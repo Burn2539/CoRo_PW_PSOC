@@ -1,0 +1,2211 @@
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"crc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.crc_Init,"ax",%progbits
+  18              		.align	2
+  19              		.global	crc_Init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	crc_Init, %function
+  23              	crc_Init:
+  24              	.LFB35:
+  25              		.file 1 ".\\crc.c"
+   1:.\crc.c       **** /****************************************************************************
+   2:.\crc.c       **** *
+   3:.\crc.c       **** * Project Name		: PSoC CapSense 2 BLE
+   4:.\crc.c       **** *
+   5:.\crc.c       **** * File Name			: crc.c
+   6:.\crc.c       **** * Version 			: 1.0
+   7:.\crc.c       **** *
+   8:.\crc.c       **** * Device Used		: CY8C4247LQI-BL483
+   9:.\crc.c       **** * Software Used		: PSoC Creator 3.2
+  10:.\crc.c       **** * Compiler    		: ARM GCC 4.8.4, ARM MDK Generic
+  11:.\crc.c       **** * Related Hardware	: CY8CKIT-042-BLE Bluetooth Low Energy Pioneer Kit
+  12:.\crc.c       **** *
+  13:.\crc.c       **** * Owner             : A. BERNIER
+  14:.\crc.c       **** *
+  15:.\crc.c       **** *****************************************************************************
+  16:.\crc.c       **** *
+  17:.\crc.c       **** * Source:	Programming Embedded Systems in C and C++
+  18:.\crc.c       **** *			By Michael Barr, p.76 to p.79
+  19:.\crc.c       **** *
+  20:.\crc.c       **** *****************************************************************************/
+  21:.\crc.c       **** 
+  22:.\crc.c       **** 
+  23:.\crc.c       **** /*****************************************************************************
+  24:.\crc.c       **** * Included headers
+  25:.\crc.c       **** *****************************************************************************/
+  26:.\crc.c       **** #include "crc.h"
+  27:.\crc.c       **** 
+  28:.\crc.c       **** 
+  29:.\crc.c       **** /*****************************************************************************
+  30:.\crc.c       **** * Local global variables
+  31:.\crc.c       **** *****************************************************************************/
+  32:.\crc.c       **** // An array containing the pre-computed intermediate result for each
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 2
+
+
+  33:.\crc.c       **** // possible byte of input. This is used to speed up the computation.
+  34:.\crc.c       **** width crcTable[256];
+  35:.\crc.c       **** 
+  36:.\crc.c       **** 
+  37:.\crc.c       **** 
+  38:.\crc.c       **** /*****************************************************************************
+  39:.\crc.c       **** * Function Name: crcInit()
+  40:.\crc.c       **** ******************************************************************************
+  41:.\crc.c       **** * Summary:
+  42:.\crc.c       **** *   Initialize the CRC lookup table. This table is used
+  43:.\crc.c       **** *	by crcCompute() to make CRC computation faster.
+  44:.\crc.c       **** *
+  45:.\crc.c       **** * Parameters:
+  46:.\crc.c       **** *   None.
+  47:.\crc.c       **** *
+  48:.\crc.c       **** * Return:
+  49:.\crc.c       **** *   None.
+  50:.\crc.c       **** *
+  51:.\crc.c       **** * Note:
+  52:.\crc.c       **** *   The mod-2 binary long division is implemented here.
+  53:.\crc.c       **** *****************************************************************************/
+  54:.\crc.c       **** void crc_Init(void)
+  55:.\crc.c       **** {
+  26              		.loc 1 55 0
+  27              		.cfi_startproc
+  28              	.LVL0:
+  56:.\crc.c       **** 	width	remainder;
+  57:.\crc.c       **** 	width	dividend;
+  58:.\crc.c       **** 	int		bit;
+  59:.\crc.c       **** 
+  60:.\crc.c       **** 	// Perform binary long division, a bit at a time.
+  61:.\crc.c       **** 	for (dividend = 0; dividend < 256; dividend++)
+  29              		.loc 1 61 0
+  30 0000 0020     		mov	r0, #0
+  31 0002 15E0     		b	.L2
+  32              	.LVL1:
+  33              	.L7:
+  62:.\crc.c       **** 	{
+  63:.\crc.c       **** 		// Initialize the remainder.
+  64:.\crc.c       **** 		remainder = dividend << (WIDTH - 8);
+  34              		.loc 1 64 0
+  35 0004 0302     		lsl	r3, r0, #8
+  36 0006 9BB2     		uxth	r3, r3
+  37              	.LVL2:
+  65:.\crc.c       **** 
+  66:.\crc.c       **** 		//Shift and XOR with the polynomial.
+  67:.\crc.c       **** 		for (bit = 0; bit < 8; bit++)
+  38              		.loc 1 67 0
+  39 0008 0022     		mov	r2, #0
+  40 000a 0AE0     		b	.L3
+  41              	.LVL3:
+  42              	.L6:
+  68:.\crc.c       **** 		{
+  69:.\crc.c       **** 			//Try to divide the current data bit.
+  70:.\crc.c       **** 			if (remainder & TOPBIT)
+  43              		.loc 1 70 0
+  44 000c 19B2     		sxth	r1, r3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 3
+
+
+  45 000e 0029     		cmp	r1, #0
+  46 0010 04DA     		bge	.L4
+  71:.\crc.c       **** 			{
+  72:.\crc.c       **** 				remainder = (remainder << 1) ^ POLYNOMIAL;
+  47              		.loc 1 72 0
+  48 0012 5B00     		lsl	r3, r3, #1
+  49              	.LVL4:
+  50 0014 0849     		ldr	r1, .L8
+  51              	.LVL5:
+  52 0016 4B40     		eor	r3, r1
+  53 0018 9BB2     		uxth	r3, r3
+  54              	.LVL6:
+  55 001a 01E0     		b	.L5
+  56              	.L4:
+  73:.\crc.c       **** 			}
+  74:.\crc.c       **** 			else
+  75:.\crc.c       **** 			{
+  76:.\crc.c       **** 				remainder = remainder << 1;
+  57              		.loc 1 76 0
+  58 001c 5B00     		lsl	r3, r3, #1
+  59              	.LVL7:
+  60 001e 9BB2     		uxth	r3, r3
+  61              	.LVL8:
+  62              	.L5:
+  67:.\crc.c       **** 		{
+  63              		.loc 1 67 0 discriminator 2
+  64 0020 0132     		add	r2, r2, #1
+  65              	.LVL9:
+  66              	.L3:
+  67:.\crc.c       **** 		{
+  67              		.loc 1 67 0 is_stmt 0 discriminator 1
+  68 0022 072A     		cmp	r2, #7
+  69 0024 F2DD     		ble	.L6
+  77:.\crc.c       **** 			}
+  78:.\crc.c       **** 		}
+  79:.\crc.c       **** 
+  80:.\crc.c       **** 		// Save the result in the table.
+  81:.\crc.c       **** 		crcTable[dividend] = remainder;
+  70              		.loc 1 81 0 is_stmt 1 discriminator 2
+  71 0026 4100     		lsl	r1, r0, #1
+  72 0028 044A     		ldr	r2, .L8+4
+  73              	.LVL10:
+  74 002a 8B52     		strh	r3, [r1, r2]
+  61:.\crc.c       **** 	{
+  75              		.loc 1 61 0 discriminator 2
+  76 002c 0130     		add	r0, r0, #1
+  77              	.LVL11:
+  78 002e 80B2     		uxth	r0, r0
+  79              	.LVL12:
+  80              	.L2:
+  61:.\crc.c       **** 	{
+  81              		.loc 1 61 0 is_stmt 0 discriminator 1
+  82 0030 FF28     		cmp	r0, #255
+  83 0032 E7D9     		bls	.L7
+  82:.\crc.c       **** 	}
+  83:.\crc.c       **** 
+  84:.\crc.c       **** }
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 4
+
+
+  84              		.loc 1 84 0 is_stmt 1
+  85              		@ sp needed
+  86 0034 7047     		bx	lr
+  87              	.L9:
+  88 0036 C046     		.align	2
+  89              	.L8:
+  90 0038 21100000 		.word	4129
+  91 003c 00000000 		.word	crcTable
+  92              		.cfi_endproc
+  93              	.LFE35:
+  94              		.size	crc_Init, .-crc_Init
+  95              		.section	.text.crcCompute,"ax",%progbits
+  96              		.align	2
+  97              		.global	crcCompute
+  98              		.code	16
+  99              		.thumb_func
+ 100              		.type	crcCompute, %function
+ 101              	crcCompute:
+ 102              	.LFB36:
+  85:.\crc.c       **** 
+  86:.\crc.c       **** 
+  87:.\crc.c       **** /*****************************************************************************
+  88:.\crc.c       **** * Function Name: crcCompute()
+  89:.\crc.c       **** ******************************************************************************
+  90:.\crc.c       **** * Summary:
+  91:.\crc.c       **** *   Compute the CRC checksum of a binary message block.
+  92:.\crc.c       **** *
+  93:.\crc.c       **** * Parameters:
+  94:.\crc.c       **** *   Pointer to the message.
+  95:.\crc.c       **** *	Number of bytes of the message.
+  96:.\crc.c       **** *
+  97:.\crc.c       **** * Return:
+  98:.\crc.c       **** *   The CRC of the data.
+  99:.\crc.c       **** *
+ 100:.\crc.c       **** * Note:
+ 101:.\crc.c       **** *   This function expects that crcInit() has been called
+ 102:.\crc.c       **** *	first to intialize the CRC lookup table.
+ 103:.\crc.c       **** *****************************************************************************/
+ 104:.\crc.c       **** width crcCompute(unsigned char * message, unsigned int nBytes)
+ 105:.\crc.c       **** {
+ 103              		.loc 1 105 0
+ 104              		.cfi_startproc
+ 105              	.LVL13:
+ 106 0000 70B5     		push	{r4, r5, r6, lr}
+ 107              		.cfi_def_cfa_offset 16
+ 108              		.cfi_offset 4, -16
+ 109              		.cfi_offset 5, -12
+ 110              		.cfi_offset 6, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 061C     		mov	r6, r0
+ 113              	.LVL14:
+ 106:.\crc.c       **** 	unsigned int	offset;
+ 107:.\crc.c       **** 	unsigned char	byte;
+ 108:.\crc.c       **** 	width			remainder = INTIAL_REMAINDER;
+ 114              		.loc 1 108 0
+ 115 0004 084B     		ldr	r3, .L13
+ 109:.\crc.c       **** 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 5
+
+
+ 110:.\crc.c       **** 	// Divide the message by the polynomial, a byte at a time.
+ 111:.\crc.c       **** 	for (offset = 0; offset < nBytes; offset++)
+ 116              		.loc 1 111 0
+ 117 0006 0024     		mov	r4, #0
+ 118 0008 09E0     		b	.L11
+ 119              	.LVL15:
+ 120              	.L12:
+ 112:.\crc.c       **** 	{
+ 113:.\crc.c       **** 		byte = (remainder >> (WIDTH - 8)) ^ message[offset];
+ 121              		.loc 1 113 0 discriminator 3
+ 122 000a 355D     		ldrb	r5, [r6, r4]
+ 123 000c 1A0A     		lsr	r2, r3, #8
+ 124 000e 6A40     		eor	r2, r5
+ 125              	.LVL16:
+ 114:.\crc.c       **** 		remainder = crcTable[byte] ^ (remainder << 8);
+ 126              		.loc 1 114 0 discriminator 3
+ 127 0010 5200     		lsl	r2, r2, #1
+ 128              	.LVL17:
+ 129 0012 064D     		ldr	r5, .L13+4
+ 130              	.LVL18:
+ 131 0014 505B     		ldrh	r0, [r2, r5]
+ 132 0016 1B02     		lsl	r3, r3, #8
+ 133              	.LVL19:
+ 134 0018 4340     		eor	r3, r0
+ 135 001a 9BB2     		uxth	r3, r3
+ 136              	.LVL20:
+ 111:.\crc.c       **** 	{
+ 137              		.loc 1 111 0 discriminator 3
+ 138 001c 0134     		add	r4, r4, #1
+ 139              	.LVL21:
+ 140              	.L11:
+ 111:.\crc.c       **** 	{
+ 141              		.loc 1 111 0 is_stmt 0 discriminator 1
+ 142 001e 8C42     		cmp	r4, r1
+ 143 0020 F3D3     		bcc	.L12
+ 115:.\crc.c       **** 	}
+ 116:.\crc.c       **** 
+ 117:.\crc.c       **** 	// The final remainder is the CRC result.
+ 118:.\crc.c       **** 	return (remainder ^ FINAL_XOR_VALUE);
+ 119:.\crc.c       **** 
+ 120:.\crc.c       **** }
+ 144              		.loc 1 120 0 is_stmt 1
+ 145 0022 181C     		mov	r0, r3
+ 146              		@ sp needed
+ 147              	.LVL22:
+ 148              	.LVL23:
+ 149 0024 70BD     		pop	{r4, r5, r6, pc}
+ 150              	.L14:
+ 151 0026 C046     		.align	2
+ 152              	.L13:
+ 153 0028 FFFF0000 		.word	65535
+ 154 002c 00000000 		.word	crcTable
+ 155              		.cfi_endproc
+ 156              	.LFE36:
+ 157              		.size	crcCompute, .-crcCompute
+ 158              		.section	.text.encodeCRC,"ax",%progbits
+ 159              		.align	2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 6
+
+
+ 160              		.global	encodeCRC
+ 161              		.code	16
+ 162              		.thumb_func
+ 163              		.type	encodeCRC, %function
+ 164              	encodeCRC:
+ 165              	.LFB37:
+ 121:.\crc.c       **** 
+ 122:.\crc.c       **** 
+ 123:.\crc.c       **** /*****************************************************************************
+ 124:.\crc.c       **** * Function Name: encodeCRC()
+ 125:.\crc.c       **** ******************************************************************************
+ 126:.\crc.c       **** * Summary:
+ 127:.\crc.c       **** *   Add the CRC at the end of the message.
+ 128:.\crc.c       **** *
+ 129:.\crc.c       **** * Parameters:
+ 130:.\crc.c       **** *   Value to encode.
+ 131:.\crc.c       **** *
+ 132:.\crc.c       **** * Return:
+ 133:.\crc.c       **** *   32 bits message. Message (16 bits) followed by
+ 134:.\crc.c       **** *	the CRC (16 bits).
+ 135:.\crc.c       **** *
+ 136:.\crc.c       **** * Note:
+ 137:.\crc.c       **** *   Works with a original message of 16 bits.
+ 138:.\crc.c       **** *****************************************************************************/
+ 139:.\crc.c       **** uint32 encodeCRC(uint16 value)
+ 140:.\crc.c       **** {
+ 166              		.loc 1 140 0
+ 167              		.cfi_startproc
+ 168              	.LVL24:
+ 169 0000 10B5     		push	{r4, lr}
+ 170              		.cfi_def_cfa_offset 8
+ 171              		.cfi_offset 4, -8
+ 172              		.cfi_offset 14, -4
+ 173 0002 82B0     		sub	sp, sp, #8
+ 174              		.cfi_def_cfa_offset 16
+ 175 0004 041C     		mov	r4, r0
+ 176              	.LVL25:
+ 141:.\crc.c       **** 	const int		SizeOfMessage = sizeof(value);
+ 142:.\crc.c       **** 	unsigned char 	message[SizeOfMessage];
+ 143:.\crc.c       **** 	width			crc;
+ 144:.\crc.c       **** 	uint32		    message_with_crc;
+ 145:.\crc.c       **** 	int				i;
+ 146:.\crc.c       **** 
+ 147:.\crc.c       **** 	// Convert the uint16 into a array of unsigned chars.
+ 148:.\crc.c       **** 	for (i = 0; i < SizeOfMessage; i++)
+ 177              		.loc 1 148 0
+ 178 0006 0023     		mov	r3, #0
+ 179 0008 08E0     		b	.L16
+ 180              	.LVL26:
+ 181              	.L17:
+ 149:.\crc.c       **** 	{
+ 150:.\crc.c       **** 		message[SizeOfMessage - 1 - i] = (value >> (i * 8) & 0xFF);
+ 182              		.loc 1 150 0 discriminator 3
+ 183 000a 0122     		mov	r2, #1
+ 184 000c D21A     		sub	r2, r2, r3
+ 185 000e D900     		lsl	r1, r3, #3
+ 186 0010 201C     		mov	r0, r4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 7
+
+
+ 187 0012 0841     		asr	r0, r0, r1
+ 188 0014 011C     		mov	r1, r0
+ 189 0016 01A8     		add	r0, sp, #4
+ 190              	.LVL27:
+ 191 0018 8154     		strb	r1, [r0, r2]
+ 148:.\crc.c       **** 	{
+ 192              		.loc 1 148 0 discriminator 3
+ 193 001a 0133     		add	r3, r3, #1
+ 194              	.LVL28:
+ 195              	.L16:
+ 148:.\crc.c       **** 	{
+ 196              		.loc 1 148 0 is_stmt 0 discriminator 1
+ 197 001c 012B     		cmp	r3, #1
+ 198 001e F4DD     		ble	.L17
+ 151:.\crc.c       **** 	}
+ 152:.\crc.c       **** 
+ 153:.\crc.c       **** 	// Calculate the CRC.
+ 154:.\crc.c       **** 	crc = crcCompute(message, SizeOfMessage);
+ 199              		.loc 1 154 0 is_stmt 1
+ 200 0020 01A8     		add	r0, sp, #4
+ 201              	.LVL29:
+ 202 0022 0221     		mov	r1, #2
+ 203 0024 FFF7FEFF 		bl	crcCompute
+ 204              	.LVL30:
+ 155:.\crc.c       **** 
+ 156:.\crc.c       **** 	// Concatenate the original message with the CRC.
+ 157:.\crc.c       **** 	message_with_crc = value << 8 * SizeOfMessage | crc;
+ 205              		.loc 1 157 0
+ 206 0028 2404     		lsl	r4, r4, #16
+ 207 002a 2043     		orr	r0, r4
+ 208              	.LVL31:
+ 158:.\crc.c       **** 
+ 159:.\crc.c       **** 	return message_with_crc;
+ 160:.\crc.c       **** 
+ 161:.\crc.c       **** }
+ 209              		.loc 1 161 0
+ 210 002c 02B0     		add	sp, sp, #8
+ 211              		@ sp needed
+ 212 002e 10BD     		pop	{r4, pc}
+ 213              		.cfi_endproc
+ 214              	.LFE37:
+ 215              		.size	encodeCRC, .-encodeCRC
+ 216              		.section	.text.verifyCRC,"ax",%progbits
+ 217              		.align	2
+ 218              		.global	verifyCRC
+ 219              		.code	16
+ 220              		.thumb_func
+ 221              		.type	verifyCRC, %function
+ 222              	verifyCRC:
+ 223              	.LFB38:
+ 162:.\crc.c       **** 
+ 163:.\crc.c       **** 
+ 164:.\crc.c       **** /*****************************************************************************
+ 165:.\crc.c       **** * Function Name: verifyCRC()
+ 166:.\crc.c       **** ******************************************************************************
+ 167:.\crc.c       **** * Summary:
+ 168:.\crc.c       **** *   Verify that the message is valid according to the CRC.
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 8
+
+
+ 169:.\crc.c       **** *
+ 170:.\crc.c       **** * Parameters:
+ 171:.\crc.c       **** *   Message to verify.
+ 172:.\crc.c       **** *	CRC of the message ot verify.
+ 173:.\crc.c       **** *
+ 174:.\crc.c       **** * Return:
+ 175:.\crc.c       **** *   FALSE if checkSUM is bad.
+ 176:.\crc.c       **** *	TRUE if checkSUM is good.
+ 177:.\crc.c       **** *
+ 178:.\crc.c       **** * Note:
+ 179:.\crc.c       **** *   
+ 180:.\crc.c       **** *****************************************************************************/
+ 181:.\crc.c       **** uint8 verifyCRC(uint16 value, uint16 good_crc)
+ 182:.\crc.c       **** {
+ 224              		.loc 1 182 0
+ 225              		.cfi_startproc
+ 226              	.LVL32:
+ 227 0000 30B5     		push	{r4, r5, lr}
+ 228              		.cfi_def_cfa_offset 12
+ 229              		.cfi_offset 4, -12
+ 230              		.cfi_offset 5, -8
+ 231              		.cfi_offset 14, -4
+ 232 0002 83B0     		sub	sp, sp, #12
+ 233              		.cfi_def_cfa_offset 24
+ 234 0004 0D1C     		mov	r5, r1
+ 235              	.LVL33:
+ 183:.\crc.c       **** 	const int		SizeOfMessage = sizeof(value);
+ 184:.\crc.c       **** 	unsigned char 	message[SizeOfMessage];
+ 185:.\crc.c       **** 	width			crc;
+ 186:.\crc.c       **** 	int				i;
+ 187:.\crc.c       **** 
+ 188:.\crc.c       **** 	/* Convert the uint16 into a array of unsigned chars. */
+ 189:.\crc.c       **** 	for (i = 0; i < SizeOfMessage; i++)
+ 236              		.loc 1 189 0
+ 237 0006 0023     		mov	r3, #0
+ 238 0008 08E0     		b	.L19
+ 239              	.LVL34:
+ 240              	.L20:
+ 190:.\crc.c       **** 	{
+ 191:.\crc.c       **** 		message[SizeOfMessage - 1 - i] = (value >> (i * 8) & 0xFF);
+ 241              		.loc 1 191 0 discriminator 3
+ 242 000a 0122     		mov	r2, #1
+ 243 000c D21A     		sub	r2, r2, r3
+ 244 000e D900     		lsl	r1, r3, #3
+ 245 0010 041C     		mov	r4, r0
+ 246 0012 0C41     		asr	r4, r4, r1
+ 247 0014 211C     		mov	r1, r4
+ 248 0016 01AC     		add	r4, sp, #4
+ 249              	.LVL35:
+ 250 0018 A154     		strb	r1, [r4, r2]
+ 189:.\crc.c       **** 	{
+ 251              		.loc 1 189 0 discriminator 3
+ 252 001a 0133     		add	r3, r3, #1
+ 253              	.LVL36:
+ 254              	.L19:
+ 189:.\crc.c       **** 	{
+ 255              		.loc 1 189 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 9
+
+
+ 256 001c 012B     		cmp	r3, #1
+ 257 001e F4DD     		ble	.L20
+ 192:.\crc.c       **** 	}
+ 193:.\crc.c       **** 
+ 194:.\crc.c       **** 	/* Calculate the CRC. */
+ 195:.\crc.c       **** 	crc = crcCompute(message, SizeOfMessage);
+ 258              		.loc 1 195 0 is_stmt 1
+ 259 0020 01A8     		add	r0, sp, #4
+ 260              	.LVL37:
+ 261 0022 0221     		mov	r1, #2
+ 262 0024 FFF7FEFF 		bl	crcCompute
+ 263              	.LVL38:
+ 196:.\crc.c       **** 
+ 197:.\crc.c       **** 	/* Validate the CRC received with the CRC calulated. */
+ 198:.\crc.c       **** 	return (crc == good_crc);
+ 264              		.loc 1 198 0
+ 265 0028 401B     		sub	r0, r0, r5
+ 266              	.LVL39:
+ 267 002a 4342     		neg	r3, r0
+ 268 002c 5841     		adc	r0, r0, r3
+ 269 002e C0B2     		uxtb	r0, r0
+ 199:.\crc.c       **** 
+ 200:.\crc.c       **** }
+ 270              		.loc 1 200 0
+ 271 0030 03B0     		add	sp, sp, #12
+ 272              		@ sp needed
+ 273 0032 30BD     		pop	{r4, r5, pc}
+ 274              		.cfi_endproc
+ 275              	.LFE38:
+ 276              		.size	verifyCRC, .-verifyCRC
+ 277              		.comm	crcTable,512,4
+ 278              		.text
+ 279              	.Letext0:
+ 280              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 281              		.file 3 ".\\crc.h"
+ 282              		.file 4 "Generated_Source\\PSoC4/BLE_Stack.h"
+ 283              		.section	.debug_info,"",%progbits
+ 284              	.Ldebug_info0:
+ 285 0000 2F040000 		.4byte	0x42f
+ 286 0004 0400     		.2byte	0x4
+ 287 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 288 000a 04       		.byte	0x4
+ 289 000b 01       		.uleb128 0x1
+ 290 000c 0A080000 		.4byte	.LASF87
+ 291 0010 01       		.byte	0x1
+ 292 0011 6C000000 		.4byte	.LASF88
+ 293 0015 A4000000 		.4byte	.LASF89
+ 294 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 295 001d 00000000 		.4byte	0
+ 296 0021 00000000 		.4byte	.Ldebug_line0
+ 297 0025 02       		.uleb128 0x2
+ 298 0026 01       		.byte	0x1
+ 299 0027 06       		.byte	0x6
+ 300 0028 6F040000 		.4byte	.LASF0
+ 301 002c 02       		.uleb128 0x2
+ 302 002d 01       		.byte	0x1
+ 303 002e 08       		.byte	0x8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 10
+
+
+ 304 002f C5030000 		.4byte	.LASF1
+ 305 0033 02       		.uleb128 0x2
+ 306 0034 02       		.byte	0x2
+ 307 0035 05       		.byte	0x5
+ 308 0036 62000000 		.4byte	.LASF2
+ 309 003a 02       		.uleb128 0x2
+ 310 003b 02       		.byte	0x2
+ 311 003c 07       		.byte	0x7
+ 312 003d 5A050000 		.4byte	.LASF3
+ 313 0041 02       		.uleb128 0x2
+ 314 0042 04       		.byte	0x4
+ 315 0043 05       		.byte	0x5
+ 316 0044 AB020000 		.4byte	.LASF4
+ 317 0048 02       		.uleb128 0x2
+ 318 0049 04       		.byte	0x4
+ 319 004a 07       		.byte	0x7
+ 320 004b 07050000 		.4byte	.LASF5
+ 321 004f 02       		.uleb128 0x2
+ 322 0050 08       		.byte	0x8
+ 323 0051 05       		.byte	0x5
+ 324 0052 7D020000 		.4byte	.LASF6
+ 325 0056 02       		.uleb128 0x2
+ 326 0057 08       		.byte	0x8
+ 327 0058 07       		.byte	0x7
+ 328 0059 8B020000 		.4byte	.LASF7
+ 329 005d 03       		.uleb128 0x3
+ 330 005e 04       		.byte	0x4
+ 331 005f 05       		.byte	0x5
+ 332 0060 696E7400 		.ascii	"int\000"
+ 333 0064 02       		.uleb128 0x2
+ 334 0065 04       		.byte	0x4
+ 335 0066 07       		.byte	0x7
+ 336 0067 D8040000 		.4byte	.LASF8
+ 337 006b 04       		.uleb128 0x4
+ 338 006c BD050000 		.4byte	.LASF9
+ 339 0070 02       		.byte	0x2
+ 340 0071 C2       		.byte	0xc2
+ 341 0072 2C000000 		.4byte	0x2c
+ 342 0076 04       		.uleb128 0x4
+ 343 0077 72010000 		.4byte	.LASF10
+ 344 007b 02       		.byte	0x2
+ 345 007c C3       		.byte	0xc3
+ 346 007d 3A000000 		.4byte	0x3a
+ 347 0081 04       		.uleb128 0x4
+ 348 0082 13060000 		.4byte	.LASF11
+ 349 0086 02       		.byte	0x2
+ 350 0087 C4       		.byte	0xc4
+ 351 0088 48000000 		.4byte	0x48
+ 352 008c 02       		.uleb128 0x2
+ 353 008d 04       		.byte	0x4
+ 354 008e 04       		.byte	0x4
+ 355 008f 44020000 		.4byte	.LASF12
+ 356 0093 02       		.uleb128 0x2
+ 357 0094 08       		.byte	0x8
+ 358 0095 04       		.byte	0x4
+ 359 0096 5B060000 		.4byte	.LASF13
+ 360 009a 02       		.uleb128 0x2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 11
+
+
+ 361 009b 01       		.byte	0x1
+ 362 009c 08       		.byte	0x8
+ 363 009d 96050000 		.4byte	.LASF14
+ 364 00a1 02       		.uleb128 0x2
+ 365 00a2 04       		.byte	0x4
+ 366 00a3 07       		.byte	0x7
+ 367 00a4 74000000 		.4byte	.LASF15
+ 368 00a8 05       		.uleb128 0x5
+ 369 00a9 04       		.byte	0x4
+ 370 00aa 2C000000 		.4byte	0x2c
+ 371 00ae 06       		.uleb128 0x6
+ 372 00af 01       		.byte	0x1
+ 373 00b0 04       		.byte	0x4
+ 374 00b1 9D       		.byte	0x9d
+ 375 00b2 33020000 		.4byte	0x233
+ 376 00b6 07       		.uleb128 0x7
+ 377 00b7 DD010000 		.4byte	.LASF16
+ 378 00bb 00       		.sleb128 0
+ 379 00bc 07       		.uleb128 0x7
+ 380 00bd 41010000 		.4byte	.LASF17
+ 381 00c1 01       		.sleb128 1
+ 382 00c2 07       		.uleb128 0x7
+ 383 00c3 6A070000 		.4byte	.LASF18
+ 384 00c7 02       		.sleb128 2
+ 385 00c8 07       		.uleb128 0x7
+ 386 00c9 85060000 		.4byte	.LASF19
+ 387 00cd 03       		.sleb128 3
+ 388 00ce 07       		.uleb128 0x7
+ 389 00cf 03010000 		.4byte	.LASF20
+ 390 00d3 04       		.sleb128 4
+ 391 00d4 07       		.uleb128 0x7
+ 392 00d5 44030000 		.4byte	.LASF21
+ 393 00d9 05       		.sleb128 5
+ 394 00da 07       		.uleb128 0x7
+ 395 00db E3060000 		.4byte	.LASF22
+ 396 00df 20       		.sleb128 32
+ 397 00e0 07       		.uleb128 0x7
+ 398 00e1 19050000 		.4byte	.LASF23
+ 399 00e5 21       		.sleb128 33
+ 400 00e6 07       		.uleb128 0x7
+ 401 00e7 1A000000 		.4byte	.LASF24
+ 402 00eb 22       		.sleb128 34
+ 403 00ec 07       		.uleb128 0x7
+ 404 00ed 60030000 		.4byte	.LASF25
+ 405 00f1 23       		.sleb128 35
+ 406 00f2 07       		.uleb128 0x7
+ 407 00f3 BC040000 		.4byte	.LASF26
+ 408 00f7 24       		.sleb128 36
+ 409 00f8 07       		.uleb128 0x7
+ 410 00f9 00000000 		.4byte	.LASF27
+ 411 00fd 25       		.sleb128 37
+ 412 00fe 07       		.uleb128 0x7
+ 413 00ff FB020000 		.4byte	.LASF28
+ 414 0103 26       		.sleb128 38
+ 415 0104 07       		.uleb128 0x7
+ 416 0105 DC020000 		.4byte	.LASF29
+ 417 0109 27       		.sleb128 39
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 12
+
+
+ 418 010a 07       		.uleb128 0x7
+ 419 010b B7080000 		.4byte	.LASF30
+ 420 010f 28       		.sleb128 40
+ 421 0110 07       		.uleb128 0x7
+ 422 0111 87000000 		.4byte	.LASF31
+ 423 0115 29       		.sleb128 41
+ 424 0116 07       		.uleb128 0x7
+ 425 0117 6D050000 		.4byte	.LASF32
+ 426 011b 2A       		.sleb128 42
+ 427 011c 07       		.uleb128 0x7
+ 428 011d A0070000 		.4byte	.LASF33
+ 429 0121 2B       		.sleb128 43
+ 430 0122 07       		.uleb128 0x7
+ 431 0123 79010000 		.4byte	.LASF34
+ 432 0127 2C       		.sleb128 44
+ 433 0128 07       		.uleb128 0x7
+ 434 0129 3E000000 		.4byte	.LASF35
+ 435 012d C000     		.sleb128 64
+ 436 012f 07       		.uleb128 0x7
+ 437 0130 EC040000 		.4byte	.LASF36
+ 438 0134 C100     		.sleb128 65
+ 439 0136 07       		.uleb128 0x7
+ 440 0137 FD080000 		.4byte	.LASF37
+ 441 013b C200     		.sleb128 66
+ 442 013d 07       		.uleb128 0x7
+ 443 013e 54010000 		.4byte	.LASF38
+ 444 0142 C300     		.sleb128 67
+ 445 0144 07       		.uleb128 0x7
+ 446 0145 4C070000 		.4byte	.LASF39
+ 447 0149 C400     		.sleb128 68
+ 448 014b 07       		.uleb128 0x7
+ 449 014c 07070000 		.4byte	.LASF40
+ 450 0150 C500     		.sleb128 69
+ 451 0152 07       		.uleb128 0x7
+ 452 0153 18010000 		.4byte	.LASF41
+ 453 0157 C600     		.sleb128 70
+ 454 0159 07       		.uleb128 0x7
+ 455 015a 51040000 		.4byte	.LASF42
+ 456 015e C700     		.sleb128 71
+ 457 0160 07       		.uleb128 0x7
+ 458 0161 95040000 		.4byte	.LASF43
+ 459 0165 C800     		.sleb128 72
+ 460 0167 07       		.uleb128 0x7
+ 461 0168 4A020000 		.4byte	.LASF44
+ 462 016c C900     		.sleb128 73
+ 463 016e 07       		.uleb128 0x7
+ 464 016f D6050000 		.4byte	.LASF45
+ 465 0173 CA00     		.sleb128 74
+ 466 0175 07       		.uleb128 0x7
+ 467 0176 9D010000 		.4byte	.LASF46
+ 468 017a CB00     		.sleb128 75
+ 469 017c 07       		.uleb128 0x7
+ 470 017d 7B040000 		.4byte	.LASF47
+ 471 0181 CC00     		.sleb128 76
+ 472 0183 07       		.uleb128 0x7
+ 473 0184 63020000 		.4byte	.LASF48
+ 474 0188 CD00     		.sleb128 77
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 13
+
+
+ 475 018a 07       		.uleb128 0x7
+ 476 018b 2E070000 		.4byte	.LASF49
+ 477 018f CE00     		.sleb128 78
+ 478 0191 07       		.uleb128 0x7
+ 479 0192 0A040000 		.4byte	.LASF50
+ 480 0196 CF00     		.sleb128 79
+ 481 0198 07       		.uleb128 0x7
+ 482 0199 98080000 		.4byte	.LASF51
+ 483 019d D000     		.sleb128 80
+ 484 019f 07       		.uleb128 0x7
+ 485 01a0 F4050000 		.4byte	.LASF52
+ 486 01a4 D100     		.sleb128 81
+ 487 01a6 07       		.uleb128 0x7
+ 488 01a7 23030000 		.4byte	.LASF53
+ 489 01ab D200     		.sleb128 82
+ 490 01ad 07       		.uleb128 0x7
+ 491 01ae B4020000 		.4byte	.LASF54
+ 492 01b2 D300     		.sleb128 83
+ 493 01b4 07       		.uleb128 0x7
+ 494 01b5 BC010000 		.4byte	.LASF55
+ 495 01b9 D400     		.sleb128 84
+ 496 01bb 07       		.uleb128 0x7
+ 497 01bc D9080000 		.4byte	.LASF56
+ 498 01c0 D500     		.sleb128 85
+ 499 01c2 07       		.uleb128 0x7
+ 500 01c3 E8070000 		.4byte	.LASF57
+ 501 01c7 D600     		.sleb128 86
+ 502 01c9 07       		.uleb128 0x7
+ 503 01ca BF070000 		.4byte	.LASF58
+ 504 01ce D700     		.sleb128 87
+ 505 01d0 07       		.uleb128 0x7
+ 506 01d1 D3030000 		.4byte	.LASF59
+ 507 01d5 F000     		.sleb128 112
+ 508 01d7 07       		.uleb128 0x7
+ 509 01d8 BD060000 		.4byte	.LASF60
+ 510 01dc F100     		.sleb128 113
+ 511 01de 07       		.uleb128 0x7
+ 512 01df 9B050000 		.4byte	.LASF61
+ 513 01e3 F200     		.sleb128 114
+ 514 01e5 07       		.uleb128 0x7
+ 515 01e6 F4010000 		.4byte	.LASF62
+ 516 01ea F300     		.sleb128 115
+ 517 01ec 07       		.uleb128 0x7
+ 518 01ed 99030000 		.4byte	.LASF63
+ 519 01f1 F400     		.sleb128 116
+ 520 01f3 07       		.uleb128 0x7
+ 521 01f4 30050000 		.4byte	.LASF64
+ 522 01f8 F500     		.sleb128 117
+ 523 01fa 07       		.uleb128 0x7
+ 524 01fb 12020000 		.4byte	.LASF65
+ 525 01ff F600     		.sleb128 118
+ 526 0201 07       		.uleb128 0x7
+ 527 0202 9E060000 		.4byte	.LASF66
+ 528 0206 F700     		.sleb128 119
+ 529 0208 07       		.uleb128 0x7
+ 530 0209 38060000 		.4byte	.LASF67
+ 531 020d F800     		.sleb128 120
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 14
+
+
+ 532 020f 07       		.uleb128 0x7
+ 533 0210 62060000 		.4byte	.LASF68
+ 534 0214 F900     		.sleb128 121
+ 535 0216 07       		.uleb128 0x7
+ 536 0217 7C070000 		.4byte	.LASF69
+ 537 021b FA00     		.sleb128 122
+ 538 021d 07       		.uleb128 0x7
+ 539 021e 1A060000 		.4byte	.LASF70
+ 540 0222 FA01     		.sleb128 250
+ 541 0224 07       		.uleb128 0x7
+ 542 0225 29040000 		.4byte	.LASF71
+ 543 0229 FB01     		.sleb128 251
+ 544 022b 07       		.uleb128 0x7
+ 545 022c B7030000 		.4byte	.LASF72
+ 546 0230 FF01     		.sleb128 255
+ 547 0232 00       		.byte	0
+ 548 0233 04       		.uleb128 0x4
+ 549 0234 3E020000 		.4byte	.LASF73
+ 550 0238 03       		.byte	0x3
+ 551 0239 2A       		.byte	0x2a
+ 552 023a 3A000000 		.4byte	0x3a
+ 553 023e 08       		.uleb128 0x8
+ 554 023f C3050000 		.4byte	.LASF90
+ 555 0243 01       		.byte	0x1
+ 556 0244 36       		.byte	0x36
+ 557 0245 00000000 		.4byte	.LFB35
+ 558 0249 40000000 		.4byte	.LFE35-.LFB35
+ 559 024d 01       		.uleb128 0x1
+ 560 024e 9C       		.byte	0x9c
+ 561 024f 81020000 		.4byte	0x281
+ 562 0253 09       		.uleb128 0x9
+ 563 0254 58000000 		.4byte	.LASF74
+ 564 0258 01       		.byte	0x1
+ 565 0259 38       		.byte	0x38
+ 566 025a 33020000 		.4byte	0x233
+ 567 025e 00000000 		.4byte	.LLST0
+ 568 0262 09       		.uleb128 0x9
+ 569 0263 48040000 		.4byte	.LASF75
+ 570 0267 01       		.byte	0x1
+ 571 0268 39       		.byte	0x39
+ 572 0269 33020000 		.4byte	0x233
+ 573 026d 3F000000 		.4byte	.LLST1
+ 574 0271 0A       		.uleb128 0xa
+ 575 0272 62697400 		.ascii	"bit\000"
+ 576 0276 01       		.byte	0x1
+ 577 0277 3A       		.byte	0x3a
+ 578 0278 5D000000 		.4byte	0x5d
+ 579 027c 69000000 		.4byte	.LLST2
+ 580 0280 00       		.byte	0
+ 581 0281 0B       		.uleb128 0xb
+ 582 0282 33020000 		.4byte	.LASF80
+ 583 0286 01       		.byte	0x1
+ 584 0287 68       		.byte	0x68
+ 585 0288 33020000 		.4byte	0x233
+ 586 028c 00000000 		.4byte	.LFB36
+ 587 0290 30000000 		.4byte	.LFE36-.LFB36
+ 588 0294 01       		.uleb128 0x1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 15
+
+
+ 589 0295 9C       		.byte	0x9c
+ 590 0296 E4020000 		.4byte	0x2e4
+ 591 029a 0C       		.uleb128 0xc
+ 592 029b 39010000 		.4byte	.LASF76
+ 593 029f 01       		.byte	0x1
+ 594 02a0 68       		.byte	0x68
+ 595 02a1 A8000000 		.4byte	0xa8
+ 596 02a5 88000000 		.4byte	.LLST3
+ 597 02a9 0D       		.uleb128 0xd
+ 598 02aa E5040000 		.4byte	.LASF77
+ 599 02ae 01       		.byte	0x1
+ 600 02af 68       		.byte	0x68
+ 601 02b0 64000000 		.4byte	0x64
+ 602 02b4 01       		.uleb128 0x1
+ 603 02b5 51       		.byte	0x51
+ 604 02b6 09       		.uleb128 0x9
+ 605 02b7 D5020000 		.4byte	.LASF78
+ 606 02bb 01       		.byte	0x1
+ 607 02bc 6A       		.byte	0x6a
+ 608 02bd 64000000 		.4byte	0x64
+ 609 02c1 B4000000 		.4byte	.LLST4
+ 610 02c5 09       		.uleb128 0x9
+ 611 02c6 86030000 		.4byte	.LASF79
+ 612 02ca 01       		.byte	0x1
+ 613 02cb 6B       		.byte	0x6b
+ 614 02cc 2C000000 		.4byte	0x2c
+ 615 02d0 D3000000 		.4byte	.LLST5
+ 616 02d4 09       		.uleb128 0x9
+ 617 02d5 58000000 		.4byte	.LASF74
+ 618 02d9 01       		.byte	0x1
+ 619 02da 6C       		.byte	0x6c
+ 620 02db 33020000 		.4byte	0x233
+ 621 02df 12010000 		.4byte	.LLST6
+ 622 02e3 00       		.byte	0
+ 623 02e4 0B       		.uleb128 0xb
+ 624 02e5 7D000000 		.4byte	.LASF81
+ 625 02e9 01       		.byte	0x1
+ 626 02ea 8B       		.byte	0x8b
+ 627 02eb 81000000 		.4byte	0x81
+ 628 02ef 00000000 		.4byte	.LFB37
+ 629 02f3 30000000 		.4byte	.LFE37-.LFB37
+ 630 02f7 01       		.uleb128 0x1
+ 631 02f8 9C       		.byte	0x9c
+ 632 02f9 66030000 		.4byte	0x366
+ 633 02fd 0C       		.uleb128 0xc
+ 634 02fe B7050000 		.4byte	.LASF82
+ 635 0302 01       		.byte	0x1
+ 636 0303 8B       		.byte	0x8b
+ 637 0304 76000000 		.4byte	0x76
+ 638 0308 3D010000 		.4byte	.LLST7
+ 639 030c 0E       		.uleb128 0xe
+ 640 030d 8B030000 		.4byte	.LASF83
+ 641 0311 01       		.byte	0x1
+ 642 0312 8D       		.byte	0x8d
+ 643 0313 66030000 		.4byte	0x366
+ 644 0317 02       		.byte	0x2
+ 645 0318 09       		.uleb128 0x9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 16
+
+
+ 646 0319 39010000 		.4byte	.LASF76
+ 647 031d 01       		.byte	0x1
+ 648 031e 8E       		.byte	0x8e
+ 649 031f 6B030000 		.4byte	0x36b
+ 650 0323 5E010000 		.4byte	.LLST8
+ 651 0327 0A       		.uleb128 0xa
+ 652 0328 63726300 		.ascii	"crc\000"
+ 653 032c 01       		.byte	0x1
+ 654 032d 8F       		.byte	0x8f
+ 655 032e 33020000 		.4byte	0x233
+ 656 0332 A2010000 		.4byte	.LLST9
+ 657 0336 0F       		.uleb128 0xf
+ 658 0337 F9030000 		.4byte	.LASF84
+ 659 033b 01       		.byte	0x1
+ 660 033c 90       		.byte	0x90
+ 661 033d 81000000 		.4byte	0x81
+ 662 0341 01       		.uleb128 0x1
+ 663 0342 50       		.byte	0x50
+ 664 0343 0A       		.uleb128 0xa
+ 665 0344 6900     		.ascii	"i\000"
+ 666 0346 01       		.byte	0x1
+ 667 0347 91       		.byte	0x91
+ 668 0348 5D000000 		.4byte	0x5d
+ 669 034c B5010000 		.4byte	.LLST10
+ 670 0350 10       		.uleb128 0x10
+ 671 0351 28000000 		.4byte	.LVL30
+ 672 0355 81020000 		.4byte	0x281
+ 673 0359 11       		.uleb128 0x11
+ 674 035a 01       		.uleb128 0x1
+ 675 035b 51       		.byte	0x51
+ 676 035c 01       		.uleb128 0x1
+ 677 035d 32       		.byte	0x32
+ 678 035e 11       		.uleb128 0x11
+ 679 035f 01       		.uleb128 0x1
+ 680 0360 50       		.byte	0x50
+ 681 0361 02       		.uleb128 0x2
+ 682 0362 91       		.byte	0x91
+ 683 0363 74       		.sleb128 -12
+ 684 0364 00       		.byte	0
+ 685 0365 00       		.byte	0
+ 686 0366 12       		.uleb128 0x12
+ 687 0367 5D000000 		.4byte	0x5d
+ 688 036b 13       		.uleb128 0x13
+ 689 036c 2C000000 		.4byte	0x2c
+ 690 0370 7C030000 		.4byte	0x37c
+ 691 0374 14       		.uleb128 0x14
+ 692 0375 A1000000 		.4byte	0xa1
+ 693 0379 01       		.uleb128 0x1
+ 694 037a 31       		.byte	0x31
+ 695 037b 00       		.byte	0
+ 696 037c 0B       		.uleb128 0xb
+ 697 037d CC050000 		.4byte	.LASF85
+ 698 0381 01       		.byte	0x1
+ 699 0382 B5       		.byte	0xb5
+ 700 0383 6B000000 		.4byte	0x6b
+ 701 0387 00000000 		.4byte	.LFB38
+ 702 038b 34000000 		.4byte	.LFE38-.LFB38
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 17
+
+
+ 703 038f 01       		.uleb128 0x1
+ 704 0390 9C       		.byte	0x9c
+ 705 0391 00040000 		.4byte	0x400
+ 706 0395 0C       		.uleb128 0xc
+ 707 0396 B7050000 		.4byte	.LASF82
+ 708 039a 01       		.byte	0x1
+ 709 039b B5       		.byte	0xb5
+ 710 039c 76000000 		.4byte	0x76
+ 711 03a0 D4010000 		.4byte	.LLST11
+ 712 03a4 0C       		.uleb128 0xc
+ 713 03a5 51050000 		.4byte	.LASF86
+ 714 03a9 01       		.byte	0x1
+ 715 03aa B5       		.byte	0xb5
+ 716 03ab 76000000 		.4byte	0x76
+ 717 03af F5010000 		.4byte	.LLST12
+ 718 03b3 0E       		.uleb128 0xe
+ 719 03b4 8B030000 		.4byte	.LASF83
+ 720 03b8 01       		.byte	0x1
+ 721 03b9 B7       		.byte	0xb7
+ 722 03ba 66030000 		.4byte	0x366
+ 723 03be 02       		.byte	0x2
+ 724 03bf 09       		.uleb128 0x9
+ 725 03c0 39010000 		.4byte	.LASF76
+ 726 03c4 01       		.byte	0x1
+ 727 03c5 B8       		.byte	0xb8
+ 728 03c6 00040000 		.4byte	0x400
+ 729 03ca 16020000 		.4byte	.LLST13
+ 730 03ce 0A       		.uleb128 0xa
+ 731 03cf 63726300 		.ascii	"crc\000"
+ 732 03d3 01       		.byte	0x1
+ 733 03d4 B9       		.byte	0xb9
+ 734 03d5 33020000 		.4byte	0x233
+ 735 03d9 5A020000 		.4byte	.LLST14
+ 736 03dd 0A       		.uleb128 0xa
+ 737 03de 6900     		.ascii	"i\000"
+ 738 03e0 01       		.byte	0x1
+ 739 03e1 BA       		.byte	0xba
+ 740 03e2 5D000000 		.4byte	0x5d
+ 741 03e6 6D020000 		.4byte	.LLST15
+ 742 03ea 10       		.uleb128 0x10
+ 743 03eb 28000000 		.4byte	.LVL38
+ 744 03ef 81020000 		.4byte	0x281
+ 745 03f3 11       		.uleb128 0x11
+ 746 03f4 01       		.uleb128 0x1
+ 747 03f5 51       		.byte	0x51
+ 748 03f6 01       		.uleb128 0x1
+ 749 03f7 32       		.byte	0x32
+ 750 03f8 11       		.uleb128 0x11
+ 751 03f9 01       		.uleb128 0x1
+ 752 03fa 50       		.byte	0x50
+ 753 03fb 02       		.uleb128 0x2
+ 754 03fc 91       		.byte	0x91
+ 755 03fd 6C       		.sleb128 -20
+ 756 03fe 00       		.byte	0
+ 757 03ff 00       		.byte	0
+ 758 0400 13       		.uleb128 0x13
+ 759 0401 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 18
+
+
+ 760 0405 11040000 		.4byte	0x411
+ 761 0409 14       		.uleb128 0x14
+ 762 040a A1000000 		.4byte	0xa1
+ 763 040e 01       		.uleb128 0x1
+ 764 040f 31       		.byte	0x31
+ 765 0410 00       		.byte	0
+ 766 0411 13       		.uleb128 0x13
+ 767 0412 33020000 		.4byte	0x233
+ 768 0416 21040000 		.4byte	0x421
+ 769 041a 15       		.uleb128 0x15
+ 770 041b A1000000 		.4byte	0xa1
+ 771 041f FF       		.byte	0xff
+ 772 0420 00       		.byte	0
+ 773 0421 16       		.uleb128 0x16
+ 774 0422 A2020000 		.4byte	.LASF91
+ 775 0426 01       		.byte	0x1
+ 776 0427 22       		.byte	0x22
+ 777 0428 11040000 		.4byte	0x411
+ 778 042c 05       		.uleb128 0x5
+ 779 042d 03       		.byte	0x3
+ 780 042e 00000000 		.4byte	crcTable
+ 781 0432 00       		.byte	0
+ 782              		.section	.debug_abbrev,"",%progbits
+ 783              	.Ldebug_abbrev0:
+ 784 0000 01       		.uleb128 0x1
+ 785 0001 11       		.uleb128 0x11
+ 786 0002 01       		.byte	0x1
+ 787 0003 25       		.uleb128 0x25
+ 788 0004 0E       		.uleb128 0xe
+ 789 0005 13       		.uleb128 0x13
+ 790 0006 0B       		.uleb128 0xb
+ 791 0007 03       		.uleb128 0x3
+ 792 0008 0E       		.uleb128 0xe
+ 793 0009 1B       		.uleb128 0x1b
+ 794 000a 0E       		.uleb128 0xe
+ 795 000b 55       		.uleb128 0x55
+ 796 000c 17       		.uleb128 0x17
+ 797 000d 11       		.uleb128 0x11
+ 798 000e 01       		.uleb128 0x1
+ 799 000f 10       		.uleb128 0x10
+ 800 0010 17       		.uleb128 0x17
+ 801 0011 00       		.byte	0
+ 802 0012 00       		.byte	0
+ 803 0013 02       		.uleb128 0x2
+ 804 0014 24       		.uleb128 0x24
+ 805 0015 00       		.byte	0
+ 806 0016 0B       		.uleb128 0xb
+ 807 0017 0B       		.uleb128 0xb
+ 808 0018 3E       		.uleb128 0x3e
+ 809 0019 0B       		.uleb128 0xb
+ 810 001a 03       		.uleb128 0x3
+ 811 001b 0E       		.uleb128 0xe
+ 812 001c 00       		.byte	0
+ 813 001d 00       		.byte	0
+ 814 001e 03       		.uleb128 0x3
+ 815 001f 24       		.uleb128 0x24
+ 816 0020 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 19
+
+
+ 817 0021 0B       		.uleb128 0xb
+ 818 0022 0B       		.uleb128 0xb
+ 819 0023 3E       		.uleb128 0x3e
+ 820 0024 0B       		.uleb128 0xb
+ 821 0025 03       		.uleb128 0x3
+ 822 0026 08       		.uleb128 0x8
+ 823 0027 00       		.byte	0
+ 824 0028 00       		.byte	0
+ 825 0029 04       		.uleb128 0x4
+ 826 002a 16       		.uleb128 0x16
+ 827 002b 00       		.byte	0
+ 828 002c 03       		.uleb128 0x3
+ 829 002d 0E       		.uleb128 0xe
+ 830 002e 3A       		.uleb128 0x3a
+ 831 002f 0B       		.uleb128 0xb
+ 832 0030 3B       		.uleb128 0x3b
+ 833 0031 0B       		.uleb128 0xb
+ 834 0032 49       		.uleb128 0x49
+ 835 0033 13       		.uleb128 0x13
+ 836 0034 00       		.byte	0
+ 837 0035 00       		.byte	0
+ 838 0036 05       		.uleb128 0x5
+ 839 0037 0F       		.uleb128 0xf
+ 840 0038 00       		.byte	0
+ 841 0039 0B       		.uleb128 0xb
+ 842 003a 0B       		.uleb128 0xb
+ 843 003b 49       		.uleb128 0x49
+ 844 003c 13       		.uleb128 0x13
+ 845 003d 00       		.byte	0
+ 846 003e 00       		.byte	0
+ 847 003f 06       		.uleb128 0x6
+ 848 0040 04       		.uleb128 0x4
+ 849 0041 01       		.byte	0x1
+ 850 0042 0B       		.uleb128 0xb
+ 851 0043 0B       		.uleb128 0xb
+ 852 0044 3A       		.uleb128 0x3a
+ 853 0045 0B       		.uleb128 0xb
+ 854 0046 3B       		.uleb128 0x3b
+ 855 0047 0B       		.uleb128 0xb
+ 856 0048 01       		.uleb128 0x1
+ 857 0049 13       		.uleb128 0x13
+ 858 004a 00       		.byte	0
+ 859 004b 00       		.byte	0
+ 860 004c 07       		.uleb128 0x7
+ 861 004d 28       		.uleb128 0x28
+ 862 004e 00       		.byte	0
+ 863 004f 03       		.uleb128 0x3
+ 864 0050 0E       		.uleb128 0xe
+ 865 0051 1C       		.uleb128 0x1c
+ 866 0052 0D       		.uleb128 0xd
+ 867 0053 00       		.byte	0
+ 868 0054 00       		.byte	0
+ 869 0055 08       		.uleb128 0x8
+ 870 0056 2E       		.uleb128 0x2e
+ 871 0057 01       		.byte	0x1
+ 872 0058 3F       		.uleb128 0x3f
+ 873 0059 19       		.uleb128 0x19
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 20
+
+
+ 874 005a 03       		.uleb128 0x3
+ 875 005b 0E       		.uleb128 0xe
+ 876 005c 3A       		.uleb128 0x3a
+ 877 005d 0B       		.uleb128 0xb
+ 878 005e 3B       		.uleb128 0x3b
+ 879 005f 0B       		.uleb128 0xb
+ 880 0060 27       		.uleb128 0x27
+ 881 0061 19       		.uleb128 0x19
+ 882 0062 11       		.uleb128 0x11
+ 883 0063 01       		.uleb128 0x1
+ 884 0064 12       		.uleb128 0x12
+ 885 0065 06       		.uleb128 0x6
+ 886 0066 40       		.uleb128 0x40
+ 887 0067 18       		.uleb128 0x18
+ 888 0068 9742     		.uleb128 0x2117
+ 889 006a 19       		.uleb128 0x19
+ 890 006b 01       		.uleb128 0x1
+ 891 006c 13       		.uleb128 0x13
+ 892 006d 00       		.byte	0
+ 893 006e 00       		.byte	0
+ 894 006f 09       		.uleb128 0x9
+ 895 0070 34       		.uleb128 0x34
+ 896 0071 00       		.byte	0
+ 897 0072 03       		.uleb128 0x3
+ 898 0073 0E       		.uleb128 0xe
+ 899 0074 3A       		.uleb128 0x3a
+ 900 0075 0B       		.uleb128 0xb
+ 901 0076 3B       		.uleb128 0x3b
+ 902 0077 0B       		.uleb128 0xb
+ 903 0078 49       		.uleb128 0x49
+ 904 0079 13       		.uleb128 0x13
+ 905 007a 02       		.uleb128 0x2
+ 906 007b 17       		.uleb128 0x17
+ 907 007c 00       		.byte	0
+ 908 007d 00       		.byte	0
+ 909 007e 0A       		.uleb128 0xa
+ 910 007f 34       		.uleb128 0x34
+ 911 0080 00       		.byte	0
+ 912 0081 03       		.uleb128 0x3
+ 913 0082 08       		.uleb128 0x8
+ 914 0083 3A       		.uleb128 0x3a
+ 915 0084 0B       		.uleb128 0xb
+ 916 0085 3B       		.uleb128 0x3b
+ 917 0086 0B       		.uleb128 0xb
+ 918 0087 49       		.uleb128 0x49
+ 919 0088 13       		.uleb128 0x13
+ 920 0089 02       		.uleb128 0x2
+ 921 008a 17       		.uleb128 0x17
+ 922 008b 00       		.byte	0
+ 923 008c 00       		.byte	0
+ 924 008d 0B       		.uleb128 0xb
+ 925 008e 2E       		.uleb128 0x2e
+ 926 008f 01       		.byte	0x1
+ 927 0090 3F       		.uleb128 0x3f
+ 928 0091 19       		.uleb128 0x19
+ 929 0092 03       		.uleb128 0x3
+ 930 0093 0E       		.uleb128 0xe
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 21
+
+
+ 931 0094 3A       		.uleb128 0x3a
+ 932 0095 0B       		.uleb128 0xb
+ 933 0096 3B       		.uleb128 0x3b
+ 934 0097 0B       		.uleb128 0xb
+ 935 0098 27       		.uleb128 0x27
+ 936 0099 19       		.uleb128 0x19
+ 937 009a 49       		.uleb128 0x49
+ 938 009b 13       		.uleb128 0x13
+ 939 009c 11       		.uleb128 0x11
+ 940 009d 01       		.uleb128 0x1
+ 941 009e 12       		.uleb128 0x12
+ 942 009f 06       		.uleb128 0x6
+ 943 00a0 40       		.uleb128 0x40
+ 944 00a1 18       		.uleb128 0x18
+ 945 00a2 9742     		.uleb128 0x2117
+ 946 00a4 19       		.uleb128 0x19
+ 947 00a5 01       		.uleb128 0x1
+ 948 00a6 13       		.uleb128 0x13
+ 949 00a7 00       		.byte	0
+ 950 00a8 00       		.byte	0
+ 951 00a9 0C       		.uleb128 0xc
+ 952 00aa 05       		.uleb128 0x5
+ 953 00ab 00       		.byte	0
+ 954 00ac 03       		.uleb128 0x3
+ 955 00ad 0E       		.uleb128 0xe
+ 956 00ae 3A       		.uleb128 0x3a
+ 957 00af 0B       		.uleb128 0xb
+ 958 00b0 3B       		.uleb128 0x3b
+ 959 00b1 0B       		.uleb128 0xb
+ 960 00b2 49       		.uleb128 0x49
+ 961 00b3 13       		.uleb128 0x13
+ 962 00b4 02       		.uleb128 0x2
+ 963 00b5 17       		.uleb128 0x17
+ 964 00b6 00       		.byte	0
+ 965 00b7 00       		.byte	0
+ 966 00b8 0D       		.uleb128 0xd
+ 967 00b9 05       		.uleb128 0x5
+ 968 00ba 00       		.byte	0
+ 969 00bb 03       		.uleb128 0x3
+ 970 00bc 0E       		.uleb128 0xe
+ 971 00bd 3A       		.uleb128 0x3a
+ 972 00be 0B       		.uleb128 0xb
+ 973 00bf 3B       		.uleb128 0x3b
+ 974 00c0 0B       		.uleb128 0xb
+ 975 00c1 49       		.uleb128 0x49
+ 976 00c2 13       		.uleb128 0x13
+ 977 00c3 02       		.uleb128 0x2
+ 978 00c4 18       		.uleb128 0x18
+ 979 00c5 00       		.byte	0
+ 980 00c6 00       		.byte	0
+ 981 00c7 0E       		.uleb128 0xe
+ 982 00c8 34       		.uleb128 0x34
+ 983 00c9 00       		.byte	0
+ 984 00ca 03       		.uleb128 0x3
+ 985 00cb 0E       		.uleb128 0xe
+ 986 00cc 3A       		.uleb128 0x3a
+ 987 00cd 0B       		.uleb128 0xb
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 22
+
+
+ 988 00ce 3B       		.uleb128 0x3b
+ 989 00cf 0B       		.uleb128 0xb
+ 990 00d0 49       		.uleb128 0x49
+ 991 00d1 13       		.uleb128 0x13
+ 992 00d2 1C       		.uleb128 0x1c
+ 993 00d3 0B       		.uleb128 0xb
+ 994 00d4 00       		.byte	0
+ 995 00d5 00       		.byte	0
+ 996 00d6 0F       		.uleb128 0xf
+ 997 00d7 34       		.uleb128 0x34
+ 998 00d8 00       		.byte	0
+ 999 00d9 03       		.uleb128 0x3
+ 1000 00da 0E       		.uleb128 0xe
+ 1001 00db 3A       		.uleb128 0x3a
+ 1002 00dc 0B       		.uleb128 0xb
+ 1003 00dd 3B       		.uleb128 0x3b
+ 1004 00de 0B       		.uleb128 0xb
+ 1005 00df 49       		.uleb128 0x49
+ 1006 00e0 13       		.uleb128 0x13
+ 1007 00e1 02       		.uleb128 0x2
+ 1008 00e2 18       		.uleb128 0x18
+ 1009 00e3 00       		.byte	0
+ 1010 00e4 00       		.byte	0
+ 1011 00e5 10       		.uleb128 0x10
+ 1012 00e6 898201   		.uleb128 0x4109
+ 1013 00e9 01       		.byte	0x1
+ 1014 00ea 11       		.uleb128 0x11
+ 1015 00eb 01       		.uleb128 0x1
+ 1016 00ec 31       		.uleb128 0x31
+ 1017 00ed 13       		.uleb128 0x13
+ 1018 00ee 00       		.byte	0
+ 1019 00ef 00       		.byte	0
+ 1020 00f0 11       		.uleb128 0x11
+ 1021 00f1 8A8201   		.uleb128 0x410a
+ 1022 00f4 00       		.byte	0
+ 1023 00f5 02       		.uleb128 0x2
+ 1024 00f6 18       		.uleb128 0x18
+ 1025 00f7 9142     		.uleb128 0x2111
+ 1026 00f9 18       		.uleb128 0x18
+ 1027 00fa 00       		.byte	0
+ 1028 00fb 00       		.byte	0
+ 1029 00fc 12       		.uleb128 0x12
+ 1030 00fd 26       		.uleb128 0x26
+ 1031 00fe 00       		.byte	0
+ 1032 00ff 49       		.uleb128 0x49
+ 1033 0100 13       		.uleb128 0x13
+ 1034 0101 00       		.byte	0
+ 1035 0102 00       		.byte	0
+ 1036 0103 13       		.uleb128 0x13
+ 1037 0104 01       		.uleb128 0x1
+ 1038 0105 01       		.byte	0x1
+ 1039 0106 49       		.uleb128 0x49
+ 1040 0107 13       		.uleb128 0x13
+ 1041 0108 01       		.uleb128 0x1
+ 1042 0109 13       		.uleb128 0x13
+ 1043 010a 00       		.byte	0
+ 1044 010b 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 23
+
+
+ 1045 010c 14       		.uleb128 0x14
+ 1046 010d 21       		.uleb128 0x21
+ 1047 010e 00       		.byte	0
+ 1048 010f 49       		.uleb128 0x49
+ 1049 0110 13       		.uleb128 0x13
+ 1050 0111 2F       		.uleb128 0x2f
+ 1051 0112 18       		.uleb128 0x18
+ 1052 0113 00       		.byte	0
+ 1053 0114 00       		.byte	0
+ 1054 0115 15       		.uleb128 0x15
+ 1055 0116 21       		.uleb128 0x21
+ 1056 0117 00       		.byte	0
+ 1057 0118 49       		.uleb128 0x49
+ 1058 0119 13       		.uleb128 0x13
+ 1059 011a 2F       		.uleb128 0x2f
+ 1060 011b 0B       		.uleb128 0xb
+ 1061 011c 00       		.byte	0
+ 1062 011d 00       		.byte	0
+ 1063 011e 16       		.uleb128 0x16
+ 1064 011f 34       		.uleb128 0x34
+ 1065 0120 00       		.byte	0
+ 1066 0121 03       		.uleb128 0x3
+ 1067 0122 0E       		.uleb128 0xe
+ 1068 0123 3A       		.uleb128 0x3a
+ 1069 0124 0B       		.uleb128 0xb
+ 1070 0125 3B       		.uleb128 0x3b
+ 1071 0126 0B       		.uleb128 0xb
+ 1072 0127 49       		.uleb128 0x49
+ 1073 0128 13       		.uleb128 0x13
+ 1074 0129 3F       		.uleb128 0x3f
+ 1075 012a 19       		.uleb128 0x19
+ 1076 012b 02       		.uleb128 0x2
+ 1077 012c 18       		.uleb128 0x18
+ 1078 012d 00       		.byte	0
+ 1079 012e 00       		.byte	0
+ 1080 012f 00       		.byte	0
+ 1081              		.section	.debug_loc,"",%progbits
+ 1082              	.Ldebug_loc0:
+ 1083              	.LLST0:
+ 1084 0000 08000000 		.4byte	.LVL2
+ 1085 0004 14000000 		.4byte	.LVL4
+ 1086 0008 0100     		.2byte	0x1
+ 1087 000a 53       		.byte	0x53
+ 1088 000b 14000000 		.4byte	.LVL4
+ 1089 000f 16000000 		.4byte	.LVL5
+ 1090 0013 0100     		.2byte	0x1
+ 1091 0015 51       		.byte	0x51
+ 1092 0016 1A000000 		.4byte	.LVL6
+ 1093 001a 1E000000 		.4byte	.LVL7
+ 1094 001e 0100     		.2byte	0x1
+ 1095 0020 53       		.byte	0x53
+ 1096 0021 1E000000 		.4byte	.LVL7
+ 1097 0025 20000000 		.4byte	.LVL8
+ 1098 0029 0100     		.2byte	0x1
+ 1099 002b 51       		.byte	0x51
+ 1100 002c 20000000 		.4byte	.LVL8
+ 1101 0030 30000000 		.4byte	.LVL12
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 24
+
+
+ 1102 0034 0100     		.2byte	0x1
+ 1103 0036 53       		.byte	0x53
+ 1104 0037 00000000 		.4byte	0
+ 1105 003b 00000000 		.4byte	0
+ 1106              	.LLST1:
+ 1107 003f 00000000 		.4byte	.LVL0
+ 1108 0043 04000000 		.4byte	.LVL1
+ 1109 0047 0200     		.2byte	0x2
+ 1110 0049 30       		.byte	0x30
+ 1111 004a 9F       		.byte	0x9f
+ 1112 004b 04000000 		.4byte	.LVL1
+ 1113 004f 2E000000 		.4byte	.LVL11
+ 1114 0053 0100     		.2byte	0x1
+ 1115 0055 50       		.byte	0x50
+ 1116 0056 30000000 		.4byte	.LVL12
+ 1117 005a 40000000 		.4byte	.LFE35
+ 1118 005e 0100     		.2byte	0x1
+ 1119 0060 50       		.byte	0x50
+ 1120 0061 00000000 		.4byte	0
+ 1121 0065 00000000 		.4byte	0
+ 1122              	.LLST2:
+ 1123 0069 08000000 		.4byte	.LVL2
+ 1124 006d 0C000000 		.4byte	.LVL3
+ 1125 0071 0200     		.2byte	0x2
+ 1126 0073 30       		.byte	0x30
+ 1127 0074 9F       		.byte	0x9f
+ 1128 0075 0C000000 		.4byte	.LVL3
+ 1129 0079 2A000000 		.4byte	.LVL10
+ 1130 007d 0100     		.2byte	0x1
+ 1131 007f 52       		.byte	0x52
+ 1132 0080 00000000 		.4byte	0
+ 1133 0084 00000000 		.4byte	0
+ 1134              	.LLST3:
+ 1135 0088 00000000 		.4byte	.LVL13
+ 1136 008c 0A000000 		.4byte	.LVL15
+ 1137 0090 0100     		.2byte	0x1
+ 1138 0092 50       		.byte	0x50
+ 1139 0093 0A000000 		.4byte	.LVL15
+ 1140 0097 24000000 		.4byte	.LVL23
+ 1141 009b 0100     		.2byte	0x1
+ 1142 009d 56       		.byte	0x56
+ 1143 009e 24000000 		.4byte	.LVL23
+ 1144 00a2 30000000 		.4byte	.LFE36
+ 1145 00a6 0400     		.2byte	0x4
+ 1146 00a8 F3       		.byte	0xf3
+ 1147 00a9 01       		.uleb128 0x1
+ 1148 00aa 50       		.byte	0x50
+ 1149 00ab 9F       		.byte	0x9f
+ 1150 00ac 00000000 		.4byte	0
+ 1151 00b0 00000000 		.4byte	0
+ 1152              	.LLST4:
+ 1153 00b4 04000000 		.4byte	.LVL14
+ 1154 00b8 0A000000 		.4byte	.LVL15
+ 1155 00bc 0200     		.2byte	0x2
+ 1156 00be 30       		.byte	0x30
+ 1157 00bf 9F       		.byte	0x9f
+ 1158 00c0 0A000000 		.4byte	.LVL15
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 25
+
+
+ 1159 00c4 24000000 		.4byte	.LVL22
+ 1160 00c8 0100     		.2byte	0x1
+ 1161 00ca 54       		.byte	0x54
+ 1162 00cb 00000000 		.4byte	0
+ 1163 00cf 00000000 		.4byte	0
+ 1164              	.LLST5:
+ 1165 00d3 10000000 		.4byte	.LVL16
+ 1166 00d7 12000000 		.4byte	.LVL17
+ 1167 00db 0100     		.2byte	0x1
+ 1168 00dd 52       		.byte	0x52
+ 1169 00de 12000000 		.4byte	.LVL17
+ 1170 00e2 14000000 		.4byte	.LVL18
+ 1171 00e6 0800     		.2byte	0x8
+ 1172 00e8 73       		.byte	0x73
+ 1173 00e9 00       		.sleb128 0
+ 1174 00ea 38       		.byte	0x38
+ 1175 00eb 25       		.byte	0x25
+ 1176 00ec 75       		.byte	0x75
+ 1177 00ed 00       		.sleb128 0
+ 1178 00ee 27       		.byte	0x27
+ 1179 00ef 9F       		.byte	0x9f
+ 1180 00f0 14000000 		.4byte	.LVL18
+ 1181 00f4 18000000 		.4byte	.LVL19
+ 1182 00f8 1000     		.2byte	0x10
+ 1183 00fa 73       		.byte	0x73
+ 1184 00fb 00       		.sleb128 0
+ 1185 00fc 38       		.byte	0x38
+ 1186 00fd 25       		.byte	0x25
+ 1187 00fe 76       		.byte	0x76
+ 1188 00ff 00       		.sleb128 0
+ 1189 0100 74       		.byte	0x74
+ 1190 0101 00       		.sleb128 0
+ 1191 0102 22       		.byte	0x22
+ 1192 0103 94       		.byte	0x94
+ 1193 0104 01       		.byte	0x1
+ 1194 0105 08       		.byte	0x8
+ 1195 0106 FF       		.byte	0xff
+ 1196 0107 1A       		.byte	0x1a
+ 1197 0108 27       		.byte	0x27
+ 1198 0109 9F       		.byte	0x9f
+ 1199 010a 00000000 		.4byte	0
+ 1200 010e 00000000 		.4byte	0
+ 1201              	.LLST6:
+ 1202 0112 04000000 		.4byte	.LVL14
+ 1203 0116 0A000000 		.4byte	.LVL15
+ 1204 011a 0300     		.2byte	0x3
+ 1205 011c 09       		.byte	0x9
+ 1206 011d FF       		.byte	0xff
+ 1207 011e 9F       		.byte	0x9f
+ 1208 011f 0A000000 		.4byte	.LVL15
+ 1209 0123 18000000 		.4byte	.LVL19
+ 1210 0127 0100     		.2byte	0x1
+ 1211 0129 53       		.byte	0x53
+ 1212 012a 1C000000 		.4byte	.LVL20
+ 1213 012e 30000000 		.4byte	.LFE36
+ 1214 0132 0100     		.2byte	0x1
+ 1215 0134 53       		.byte	0x53
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 26
+
+
+ 1216 0135 00000000 		.4byte	0
+ 1217 0139 00000000 		.4byte	0
+ 1218              	.LLST7:
+ 1219 013d 00000000 		.4byte	.LVL24
+ 1220 0141 0A000000 		.4byte	.LVL26
+ 1221 0145 0100     		.2byte	0x1
+ 1222 0147 50       		.byte	0x50
+ 1223 0148 0A000000 		.4byte	.LVL26
+ 1224 014c 30000000 		.4byte	.LFE37
+ 1225 0150 0400     		.2byte	0x4
+ 1226 0152 F3       		.byte	0xf3
+ 1227 0153 01       		.uleb128 0x1
+ 1228 0154 50       		.byte	0x50
+ 1229 0155 9F       		.byte	0x9f
+ 1230 0156 00000000 		.4byte	0
+ 1231 015a 00000000 		.4byte	0
+ 1232              	.LLST8:
+ 1233 015e 06000000 		.4byte	.LVL25
+ 1234 0162 18000000 		.4byte	.LVL27
+ 1235 0166 0200     		.2byte	0x2
+ 1236 0168 91       		.byte	0x91
+ 1237 0169 74       		.sleb128 -12
+ 1238 016a 18000000 		.4byte	.LVL27
+ 1239 016e 1C000000 		.4byte	.LVL28
+ 1240 0172 0200     		.2byte	0x2
+ 1241 0174 70       		.byte	0x70
+ 1242 0175 00       		.sleb128 0
+ 1243 0176 1C000000 		.4byte	.LVL28
+ 1244 017a 22000000 		.4byte	.LVL29
+ 1245 017e 0200     		.2byte	0x2
+ 1246 0180 91       		.byte	0x91
+ 1247 0181 74       		.sleb128 -12
+ 1248 0182 22000000 		.4byte	.LVL29
+ 1249 0186 27000000 		.4byte	.LVL30-1
+ 1250 018a 0200     		.2byte	0x2
+ 1251 018c 70       		.byte	0x70
+ 1252 018d 00       		.sleb128 0
+ 1253 018e 27000000 		.4byte	.LVL30-1
+ 1254 0192 30000000 		.4byte	.LFE37
+ 1255 0196 0200     		.2byte	0x2
+ 1256 0198 91       		.byte	0x91
+ 1257 0199 74       		.sleb128 -12
+ 1258 019a 00000000 		.4byte	0
+ 1259 019e 00000000 		.4byte	0
+ 1260              	.LLST9:
+ 1261 01a2 28000000 		.4byte	.LVL30
+ 1262 01a6 2C000000 		.4byte	.LVL31
+ 1263 01aa 0100     		.2byte	0x1
+ 1264 01ac 50       		.byte	0x50
+ 1265 01ad 00000000 		.4byte	0
+ 1266 01b1 00000000 		.4byte	0
+ 1267              	.LLST10:
+ 1268 01b5 06000000 		.4byte	.LVL25
+ 1269 01b9 0A000000 		.4byte	.LVL26
+ 1270 01bd 0200     		.2byte	0x2
+ 1271 01bf 30       		.byte	0x30
+ 1272 01c0 9F       		.byte	0x9f
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 27
+
+
+ 1273 01c1 0A000000 		.4byte	.LVL26
+ 1274 01c5 27000000 		.4byte	.LVL30-1
+ 1275 01c9 0100     		.2byte	0x1
+ 1276 01cb 53       		.byte	0x53
+ 1277 01cc 00000000 		.4byte	0
+ 1278 01d0 00000000 		.4byte	0
+ 1279              	.LLST11:
+ 1280 01d4 00000000 		.4byte	.LVL32
+ 1281 01d8 22000000 		.4byte	.LVL37
+ 1282 01dc 0100     		.2byte	0x1
+ 1283 01de 50       		.byte	0x50
+ 1284 01df 22000000 		.4byte	.LVL37
+ 1285 01e3 34000000 		.4byte	.LFE38
+ 1286 01e7 0400     		.2byte	0x4
+ 1287 01e9 F3       		.byte	0xf3
+ 1288 01ea 01       		.uleb128 0x1
+ 1289 01eb 50       		.byte	0x50
+ 1290 01ec 9F       		.byte	0x9f
+ 1291 01ed 00000000 		.4byte	0
+ 1292 01f1 00000000 		.4byte	0
+ 1293              	.LLST12:
+ 1294 01f5 00000000 		.4byte	.LVL32
+ 1295 01f9 0A000000 		.4byte	.LVL34
+ 1296 01fd 0100     		.2byte	0x1
+ 1297 01ff 51       		.byte	0x51
+ 1298 0200 0A000000 		.4byte	.LVL34
+ 1299 0204 34000000 		.4byte	.LFE38
+ 1300 0208 0400     		.2byte	0x4
+ 1301 020a F3       		.byte	0xf3
+ 1302 020b 01       		.uleb128 0x1
+ 1303 020c 51       		.byte	0x51
+ 1304 020d 9F       		.byte	0x9f
+ 1305 020e 00000000 		.4byte	0
+ 1306 0212 00000000 		.4byte	0
+ 1307              	.LLST13:
+ 1308 0216 06000000 		.4byte	.LVL33
+ 1309 021a 18000000 		.4byte	.LVL35
+ 1310 021e 0200     		.2byte	0x2
+ 1311 0220 91       		.byte	0x91
+ 1312 0221 6C       		.sleb128 -20
+ 1313 0222 18000000 		.4byte	.LVL35
+ 1314 0226 1C000000 		.4byte	.LVL36
+ 1315 022a 0200     		.2byte	0x2
+ 1316 022c 74       		.byte	0x74
+ 1317 022d 00       		.sleb128 0
+ 1318 022e 1C000000 		.4byte	.LVL36
+ 1319 0232 22000000 		.4byte	.LVL37
+ 1320 0236 0200     		.2byte	0x2
+ 1321 0238 91       		.byte	0x91
+ 1322 0239 6C       		.sleb128 -20
+ 1323 023a 22000000 		.4byte	.LVL37
+ 1324 023e 27000000 		.4byte	.LVL38-1
+ 1325 0242 0200     		.2byte	0x2
+ 1326 0244 70       		.byte	0x70
+ 1327 0245 00       		.sleb128 0
+ 1328 0246 27000000 		.4byte	.LVL38-1
+ 1329 024a 34000000 		.4byte	.LFE38
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 28
+
+
+ 1330 024e 0200     		.2byte	0x2
+ 1331 0250 91       		.byte	0x91
+ 1332 0251 6C       		.sleb128 -20
+ 1333 0252 00000000 		.4byte	0
+ 1334 0256 00000000 		.4byte	0
+ 1335              	.LLST14:
+ 1336 025a 28000000 		.4byte	.LVL38
+ 1337 025e 2A000000 		.4byte	.LVL39
+ 1338 0262 0100     		.2byte	0x1
+ 1339 0264 50       		.byte	0x50
+ 1340 0265 00000000 		.4byte	0
+ 1341 0269 00000000 		.4byte	0
+ 1342              	.LLST15:
+ 1343 026d 06000000 		.4byte	.LVL33
+ 1344 0271 0A000000 		.4byte	.LVL34
+ 1345 0275 0200     		.2byte	0x2
+ 1346 0277 30       		.byte	0x30
+ 1347 0278 9F       		.byte	0x9f
+ 1348 0279 0A000000 		.4byte	.LVL34
+ 1349 027d 27000000 		.4byte	.LVL38-1
+ 1350 0281 0100     		.2byte	0x1
+ 1351 0283 53       		.byte	0x53
+ 1352 0284 00000000 		.4byte	0
+ 1353 0288 00000000 		.4byte	0
+ 1354              		.section	.debug_aranges,"",%progbits
+ 1355 0000 34000000 		.4byte	0x34
+ 1356 0004 0200     		.2byte	0x2
+ 1357 0006 00000000 		.4byte	.Ldebug_info0
+ 1358 000a 04       		.byte	0x4
+ 1359 000b 00       		.byte	0
+ 1360 000c 0000     		.2byte	0
+ 1361 000e 0000     		.2byte	0
+ 1362 0010 00000000 		.4byte	.LFB35
+ 1363 0014 40000000 		.4byte	.LFE35-.LFB35
+ 1364 0018 00000000 		.4byte	.LFB36
+ 1365 001c 30000000 		.4byte	.LFE36-.LFB36
+ 1366 0020 00000000 		.4byte	.LFB37
+ 1367 0024 30000000 		.4byte	.LFE37-.LFB37
+ 1368 0028 00000000 		.4byte	.LFB38
+ 1369 002c 34000000 		.4byte	.LFE38-.LFB38
+ 1370 0030 00000000 		.4byte	0
+ 1371 0034 00000000 		.4byte	0
+ 1372              		.section	.debug_ranges,"",%progbits
+ 1373              	.Ldebug_ranges0:
+ 1374 0000 00000000 		.4byte	.LFB35
+ 1375 0004 40000000 		.4byte	.LFE35
+ 1376 0008 00000000 		.4byte	.LFB36
+ 1377 000c 30000000 		.4byte	.LFE36
+ 1378 0010 00000000 		.4byte	.LFB37
+ 1379 0014 30000000 		.4byte	.LFE37
+ 1380 0018 00000000 		.4byte	.LFB38
+ 1381 001c 34000000 		.4byte	.LFE38
+ 1382 0020 00000000 		.4byte	0
+ 1383 0024 00000000 		.4byte	0
+ 1384              		.section	.debug_line,"",%progbits
+ 1385              	.Ldebug_line0:
+ 1386 0000 12010000 		.section	.debug_str,"MS",%progbits,1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 29
+
+
+ 1386      02005C00 
+ 1386      00000201 
+ 1386      FB0E0D00 
+ 1386      01010101 
+ 1387              	.LASF27:
+ 1388 0000 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 1388      455F4556 
+ 1388      545F4741 
+ 1388      505F4155 
+ 1388      54485F46 
+ 1389              	.LASF24:
+ 1390 001a 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 1390      455F4556 
+ 1390      545F4741 
+ 1390      505F5041 
+ 1390      53534B45 
+ 1391              	.LASF35:
+ 1392 003e 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 1392      455F4556 
+ 1392      545F4741 
+ 1392      5454435F 
+ 1392      4552524F 
+ 1393              	.LASF74:
+ 1394 0058 72656D61 		.ascii	"remainder\000"
+ 1394      696E6465 
+ 1394      7200
+ 1395              	.LASF2:
+ 1396 0062 73686F72 		.ascii	"short int\000"
+ 1396      7420696E 
+ 1396      7400
+ 1397              	.LASF88:
+ 1398 006c 2E5C6372 		.ascii	".\\crc.c\000"
+ 1398      632E6300 
+ 1399              	.LASF15:
+ 1400 0074 73697A65 		.ascii	"sizetype\000"
+ 1400      74797065 
+ 1400      00
+ 1401              	.LASF81:
+ 1402 007d 656E636F 		.ascii	"encodeCRC\000"
+ 1402      64654352 
+ 1402      4300
+ 1403              	.LASF31:
+ 1404 0087 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 1404      455F4556 
+ 1404      545F4741 
+ 1404      505F454E 
+ 1404      43525950 
+ 1405              	.LASF89:
+ 1406 00a4 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
+ 1406      73657273 
+ 1406      5C416C65 
+ 1406      78616E64 
+ 1406      72655C44 
+ 1407 00d2 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
+ 1407      534F435F 
+ 1407      43617053 
+ 1407      656E7365 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 30
+
+
+ 1407      5F325F42 
+ 1408              	.LASF20:
+ 1409 0103 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 1409      455F4556 
+ 1409      545F4843 
+ 1409      495F5354 
+ 1409      41545553 
+ 1410              	.LASF41:
+ 1411 0118 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 1411      455F4556 
+ 1411      545F4741 
+ 1411      5454435F 
+ 1411      52454144 
+ 1412              	.LASF76:
+ 1413 0139 6D657373 		.ascii	"message\000"
+ 1413      61676500 
+ 1414              	.LASF17:
+ 1415 0141 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 1415      455F4556 
+ 1415      545F5354 
+ 1415      41434B5F 
+ 1415      4F4E00
+ 1416              	.LASF38:
+ 1417 0154 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 1417      455F4556 
+ 1417      545F4741 
+ 1417      5454535F 
+ 1417      58434E48 
+ 1418              	.LASF10:
+ 1419 0172 75696E74 		.ascii	"uint16\000"
+ 1419      313600
+ 1420              	.LASF34:
+ 1421 0179 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 1421      455F4556 
+ 1421      545F4741 
+ 1421      505F4B45 
+ 1421      59494E46 
+ 1422              	.LASF46:
+ 1423 019d 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 1423      455F4556 
+ 1423      545F4741 
+ 1423      5454435F 
+ 1423      52454144 
+ 1424              	.LASF55:
+ 1425 01bc 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 1425      455F4556 
+ 1425      545F4741 
+ 1425      5454535F 
+ 1425      48414E44 
+ 1426              	.LASF16:
+ 1427 01dd 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 1427      455F4556 
+ 1427      545F484F 
+ 1427      53545F49 
+ 1427      4E56414C 
+ 1428              	.LASF62:
+ 1429 01f4 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 31
+
+
+ 1429      455F4556 
+ 1429      545F4C32 
+ 1429      4341505F 
+ 1429      43424643 
+ 1430              	.LASF65:
+ 1431 0212 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 1431      455F4556 
+ 1431      545F4C32 
+ 1431      4341505F 
+ 1431      43424643 
+ 1432              	.LASF80:
+ 1433 0233 63726343 		.ascii	"crcCompute\000"
+ 1433      6F6D7075 
+ 1433      746500
+ 1434              	.LASF73:
+ 1435 023e 77696474 		.ascii	"width\000"
+ 1435      6800
+ 1436              	.LASF12:
+ 1437 0244 666C6F61 		.ascii	"float\000"
+ 1437      7400
+ 1438              	.LASF44:
+ 1439 024a 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 1439      455F4556 
+ 1439      545F4741 
+ 1439      5454435F 
+ 1439      52454144 
+ 1440              	.LASF48:
+ 1441 0263 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 1441      455F4556 
+ 1441      545F4741 
+ 1441      5454435F 
+ 1441      57524954 
+ 1442              	.LASF6:
+ 1443 027d 6C6F6E67 		.ascii	"long long int\000"
+ 1443      206C6F6E 
+ 1443      6720696E 
+ 1443      7400
+ 1444              	.LASF7:
+ 1445 028b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1445      206C6F6E 
+ 1445      6720756E 
+ 1445      7369676E 
+ 1445      65642069 
+ 1446              	.LASF91:
+ 1447 02a2 63726354 		.ascii	"crcTable\000"
+ 1447      61626C65 
+ 1447      00
+ 1448              	.LASF4:
+ 1449 02ab 6C6F6E67 		.ascii	"long int\000"
+ 1449      20696E74 
+ 1449      00
+ 1450              	.LASF54:
+ 1451 02b4 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 1451      455F4556 
+ 1451      545F4741 
+ 1451      5454435F 
+ 1451      48414E44 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 32
+
+
+ 1452              	.LASF78:
+ 1453 02d5 6F666673 		.ascii	"offset\000"
+ 1453      657400
+ 1454              	.LASF29:
+ 1455 02dc 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 1455      455F4556 
+ 1455      545F4741 
+ 1455      505F4445 
+ 1455      56494345 
+ 1456              	.LASF28:
+ 1457 02fb 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 1457      455F4556 
+ 1457      545F4741 
+ 1457      50505F41 
+ 1457      44564552 
+ 1458              	.LASF53:
+ 1459 0323 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 1459      455F4556 
+ 1459      545F4741 
+ 1459      5454435F 
+ 1459      48414E44 
+ 1460              	.LASF21:
+ 1461 0344 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 1461      455F4556 
+ 1461      545F5354 
+ 1461      41434B5F 
+ 1461      42555359 
+ 1462              	.LASF25:
+ 1463 0360 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 1463      455F4556 
+ 1463      545F4741 
+ 1463      505F5041 
+ 1463      53534B45 
+ 1464              	.LASF79:
+ 1465 0386 62797465 		.ascii	"byte\000"
+ 1465      00
+ 1466              	.LASF83:
+ 1467 038b 53697A65 		.ascii	"SizeOfMessage\000"
+ 1467      4F664D65 
+ 1467      73736167 
+ 1467      6500
+ 1468              	.LASF63:
+ 1469 0399 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 1469      455F4556 
+ 1469      545F4C32 
+ 1469      4341505F 
+ 1469      43424643 
+ 1470              	.LASF72:
+ 1471 03b7 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 1471      455F4556 
+ 1471      545F4D41 
+ 1471      5800
+ 1472              	.LASF1:
+ 1473 03c5 756E7369 		.ascii	"unsigned char\000"
+ 1473      676E6564 
+ 1473      20636861 
+ 1473      7200
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 33
+
+
+ 1474              	.LASF59:
+ 1475 03d3 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 1475      455F4556 
+ 1475      545F4C32 
+ 1475      4341505F 
+ 1475      434F4E4E 
+ 1476              	.LASF84:
+ 1477 03f9 6D657373 		.ascii	"message_with_crc\000"
+ 1477      6167655F 
+ 1477      77697468 
+ 1477      5F637263 
+ 1477      00
+ 1478              	.LASF50:
+ 1479 040a 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 1479      455F4556 
+ 1479      545F4741 
+ 1479      5454535F 
+ 1479      50524550 
+ 1480              	.LASF71:
+ 1481 0429 4359424C 		.ascii	"CYBLE_EVT_LE_PING_AUTH_TIMEOUT\000"
+ 1481      455F4556 
+ 1481      545F4C45 
+ 1481      5F50494E 
+ 1481      475F4155 
+ 1482              	.LASF75:
+ 1483 0448 64697669 		.ascii	"dividend\000"
+ 1483      64656E64 
+ 1483      00
+ 1484              	.LASF42:
+ 1485 0451 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 1485      455F4556 
+ 1485      545F4741 
+ 1485      5454435F 
+ 1485      46494E44 
+ 1486              	.LASF0:
+ 1487 046f 7369676E 		.ascii	"signed char\000"
+ 1487      65642063 
+ 1487      68617200 
+ 1488              	.LASF47:
+ 1489 047b 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ 1489      455F4556 
+ 1489      545F4741 
+ 1489      5454535F 
+ 1489      57524954 
+ 1490              	.LASF43:
+ 1491 0495 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 1491      455F4556 
+ 1491      545F4741 
+ 1491      5454435F 
+ 1491      46494E44 
+ 1492              	.LASF26:
+ 1493 04bc 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 1493      455F4556 
+ 1493      545F4741 
+ 1493      505F4155 
+ 1493      54485F43 
+ 1494              	.LASF8:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 34
+
+
+ 1495 04d8 756E7369 		.ascii	"unsigned int\000"
+ 1495      676E6564 
+ 1495      20696E74 
+ 1495      00
+ 1496              	.LASF77:
+ 1497 04e5 6E427974 		.ascii	"nBytes\000"
+ 1497      657300
+ 1498              	.LASF36:
+ 1499 04ec 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 1499      455F4556 
+ 1499      545F4741 
+ 1499      54545F43 
+ 1499      4F4E4E45 
+ 1500              	.LASF5:
+ 1501 0507 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1501      20756E73 
+ 1501      69676E65 
+ 1501      6420696E 
+ 1501      7400
+ 1502              	.LASF23:
+ 1503 0519 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 1503      455F4556 
+ 1503      545F4741 
+ 1503      505F4155 
+ 1503      54485F52 
+ 1504              	.LASF64:
+ 1505 0530 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 1505      455F4556 
+ 1505      545F4C32 
+ 1505      4341505F 
+ 1505      43424643 
+ 1506              	.LASF86:
+ 1507 0551 676F6F64 		.ascii	"good_crc\000"
+ 1507      5F637263 
+ 1507      00
+ 1508              	.LASF3:
+ 1509 055a 73686F72 		.ascii	"short unsigned int\000"
+ 1509      7420756E 
+ 1509      7369676E 
+ 1509      65642069 
+ 1509      6E7400
+ 1510              	.LASF32:
+ 1511 056d 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 1511      455F4556 
+ 1511      545F4741 
+ 1511      505F434F 
+ 1511      4E4E4543 
+ 1512              	.LASF14:
+ 1513 0596 63686172 		.ascii	"char\000"
+ 1513      00
+ 1514              	.LASF61:
+ 1515 059b 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ 1515      455F4556 
+ 1515      545F4C32 
+ 1515      4341505F 
+ 1515      434F4D4D 
+ 1516              	.LASF82:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 35
+
+
+ 1517 05b7 76616C75 		.ascii	"value\000"
+ 1517      6500
+ 1518              	.LASF9:
+ 1519 05bd 75696E74 		.ascii	"uint8\000"
+ 1519      3800
+ 1520              	.LASF90:
+ 1521 05c3 6372635F 		.ascii	"crc_Init\000"
+ 1521      496E6974 
+ 1521      00
+ 1522              	.LASF85:
+ 1523 05cc 76657269 		.ascii	"verifyCRC\000"
+ 1523      66794352 
+ 1523      4300
+ 1524              	.LASF45:
+ 1525 05d6 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 1525      455F4556 
+ 1525      545F4741 
+ 1525      5454435F 
+ 1525      52454144 
+ 1526              	.LASF52:
+ 1527 05f4 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 1527      455F4556 
+ 1527      545F4741 
+ 1527      5454435F 
+ 1527      45584543 
+ 1528              	.LASF11:
+ 1529 0613 75696E74 		.ascii	"uint32\000"
+ 1529      333200
+ 1530              	.LASF70:
+ 1531 061a 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 1531      455F4556 
+ 1531      545F5045 
+ 1531      4E44494E 
+ 1531      475F464C 
+ 1532              	.LASF67:
+ 1533 0638 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 1533      455F4556 
+ 1533      545F4C32 
+ 1533      4341505F 
+ 1533      43424643 
+ 1534              	.LASF13:
+ 1535 065b 646F7562 		.ascii	"double\000"
+ 1535      6C6500
+ 1536              	.LASF68:
+ 1537 0662 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 1537      455F4556 
+ 1537      545F4C32 
+ 1537      4341505F 
+ 1537      43424643 
+ 1538              	.LASF19:
+ 1539 0685 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ 1539      455F4556 
+ 1539      545F4841 
+ 1539      52445741 
+ 1539      52455F45 
+ 1540              	.LASF66:
+ 1541 069e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 36
+
+
+ 1541      455F4556 
+ 1541      545F4C32 
+ 1541      4341505F 
+ 1541      43424643 
+ 1542              	.LASF60:
+ 1543 06bd 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 1543      455F4556 
+ 1543      545F4C32 
+ 1543      4341505F 
+ 1543      434F4E4E 
+ 1544              	.LASF22:
+ 1545 06e3 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 1545      455F4556 
+ 1545      545F4741 
+ 1545      50435F53 
+ 1545      43414E5F 
+ 1546              	.LASF40:
+ 1547 0707 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 1547      455F4556 
+ 1547      545F4741 
+ 1547      5454435F 
+ 1547      52454144 
+ 1548              	.LASF49:
+ 1549 072e 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 1549      455F4556 
+ 1549      545F4741 
+ 1549      5454535F 
+ 1549      57524954 
+ 1550              	.LASF39:
+ 1551 074c 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 1551      455F4556 
+ 1551      545F4741 
+ 1551      5454435F 
+ 1551      5843484E 
+ 1552              	.LASF18:
+ 1553 076a 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 1553      455F4556 
+ 1553      545F5449 
+ 1553      4D454F55 
+ 1553      5400
+ 1554              	.LASF69:
+ 1555 077c 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 1555      455F4556 
+ 1555      545F4C32 
+ 1555      4341505F 
+ 1555      43424643 
+ 1556              	.LASF33:
+ 1557 07a0 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 1557      455F4556 
+ 1557      545F4741 
+ 1557      50435F53 
+ 1557      43414E5F 
+ 1558              	.LASF58:
+ 1559 07bf 4359424C 		.ascii	"CYBLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ\000"
+ 1559      455F4556 
+ 1559      545F4741 
+ 1559      5454535F 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccwupIWy.s 			page 37
+
+
+ 1559      52454144 
+ 1560              	.LASF57:
+ 1561 07e8 4359424C 		.ascii	"CYBLE_EVT_GATTC_STOP_CMD_COMPLETE\000"
+ 1561      455F4556 
+ 1561      545F4741 
+ 1561      5454435F 
+ 1561      53544F50 
+ 1562              	.LASF87:
+ 1563 080a 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1563      4320342E 
+ 1563      392E3320 
+ 1563      32303135 
+ 1563      30333033 
+ 1564 083d 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1564      20726576 
+ 1564      6973696F 
+ 1564      6E203232 
+ 1564      31323230 
+ 1565 0870 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1565      66756E63 
+ 1565      74696F6E 
+ 1565      2D736563 
+ 1565      74696F6E 
+ 1566              	.LASF51:
+ 1567 0898 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 1567      455F4556 
+ 1567      545F4741 
+ 1567      5454535F 
+ 1567      45584543 
+ 1568              	.LASF30:
+ 1569 08b7 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 1569      455F4556 
+ 1569      545F4741 
+ 1569      505F4445 
+ 1569      56494345 
+ 1570              	.LASF56:
+ 1571 08d9 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 1571      455F4556 
+ 1571      545F4741 
+ 1571      5454535F 
+ 1571      44415441 
+ 1572              	.LASF37:
+ 1573 08fd 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ 1573      455F4556 
+ 1573      545F4741 
+ 1573      54545F44 
+ 1573      4953434F 
+ 1574              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

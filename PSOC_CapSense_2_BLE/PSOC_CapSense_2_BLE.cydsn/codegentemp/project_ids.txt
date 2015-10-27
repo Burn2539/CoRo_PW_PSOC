@@ -1,0 +1,5 @@
+C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\PSOC_CapSense_2_BLE.cyprj|bedacf65-cfd4-4e78-ae95-a5db1fc3877d
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|a420bd72-8c97-4be2-93d7-c8468c08c1d4
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|567ae1a7-55cd-49fc-90a8-b4b3aa04f501
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|bddd4eb6-f10d-4e6c-bcab-ca3599926500
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|7decc41a-026b-43d9-b5b7-5c69c76c806e

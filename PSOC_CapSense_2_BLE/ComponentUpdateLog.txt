@@ -1,0 +1,10 @@
+Last Modified Date & Time: 10/22/2015 14:44:07
+
+PSOC_CapSense_2_BLE: TopDesign.cysch
+	BLE [v2.20] to [v2.20]
+	CapSense [v2.30] to [v2.30]
+
+PSOC_CapSense_2_BLE: PSOC_CapSense_2_BLE.cydwr
+	cy_boot [v5.10] to [v5.20]
+
+

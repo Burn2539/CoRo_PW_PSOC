@@ -1,0 +1,726 @@
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"_PrISM.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._PrISM_Init,"ax",%progbits
+  18              		.align	2
+  19              		.global	_PrISM_Init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	_PrISM_Init, %function
+  23              	_PrISM_Init:
+  24              	.LFB35:
+  25              		.file 1 ".\\_PrISM.c"
+   1:.\_PrISM.c    **** /****************************************************************************
+   2:.\_PrISM.c    **** *
+   3:.\_PrISM.c    **** * Project Name		: PSoC CapSense 2 BLE
+   4:.\_PrISM.c    **** *
+   5:.\_PrISM.c    **** * File Name			: _PrISM.c
+   6:.\_PrISM.c    **** * Version 			: 1.0
+   7:.\_PrISM.c    **** *
+   8:.\_PrISM.c    **** * Device Used		: CY8C4247LQI-BL483
+   9:.\_PrISM.c    **** * Software Used		: PSoC Creator 3.3
+  10:.\_PrISM.c    **** * Compiler    		: ARM GCC 4.8.4, ARM MDK Generic
+  11:.\_PrISM.c    **** * Related Hardware	: CY8CKIT-042-BLE Bluetooth Low Energy Pioneer Kit 
+  12:.\_PrISM.c    **** *
+  13:.\_PrISM.c    **** * Owner             : A. BERNIER
+  14:.\_PrISM.c    **** *
+  15:.\_PrISM.c    **** *****************************************************************************/
+  16:.\_PrISM.c    **** 
+  17:.\_PrISM.c    **** 
+  18:.\_PrISM.c    **** /*****************************************************************************
+  19:.\_PrISM.c    **** * Included headers
+  20:.\_PrISM.c    **** *****************************************************************************/
+  21:.\_PrISM.c    **** #include "_PrISM.h"
+  22:.\_PrISM.c    **** 
+  23:.\_PrISM.c    **** 
+  24:.\_PrISM.c    **** /*****************************************************************************
+  25:.\_PrISM.c    **** * Function Name: _PrISM_Init()
+  26:.\_PrISM.c    **** ******************************************************************************
+  27:.\_PrISM.c    **** * Summary:
+  28:.\_PrISM.c    **** *   Initialize the PrISM modules.
+  29:.\_PrISM.c    **** *
+  30:.\_PrISM.c    **** * Parameters:
+  31:.\_PrISM.c    **** *   None.
+  32:.\_PrISM.c    **** *
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 2
+
+
+  33:.\_PrISM.c    **** * Return:
+  34:.\_PrISM.c    **** *   None.
+  35:.\_PrISM.c    **** *
+  36:.\_PrISM.c    **** * Note:
+  37:.\_PrISM.c    **** *
+  38:.\_PrISM.c    **** *****************************************************************************/
+  39:.\_PrISM.c    **** void _PrISM_Init(void)
+  40:.\_PrISM.c    **** {
+  26              		.loc 1 40 0
+  27              		.cfi_startproc
+  28 0000 08B5     		push	{r3, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 3, -8
+  31              		.cfi_offset 14, -4
+  41:.\_PrISM.c    ****     // Start the PrISM component for LED control.
+  42:.\_PrISM.c    ****     PrISM_1_Start();
+  32              		.loc 1 42 0
+  33 0002 FFF7FEFF 		bl	PrISM_1_Start
+  34              	.LVL0:
+  43:.\_PrISM.c    ****     PrISM_2_Start();
+  35              		.loc 1 43 0
+  36 0006 FFF7FEFF 		bl	PrISM_2_Start
+  37              	.LVL1:
+  44:.\_PrISM.c    ****     
+  45:.\_PrISM.c    ****     // The RGB LED on BLE Pioneer kit are active low. Drive HIGH on 
+  46:.\_PrISM.c    **** 	// pin for OFF and drive LOW on pin for ON.
+  47:.\_PrISM.c    **** 	PrISM_1_WritePulse0(RGB_LED_OFF);
+  38              		.loc 1 47 0
+  39 000a FF20     		mov	r0, #255
+  40 000c FFF7FEFF 		bl	PrISM_1_WritePulse0
+  41              	.LVL2:
+  48:.\_PrISM.c    **** 	PrISM_1_WritePulse1(RGB_LED_OFF);
+  42              		.loc 1 48 0
+  43 0010 FF20     		mov	r0, #255
+  44 0012 FFF7FEFF 		bl	PrISM_1_WritePulse1
+  45              	.LVL3:
+  49:.\_PrISM.c    **** 	PrISM_2_WritePulse0(RGB_LED_OFF);
+  46              		.loc 1 49 0
+  47 0016 FF20     		mov	r0, #255
+  48 0018 FFF7FEFF 		bl	PrISM_2_WritePulse0
+  49              	.LVL4:
+  50:.\_PrISM.c    **** 	
+  51:.\_PrISM.c    **** 	// Set Drive mode of output pins from HiZ to Strong.
+  52:.\_PrISM.c    **** 	RED_SetDriveMode(RED_DM_STRONG);
+  50              		.loc 1 52 0
+  51 001c 0620     		mov	r0, #6
+  52 001e FFF7FEFF 		bl	RED_SetDriveMode
+  53              	.LVL5:
+  53:.\_PrISM.c    **** 	GREEN_SetDriveMode(GREEN_DM_STRONG);
+  54              		.loc 1 53 0
+  55 0022 0620     		mov	r0, #6
+  56 0024 FFF7FEFF 		bl	GREEN_SetDriveMode
+  57              	.LVL6:
+  54:.\_PrISM.c    **** 	BLUE_SetDriveMode(BLUE_DM_STRONG);
+  58              		.loc 1 54 0
+  59 0028 0620     		mov	r0, #6
+  60 002a FFF7FEFF 		bl	BLUE_SetDriveMode
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 3
+
+
+  61              	.LVL7:
+  55:.\_PrISM.c    **** }
+  62              		.loc 1 55 0
+  63              		@ sp needed
+  64 002e 08BD     		pop	{r3, pc}
+  65              		.cfi_endproc
+  66              	.LFE35:
+  67              		.size	_PrISM_Init, .-_PrISM_Init
+  68              		.text
+  69              	.Letext0:
+  70              		.file 2 "Generated_Source\\PSoC4/PrISM_1.h"
+  71              		.file 3 "Generated_Source\\PSoC4/PrISM_2.h"
+  72              		.file 4 "Generated_Source\\PSoC4/RED.h"
+  73              		.file 5 "Generated_Source\\PSoC4/GREEN.h"
+  74              		.file 6 "Generated_Source\\PSoC4/cytypes.h"
+  75              		.file 7 "Generated_Source\\PSoC4/BLUE.h"
+  76              		.section	.debug_info,"",%progbits
+  77              	.Ldebug_info0:
+  78 0000 98010000 		.4byte	0x198
+  79 0004 0400     		.2byte	0x4
+  80 0006 00000000 		.4byte	.Ldebug_abbrev0
+  81 000a 04       		.byte	0x4
+  82 000b 01       		.uleb128 0x1
+  83 000c 88010000 		.4byte	.LASF20
+  84 0010 01       		.byte	0x1
+  85 0011 71010000 		.4byte	.LASF21
+  86 0015 72000000 		.4byte	.LASF22
+  87 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  88 001d 00000000 		.4byte	0
+  89 0021 00000000 		.4byte	.Ldebug_line0
+  90 0025 02       		.uleb128 0x2
+  91 0026 01       		.byte	0x1
+  92 0027 06       		.byte	0x6
+  93 0028 65010000 		.4byte	.LASF0
+  94 002c 02       		.uleb128 0x2
+  95 002d 01       		.byte	0x1
+  96 002e 08       		.byte	0x8
+  97 002f 06010000 		.4byte	.LASF1
+  98 0033 02       		.uleb128 0x2
+  99 0034 02       		.byte	0x2
+ 100 0035 05       		.byte	0x5
+ 101 0036 16020000 		.4byte	.LASF2
+ 102 003a 02       		.uleb128 0x2
+ 103 003b 02       		.byte	0x2
+ 104 003c 07       		.byte	0x7
+ 105 003d 0E000000 		.4byte	.LASF3
+ 106 0041 02       		.uleb128 0x2
+ 107 0042 04       		.byte	0x4
+ 108 0043 05       		.byte	0x5
+ 109 0044 2D010000 		.4byte	.LASF4
+ 110 0048 02       		.uleb128 0x2
+ 111 0049 04       		.byte	0x4
+ 112 004a 07       		.byte	0x7
+ 113 004b D7000000 		.4byte	.LASF5
+ 114 004f 02       		.uleb128 0x2
+ 115 0050 08       		.byte	0x8
+ 116 0051 05       		.byte	0x5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 4
+
+
+ 117 0052 00000000 		.4byte	.LASF6
+ 118 0056 02       		.uleb128 0x2
+ 119 0057 08       		.byte	0x8
+ 120 0058 07       		.byte	0x7
+ 121 0059 E9000000 		.4byte	.LASF7
+ 122 005d 03       		.uleb128 0x3
+ 123 005e 04       		.byte	0x4
+ 124 005f 05       		.byte	0x5
+ 125 0060 696E7400 		.ascii	"int\000"
+ 126 0064 02       		.uleb128 0x2
+ 127 0065 04       		.byte	0x4
+ 128 0066 07       		.byte	0x7
+ 129 0067 21000000 		.4byte	.LASF8
+ 130 006b 04       		.uleb128 0x4
+ 131 006c D1000000 		.4byte	.LASF23
+ 132 0070 06       		.byte	0x6
+ 133 0071 C2       		.byte	0xc2
+ 134 0072 2C000000 		.4byte	0x2c
+ 135 0076 02       		.uleb128 0x2
+ 136 0077 04       		.byte	0x4
+ 137 0078 04       		.byte	0x4
+ 138 0079 00010000 		.4byte	.LASF9
+ 139 007d 02       		.uleb128 0x2
+ 140 007e 08       		.byte	0x8
+ 141 007f 04       		.byte	0x4
+ 142 0080 4A010000 		.4byte	.LASF10
+ 143 0084 02       		.uleb128 0x2
+ 144 0085 01       		.byte	0x1
+ 145 0086 08       		.byte	0x8
+ 146 0087 14010000 		.4byte	.LASF11
+ 147 008b 02       		.uleb128 0x2
+ 148 008c 04       		.byte	0x4
+ 149 008d 07       		.byte	0x7
+ 150 008e 2E020000 		.4byte	.LASF12
+ 151 0092 05       		.uleb128 0x5
+ 152 0093 7C010000 		.4byte	.LASF24
+ 153 0097 01       		.byte	0x1
+ 154 0098 27       		.byte	0x27
+ 155 0099 00000000 		.4byte	.LFB35
+ 156 009d 30000000 		.4byte	.LFE35-.LFB35
+ 157 00a1 01       		.uleb128 0x1
+ 158 00a2 9C       		.byte	0x9c
+ 159 00a3 2B010000 		.4byte	0x12b
+ 160 00a7 06       		.uleb128 0x6
+ 161 00a8 06000000 		.4byte	.LVL0
+ 162 00ac 2B010000 		.4byte	0x12b
+ 163 00b0 06       		.uleb128 0x6
+ 164 00b1 0A000000 		.4byte	.LVL1
+ 165 00b5 32010000 		.4byte	0x132
+ 166 00b9 07       		.uleb128 0x7
+ 167 00ba 10000000 		.4byte	.LVL2
+ 168 00be 39010000 		.4byte	0x139
+ 169 00c2 CD000000 		.4byte	0xcd
+ 170 00c6 08       		.uleb128 0x8
+ 171 00c7 01       		.uleb128 0x1
+ 172 00c8 50       		.byte	0x50
+ 173 00c9 02       		.uleb128 0x2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 5
+
+
+ 174 00ca 09       		.byte	0x9
+ 175 00cb FF       		.byte	0xff
+ 176 00cc 00       		.byte	0
+ 177 00cd 07       		.uleb128 0x7
+ 178 00ce 16000000 		.4byte	.LVL3
+ 179 00d2 4A010000 		.4byte	0x14a
+ 180 00d6 E1000000 		.4byte	0xe1
+ 181 00da 08       		.uleb128 0x8
+ 182 00db 01       		.uleb128 0x1
+ 183 00dc 50       		.byte	0x50
+ 184 00dd 02       		.uleb128 0x2
+ 185 00de 09       		.byte	0x9
+ 186 00df FF       		.byte	0xff
+ 187 00e0 00       		.byte	0
+ 188 00e1 07       		.uleb128 0x7
+ 189 00e2 1C000000 		.4byte	.LVL4
+ 190 00e6 5B010000 		.4byte	0x15b
+ 191 00ea F5000000 		.4byte	0xf5
+ 192 00ee 08       		.uleb128 0x8
+ 193 00ef 01       		.uleb128 0x1
+ 194 00f0 50       		.byte	0x50
+ 195 00f1 02       		.uleb128 0x2
+ 196 00f2 09       		.byte	0x9
+ 197 00f3 FF       		.byte	0xff
+ 198 00f4 00       		.byte	0
+ 199 00f5 07       		.uleb128 0x7
+ 200 00f6 22000000 		.4byte	.LVL5
+ 201 00fa 6C010000 		.4byte	0x16c
+ 202 00fe 08010000 		.4byte	0x108
+ 203 0102 08       		.uleb128 0x8
+ 204 0103 01       		.uleb128 0x1
+ 205 0104 50       		.byte	0x50
+ 206 0105 01       		.uleb128 0x1
+ 207 0106 36       		.byte	0x36
+ 208 0107 00       		.byte	0
+ 209 0108 07       		.uleb128 0x7
+ 210 0109 28000000 		.4byte	.LVL6
+ 211 010d 7D010000 		.4byte	0x17d
+ 212 0111 1B010000 		.4byte	0x11b
+ 213 0115 08       		.uleb128 0x8
+ 214 0116 01       		.uleb128 0x1
+ 215 0117 50       		.byte	0x50
+ 216 0118 01       		.uleb128 0x1
+ 217 0119 36       		.byte	0x36
+ 218 011a 00       		.byte	0
+ 219 011b 09       		.uleb128 0x9
+ 220 011c 2E000000 		.4byte	.LVL7
+ 221 0120 8E010000 		.4byte	0x18e
+ 222 0124 08       		.uleb128 0x8
+ 223 0125 01       		.uleb128 0x1
+ 224 0126 50       		.byte	0x50
+ 225 0127 01       		.uleb128 0x1
+ 226 0128 36       		.byte	0x36
+ 227 0129 00       		.byte	0
+ 228 012a 00       		.byte	0
+ 229 012b 0A       		.uleb128 0xa
+ 230 012c 20020000 		.4byte	.LASF13
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 6
+
+
+ 231 0130 02       		.byte	0x2
+ 232 0131 47       		.byte	0x47
+ 233 0132 0A       		.uleb128 0xa
+ 234 0133 51000000 		.4byte	.LASF14
+ 235 0137 03       		.byte	0x3
+ 236 0138 47       		.byte	0x47
+ 237 0139 0B       		.uleb128 0xb
+ 238 013a 19010000 		.4byte	.LASF15
+ 239 013e 02       		.byte	0x2
+ 240 013f 51       		.byte	0x51
+ 241 0140 4A010000 		.4byte	0x14a
+ 242 0144 0C       		.uleb128 0xc
+ 243 0145 6B000000 		.4byte	0x6b
+ 244 0149 00       		.byte	0
+ 245 014a 0B       		.uleb128 0xb
+ 246 014b 36010000 		.4byte	.LASF16
+ 247 014f 02       		.byte	0x2
+ 248 0150 54       		.byte	0x54
+ 249 0151 5B010000 		.4byte	0x15b
+ 250 0155 0C       		.uleb128 0xc
+ 251 0156 6B000000 		.4byte	0x6b
+ 252 015a 00       		.byte	0
+ 253 015b 0B       		.uleb128 0xb
+ 254 015c 51010000 		.4byte	.LASF17
+ 255 0160 03       		.byte	0x3
+ 256 0161 51       		.byte	0x51
+ 257 0162 6C010000 		.4byte	0x16c
+ 258 0166 0C       		.uleb128 0xc
+ 259 0167 6B000000 		.4byte	0x6b
+ 260 016b 00       		.byte	0
+ 261 016c 0B       		.uleb128 0xb
+ 262 016d 2E000000 		.4byte	.LASF18
+ 263 0171 04       		.byte	0x4
+ 264 0172 1E       		.byte	0x1e
+ 265 0173 7D010000 		.4byte	0x17d
+ 266 0177 0C       		.uleb128 0xc
+ 267 0178 6B000000 		.4byte	0x6b
+ 268 017c 00       		.byte	0
+ 269 017d 0B       		.uleb128 0xb
+ 270 017e 5F000000 		.4byte	.LASF19
+ 271 0182 05       		.byte	0x5
+ 272 0183 1E       		.byte	0x1e
+ 273 0184 8E010000 		.4byte	0x18e
+ 274 0188 0C       		.uleb128 0xc
+ 275 0189 6B000000 		.4byte	0x6b
+ 276 018d 00       		.byte	0
+ 277 018e 0D       		.uleb128 0xd
+ 278 018f 3F000000 		.4byte	.LASF25
+ 279 0193 07       		.byte	0x7
+ 280 0194 1E       		.byte	0x1e
+ 281 0195 0C       		.uleb128 0xc
+ 282 0196 6B000000 		.4byte	0x6b
+ 283 019a 00       		.byte	0
+ 284 019b 00       		.byte	0
+ 285              		.section	.debug_abbrev,"",%progbits
+ 286              	.Ldebug_abbrev0:
+ 287 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 7
+
+
+ 288 0001 11       		.uleb128 0x11
+ 289 0002 01       		.byte	0x1
+ 290 0003 25       		.uleb128 0x25
+ 291 0004 0E       		.uleb128 0xe
+ 292 0005 13       		.uleb128 0x13
+ 293 0006 0B       		.uleb128 0xb
+ 294 0007 03       		.uleb128 0x3
+ 295 0008 0E       		.uleb128 0xe
+ 296 0009 1B       		.uleb128 0x1b
+ 297 000a 0E       		.uleb128 0xe
+ 298 000b 55       		.uleb128 0x55
+ 299 000c 17       		.uleb128 0x17
+ 300 000d 11       		.uleb128 0x11
+ 301 000e 01       		.uleb128 0x1
+ 302 000f 10       		.uleb128 0x10
+ 303 0010 17       		.uleb128 0x17
+ 304 0011 00       		.byte	0
+ 305 0012 00       		.byte	0
+ 306 0013 02       		.uleb128 0x2
+ 307 0014 24       		.uleb128 0x24
+ 308 0015 00       		.byte	0
+ 309 0016 0B       		.uleb128 0xb
+ 310 0017 0B       		.uleb128 0xb
+ 311 0018 3E       		.uleb128 0x3e
+ 312 0019 0B       		.uleb128 0xb
+ 313 001a 03       		.uleb128 0x3
+ 314 001b 0E       		.uleb128 0xe
+ 315 001c 00       		.byte	0
+ 316 001d 00       		.byte	0
+ 317 001e 03       		.uleb128 0x3
+ 318 001f 24       		.uleb128 0x24
+ 319 0020 00       		.byte	0
+ 320 0021 0B       		.uleb128 0xb
+ 321 0022 0B       		.uleb128 0xb
+ 322 0023 3E       		.uleb128 0x3e
+ 323 0024 0B       		.uleb128 0xb
+ 324 0025 03       		.uleb128 0x3
+ 325 0026 08       		.uleb128 0x8
+ 326 0027 00       		.byte	0
+ 327 0028 00       		.byte	0
+ 328 0029 04       		.uleb128 0x4
+ 329 002a 16       		.uleb128 0x16
+ 330 002b 00       		.byte	0
+ 331 002c 03       		.uleb128 0x3
+ 332 002d 0E       		.uleb128 0xe
+ 333 002e 3A       		.uleb128 0x3a
+ 334 002f 0B       		.uleb128 0xb
+ 335 0030 3B       		.uleb128 0x3b
+ 336 0031 0B       		.uleb128 0xb
+ 337 0032 49       		.uleb128 0x49
+ 338 0033 13       		.uleb128 0x13
+ 339 0034 00       		.byte	0
+ 340 0035 00       		.byte	0
+ 341 0036 05       		.uleb128 0x5
+ 342 0037 2E       		.uleb128 0x2e
+ 343 0038 01       		.byte	0x1
+ 344 0039 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 8
+
+
+ 345 003a 19       		.uleb128 0x19
+ 346 003b 03       		.uleb128 0x3
+ 347 003c 0E       		.uleb128 0xe
+ 348 003d 3A       		.uleb128 0x3a
+ 349 003e 0B       		.uleb128 0xb
+ 350 003f 3B       		.uleb128 0x3b
+ 351 0040 0B       		.uleb128 0xb
+ 352 0041 27       		.uleb128 0x27
+ 353 0042 19       		.uleb128 0x19
+ 354 0043 11       		.uleb128 0x11
+ 355 0044 01       		.uleb128 0x1
+ 356 0045 12       		.uleb128 0x12
+ 357 0046 06       		.uleb128 0x6
+ 358 0047 40       		.uleb128 0x40
+ 359 0048 18       		.uleb128 0x18
+ 360 0049 9742     		.uleb128 0x2117
+ 361 004b 19       		.uleb128 0x19
+ 362 004c 01       		.uleb128 0x1
+ 363 004d 13       		.uleb128 0x13
+ 364 004e 00       		.byte	0
+ 365 004f 00       		.byte	0
+ 366 0050 06       		.uleb128 0x6
+ 367 0051 898201   		.uleb128 0x4109
+ 368 0054 00       		.byte	0
+ 369 0055 11       		.uleb128 0x11
+ 370 0056 01       		.uleb128 0x1
+ 371 0057 31       		.uleb128 0x31
+ 372 0058 13       		.uleb128 0x13
+ 373 0059 00       		.byte	0
+ 374 005a 00       		.byte	0
+ 375 005b 07       		.uleb128 0x7
+ 376 005c 898201   		.uleb128 0x4109
+ 377 005f 01       		.byte	0x1
+ 378 0060 11       		.uleb128 0x11
+ 379 0061 01       		.uleb128 0x1
+ 380 0062 31       		.uleb128 0x31
+ 381 0063 13       		.uleb128 0x13
+ 382 0064 01       		.uleb128 0x1
+ 383 0065 13       		.uleb128 0x13
+ 384 0066 00       		.byte	0
+ 385 0067 00       		.byte	0
+ 386 0068 08       		.uleb128 0x8
+ 387 0069 8A8201   		.uleb128 0x410a
+ 388 006c 00       		.byte	0
+ 389 006d 02       		.uleb128 0x2
+ 390 006e 18       		.uleb128 0x18
+ 391 006f 9142     		.uleb128 0x2111
+ 392 0071 18       		.uleb128 0x18
+ 393 0072 00       		.byte	0
+ 394 0073 00       		.byte	0
+ 395 0074 09       		.uleb128 0x9
+ 396 0075 898201   		.uleb128 0x4109
+ 397 0078 01       		.byte	0x1
+ 398 0079 11       		.uleb128 0x11
+ 399 007a 01       		.uleb128 0x1
+ 400 007b 31       		.uleb128 0x31
+ 401 007c 13       		.uleb128 0x13
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 9
+
+
+ 402 007d 00       		.byte	0
+ 403 007e 00       		.byte	0
+ 404 007f 0A       		.uleb128 0xa
+ 405 0080 2E       		.uleb128 0x2e
+ 406 0081 00       		.byte	0
+ 407 0082 3F       		.uleb128 0x3f
+ 408 0083 19       		.uleb128 0x19
+ 409 0084 03       		.uleb128 0x3
+ 410 0085 0E       		.uleb128 0xe
+ 411 0086 3A       		.uleb128 0x3a
+ 412 0087 0B       		.uleb128 0xb
+ 413 0088 3B       		.uleb128 0x3b
+ 414 0089 0B       		.uleb128 0xb
+ 415 008a 27       		.uleb128 0x27
+ 416 008b 19       		.uleb128 0x19
+ 417 008c 3C       		.uleb128 0x3c
+ 418 008d 19       		.uleb128 0x19
+ 419 008e 00       		.byte	0
+ 420 008f 00       		.byte	0
+ 421 0090 0B       		.uleb128 0xb
+ 422 0091 2E       		.uleb128 0x2e
+ 423 0092 01       		.byte	0x1
+ 424 0093 3F       		.uleb128 0x3f
+ 425 0094 19       		.uleb128 0x19
+ 426 0095 03       		.uleb128 0x3
+ 427 0096 0E       		.uleb128 0xe
+ 428 0097 3A       		.uleb128 0x3a
+ 429 0098 0B       		.uleb128 0xb
+ 430 0099 3B       		.uleb128 0x3b
+ 431 009a 0B       		.uleb128 0xb
+ 432 009b 27       		.uleb128 0x27
+ 433 009c 19       		.uleb128 0x19
+ 434 009d 3C       		.uleb128 0x3c
+ 435 009e 19       		.uleb128 0x19
+ 436 009f 01       		.uleb128 0x1
+ 437 00a0 13       		.uleb128 0x13
+ 438 00a1 00       		.byte	0
+ 439 00a2 00       		.byte	0
+ 440 00a3 0C       		.uleb128 0xc
+ 441 00a4 05       		.uleb128 0x5
+ 442 00a5 00       		.byte	0
+ 443 00a6 49       		.uleb128 0x49
+ 444 00a7 13       		.uleb128 0x13
+ 445 00a8 00       		.byte	0
+ 446 00a9 00       		.byte	0
+ 447 00aa 0D       		.uleb128 0xd
+ 448 00ab 2E       		.uleb128 0x2e
+ 449 00ac 01       		.byte	0x1
+ 450 00ad 3F       		.uleb128 0x3f
+ 451 00ae 19       		.uleb128 0x19
+ 452 00af 03       		.uleb128 0x3
+ 453 00b0 0E       		.uleb128 0xe
+ 454 00b1 3A       		.uleb128 0x3a
+ 455 00b2 0B       		.uleb128 0xb
+ 456 00b3 3B       		.uleb128 0x3b
+ 457 00b4 0B       		.uleb128 0xb
+ 458 00b5 27       		.uleb128 0x27
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 10
+
+
+ 459 00b6 19       		.uleb128 0x19
+ 460 00b7 3C       		.uleb128 0x3c
+ 461 00b8 19       		.uleb128 0x19
+ 462 00b9 00       		.byte	0
+ 463 00ba 00       		.byte	0
+ 464 00bb 00       		.byte	0
+ 465              		.section	.debug_aranges,"",%progbits
+ 466 0000 1C000000 		.4byte	0x1c
+ 467 0004 0200     		.2byte	0x2
+ 468 0006 00000000 		.4byte	.Ldebug_info0
+ 469 000a 04       		.byte	0x4
+ 470 000b 00       		.byte	0
+ 471 000c 0000     		.2byte	0
+ 472 000e 0000     		.2byte	0
+ 473 0010 00000000 		.4byte	.LFB35
+ 474 0014 30000000 		.4byte	.LFE35-.LFB35
+ 475 0018 00000000 		.4byte	0
+ 476 001c 00000000 		.4byte	0
+ 477              		.section	.debug_ranges,"",%progbits
+ 478              	.Ldebug_ranges0:
+ 479 0000 00000000 		.4byte	.LFB35
+ 480 0004 30000000 		.4byte	.LFE35
+ 481 0008 00000000 		.4byte	0
+ 482 000c 00000000 		.4byte	0
+ 483              		.section	.debug_line,"",%progbits
+ 484              	.Ldebug_line0:
+ 485 0000 9B000000 		.section	.debug_str,"MS",%progbits,1
+ 485      02007D00 
+ 485      00000201 
+ 485      FB0E0D00 
+ 485      01010101 
+ 486              	.LASF6:
+ 487 0000 6C6F6E67 		.ascii	"long long int\000"
+ 487      206C6F6E 
+ 487      6720696E 
+ 487      7400
+ 488              	.LASF3:
+ 489 000e 73686F72 		.ascii	"short unsigned int\000"
+ 489      7420756E 
+ 489      7369676E 
+ 489      65642069 
+ 489      6E7400
+ 490              	.LASF8:
+ 491 0021 756E7369 		.ascii	"unsigned int\000"
+ 491      676E6564 
+ 491      20696E74 
+ 491      00
+ 492              	.LASF18:
+ 493 002e 5245445F 		.ascii	"RED_SetDriveMode\000"
+ 493      53657444 
+ 493      72697665 
+ 493      4D6F6465 
+ 493      00
+ 494              	.LASF25:
+ 495 003f 424C5545 		.ascii	"BLUE_SetDriveMode\000"
+ 495      5F536574 
+ 495      44726976 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 11
+
+
+ 495      654D6F64 
+ 495      6500
+ 496              	.LASF14:
+ 497 0051 50724953 		.ascii	"PrISM_2_Start\000"
+ 497      4D5F325F 
+ 497      53746172 
+ 497      7400
+ 498              	.LASF19:
+ 499 005f 47524545 		.ascii	"GREEN_SetDriveMode\000"
+ 499      4E5F5365 
+ 499      74447269 
+ 499      76654D6F 
+ 499      646500
+ 500              	.LASF22:
+ 501 0072 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
+ 501      73657273 
+ 501      5C416C65 
+ 501      78616E64 
+ 501      72655C44 
+ 502 00a0 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
+ 502      534F435F 
+ 502      43617053 
+ 502      656E7365 
+ 502      5F325F42 
+ 503              	.LASF23:
+ 504 00d1 75696E74 		.ascii	"uint8\000"
+ 504      3800
+ 505              	.LASF5:
+ 506 00d7 6C6F6E67 		.ascii	"long unsigned int\000"
+ 506      20756E73 
+ 506      69676E65 
+ 506      6420696E 
+ 506      7400
+ 507              	.LASF7:
+ 508 00e9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 508      206C6F6E 
+ 508      6720756E 
+ 508      7369676E 
+ 508      65642069 
+ 509              	.LASF9:
+ 510 0100 666C6F61 		.ascii	"float\000"
+ 510      7400
+ 511              	.LASF1:
+ 512 0106 756E7369 		.ascii	"unsigned char\000"
+ 512      676E6564 
+ 512      20636861 
+ 512      7200
+ 513              	.LASF11:
+ 514 0114 63686172 		.ascii	"char\000"
+ 514      00
+ 515              	.LASF15:
+ 516 0119 50724953 		.ascii	"PrISM_1_WritePulse0\000"
+ 516      4D5F315F 
+ 516      57726974 
+ 516      6550756C 
+ 516      73653000 
+ 517              	.LASF4:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 12
+
+
+ 518 012d 6C6F6E67 		.ascii	"long int\000"
+ 518      20696E74 
+ 518      00
+ 519              	.LASF16:
+ 520 0136 50724953 		.ascii	"PrISM_1_WritePulse1\000"
+ 520      4D5F315F 
+ 520      57726974 
+ 520      6550756C 
+ 520      73653100 
+ 521              	.LASF10:
+ 522 014a 646F7562 		.ascii	"double\000"
+ 522      6C6500
+ 523              	.LASF17:
+ 524 0151 50724953 		.ascii	"PrISM_2_WritePulse0\000"
+ 524      4D5F325F 
+ 524      57726974 
+ 524      6550756C 
+ 524      73653000 
+ 525              	.LASF0:
+ 526 0165 7369676E 		.ascii	"signed char\000"
+ 526      65642063 
+ 526      68617200 
+ 527              	.LASF21:
+ 528 0171 2E5C5F50 		.ascii	".\\_PrISM.c\000"
+ 528      7249534D 
+ 528      2E6300
+ 529              	.LASF24:
+ 530 017c 5F507249 		.ascii	"_PrISM_Init\000"
+ 530      534D5F49 
+ 530      6E697400 
+ 531              	.LASF20:
+ 532 0188 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 532      4320342E 
+ 532      392E3320 
+ 532      32303135 
+ 532      30333033 
+ 533 01bb 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 533      20726576 
+ 533      6973696F 
+ 533      6E203232 
+ 533      31323230 
+ 534 01ee 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 534      66756E63 
+ 534      74696F6E 
+ 534      2D736563 
+ 534      74696F6E 
+ 535              	.LASF2:
+ 536 0216 73686F72 		.ascii	"short int\000"
+ 536      7420696E 
+ 536      7400
+ 537              	.LASF13:
+ 538 0220 50724953 		.ascii	"PrISM_1_Start\000"
+ 538      4D5F315F 
+ 538      53746172 
+ 538      7400
+ 539              	.LASF12:
+ 540 022e 73697A65 		.ascii	"sizetype\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc4vgb8I.s 			page 13
+
+
+ 540      74797065 
+ 540      00
+ 541              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
