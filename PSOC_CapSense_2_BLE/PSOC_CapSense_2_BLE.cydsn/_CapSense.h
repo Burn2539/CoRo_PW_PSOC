@@ -32,7 +32,7 @@
 * Function Declarations
 *****************************************************************************/
 void _CapSense_Init(void);
-void _CapSense_Scan(void);
+uint8 _CapSense_Scan(void);
 
 #endif
 

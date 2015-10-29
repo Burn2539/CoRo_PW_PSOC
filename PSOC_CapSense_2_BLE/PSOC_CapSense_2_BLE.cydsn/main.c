@@ -37,8 +37,10 @@
 // Status flags
 uint8 Status_Ready;
 uint8 Status_Acquiring;
+uint8 Status_NoMoreSpace;
 uint8 Status_DataAcquired;
 uint8 Status_Sending;
+uint8 Status_NoMoreData;
 
 
 /*****************************************************************************
@@ -74,13 +76,58 @@ int main()
         // Update the CapSense CCCD.
         _BLE_UpdateCCCD();
         
-        if (_BLE_sendData)
-        {
-            _CapSense_Scan();
-            _BLE_sendCapSenseData();
+        // Update the Control values.
+        _BLE_UpdateControl();
+        
+        // If asked by client, send the content of the vector containing
+        // the CapSense data.
+        if ( _BLE_sendData ) {
+            Status_DataAcquired = FALSE;
+            Status_Sending = TRUE;
+            
+            // Send one set of values (all sensors).
+            if( NO_MORE_DATA == _BLE_sendCapSenseData() ) {
+                Status_NoMoreData = TRUE;
+                deleteVector();
+            }
+            else
+                Status_NoMoreData = FALSE;
         }
-        else if (_BLE_acquireData)
-            _CapSense_Scan();
+        
+        // If asked by client, acquire CapSense data and store it in
+        // the vector.
+        else if ( _BLE_acquireData ) {
+            Status_Ready = FALSE;
+            Status_Acquiring = TRUE;
+            
+            // Scan the CapSense widgets once.
+            if( NO_MORE_SPACE == _CapSense_Scan() )
+                Status_NoMoreSpace = TRUE;
+            else
+                Status_NoMoreSpace = FALSE;
+        }
+        
+        // If the 'acquireData' request is not present, but the vector
+        // isn't empty, then no more data can be acquired.
+        else if ( !_BLE_acquireData && !vectorIsEmpty() ) {
+            Status_Acquiring = FALSE;
+            Status_NoMoreSpace = FALSE;
+            Status_DataAcquired = TRUE;
+        }
+        
+        // If the 'sendData' request is not present, but the vector
+        // is empty, then data has been all sent and it's ready to
+        // acquire new data.
+        else if ( !_BLE_sendData && vectorIsEmpty() ) {
+            Status_Sending = FALSE;
+            Status_NoMoreData = FALSE;
+            Status_Ready = TRUE;
+        }
+        
+        // If asked by client, send the status flags by notification or
+        // indication.
+        if (_BLE_sendStatus)
+            _BLE_sendPSOCStatus();
     }
     
 }
@@ -107,10 +154,12 @@ void InitializeSystem(void)
     CyGlobalIntEnable;
     
     // Initialize flags
-    Status_Ready = FALSE;
+    Status_Ready = TRUE;
     Status_Acquiring = FALSE;
+    Status_NoMoreSpace = FALSE;
     Status_DataAcquired = FALSE;
     Status_Sending = FALSE;
+    Status_NoMoreData = FALSE;
     
     // Initialize the table used for CRC calcultation.
     crc_Init();

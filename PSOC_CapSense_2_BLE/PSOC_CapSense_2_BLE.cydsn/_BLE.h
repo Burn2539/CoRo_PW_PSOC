@@ -26,20 +26,28 @@
 /*****************************************************************************
 * Macros and constants
 *****************************************************************************/
-// Bit masks for notification and indication bit in CCCD.
-#define CCCD_NTF_BIT_MASK   0x01
-#define CCCD_IND_BIT_MASK   0x02
-
 // Byte masks for the status characteristic.
 #define STATUS_READY_BYTE_MASK          0x00
 #define STATUS_ACQUIRING_BYTE_MASK      0x01
-#define STATUS_DATA_ACQUIRED_BYTE_MASK  0x02
-#define STATUS_SENDING_BYTE_MASK        0x03
+#define STATUS_NO_MORE_SPACE_BYTE_MASK  0x02
+#define STATUS_DATA_ACQUIRED_BYTE_MASK  0x03
+#define STATUS_SENDING_BYTE_MASK        0x04
+#define STATUS_NO_MORE_DATA_BYTE_MASK   0x05
+    
+// Number of status in the BLE profile.
+#define NUM_STATUS  6
     
 // Byte masks for the control characteristic.
-#define CONTROL_ACQUIRE_DATA    0x00
-#define CONTROL_SEND_DATA       0x01
+#define CONTROL_ACQUIRE_DATA_BYTE_MASK    0x00
+#define CONTROL_SEND_DATA_BYTE_MASK       0x01
+    
+// Number of controls in the BLE profile.
+#define NUM_CONTROLS  2
 
+// Bit masks for notification and indication bit in CCCD.
+#define CCCD_NTF_BIT_MASK   0x01
+#define CCCD_IND_BIT_MASK   0x02
+    
 // Client Characteristic Configuration descriptor data length. This is defined
 // as per BLE spec.
 #define CCC_DATA_LEN   2
@@ -74,7 +82,9 @@ extern uint8 _BLE_sendStatus;
 void _BLE_Init(void);
 void EventHandler(uint32 event, void *eventParam);
 void _BLE_UpdateCCCD(void);
-void _BLE_sendCapSenseData(void);
+void _BLE_UpdateControl(void);
+uint8 _BLE_sendCapSenseData(void);
+void _BLE_sendPSOCStatus(void);
 
 #endif
 

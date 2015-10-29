@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\TopDesign">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_custom.h">
 <ExpandedNodeIds>
 <v>PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
@@ -33,6 +33,7 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\vector.c</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE.cycsa</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cycodeshareimport.ld</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cycodeshareimport.scat</v>
@@ -41,33 +42,32 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_custom.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_custom.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_eventHandler.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_eventHandler.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_gatt.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_gatt.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_INT.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_PVT.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_PVT.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_Stack.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_STACK_PVT.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGap.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGatt.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattClient.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattDb.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattServer.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackHostMain.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackL2cap.h</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE_bless_isr</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLUE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_SampleClk</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_SenseClk</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_Sns</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cy_boot</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cy_lfclk</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\GREEN</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\PrISM_1</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\PrISM_2</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\PrISM_Clock</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\RED</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE.cycsa</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cycodeshareimport.ld</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cycodeshareimport.scat</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cydevice_trm.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cydevicegnu_trm.inc</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cydeviceiar_trm.inc</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cydevicerv_trm.inc</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cydisabledsheets.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfitter.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfitter_cfg.c</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfitter_cfg.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfittergnu.inc</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfitteriar.inc</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\cyfitterrv.inc</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -166,7 +166,6 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\CyBootAsmGnu.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\cyfitter_cfg.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\CyFlash.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\CyLFClk.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>

@@ -1,5 +1,5 @@
 # PSOC_CapSense_2_BLE
-# 2015-10-27 19:23:43Z
+# 2015-10-29 17:15:41Z
 
 # IO_6@[IOP=(0)][IoId=(6)] is reserved: SWDDebugEnabled
 dont_use_io iocell 0 6

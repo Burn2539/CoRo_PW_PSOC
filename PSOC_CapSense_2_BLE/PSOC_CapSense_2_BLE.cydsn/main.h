@@ -29,6 +29,11 @@
 *****************************************************************************/
 #define FALSE   0u
 #define TRUE    1u
+    
+// Return values of functions
+#define SUCCESS         0u
+#define NO_MORE_SPACE   1u
+#define NO_MORE_DATA    2u
 
 
 /*****************************************************************************
@@ -36,8 +41,10 @@
 *****************************************************************************/
 extern uint8 Status_Ready;
 extern uint8 Status_Acquiring;
+extern uint8 Status_NoMoreSpace;
 extern uint8 Status_DataAcquired;
 extern uint8 Status_Sending;
+extern uint8 Status_NoMoreData;
 
 #endif
 

@@ -57,28 +57,36 @@ void _CapSense_Init(void)
 *   None.
 *
 * Return:
-*   None.
+*   'SUCCESS' if it succeeded.
+*   'NO_MORE_SPACE' if the vector is full.
 *
 * Note:
 *
 *****************************************************************************/
-void _CapSense_Scan(void)
+uint8 _CapSense_Scan(void)
 {
-    if (!vectorIsFull())
-    {
-        // Scan the Widgets.
-        CapSense_ScanEnabledWidgets();
+    // Verify if there is space in the vector.
+    if ( vectorIsFull() )
+        return NO_MORE_SPACE;
+    
+    // Scan the Widgets.
+    CapSense_ScanEnabledWidgets();
+    
+    // Wait for CapSense scanning to be complete.
+	while(CapSense_IsBusy())
+		CySysPmSleep();
+    
+    // Update CapSense Baseline.
+    CapSense_UpdateEnabledBaselines();
         
-        // Wait for CapSense scanning to be complete.
-    	while(CapSense_IsBusy())
-    		CySysPmSleep();
-        
-        // Update CapSense Baseline.
-        CapSense_UpdateEnabledBaselines();
-            
-        // Store the sensors values into the vectors.
-        pushInVector(CapSense_sensorRaw);
-    }
+    // Store the sensors values into the vectors.
+    pushInVector(CapSense_sensorRaw);
+    
+    // Verify if the vector is now full.
+    if ( vectorIsFull() )
+        return NO_MORE_SPACE;
+    
+    return SUCCESS;
 }
 
 

@@ -34,8 +34,8 @@ typedef struct vector {
     
 vector sensor[CapSense_TOTAL_SENSOR_COUNT];
 
-uint8 front;
-uint8 rear;
+uint16 front;
+uint16 rear;
 
 
 /*****************************************************************************
@@ -173,7 +173,7 @@ uint8 vectorIsEmpty(void) {
 *   
 *****************************************************************************/
 uint8 vectorIsFull(void) {
-    return (vectorSize() == (VECTOR_MAX_SIZE - 1) ) ? TRUE : FALSE;
+    return ( vectorSize() == (VECTOR_MAX_SIZE - 1) ) ? TRUE : FALSE;
 }
 
 
