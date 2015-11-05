@@ -27,44 +27,33 @@
 * Macros and constants
 *****************************************************************************/
 // Byte masks for the status characteristic.
-#define STATUS_READY_BYTE_MASK          0x00
-#define STATUS_ACQUIRING_BYTE_MASK      0x01
-#define STATUS_NO_MORE_SPACE_BYTE_MASK  0x02
-#define STATUS_DATA_ACQUIRED_BYTE_MASK  0x03
-#define STATUS_SENDING_BYTE_MASK        0x04
-#define STATUS_NO_MORE_DATA_BYTE_MASK   0x05
+#define STATUS_READY_BYTE_MASK          0
+#define STATUS_ACQUIRING_BYTE_MASK      1
+#define STATUS_NO_MORE_SPACE_BYTE_MASK  2
+#define STATUS_DATA_ACQUIRED_BYTE_MASK  3
+#define STATUS_SENDING_BYTE_MASK        4
+#define STATUS_NO_MORE_DATA_BYTE_MASK   5
     
 // Number of status in the BLE profile.
 #define NUM_STATUS  6
     
 // Byte masks for the control characteristic.
-#define CONTROL_ACQUIRE_DATA_BYTE_MASK    0x00
-#define CONTROL_SEND_DATA_BYTE_MASK       0x01
+#define CONTROL_ACQUIRE_DATA_BYTE_MASK              0
+#define CONTROL_SEND_DATA_BYTE_MASK                 1
+#define CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK   2
     
 // Number of controls in the BLE profile.
-#define NUM_CONTROLS  2
+#define NUM_CONTROLS    3
 
 // Bit masks for notification and indication bit in CCCD.
-#define CCCD_NTF_BIT_MASK   0x01
-#define CCCD_IND_BIT_MASK   0x02
+#define CCCD_NTF_BIT_MASK   1
+#define CCCD_IND_BIT_MASK   2
     
 // Client Characteristic Configuration descriptor data length. This is defined
 // as per BLE spec.
-#define CCC_DATA_LEN   2
-
-// Connection Update Parameter values to modify connection interval. These 
-// values are sent as part of CyBle_L2capLeConnectionParamUpdateRequest() 
-// which requests Client to update the existing Connection Interval to new  
-// value. Increasing connection interval will reduce data rate but will also 
-// reduce power consumption. These numbers will influence power consumption.
-// Minimum connection interval = CONN_PARAM_UPDATE_MIN_CONN_INTERVAL * 1.25 ms.
-#define CONN_PARAM_UPDATE_MIN_CONN_INTERVAL 40
-// Maximum connection interval = CONN_PARAM_UPDATE_MAX_CONN_INTERVAL * 1.25 ms.
-#define CONN_PARAM_UPDATE_MAX_CONN_INTERVAL	42
-// Slave latency = Number of connection events.
-#define CONN_PARAM_UPDATE_SLAVE_LATENCY		4
-// Supervision timeout = CONN_PARAM_UPDATE_SUPRV_TIMEOUT * 10.
-#define CONN_PARAM_UPDATE_SUPRV_TIMEOUT		200
+#define CCC_DATA_LEN    2
+    
+#define BUFFER_MAX_SIZE (CYBLE_GATT_MTU - CYBLE_GATT_MTU_BUF_COUNT)
 
 
 /*****************************************************************************
@@ -74,17 +63,25 @@
 extern uint8 _BLE_sendData;
 extern uint8 _BLE_acquireData;
 extern uint8 _BLE_sendStatus;
+extern uint8 _BLE_sendDataSynchronously;
+extern uint8 _BLE_restartAdvertisement;
+extern uint8 _BLE_resetNeeded;
+    
+// Flag that is set when a device is connected through BLE.
+extern uint8 _BLE_deviceConnected;
 
 
 /*****************************************************************************
 * Function Declarations
 *****************************************************************************/
 void _BLE_Init(void);
+void _BLE_Reset(void);
 void EventHandler(uint32 event, void *eventParam);
 void _BLE_UpdateCCCD(void);
 void _BLE_UpdateControl(void);
 uint8 _BLE_sendCapSenseData(void);
-void _BLE_sendPSOCStatus(void);
+void _BLE_sendStatusFlags(void);
+void _BLE_writeStatusFlags(void);
 
 #endif
 

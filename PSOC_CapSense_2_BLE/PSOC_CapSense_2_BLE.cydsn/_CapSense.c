@@ -41,9 +41,6 @@ void _CapSense_Init(void)
 {
     // Initialize and enables all the sensors.
     CapSense_Start();
-    
-    // Initialize all CapSense Baseline.
-	CapSense_InitializeAllBaselines();
 }
 
 
@@ -69,25 +66,24 @@ uint8 _CapSense_Scan(void)
     if ( vectorIsFull() )
         return NO_MORE_SPACE;
     
+    
     // Scan the Widgets.
     CapSense_ScanEnabledWidgets();
     
     // Wait for CapSense scanning to be complete.
 	while(CapSense_IsBusy())
 		CySysPmSleep();
-    
-    // Update CapSense Baseline.
-    CapSense_UpdateEnabledBaselines();
         
     // Store the sensors values into the vectors.
     pushInVector(CapSense_sensorRaw);
+    
     
     // Verify if the vector is now full.
     if ( vectorIsFull() )
         return NO_MORE_SPACE;
     
+    
     return SUCCESS;
 }
-
 
 /* [] END OF FILE */

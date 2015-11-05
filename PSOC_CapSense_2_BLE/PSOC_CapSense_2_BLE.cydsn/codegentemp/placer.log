@@ -6,7 +6,7 @@
 
 #Build Date:         Aug 18 2015 10:30:14
 
-#File Generated:     Oct 29 2015 13:15:40
+#File Generated:     Nov 5 2015 15:10:45
 
 #Purpose:            
 
@@ -44,17 +44,17 @@ Phase 2
 Phase 3
 
 Design Statistics after Packing
-    Number of Combinational MCs 	:	1
-    Number of Sequential MCs    	:	5
-    Number of DPs               	:	2
-    Number of Controls          	:	2
-    Number of Status            	:	0
+    Number of Combinational MCs 	:	2
+    Number of Sequential MCs    	:	6
+    Number of DPs               	:	4
+    Number of Controls          	:	3
+    Number of Status            	:	1
     Number of SyncCells         	:	0
     Number of count7cells       	:	0
 
 Device Utilization Summary after Packing
-    Macrocells                  :	6/32
-    UDBS                        :	2/4
+    Macrocells                  :	8/32
+    UDBS                        :	4/4
     IOs                         :	9/38
 
 
@@ -82,7 +82,7 @@ Clock: CapSense_SampleClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk    | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyECO                | Frequency: N/A       | Target:  24.0 MHz
-Clock: CyHFCLK              | Frequency: N/A       | Target:  24.0 MHz
+Clock: CyHFCLK              | Frequency:  41.7 MHz | Target:  24.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.0 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyLFCLK              | Frequency: N/A       | Target:   0.0 MHz
@@ -107,7 +107,7 @@ Clock: CapSense_SampleClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk    | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyECO                | Frequency: N/A       | Target:  24.0 MHz
-Clock: CyHFCLK              | Frequency: N/A       | Target:  24.0 MHz
+Clock: CyHFCLK              | Frequency:  41.7 MHz | Target:  24.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.0 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyLFCLK              | Frequency: N/A       | Target:   0.0 MHz
@@ -119,20 +119,20 @@ Clock: PrISM_Clock          | Frequency:  87.5 MHz | Target:   0.1 MHz
 ======================================================================
                      End of Clock Summary
 ######################################################################
-D2088: Phase 7, elapsed time : 0.1 (sec)
+D2088: Phase 7, elapsed time : 0.2 (sec)
 
 Final Design Statistics
-    Number of Combinational MCs 	:	1
-    Number of Sequential MCs    	:	5
-    Number of DPs               	:	2
-    Number of Controls          	:	2
-    Number of Status            	:	0
+    Number of Combinational MCs 	:	2
+    Number of Sequential MCs    	:	6
+    Number of DPs               	:	4
+    Number of Controls          	:	3
+    Number of Status            	:	1
     Number of SyncCells         	:	0
     Number of count7cells       	:	0
     Number of IOs       	:	9
 
 Device Utilization Summary
-    Macrocells                  :	6/32
+    Macrocells                  :	8/32
     IOs                         :	9/38
 
 
@@ -155,7 +155,7 @@ Clock: CapSense_SampleClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk    | Frequency: N/A       | Target:   0.1 MHz
 Clock: CapSense_SenseClk(FFB) | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyECO                | Frequency: N/A       | Target:  24.0 MHz
-Clock: CyHFCLK              | Frequency: N/A       | Target:  24.0 MHz
+Clock: CyHFCLK              | Frequency:  41.7 MHz | Target:  26.3 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.0 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyLFCLK              | Frequency: N/A       | Target:   0.0 MHz
@@ -173,5 +173,5 @@ D2088: Phase 8, elapsed time : 0.0 (sec)
 
 D2054: Placement of the design completed successfully
 
-I2076: Total run-time: 0.3 sec.
+I2076: Total run-time: 0.5 sec.
 

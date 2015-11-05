@@ -16,6 +16,19 @@
 *
 * Source:	http://www.sourcetricks.com/2008/07/c-queues.html
 *
+* Note:     With a IMO = 24MHz, it gives a scan time of 5.461ms.
+*           With 5 sensors, it gives a total scan time of 27.306ms
+*           (36.6 data/sec for each sensor).
+*           Since one data is 2 bytes long, each 512 bytes vector uses
+*           1024 bytes of memory. So it uses a total of 5120 bytes of memory.
+*           With that amount of memory, you get approximately 14 seconds
+*           worth of data.
+*           
+*           (5120 bytes) / (14 seconds) / (5 sensors)
+*               = 73.2 bytes of memory per second per sensor
+*               = 4395 bytes of memory per minute per sensor
+*           
+*
 *****************************************************************************/
 
 
@@ -130,10 +143,10 @@ void popOutVector(uint16 *dataOut) {
 *   
 *****************************************************************************/
 uint16 vectorSize(void) {
-    if (rear >= front)
+    if (rear > front)
         return (rear - front);
     else
-        return (front - rear);
+        return (VECTOR_MAX_SIZE - front + rear);
 }
 
 
@@ -192,10 +205,9 @@ uint8 vectorIsFull(void) {
 * Note:
 *   Doesn't delete the actual data.
 *****************************************************************************/
-void deleteVector(void) {
+void clearVector(void) {
         front = 0;
         rear = 0;
 }
-
 
 /* [] END OF FILE */

@@ -42,12 +42,16 @@
           <File BuildType="BUILD" Toolchain="">.\_CapSense.c</File>
           <File BuildType="BUILD" Toolchain="">.\_BLE.c</File>
           <File BuildType="BUILD" Toolchain="">.\vector.c</File>
+          <File BuildType="BUILD" Toolchain="">.\_Watchdog.c</File>
+          <File BuildType="BUILD" Toolchain="">.\_Timer.c</File>
           <File BuildType="BUILD" Toolchain="">.\crc.h</File>
           <File BuildType="BUILD" Toolchain="">.\_PrISM.h</File>
           <File BuildType="BUILD" Toolchain="">.\_CapSense.h</File>
           <File BuildType="BUILD" Toolchain="">.\_BLE.h</File>
           <File BuildType="BUILD" Toolchain="">.\main.h</File>
           <File BuildType="BUILD" Toolchain="">.\vector.h</File>
+          <File BuildType="BUILD" Toolchain="">.\_Watchdog.h</File>
+          <File BuildType="BUILD" Toolchain="">.\_Timer.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4">
@@ -138,6 +142,11 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\CyLFClk.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\CyLFClk.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\project.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\TimerDelay.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\TimerDelay.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\TimerDelay_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\TimerDelay_Interrupt.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\TimerDelay_Interrupt.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\Export\ARM_GCC_Generic\BLE_v2_20">

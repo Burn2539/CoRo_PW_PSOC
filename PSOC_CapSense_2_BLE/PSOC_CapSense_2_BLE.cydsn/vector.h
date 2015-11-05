@@ -29,7 +29,7 @@
 #define FALSE   0u
 #define TRUE    1u
 
-#define VECTOR_MAX_SIZE     512
+#define VECTOR_MAX_SIZE     256
 
 
 /*****************************************************************************
@@ -41,7 +41,7 @@ void popOutVector(uint16 *dataOut);
 uint16 vectorSize(void);
 uint8 vectorIsEmpty(void);
 uint8 vectorIsFull(void);
-void deleteVector(void);
+void clearVector(void);
 
 #endif
 

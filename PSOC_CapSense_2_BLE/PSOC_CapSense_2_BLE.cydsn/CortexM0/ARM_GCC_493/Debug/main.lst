@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -55,1779 +55,2540 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 1
   27:.\main.c      **** *****************************************************************************/
   28:.\main.c      **** #include "crc.h"
   29:.\main.c      **** #include "_PrISM.h"
-  30:.\main.c      **** #include "_CapSense.h"
-  31:.\main.c      **** #include "_BLE.h"
-  32:.\main.c      **** 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 2
+  30:.\main.c      **** #include "_Timer.h"
+  31:.\main.c      **** #include "_CapSense.h"
+  32:.\main.c      **** #include "_BLE.h"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 2
 
 
-  33:.\main.c      **** 
-  34:.\main.c      **** /*****************************************************************************
-  35:.\main.c      **** * Local global variables
-  36:.\main.c      **** *****************************************************************************/
-  37:.\main.c      **** // Status flags
-  38:.\main.c      **** uint8 Status_Ready;
-  39:.\main.c      **** uint8 Status_Acquiring;
-  40:.\main.c      **** uint8 Status_NoMoreSpace;
-  41:.\main.c      **** uint8 Status_DataAcquired;
-  42:.\main.c      **** uint8 Status_Sending;
-  43:.\main.c      **** uint8 Status_NoMoreData;
-  44:.\main.c      **** 
-  45:.\main.c      **** 
-  46:.\main.c      **** /*****************************************************************************
-  47:.\main.c      **** * Function Declarations
-  48:.\main.c      **** *****************************************************************************/
-  49:.\main.c      **** void InitializeSystem(void);
-  50:.\main.c      **** 
-  51:.\main.c      **** 
-  52:.\main.c      **** /*****************************************************************************
-  53:.\main.c      **** * Function Name: main()
-  54:.\main.c      **** ******************************************************************************
-  55:.\main.c      **** * Summary:
-  56:.\main.c      **** *   Central function which controls the application flow.
-  57:.\main.c      **** *
-  58:.\main.c      **** * Parameters:
-  59:.\main.c      **** *   None.
+  33:.\main.c      **** #include "_Watchdog.h"
+  34:.\main.c      **** 
+  35:.\main.c      **** 
+  36:.\main.c      **** /*****************************************************************************
+  37:.\main.c      **** * Local global variables
+  38:.\main.c      **** *****************************************************************************/
+  39:.\main.c      **** // Status flags
+  40:.\main.c      **** uint8 Status_Ready;
+  41:.\main.c      **** uint8 Status_Acquiring;
+  42:.\main.c      **** uint8 Status_NoMoreSpace;
+  43:.\main.c      **** uint8 Status_DataAcquired;
+  44:.\main.c      **** uint8 Status_Sending;
+  45:.\main.c      **** uint8 Status_NoMoreData;
+  46:.\main.c      **** 
+  47:.\main.c      **** 
+  48:.\main.c      **** /*****************************************************************************
+  49:.\main.c      **** * Function Declarations
+  50:.\main.c      **** *****************************************************************************/
+  51:.\main.c      **** void InitializeSystem(void);
+  52:.\main.c      **** void ResetSystem(void);
+  53:.\main.c      **** 
+  54:.\main.c      **** 
+  55:.\main.c      **** /*****************************************************************************
+  56:.\main.c      **** * Function Name: main()
+  57:.\main.c      **** ******************************************************************************
+  58:.\main.c      **** * Summary:
+  59:.\main.c      **** *   Central function which controls the application flow.
   60:.\main.c      **** *
-  61:.\main.c      **** * Return:
+  61:.\main.c      **** * Parameters:
   62:.\main.c      **** *   None.
   63:.\main.c      **** *
-  64:.\main.c      **** * Note:
-  65:.\main.c      **** *
-  66:.\main.c      **** *****************************************************************************/
-  67:.\main.c      **** int main()
-  68:.\main.c      **** {
-  69:.\main.c      ****     InitializeSystem();
-  70:.\main.c      ****     
-  71:.\main.c      ****     for(;;)
-  72:.\main.c      ****     {
-  73:.\main.c      ****         // Process all the events in the stack.
-  74:.\main.c      ****         CyBle_ProcessEvents();
-  75:.\main.c      ****         
-  76:.\main.c      ****         // Update the CapSense CCCD.
-  77:.\main.c      ****         _BLE_UpdateCCCD();
+  64:.\main.c      **** * Return:
+  65:.\main.c      **** *   None.
+  66:.\main.c      **** *
+  67:.\main.c      **** * Note:
+  68:.\main.c      **** *
+  69:.\main.c      **** *****************************************************************************/
+  70:.\main.c      **** int main()
+  71:.\main.c      **** {
+  72:.\main.c      ****     InitializeSystem();
+  73:.\main.c      ****     
+  74:.\main.c      ****     for(;;)
+  75:.\main.c      ****     {
+  76:.\main.c      ****         // Process all the events in the stack.
+  77:.\main.c      ****         CyBle_ProcessEvents();
   78:.\main.c      ****         
-  79:.\main.c      ****         // Update the Control values.
-  80:.\main.c      ****         _BLE_UpdateControl();
-  81:.\main.c      ****         
-  82:.\main.c      ****         // If asked by client, send the content of the vector containing
-  83:.\main.c      ****         // the CapSense data.
-  84:.\main.c      ****         if ( _BLE_sendData ) {
-  85:.\main.c      ****             Status_DataAcquired = FALSE;
-  86:.\main.c      ****             Status_Sending = TRUE;
+  79:.\main.c      ****         // To execute only if a device is connected
+  80:.\main.c      ****         if (_BLE_deviceConnected) {
+  81:.\main.c      ****             
+  82:.\main.c      ****             // Update the CapSense CCCD.
+  83:.\main.c      ****             _BLE_UpdateCCCD();
+  84:.\main.c      ****             
+  85:.\main.c      ****             // Update the Control values.
+  86:.\main.c      ****             _BLE_UpdateControl();
   87:.\main.c      ****             
-  88:.\main.c      ****             // Send one set of values (all sensors).
-  89:.\main.c      ****             if( NO_MORE_DATA == _BLE_sendCapSenseData() ) {
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 3
+  88:.\main.c      ****             // If asked by client, send the content of the vector containing
+  89:.\main.c      ****             // the CapSense data.
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 3
 
 
-  90:.\main.c      ****                 Status_NoMoreData = TRUE;
-  91:.\main.c      ****                 deleteVector();
-  92:.\main.c      ****             }
-  93:.\main.c      ****             else
-  94:.\main.c      ****                 Status_NoMoreData = FALSE;
-  95:.\main.c      ****         }
-  96:.\main.c      ****         
-  97:.\main.c      ****         // If asked by client, acquire CapSense data and store it in
-  98:.\main.c      ****         // the vector.
-  99:.\main.c      ****         else if ( _BLE_acquireData ) {
- 100:.\main.c      ****             Status_Ready = FALSE;
- 101:.\main.c      ****             Status_Acquiring = TRUE;
- 102:.\main.c      ****             
- 103:.\main.c      ****             // Scan the CapSense widgets once.
- 104:.\main.c      ****             if( NO_MORE_SPACE == _CapSense_Scan() )
- 105:.\main.c      ****                 Status_NoMoreSpace = TRUE;
- 106:.\main.c      ****             else
- 107:.\main.c      ****                 Status_NoMoreSpace = FALSE;
- 108:.\main.c      ****         }
- 109:.\main.c      ****         
- 110:.\main.c      ****         // If the 'acquireData' request is not present, but the vector
- 111:.\main.c      ****         // isn't empty, then no more data can be acquired.
- 112:.\main.c      ****         else if ( !_BLE_acquireData && !vectorIsEmpty() ) {
- 113:.\main.c      ****             Status_Acquiring = FALSE;
- 114:.\main.c      ****             Status_NoMoreSpace = FALSE;
- 115:.\main.c      ****             Status_DataAcquired = TRUE;
- 116:.\main.c      ****         }
- 117:.\main.c      ****         
- 118:.\main.c      ****         // If the 'sendData' request is not present, but the vector
- 119:.\main.c      ****         // is empty, then data has been all sent and it's ready to
- 120:.\main.c      ****         // acquire new data.
- 121:.\main.c      ****         else if ( !_BLE_sendData && vectorIsEmpty() ) {
- 122:.\main.c      ****             Status_Sending = FALSE;
- 123:.\main.c      ****             Status_NoMoreData = FALSE;
- 124:.\main.c      ****             Status_Ready = TRUE;
- 125:.\main.c      ****         }
- 126:.\main.c      ****         
- 127:.\main.c      ****         // If asked by client, send the status flags by notification or
- 128:.\main.c      ****         // indication.
- 129:.\main.c      ****         if (_BLE_sendStatus)
- 130:.\main.c      ****             _BLE_sendPSOCStatus();
- 131:.\main.c      ****     }
- 132:.\main.c      ****     
- 133:.\main.c      **** }
- 134:.\main.c      **** 
- 135:.\main.c      **** 
- 136:.\main.c      **** /*****************************************************************************
- 137:.\main.c      **** * Function Name: InitializeSystem()
- 138:.\main.c      **** ******************************************************************************
- 139:.\main.c      **** * Summary:
- 140:.\main.c      **** *   Initialize everything here.
- 141:.\main.c      **** *
- 142:.\main.c      **** * Parameters:
- 143:.\main.c      **** *   None.
- 144:.\main.c      **** *
- 145:.\main.c      **** * Return:
- 146:.\main.c      **** *   None.
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 4
+  90:.\main.c      ****             if ( _BLE_sendData ) {
+  91:.\main.c      ****                 Status_DataAcquired = FALSE;
+  92:.\main.c      ****                 Status_Sending = TRUE;
+  93:.\main.c      ****                 
+  94:.\main.c      ****                 // Delay to let the computer process the previous set of data.
+  95:.\main.c      ****                 TimerDelay_Start();
+  96:.\main.c      ****                 if (_Timer_DelayDone) {
+  97:.\main.c      ****                     _Timer_DelayDone = FALSE;
+  98:.\main.c      ****                 
+  99:.\main.c      ****                     // Send as many sets of values as possible (for all sensors).
+ 100:.\main.c      ****                     if( NO_MORE_DATA == _BLE_sendCapSenseData() )
+ 101:.\main.c      ****                         Status_NoMoreData = TRUE;
+ 102:.\main.c      ****                     else
+ 103:.\main.c      ****                         Status_NoMoreData = FALSE;
+ 104:.\main.c      ****                 }
+ 105:.\main.c      ****             }
+ 106:.\main.c      ****             
+ 107:.\main.c      ****             // If asked by client, acquire CapSense data and store it in
+ 108:.\main.c      ****             // the vector.
+ 109:.\main.c      ****             else if ( _BLE_acquireData ) {
+ 110:.\main.c      ****                 Status_Ready = FALSE;
+ 111:.\main.c      ****                 Status_Acquiring = TRUE;
+ 112:.\main.c      ****                 
+ 113:.\main.c      ****                 // Scan the CapSense widgets once.
+ 114:.\main.c      ****                 if( NO_MORE_SPACE == _CapSense_Scan() )
+ 115:.\main.c      ****                     Status_NoMoreSpace = TRUE;
+ 116:.\main.c      ****                 else
+ 117:.\main.c      ****                     Status_NoMoreSpace = FALSE;
+ 118:.\main.c      ****                 
+ 119:.\main.c      ****                 // If asked by client, send data synchronously
+ 120:.\main.c      ****                 if( _BLE_sendDataSynchronously ) {
+ 121:.\main.c      ****                     Status_Sending = TRUE;
+ 122:.\main.c      ****                     _BLE_sendCapSenseData();
+ 123:.\main.c      ****                 }
+ 124:.\main.c      ****             }
+ 125:.\main.c      ****             
+ 126:.\main.c      ****             // If the 'acquireData' request is not present, but the vector
+ 127:.\main.c      ****             // isn't empty, then no more data can be acquired.
+ 128:.\main.c      ****             else if ( !_BLE_acquireData && !vectorIsEmpty() ) {
+ 129:.\main.c      ****                 Status_Acquiring = FALSE;
+ 130:.\main.c      ****                 Status_NoMoreSpace = FALSE;
+ 131:.\main.c      ****                 Status_DataAcquired = TRUE;
+ 132:.\main.c      ****             }
+ 133:.\main.c      ****             
+ 134:.\main.c      ****             // If the 'sendData' and 'acquireData' requests are not present,
+ 135:.\main.c      ****             // but the vector is empty, then data has been all sent and
+ 136:.\main.c      ****             // it's ready to acquire new data.
+ 137:.\main.c      ****             else if ( !_BLE_sendData && !_BLE_acquireData && vectorIsEmpty() ) {
+ 138:.\main.c      ****                 Status_Acquiring = FALSE;
+ 139:.\main.c      ****                 Status_NoMoreSpace = FALSE;
+ 140:.\main.c      ****                 Status_Sending = FALSE;
+ 141:.\main.c      ****                 Status_NoMoreData = FALSE;
+ 142:.\main.c      ****                 Status_Ready = TRUE;
+ 143:.\main.c      ****                 clearVector();
+ 144:.\main.c      ****             }
+ 145:.\main.c      ****             
+ 146:.\main.c      ****             // If asked by client, send the status flags by notification or
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 4
 
 
- 147:.\main.c      **** *
- 148:.\main.c      **** * Note:
- 149:.\main.c      **** *
- 150:.\main.c      **** *****************************************************************************/
- 151:.\main.c      **** void InitializeSystem(void)
- 152:.\main.c      **** {
-  26              		.loc 1 152 0
+ 147:.\main.c      ****             // indication.
+ 148:.\main.c      ****             if (_BLE_sendStatus)
+ 149:.\main.c      ****                 _BLE_sendStatusFlags();
+ 150:.\main.c      ****         }
+ 151:.\main.c      ****                     
+ 152:.\main.c      ****         // Start advertisement if the flag is set in the BLE event handler.
+ 153:.\main.c      ****         if (_BLE_restartAdvertisement) {
+ 154:.\main.c      ****             // Reset the flag.
+ 155:.\main.c      ****             _BLE_restartAdvertisement = FALSE;
+ 156:.\main.c      ****             // Start advertisement.
+ 157:.\main.c      ****             CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
+ 158:.\main.c      ****         }
+ 159:.\main.c      ****         
+ 160:.\main.c      ****         // If the client is disconnected, reset everything as the program
+ 161:.\main.c      ****         // would be is first started.
+ 162:.\main.c      ****         if (_BLE_resetNeeded) {
+ 163:.\main.c      ****             // Reset the flag.
+ 164:.\main.c      ****             _BLE_resetNeeded = FALSE;
+ 165:.\main.c      ****             // Reset everything that needs to.
+ 166:.\main.c      ****             ResetSystem();
+ 167:.\main.c      ****         }
+ 168:.\main.c      ****     }
+ 169:.\main.c      **** }
+ 170:.\main.c      **** 
+ 171:.\main.c      **** 
+ 172:.\main.c      **** /*****************************************************************************
+ 173:.\main.c      **** * Function Name: InitializeSystem()
+ 174:.\main.c      **** ******************************************************************************
+ 175:.\main.c      **** * Summary:
+ 176:.\main.c      **** *   Initialize everything here.
+ 177:.\main.c      **** *
+ 178:.\main.c      **** * Parameters:
+ 179:.\main.c      **** *   None.
+ 180:.\main.c      **** *
+ 181:.\main.c      **** * Return:
+ 182:.\main.c      **** *   None.
+ 183:.\main.c      **** *
+ 184:.\main.c      **** * Note:
+ 185:.\main.c      **** *
+ 186:.\main.c      **** *****************************************************************************/
+ 187:.\main.c      **** void InitializeSystem(void)
+ 188:.\main.c      **** {
+  26              		.loc 1 188 0
   27              		.cfi_startproc
   28 0000 08B5     		push	{r3, lr}
   29              		.cfi_def_cfa_offset 8
   30              		.cfi_offset 3, -8
   31              		.cfi_offset 14, -4
- 153:.\main.c      ****     // Enable global interrupts.
- 154:.\main.c      ****     CyGlobalIntEnable;
-  32              		.loc 1 154 0
-  33              	@ 154 ".\main.c" 1
+ 189:.\main.c      ****     // Enable global interrupts.
+ 190:.\main.c      ****     CyGlobalIntEnable;
+  32              		.loc 1 190 0
+  33              	@ 190 ".\main.c" 1
   34 0002 62B6     		CPSIE   i
   35              	@ 0 "" 2
- 155:.\main.c      ****     
- 156:.\main.c      ****     // Initialize flags
- 157:.\main.c      ****     Status_Ready = TRUE;
-  36              		.loc 1 157 0
+ 191:.\main.c      ****     
+ 192:.\main.c      ****     // Initialize the table used for CRC calcultation.
+ 193:.\main.c      ****     crc_Init();
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 5
+
+
+  36              		.loc 1 193 0
   37              		.code	16
-  38 0004 0122     		mov	r2, #1
-  39 0006 0C4B     		ldr	r3, .L2
-  40 0008 1A70     		strb	r2, [r3]
- 158:.\main.c      ****     Status_Acquiring = FALSE;
-  41              		.loc 1 158 0
-  42 000a 0023     		mov	r3, #0
-  43 000c 0B4A     		ldr	r2, .L2+4
-  44 000e 1370     		strb	r3, [r2]
- 159:.\main.c      ****     Status_NoMoreSpace = FALSE;
-  45              		.loc 1 159 0
-  46 0010 0B4A     		ldr	r2, .L2+8
-  47 0012 1370     		strb	r3, [r2]
- 160:.\main.c      ****     Status_DataAcquired = FALSE;
-  48              		.loc 1 160 0
-  49 0014 0B4A     		ldr	r2, .L2+12
-  50 0016 1370     		strb	r3, [r2]
- 161:.\main.c      ****     Status_Sending = FALSE;
-  51              		.loc 1 161 0
-  52 0018 0B4A     		ldr	r2, .L2+16
-  53 001a 1370     		strb	r3, [r2]
- 162:.\main.c      ****     Status_NoMoreData = FALSE;
-  54              		.loc 1 162 0
-  55 001c 0B4A     		ldr	r2, .L2+20
-  56 001e 1370     		strb	r3, [r2]
- 163:.\main.c      ****     
- 164:.\main.c      ****     // Initialize the table used for CRC calcultation.
- 165:.\main.c      ****     crc_Init();
-  57              		.loc 1 165 0
-  58 0020 FFF7FEFF 		bl	crc_Init
-  59              	.LVL0:
- 166:.\main.c      ****     
- 167:.\main.c      ****     //Initalize the vectors used for data storage.
- 168:.\main.c      ****     Vector_Init();
-  60              		.loc 1 168 0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 5
+  38 0004 FFF7FEFF 		bl	crc_Init
+  39              	.LVL0:
+ 194:.\main.c      ****     
+ 195:.\main.c      ****     //Initalize the vectors used for data storage.
+ 196:.\main.c      ****     Vector_Init();
+  40              		.loc 1 196 0
+  41 0008 FFF7FEFF 		bl	Vector_Init
+  42              	.LVL1:
+ 197:.\main.c      ****     
+ 198:.\main.c      ****     //Initialize the PrISM modules.
+ 199:.\main.c      ****     _PrISM_Init();
+  43              		.loc 1 199 0
+  44 000c FFF7FEFF 		bl	_PrISM_Init
+  45              	.LVL2:
+ 200:.\main.c      ****     
+ 201:.\main.c      ****     // Initialize the Timer and Interrupt components.
+ 202:.\main.c      ****     _Timer_Init();
+  46              		.loc 1 202 0
+  47 0010 FFF7FEFF 		bl	_Timer_Init
+  48              	.LVL3:
+ 203:.\main.c      ****     
+ 204:.\main.c      ****     // Initialize the CapSense module.
+ 205:.\main.c      ****     _CapSense_Init();
+  49              		.loc 1 205 0
+  50 0014 FFF7FEFF 		bl	_CapSense_Init
+  51              	.LVL4:
+ 206:.\main.c      ****     
+ 207:.\main.c      ****     // Initialize the BLE module.
+ 208:.\main.c      ****     _BLE_Init();
+  52              		.loc 1 208 0
+  53 0018 FFF7FEFF 		bl	_BLE_Init
+  54              	.LVL5:
+ 209:.\main.c      ****     
+ 210:.\main.c      ****     // Initialize the watchdog.
+ 211:.\main.c      ****     _Watchdog_Init();
+  55              		.loc 1 211 0
+  56 001c FFF7FEFF 		bl	_Watchdog_Init
+  57              	.LVL6:
+ 212:.\main.c      ****     
+ 213:.\main.c      ****     // Initialize status flags
+ 214:.\main.c      ****     Status_Ready = TRUE;
+  58              		.loc 1 214 0
+  59 0020 0122     		mov	r2, #1
+  60 0022 074B     		ldr	r3, .L2
+  61 0024 1A70     		strb	r2, [r3]
+ 215:.\main.c      ****     Status_Acquiring = FALSE;
+  62              		.loc 1 215 0
+  63 0026 0023     		mov	r3, #0
+  64 0028 064A     		ldr	r2, .L2+4
+  65 002a 1370     		strb	r3, [r2]
+ 216:.\main.c      ****     Status_NoMoreSpace = FALSE;
+  66              		.loc 1 216 0
+  67 002c 064A     		ldr	r2, .L2+8
+  68 002e 1370     		strb	r3, [r2]
+ 217:.\main.c      ****     Status_DataAcquired = FALSE;
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 6
 
 
-  61 0024 FFF7FEFF 		bl	Vector_Init
-  62              	.LVL1:
- 169:.\main.c      ****     
- 170:.\main.c      ****     //Initialize the PrISM modules.
- 171:.\main.c      ****     _PrISM_Init();
-  63              		.loc 1 171 0
-  64 0028 FFF7FEFF 		bl	_PrISM_Init
-  65              	.LVL2:
- 172:.\main.c      ****     
- 173:.\main.c      ****     // Initialize the CapSense module.
- 174:.\main.c      ****     _CapSense_Init();
-  66              		.loc 1 174 0
-  67 002c FFF7FEFF 		bl	_CapSense_Init
-  68              	.LVL3:
- 175:.\main.c      ****     
- 176:.\main.c      ****     // Initialize the BLE module.
- 177:.\main.c      ****     _BLE_Init();
-  69              		.loc 1 177 0
-  70 0030 FFF7FEFF 		bl	_BLE_Init
-  71              	.LVL4:
- 178:.\main.c      **** }...
-  72              		.loc 1 178 0
-  73              		@ sp needed
-  74 0034 08BD     		pop	{r3, pc}
-  75              	.L3:
-  76 0036 C046     		.align	2
-  77              	.L2:
-  78 0038 00000000 		.word	Status_Ready
-  79 003c 00000000 		.word	Status_Acquiring
-  80 0040 00000000 		.word	Status_NoMoreSpace
-  81 0044 00000000 		.word	Status_DataAcquired
-  82 0048 00000000 		.word	Status_Sending
-  83 004c 00000000 		.word	Status_NoMoreData
-  84              		.cfi_endproc
-  85              	.LFE36:
-  86              		.size	InitializeSystem, .-InitializeSystem
-  87              		.section	.text.main,"ax",%progbits
-  88              		.align	2
-  89              		.global	main
-  90              		.code	16
-  91              		.thumb_func
-  92              		.type	main, %function
-  93              	main:
-  94              	.LFB35:
-  68:.\main.c      **** {
-  95              		.loc 1 68 0
-  96              		.cfi_startproc
-  97 0000 08B5     		push	{r3, lr}
-  98              		.cfi_def_cfa_offset 8
-  99              		.cfi_offset 3, -8
- 100              		.cfi_offset 14, -4
-  69:.\main.c      ****     InitializeSystem();
- 101              		.loc 1 69 0
- 102 0002 FFF7FEFF 		bl	InitializeSystem
- 103              	.LVL5:
- 104              	.L11:
-  74:.\main.c      ****         CyBle_ProcessEvents();
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 6
+  69              		.loc 1 217 0
+  70 0030 064A     		ldr	r2, .L2+12
+  71 0032 1370     		strb	r3, [r2]
+ 218:.\main.c      ****     Status_Sending = FALSE;
+  72              		.loc 1 218 0
+  73 0034 064A     		ldr	r2, .L2+16
+  74 0036 1370     		strb	r3, [r2]
+ 219:.\main.c      ****     Status_NoMoreData = FALSE;
+  75              		.loc 1 219 0
+  76 0038 064A     		ldr	r2, .L2+20
+  77 003a 1370     		strb	r3, [r2]
+ 220:.\main.c      **** }
+  78              		.loc 1 220 0
+  79              		@ sp needed
+  80 003c 08BD     		pop	{r3, pc}
+  81              	.L3:
+  82 003e C046     		.align	2
+  83              	.L2:
+  84 0040 00000000 		.word	Status_Ready
+  85 0044 00000000 		.word	Status_Acquiring
+  86 0048 00000000 		.word	Status_NoMoreSpace
+  87 004c 00000000 		.word	Status_DataAcquired
+  88 0050 00000000 		.word	Status_Sending
+  89 0054 00000000 		.word	Status_NoMoreData
+  90              		.cfi_endproc
+  91              	.LFE36:
+  92              		.size	InitializeSystem, .-InitializeSystem
+  93              		.section	.text.ResetSystem,"ax",%progbits
+  94              		.align	2
+  95              		.global	ResetSystem
+  96              		.code	16
+  97              		.thumb_func
+  98              		.type	ResetSystem, %function
+  99              	ResetSystem:
+ 100              	.LFB37:
+ 221:.\main.c      **** 
+ 222:.\main.c      **** 
+ 223:.\main.c      **** /*****************************************************************************
+ 224:.\main.c      **** * Function Name: ResetSystem()
+ 225:.\main.c      **** ******************************************************************************
+ 226:.\main.c      **** * Summary:
+ 227:.\main.c      **** *   Reset everything here.
+ 228:.\main.c      **** *
+ 229:.\main.c      **** * Parameters:
+ 230:.\main.c      **** *   None.
+ 231:.\main.c      **** *
+ 232:.\main.c      **** * Return:
+ 233:.\main.c      **** *   None.
+ 234:.\main.c      **** *
+ 235:.\main.c      **** * Note:
+ 236:.\main.c      **** *
+ 237:.\main.c      **** *****************************************************************************/
+ 238:.\main.c      **** void ResetSystem(void)
+ 239:.\main.c      **** {
+ 101              		.loc 1 239 0
+ 102              		.cfi_startproc
+ 103 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 7
 
 
- 105              		.loc 1 74 0
- 106 0006 FFF7FEFF 		bl	CyBle_ProcessEvents
- 107              	.LVL6:
-  77:.\main.c      ****         _BLE_UpdateCCCD();
- 108              		.loc 1 77 0
- 109 000a FFF7FEFF 		bl	_BLE_UpdateCCCD
- 110              	.LVL7:
-  80:.\main.c      ****         _BLE_UpdateControl();
- 111              		.loc 1 80 0
- 112 000e FFF7FEFF 		bl	_BLE_UpdateControl
- 113              	.LVL8:
-  84:.\main.c      ****         if ( _BLE_sendData ) {
- 114              		.loc 1 84 0
- 115 0012 2A4B     		ldr	r3, .L13
- 116 0014 1B78     		ldrb	r3, [r3]
- 117 0016 002B     		cmp	r3, #0
- 118 0018 13D0     		beq	.L5
-  85:.\main.c      ****             Status_DataAcquired = FALSE;
- 119              		.loc 1 85 0
- 120 001a 0022     		mov	r2, #0
- 121 001c 284B     		ldr	r3, .L13+4
- 122 001e 1A70     		strb	r2, [r3]
-  86:.\main.c      ****             Status_Sending = TRUE;
- 123              		.loc 1 86 0
- 124 0020 0132     		add	r2, r2, #1
- 125 0022 284B     		ldr	r3, .L13+8
- 126 0024 1A70     		strb	r2, [r3]
-  89:.\main.c      ****             if( NO_MORE_DATA == _BLE_sendCapSenseData() ) {
- 127              		.loc 1 89 0
- 128 0026 FFF7FEFF 		bl	_BLE_sendCapSenseData
- 129              	.LVL9:
- 130 002a 0228     		cmp	r0, #2
- 131 002c 05D1     		bne	.L6
-  90:.\main.c      ****                 Status_NoMoreData = TRUE;
- 132              		.loc 1 90 0
- 133 002e 0122     		mov	r2, #1
- 134 0030 254B     		ldr	r3, .L13+12
- 135 0032 1A70     		strb	r2, [r3]
-  91:.\main.c      ****                 deleteVector();
- 136              		.loc 1 91 0
- 137 0034 FFF7FEFF 		bl	deleteVector
- 138              	.LVL10:
- 139 0038 38E0     		b	.L7
- 140              	.L6:
-  94:.\main.c      ****                 Status_NoMoreData = FALSE;
- 141              		.loc 1 94 0
- 142 003a 0022     		mov	r2, #0
- 143 003c 224B     		ldr	r3, .L13+12
- 144 003e 1A70     		strb	r2, [r3]
- 145 0040 34E0     		b	.L7
- 146              	.L5:
-  99:.\main.c      ****         else if ( _BLE_acquireData ) {
- 147              		.loc 1 99 0
- 148 0042 224B     		ldr	r3, .L13+16
- 149 0044 1B78     		ldrb	r3, [r3]
- 150 0046 002B     		cmp	r3, #0
- 151 0048 11D0     		beq	.L8
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 7
+ 104              		.cfi_def_cfa_offset 8
+ 105              		.cfi_offset 3, -8
+ 106              		.cfi_offset 14, -4
+ 240:.\main.c      ****     //Reset the vectors used for data storage.
+ 241:.\main.c      ****     clearVector();
+ 107              		.loc 1 241 0
+ 108 0002 FFF7FEFF 		bl	clearVector
+ 109              	.LVL7:
+ 242:.\main.c      ****     
+ 243:.\main.c      ****     // Reset status flags
+ 244:.\main.c      ****     Status_Ready = TRUE;
+ 110              		.loc 1 244 0
+ 111 0006 0122     		mov	r2, #1
+ 112 0008 074B     		ldr	r3, .L5
+ 113 000a 1A70     		strb	r2, [r3]
+ 245:.\main.c      ****     Status_Acquiring = FALSE;
+ 114              		.loc 1 245 0
+ 115 000c 0023     		mov	r3, #0
+ 116 000e 074A     		ldr	r2, .L5+4
+ 117 0010 1370     		strb	r3, [r2]
+ 246:.\main.c      ****     Status_NoMoreSpace = FALSE;
+ 118              		.loc 1 246 0
+ 119 0012 074A     		ldr	r2, .L5+8
+ 120 0014 1370     		strb	r3, [r2]
+ 247:.\main.c      ****     Status_DataAcquired = FALSE;
+ 121              		.loc 1 247 0
+ 122 0016 074A     		ldr	r2, .L5+12
+ 123 0018 1370     		strb	r3, [r2]
+ 248:.\main.c      ****     Status_Sending = FALSE;
+ 124              		.loc 1 248 0
+ 125 001a 074A     		ldr	r2, .L5+16
+ 126 001c 1370     		strb	r3, [r2]
+ 249:.\main.c      ****     Status_NoMoreData = FALSE;
+ 127              		.loc 1 249 0
+ 128 001e 074A     		ldr	r2, .L5+20
+ 129 0020 1370     		strb	r3, [r2]
+ 250:.\main.c      ****     
+ 251:.\main.c      ****     // Initialize the BLE module.
+ 252:.\main.c      ****     _BLE_Reset();
+ 130              		.loc 1 252 0
+ 131 0022 FFF7FEFF 		bl	_BLE_Reset
+ 132              	.LVL8:
+ 253:.\main.c      **** }
+ 133              		.loc 1 253 0
+ 134              		@ sp needed
+ 135 0026 08BD     		pop	{r3, pc}
+ 136              	.L6:
+ 137              		.align	2
+ 138              	.L5:
+ 139 0028 00000000 		.word	Status_Ready
+ 140 002c 00000000 		.word	Status_Acquiring
+ 141 0030 00000000 		.word	Status_NoMoreSpace
+ 142 0034 00000000 		.word	Status_DataAcquired
+ 143 0038 00000000 		.word	Status_Sending
+ 144 003c 00000000 		.word	Status_NoMoreData
+ 145              		.cfi_endproc
+ 146              	.LFE37:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 8
 
 
- 100:.\main.c      ****             Status_Ready = FALSE;
- 152              		.loc 1 100 0
- 153 004a 0022     		mov	r2, #0
- 154 004c 204B     		ldr	r3, .L13+20
- 155 004e 1A70     		strb	r2, [r3]
- 101:.\main.c      ****             Status_Acquiring = TRUE;
- 156              		.loc 1 101 0
- 157 0050 0132     		add	r2, r2, #1
- 158 0052 204B     		ldr	r3, .L13+24
- 159 0054 1A70     		strb	r2, [r3]
- 104:.\main.c      ****             if( NO_MORE_SPACE == _CapSense_Scan() )
- 160              		.loc 1 104 0
- 161 0056 FFF7FEFF 		bl	_CapSense_Scan
- 162              	.LVL11:
- 163 005a 0128     		cmp	r0, #1
- 164 005c 03D1     		bne	.L9
- 105:.\main.c      ****                 Status_NoMoreSpace = TRUE;
- 165              		.loc 1 105 0
- 166 005e 0122     		mov	r2, #1
- 167 0060 1D4B     		ldr	r3, .L13+28
- 168 0062 1A70     		strb	r2, [r3]
- 169 0064 22E0     		b	.L7
- 170              	.L9:
- 107:.\main.c      ****                 Status_NoMoreSpace = FALSE;
- 171              		.loc 1 107 0
- 172 0066 0022     		mov	r2, #0
- 173 0068 1B4B     		ldr	r3, .L13+28
- 174 006a 1A70     		strb	r2, [r3]
- 175 006c 1EE0     		b	.L7
- 176              	.L8:
- 112:.\main.c      ****         else if ( !_BLE_acquireData && !vectorIsEmpty() ) {
- 177              		.loc 1 112 0
- 178 006e 002B     		cmp	r3, #0
- 179 0070 0CD1     		bne	.L10
- 112:.\main.c      ****         else if ( !_BLE_acquireData && !vectorIsEmpty() ) {
- 180              		.loc 1 112 0 is_stmt 0 discriminator 1
- 181 0072 FFF7FEFF 		bl	vectorIsEmpty
- 182              	.LVL12:
- 183 0076 0028     		cmp	r0, #0
- 184 0078 08D1     		bne	.L10
- 113:.\main.c      ****             Status_Acquiring = FALSE;
- 185              		.loc 1 113 0 is_stmt 1
- 186 007a 0023     		mov	r3, #0
- 187 007c 154A     		ldr	r2, .L13+24
- 188 007e 1370     		strb	r3, [r2]
- 114:.\main.c      ****             Status_NoMoreSpace = FALSE;
- 189              		.loc 1 114 0
- 190 0080 154A     		ldr	r2, .L13+28
- 191 0082 1370     		strb	r3, [r2]
- 115:.\main.c      ****             Status_DataAcquired = TRUE;
- 192              		.loc 1 115 0
- 193 0084 0122     		mov	r2, #1
- 194 0086 0E4B     		ldr	r3, .L13+4
- 195 0088 1A70     		strb	r2, [r3]
- 196 008a 0FE0     		b	.L7
- 197              	.L10:
- 121:.\main.c      ****         else if ( !_BLE_sendData && vectorIsEmpty() ) {
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 8
+ 147              		.size	ResetSystem, .-ResetSystem
+ 148              		.section	.text.main,"ax",%progbits
+ 149              		.align	2
+ 150              		.global	main
+ 151              		.code	16
+ 152              		.thumb_func
+ 153              		.type	main, %function
+ 154              	main:
+ 155              	.LFB35:
+  71:.\main.c      ****     InitializeSystem();
+ 156              		.loc 1 71 0
+ 157              		.cfi_startproc
+ 158 0000 08B5     		push	{r3, lr}
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 3, -8
+ 161              		.cfi_offset 14, -4
+  72:.\main.c      ****     
+ 162              		.loc 1 72 0
+ 163 0002 FFF7FEFF 		bl	InitializeSystem
+ 164              	.LVL9:
+ 165              	.L17:
+  77:.\main.c      ****         
+ 166              		.loc 1 77 0
+ 167 0006 FFF7FEFF 		bl	CyBle_ProcessEvents
+ 168              	.LVL10:
+  80:.\main.c      ****             
+ 169              		.loc 1 80 0
+ 170 000a 454B     		ldr	r3, .L19
+ 171 000c 1B78     		ldrb	r3, [r3]
+ 172 000e 002B     		cmp	r3, #0
+ 173 0010 70D0     		beq	.L8
+  83:.\main.c      ****             
+ 174              		.loc 1 83 0
+ 175 0012 FFF7FEFF 		bl	_BLE_UpdateCCCD
+ 176              	.LVL11:
+  86:.\main.c      ****             
+ 177              		.loc 1 86 0
+ 178 0016 FFF7FEFF 		bl	_BLE_UpdateControl
+ 179              	.LVL12:
+  90:.\main.c      ****                 Status_DataAcquired = FALSE;
+ 180              		.loc 1 90 0
+ 181 001a 424B     		ldr	r3, .L19+4
+ 182 001c 1B78     		ldrb	r3, [r3]
+ 183 001e 002B     		cmp	r3, #0
+ 184 0020 1AD0     		beq	.L9
+  91:.\main.c      ****                 Status_Sending = TRUE;
+ 185              		.loc 1 91 0
+ 186 0022 0022     		mov	r2, #0
+ 187 0024 404B     		ldr	r3, .L19+8
+ 188 0026 1A70     		strb	r2, [r3]
+  92:.\main.c      ****                 
+ 189              		.loc 1 92 0
+ 190 0028 0132     		add	r2, r2, #1
+ 191 002a 404B     		ldr	r3, .L19+12
+ 192 002c 1A70     		strb	r2, [r3]
+  95:.\main.c      ****                 if (_Timer_DelayDone) {
+ 193              		.loc 1 95 0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 9
 
 
- 198              		.loc 1 121 0
- 199 008c 0B4B     		ldr	r3, .L13
- 200 008e 1B78     		ldrb	r3, [r3]
- 201 0090 002B     		cmp	r3, #0
- 202 0092 0BD1     		bne	.L7
- 121:.\main.c      ****         else if ( !_BLE_sendData && vectorIsEmpty() ) {
- 203              		.loc 1 121 0 is_stmt 0 discriminator 1
- 204 0094 FFF7FEFF 		bl	vectorIsEmpty
- 205              	.LVL13:
- 206 0098 0028     		cmp	r0, #0
- 207 009a 07D0     		beq	.L7
- 122:.\main.c      ****             Status_Sending = FALSE;
- 208              		.loc 1 122 0 is_stmt 1
- 209 009c 0023     		mov	r3, #0
- 210 009e 094A     		ldr	r2, .L13+8
- 211 00a0 1370     		strb	r3, [r2]
- 123:.\main.c      ****             Status_NoMoreData = FALSE;
- 212              		.loc 1 123 0
- 213 00a2 094A     		ldr	r2, .L13+12
- 214 00a4 1370     		strb	r3, [r2]
- 124:.\main.c      ****             Status_Ready = TRUE;
- 215              		.loc 1 124 0
- 216 00a6 0122     		mov	r2, #1
- 217 00a8 094B     		ldr	r3, .L13+20
- 218 00aa 1A70     		strb	r2, [r3]
- 219              	.L7:
- 129:.\main.c      ****         if (_BLE_sendStatus)
- 220              		.loc 1 129 0
- 221 00ac 0B4B     		ldr	r3, .L13+32
- 222 00ae 1B78     		ldrb	r3, [r3]
- 223 00b0 002B     		cmp	r3, #0
- 224 00b2 A8D0     		beq	.L11
- 130:.\main.c      ****             _BLE_sendPSOCStatus();
- 225              		.loc 1 130 0
- 226 00b4 FFF7FEFF 		bl	_BLE_sendPSOCStatus
- 227              	.LVL14:
- 228 00b8 A5E7     		b	.L11
- 229              	.L14:
- 230 00ba C046     		.align	2
- 231              	.L13:
- 232 00bc 00000000 		.word	_BLE_sendData
- 233 00c0 00000000 		.word	Status_DataAcquired
- 234 00c4 00000000 		.word	Status_Sending
- 235 00c8 00000000 		.word	Status_NoMoreData
- 236 00cc 00000000 		.word	_BLE_acquireData
- 237 00d0 00000000 		.word	Status_Ready
- 238 00d4 00000000 		.word	Status_Acquiring
- 239 00d8 00000000 		.word	Status_NoMoreSpace
- 240 00dc 00000000 		.word	_BLE_sendStatus
- 241              		.cfi_endproc
- 242              	.LFE35:
- 243              		.size	main, .-main
- 244              		.comm	Status_NoMoreData,1,1
- 245              		.comm	Status_Sending,1,1
- 246              		.comm	Status_DataAcquired,1,1
- 247              		.comm	Status_NoMoreSpace,1,1
- 248              		.comm	Status_Acquiring,1,1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 9
+ 194 002e FFF7FEFF 		bl	TimerDelay_Start
+ 195              	.LVL13:
+  96:.\main.c      ****                     _Timer_DelayDone = FALSE;
+ 196              		.loc 1 96 0
+ 197 0032 3F4B     		ldr	r3, .L19+16
+ 198 0034 1B78     		ldrb	r3, [r3]
+ 199 0036 002B     		cmp	r3, #0
+ 200 0038 56D0     		beq	.L10
+  97:.\main.c      ****                 
+ 201              		.loc 1 97 0
+ 202 003a 0022     		mov	r2, #0
+ 203 003c 3C4B     		ldr	r3, .L19+16
+ 204 003e 1A70     		strb	r2, [r3]
+ 100:.\main.c      ****                         Status_NoMoreData = TRUE;
+ 205              		.loc 1 100 0
+ 206 0040 FFF7FEFF 		bl	_BLE_sendCapSenseData
+ 207              	.LVL14:
+ 208 0044 0228     		cmp	r0, #2
+ 209 0046 03D1     		bne	.L11
+ 101:.\main.c      ****                     else
+ 210              		.loc 1 101 0
+ 211 0048 0122     		mov	r2, #1
+ 212 004a 3A4B     		ldr	r3, .L19+20
+ 213 004c 1A70     		strb	r2, [r3]
+ 214 004e 4BE0     		b	.L10
+ 215              	.L11:
+ 103:.\main.c      ****                 }
+ 216              		.loc 1 103 0
+ 217 0050 0022     		mov	r2, #0
+ 218 0052 384B     		ldr	r3, .L19+20
+ 219 0054 1A70     		strb	r2, [r3]
+ 220 0056 47E0     		b	.L10
+ 221              	.L9:
+ 109:.\main.c      ****                 Status_Ready = FALSE;
+ 222              		.loc 1 109 0
+ 223 0058 374B     		ldr	r3, .L19+24
+ 224 005a 1B78     		ldrb	r3, [r3]
+ 225 005c 002B     		cmp	r3, #0
+ 226 005e 1AD0     		beq	.L12
+ 110:.\main.c      ****                 Status_Acquiring = TRUE;
+ 227              		.loc 1 110 0
+ 228 0060 0022     		mov	r2, #0
+ 229 0062 364B     		ldr	r3, .L19+28
+ 230 0064 1A70     		strb	r2, [r3]
+ 111:.\main.c      ****                 
+ 231              		.loc 1 111 0
+ 232 0066 0132     		add	r2, r2, #1
+ 233 0068 354B     		ldr	r3, .L19+32
+ 234 006a 1A70     		strb	r2, [r3]
+ 114:.\main.c      ****                     Status_NoMoreSpace = TRUE;
+ 235              		.loc 1 114 0
+ 236 006c FFF7FEFF 		bl	_CapSense_Scan
+ 237              	.LVL15:
+ 238 0070 0128     		cmp	r0, #1
+ 239 0072 03D1     		bne	.L13
+ 115:.\main.c      ****                 else
+ 240              		.loc 1 115 0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 10
 
 
- 249              		.comm	Status_Ready,1,1
- 250              		.text
- 251              	.Letext0:
- 252              		.file 2 ".\\_BLE.h"
- 253              		.file 3 ".\\crc.h"
- 254              		.file 4 ".\\_PrISM.h"
- 255              		.file 5 ".\\_CapSense.h"
- 256              		.file 6 "Generated_Source\\PSoC4/BLE_Stack.h"
- 257              		.file 7 ".\\vector.h"
- 258              		.file 8 "Generated_Source\\PSoC4/cytypes.h"
- 259              		.section	.debug_info,"",%progbits
- 260              	.Ldebug_info0:
- 261 0000 C0030000 		.4byte	0x3c0
- 262 0004 0400     		.2byte	0x4
- 263 0006 00000000 		.4byte	.Ldebug_abbrev0
- 264 000a 04       		.byte	0x4
- 265 000b 01       		.uleb128 0x1
- 266 000c D0030000 		.4byte	.LASF93
- 267 0010 01       		.byte	0x1
- 268 0011 74010000 		.4byte	.LASF94
- 269 0015 A0070000 		.4byte	.LASF95
- 270 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 271 001d 00000000 		.4byte	0
- 272 0021 00000000 		.4byte	.Ldebug_line0
- 273 0025 02       		.uleb128 0x2
- 274 0026 01       		.byte	0x1
- 275 0027 06       		.byte	0x6
- 276 0028 20050000 		.4byte	.LASF0
- 277 002c 02       		.uleb128 0x2
- 278 002d 01       		.byte	0x1
- 279 002e 08       		.byte	0x8
- 280 002f B6040000 		.4byte	.LASF1
- 281 0033 02       		.uleb128 0x2
- 282 0034 02       		.byte	0x2
- 283 0035 05       		.byte	0x5
- 284 0036 53000000 		.4byte	.LASF2
- 285 003a 02       		.uleb128 0x2
- 286 003b 02       		.byte	0x2
- 287 003c 07       		.byte	0x7
- 288 003d 3D060000 		.4byte	.LASF3
- 289 0041 02       		.uleb128 0x2
- 290 0042 04       		.byte	0x4
- 291 0043 05       		.byte	0x5
- 292 0044 C5020000 		.4byte	.LASF4
- 293 0048 02       		.uleb128 0x2
- 294 0049 04       		.byte	0x4
- 295 004a 07       		.byte	0x7
- 296 004b C5050000 		.4byte	.LASF5
- 297 004f 02       		.uleb128 0x2
- 298 0050 08       		.byte	0x8
- 299 0051 05       		.byte	0x5
- 300 0052 A0020000 		.4byte	.LASF6
- 301 0056 02       		.uleb128 0x2
- 302 0057 08       		.byte	0x8
- 303 0058 07       		.byte	0x7
- 304 0059 AE020000 		.4byte	.LASF7
- 305 005d 03       		.uleb128 0x3
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 10
+ 241 0074 0122     		mov	r2, #1
+ 242 0076 334B     		ldr	r3, .L19+36
+ 243 0078 1A70     		strb	r2, [r3]
+ 244 007a 02E0     		b	.L14
+ 245              	.L13:
+ 117:.\main.c      ****                 
+ 246              		.loc 1 117 0
+ 247 007c 0022     		mov	r2, #0
+ 248 007e 314B     		ldr	r3, .L19+36
+ 249 0080 1A70     		strb	r2, [r3]
+ 250              	.L14:
+ 120:.\main.c      ****                     Status_Sending = TRUE;
+ 251              		.loc 1 120 0
+ 252 0082 314B     		ldr	r3, .L19+40
+ 253 0084 1B78     		ldrb	r3, [r3]
+ 254 0086 002B     		cmp	r3, #0
+ 255 0088 2ED0     		beq	.L10
+ 121:.\main.c      ****                     _BLE_sendCapSenseData();
+ 256              		.loc 1 121 0
+ 257 008a 0122     		mov	r2, #1
+ 258 008c 274B     		ldr	r3, .L19+12
+ 259 008e 1A70     		strb	r2, [r3]
+ 122:.\main.c      ****                 }
+ 260              		.loc 1 122 0
+ 261 0090 FFF7FEFF 		bl	_BLE_sendCapSenseData
+ 262              	.LVL16:
+ 263 0094 28E0     		b	.L10
+ 264              	.L12:
+ 128:.\main.c      ****                 Status_Acquiring = FALSE;
+ 265              		.loc 1 128 0
+ 266 0096 002B     		cmp	r3, #0
+ 267 0098 0CD1     		bne	.L15
+ 128:.\main.c      ****                 Status_Acquiring = FALSE;
+ 268              		.loc 1 128 0 is_stmt 0 discriminator 1
+ 269 009a FFF7FEFF 		bl	vectorIsEmpty
+ 270              	.LVL17:
+ 271 009e 0028     		cmp	r0, #0
+ 272 00a0 08D1     		bne	.L15
+ 129:.\main.c      ****                 Status_NoMoreSpace = FALSE;
+ 273              		.loc 1 129 0 is_stmt 1
+ 274 00a2 0023     		mov	r3, #0
+ 275 00a4 264A     		ldr	r2, .L19+32
+ 276 00a6 1370     		strb	r3, [r2]
+ 130:.\main.c      ****                 Status_DataAcquired = TRUE;
+ 277              		.loc 1 130 0
+ 278 00a8 264A     		ldr	r2, .L19+36
+ 279 00aa 1370     		strb	r3, [r2]
+ 131:.\main.c      ****             }
+ 280              		.loc 1 131 0
+ 281 00ac 0122     		mov	r2, #1
+ 282 00ae 1E4B     		ldr	r3, .L19+8
+ 283 00b0 1A70     		strb	r2, [r3]
+ 284 00b2 19E0     		b	.L10
+ 285              	.L15:
+ 137:.\main.c      ****                 Status_Acquiring = FALSE;
+ 286              		.loc 1 137 0
+ 287 00b4 1B4B     		ldr	r3, .L19+4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 11
 
 
- 306 005e 04       		.byte	0x4
- 307 005f 05       		.byte	0x5
- 308 0060 696E7400 		.ascii	"int\000"
- 309 0064 02       		.uleb128 0x2
- 310 0065 04       		.byte	0x4
- 311 0066 07       		.byte	0x7
- 312 0067 9D050000 		.4byte	.LASF8
- 313 006b 04       		.uleb128 0x4
- 314 006c 8A040000 		.4byte	.LASF96
- 315 0070 08       		.byte	0x8
- 316 0071 C2       		.byte	0xc2
- 317 0072 2C000000 		.4byte	0x2c
- 318 0076 02       		.uleb128 0x2
- 319 0077 04       		.byte	0x4
- 320 0078 04       		.byte	0x4
- 321 0079 24000000 		.4byte	.LASF9
- 322 007d 02       		.uleb128 0x2
- 323 007e 08       		.byte	0x8
- 324 007f 04       		.byte	0x4
- 325 0080 48070000 		.4byte	.LASF10
- 326 0084 02       		.uleb128 0x2
- 327 0085 01       		.byte	0x1
- 328 0086 08       		.byte	0x8
- 329 0087 8A060000 		.4byte	.LASF11
- 330 008b 02       		.uleb128 0x2
- 331 008c 04       		.byte	0x4
- 332 008d 07       		.byte	0x7
- 333 008e 77000000 		.4byte	.LASF12
- 334 0092 05       		.uleb128 0x5
- 335 0093 01       		.byte	0x1
- 336 0094 06       		.byte	0x6
- 337 0095 9D       		.byte	0x9d
- 338 0096 17020000 		.4byte	0x217
- 339 009a 06       		.uleb128 0x6
- 340 009b F1010000 		.4byte	.LASF13
- 341 009f 00       		.sleb128 0
- 342 00a0 06       		.uleb128 0x6
- 343 00a1 0A010000 		.4byte	.LASF14
- 344 00a5 01       		.sleb128 1
- 345 00a6 06       		.uleb128 0x6
- 346 00a7 08090000 		.4byte	.LASF15
- 347 00ab 02       		.sleb128 2
- 348 00ac 06       		.uleb128 0x6
- 349 00ad FF070000 		.4byte	.LASF16
- 350 00b1 03       		.sleb128 3
- 351 00b2 06       		.uleb128 0x6
- 352 00b3 C0000000 		.4byte	.LASF17
- 353 00b7 04       		.sleb128 4
- 354 00b8 06       		.uleb128 0x6
- 355 00b9 80030000 		.4byte	.LASF18
- 356 00bd 05       		.sleb128 5
- 357 00be 06       		.uleb128 0x6
- 358 00bf 5D080000 		.4byte	.LASF19
- 359 00c3 20       		.sleb128 32
- 360 00c4 06       		.uleb128 0x6
- 361 00c5 D7050000 		.4byte	.LASF20
- 362 00c9 21       		.sleb128 33
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 11
+ 288 00b6 1B78     		ldrb	r3, [r3]
+ 289 00b8 002B     		cmp	r3, #0
+ 290 00ba 15D1     		bne	.L10
+ 137:.\main.c      ****                 Status_Acquiring = FALSE;
+ 291              		.loc 1 137 0 is_stmt 0 discriminator 1
+ 292 00bc 1E4B     		ldr	r3, .L19+24
+ 293 00be 1B78     		ldrb	r3, [r3]
+ 294 00c0 002B     		cmp	r3, #0
+ 295 00c2 11D1     		bne	.L10
+ 137:.\main.c      ****                 Status_Acquiring = FALSE;
+ 296              		.loc 1 137 0 discriminator 2
+ 297 00c4 FFF7FEFF 		bl	vectorIsEmpty
+ 298              	.LVL18:
+ 299 00c8 0028     		cmp	r0, #0
+ 300 00ca 0DD0     		beq	.L10
+ 138:.\main.c      ****                 Status_NoMoreSpace = FALSE;
+ 301              		.loc 1 138 0 is_stmt 1
+ 302 00cc 0023     		mov	r3, #0
+ 303 00ce 1C4A     		ldr	r2, .L19+32
+ 304 00d0 1370     		strb	r3, [r2]
+ 139:.\main.c      ****                 Status_Sending = FALSE;
+ 305              		.loc 1 139 0
+ 306 00d2 1C4A     		ldr	r2, .L19+36
+ 307 00d4 1370     		strb	r3, [r2]
+ 140:.\main.c      ****                 Status_NoMoreData = FALSE;
+ 308              		.loc 1 140 0
+ 309 00d6 154A     		ldr	r2, .L19+12
+ 310 00d8 1370     		strb	r3, [r2]
+ 141:.\main.c      ****                 Status_Ready = TRUE;
+ 311              		.loc 1 141 0
+ 312 00da 164A     		ldr	r2, .L19+20
+ 313 00dc 1370     		strb	r3, [r2]
+ 142:.\main.c      ****                 clearVector();
+ 314              		.loc 1 142 0
+ 315 00de 0122     		mov	r2, #1
+ 316 00e0 164B     		ldr	r3, .L19+28
+ 317 00e2 1A70     		strb	r2, [r3]
+ 143:.\main.c      ****             }
+ 318              		.loc 1 143 0
+ 319 00e4 FFF7FEFF 		bl	clearVector
+ 320              	.LVL19:
+ 321              	.L10:
+ 148:.\main.c      ****                 _BLE_sendStatusFlags();
+ 322              		.loc 1 148 0
+ 323 00e8 184B     		ldr	r3, .L19+44
+ 324 00ea 1B78     		ldrb	r3, [r3]
+ 325 00ec 002B     		cmp	r3, #0
+ 326 00ee 01D0     		beq	.L8
+ 149:.\main.c      ****         }
+ 327              		.loc 1 149 0
+ 328 00f0 FFF7FEFF 		bl	_BLE_sendStatusFlags
+ 329              	.LVL20:
+ 330              	.L8:
+ 153:.\main.c      ****             // Reset the flag.
+ 331              		.loc 1 153 0
+ 332 00f4 164B     		ldr	r3, .L19+48
+ 333 00f6 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 12
 
 
- 363 00ca 06       		.uleb128 0x6
- 364 00cb 00000000 		.4byte	.LASF21
- 365 00cf 22       		.sleb128 34
- 366 00d0 06       		.uleb128 0x6
- 367 00d1 9C030000 		.4byte	.LASF22
- 368 00d5 23       		.sleb128 35
- 369 00d6 06       		.uleb128 0x6
- 370 00d7 81050000 		.4byte	.LASF23
- 371 00db 24       		.sleb128 36
- 372 00dc 06       		.uleb128 0x6
- 373 00dd 5D000000 		.4byte	.LASF24
- 374 00e1 25       		.sleb128 37
- 375 00e2 06       		.uleb128 0x6
- 376 00e3 37030000 		.4byte	.LASF25
- 377 00e7 26       		.sleb128 38
- 378 00e8 06       		.uleb128 0x6
- 379 00e9 18030000 		.4byte	.LASF26
- 380 00ed 27       		.sleb128 39
- 381 00ee 06       		.uleb128 0x6
- 382 00ef 7D090000 		.4byte	.LASF27
- 383 00f3 28       		.sleb128 40
- 384 00f4 06       		.uleb128 0x6
- 385 00f5 0F060000 		.4byte	.LASF28
- 386 00f9 29       		.sleb128 41
- 387 00fa 06       		.uleb128 0x6
- 388 00fb 61060000 		.4byte	.LASF29
- 389 00ff 2A       		.sleb128 42
- 390 0100 06       		.uleb128 0x6
- 391 0101 E8060000 		.4byte	.LASF30
- 392 0105 2B       		.sleb128 43
- 393 0106 06       		.uleb128 0x6
- 394 0107 7D010000 		.4byte	.LASF31
- 395 010b 2C       		.sleb128 44
- 396 010c 06       		.uleb128 0x6
- 397 010d 39000000 		.4byte	.LASF32
- 398 0111 C000     		.sleb128 64
- 399 0113 06       		.uleb128 0x6
- 400 0114 AA050000 		.4byte	.LASF33
- 401 0118 C100     		.sleb128 65
- 402 011a 06       		.uleb128 0x6
- 403 011b CD090000 		.4byte	.LASF34
- 404 011f C200     		.sleb128 66
- 405 0121 06       		.uleb128 0x6
- 406 0122 33010000 		.4byte	.LASF35
- 407 0126 C300     		.sleb128 67
- 408 0128 06       		.uleb128 0x6
- 409 0129 B9080000 		.4byte	.LASF36
- 410 012d C400     		.sleb128 68
- 411 012f 06       		.uleb128 0x6
- 412 0130 81080000 		.4byte	.LASF37
- 413 0134 C500     		.sleb128 69
- 414 0136 06       		.uleb128 0x6
- 415 0137 D5000000 		.4byte	.LASF38
- 416 013b C600     		.sleb128 70
- 417 013d 06       		.uleb128 0x6
- 418 013e 02050000 		.4byte	.LASF39
- 419 0142 C700     		.sleb128 71
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 12
+ 334 00f8 002B     		cmp	r3, #0
+ 335 00fa 05D0     		beq	.L16
+ 155:.\main.c      ****             // Start advertisement.
+ 336              		.loc 1 155 0
+ 337 00fc 0022     		mov	r2, #0
+ 338 00fe 144B     		ldr	r3, .L19+48
+ 339 0100 1A70     		strb	r2, [r3]
+ 157:.\main.c      ****         }
+ 340              		.loc 1 157 0
+ 341 0102 0020     		mov	r0, #0
+ 342 0104 FFF7FEFF 		bl	CyBle_GappStartAdvertisement
+ 343              	.LVL21:
+ 344              	.L16:
+ 162:.\main.c      ****             // Reset the flag.
+ 345              		.loc 1 162 0
+ 346 0108 124B     		ldr	r3, .L19+52
+ 347 010a 1B78     		ldrb	r3, [r3]
+ 348 010c 002B     		cmp	r3, #0
+ 349 010e 00D1     		bne	.LCB262
+ 350 0110 79E7     		b	.L17	@long jump
+ 351              	.LCB262:
+ 164:.\main.c      ****             // Reset everything that needs to.
+ 352              		.loc 1 164 0
+ 353 0112 0022     		mov	r2, #0
+ 354 0114 0F4B     		ldr	r3, .L19+52
+ 355 0116 1A70     		strb	r2, [r3]
+ 166:.\main.c      ****         }
+ 356              		.loc 1 166 0
+ 357 0118 FFF7FEFF 		bl	ResetSystem
+ 358              	.LVL22:
+ 359 011c 73E7     		b	.L17
+ 360              	.L20:
+ 361 011e C046     		.align	2
+ 362              	.L19:
+ 363 0120 00000000 		.word	_BLE_deviceConnected
+ 364 0124 00000000 		.word	_BLE_sendData
+ 365 0128 00000000 		.word	Status_DataAcquired
+ 366 012c 00000000 		.word	Status_Sending
+ 367 0130 00000000 		.word	_Timer_DelayDone
+ 368 0134 00000000 		.word	Status_NoMoreData
+ 369 0138 00000000 		.word	_BLE_acquireData
+ 370 013c 00000000 		.word	Status_Ready
+ 371 0140 00000000 		.word	Status_Acquiring
+ 372 0144 00000000 		.word	Status_NoMoreSpace
+ 373 0148 00000000 		.word	_BLE_sendDataSynchronously
+ 374 014c 00000000 		.word	_BLE_sendStatus
+ 375 0150 00000000 		.word	_BLE_restartAdvertisement
+ 376 0154 00000000 		.word	_BLE_resetNeeded
+ 377              		.cfi_endproc
+ 378              	.LFE35:
+ 379              		.size	main, .-main
+ 380              		.comm	Status_NoMoreData,1,1
+ 381              		.comm	Status_Sending,1,1
+ 382              		.comm	Status_DataAcquired,1,1
+ 383              		.comm	Status_NoMoreSpace,1,1
+ 384              		.comm	Status_Acquiring,1,1
+ 385              		.comm	Status_Ready,1,1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 13
 
 
- 420 0144 06       		.uleb128 0x6
- 421 0145 5A050000 		.4byte	.LASF40
- 422 0149 C800     		.sleb128 72
- 423 014b 06       		.uleb128 0x6
- 424 014c 5A020000 		.4byte	.LASF41
- 425 0150 C900     		.sleb128 73
- 426 0152 06       		.uleb128 0x6
- 427 0153 AB060000 		.4byte	.LASF42
- 428 0157 CA00     		.sleb128 74
- 429 0159 06       		.uleb128 0x6
- 430 015a A1010000 		.4byte	.LASF43
- 431 015e CB00     		.sleb128 75
- 432 0160 06       		.uleb128 0x6
- 433 0161 2C050000 		.4byte	.LASF44
- 434 0165 CC00     		.sleb128 76
- 435 0167 06       		.uleb128 0x6
- 436 0168 86020000 		.4byte	.LASF45
- 437 016c CD00     		.sleb128 77
- 438 016e 06       		.uleb128 0x6
- 439 016f A2000000 		.4byte	.LASF46
- 440 0173 CE00     		.sleb128 78
- 441 0175 06       		.uleb128 0x6
- 442 0176 C4040000 		.4byte	.LASF47
- 443 017a CF00     		.sleb128 79
- 444 017c 06       		.uleb128 0x6
- 445 017d 5E090000 		.4byte	.LASF48
- 446 0181 D000     		.sleb128 80
- 447 0183 06       		.uleb128 0x6
- 448 0184 C9060000 		.4byte	.LASF49
- 449 0188 D100     		.sleb128 81
- 450 018a 06       		.uleb128 0x6
- 451 018b 5F030000 		.4byte	.LASF50
- 452 018f D200     		.sleb128 82
- 453 0191 06       		.uleb128 0x6
- 454 0192 CE020000 		.4byte	.LASF51
- 455 0196 D300     		.sleb128 83
- 456 0198 06       		.uleb128 0x6
- 457 0199 D0010000 		.4byte	.LASF52
- 458 019d D400     		.sleb128 84
- 459 019f 06       		.uleb128 0x6
- 460 01a0 A9090000 		.4byte	.LASF53
- 461 01a4 D500     		.sleb128 85
- 462 01a6 06       		.uleb128 0x6
- 463 01a7 3C090000 		.4byte	.LASF54
- 464 01ab D600     		.sleb128 86
- 465 01ad 06       		.uleb128 0x6
- 466 01ae EF020000 		.4byte	.LASF55
- 467 01b2 D700     		.sleb128 87
- 468 01b4 06       		.uleb128 0x6
- 469 01b5 90040000 		.4byte	.LASF56
- 470 01b9 F000     		.sleb128 112
- 471 01bb 06       		.uleb128 0x6
- 472 01bc 37080000 		.4byte	.LASF57
- 473 01c0 F100     		.sleb128 113
- 474 01c2 06       		.uleb128 0x6
- 475 01c3 8F060000 		.4byte	.LASF58
- 476 01c7 F200     		.sleb128 114
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 13
+ 386              		.text
+ 387              	.Letext0:
+ 388              		.file 2 "Generated_Source\\PSoC4/BLE_Stack.h"
+ 389              		.file 3 "Generated_Source\\PSoC4/cytypes.h"
+ 390              		.file 4 ".\\_Timer.h"
+ 391              		.file 5 ".\\_BLE.h"
+ 392              		.file 6 ".\\crc.h"
+ 393              		.file 7 ".\\_PrISM.h"
+ 394              		.file 8 ".\\_CapSense.h"
+ 395              		.file 9 ".\\_Watchdog.h"
+ 396              		.file 10 ".\\vector.h"
+ 397              		.file 11 "Generated_Source\\PSoC4/TimerDelay.h"
+ 398              		.file 12 "Generated_Source\\PSoC4/BLE.h"
+ 399              		.section	.debug_info,"",%progbits
+ 400              	.Ldebug_info0:
+ 401 0000 50050000 		.4byte	0x550
+ 402 0004 0400     		.2byte	0x4
+ 403 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 404 000a 04       		.byte	0x4
+ 405 000b 01       		.uleb128 0x1
+ 406 000c A4090000 		.4byte	.LASF133
+ 407 0010 01       		.byte	0x1
+ 408 0011 1D0B0000 		.4byte	.LASF134
+ 409 0015 6E010000 		.4byte	.LASF135
+ 410 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 411 001d 00000000 		.4byte	0
+ 412 0021 00000000 		.4byte	.Ldebug_line0
+ 413 0025 02       		.uleb128 0x2
+ 414 0026 01       		.byte	0x1
+ 415 0027 06       		.byte	0x6
+ 416 0028 61020000 		.4byte	.LASF0
+ 417 002c 02       		.uleb128 0x2
+ 418 002d 01       		.byte	0x1
+ 419 002e 08       		.byte	0x8
+ 420 002f 96090000 		.4byte	.LASF1
+ 421 0033 02       		.uleb128 0x2
+ 422 0034 02       		.byte	0x2
+ 423 0035 05       		.byte	0x5
+ 424 0036 430A0000 		.4byte	.LASF2
+ 425 003a 02       		.uleb128 0x2
+ 426 003b 02       		.byte	0x2
+ 427 003c 07       		.byte	0x7
+ 428 003d 4D0C0000 		.4byte	.LASF3
+ 429 0041 02       		.uleb128 0x2
+ 430 0042 04       		.byte	0x4
+ 431 0043 05       		.byte	0x5
+ 432 0044 1D010000 		.4byte	.LASF4
+ 433 0048 02       		.uleb128 0x2
+ 434 0049 04       		.byte	0x4
+ 435 004a 07       		.byte	0x7
+ 436 004b 6B050000 		.4byte	.LASF5
+ 437 004f 02       		.uleb128 0x2
+ 438 0050 08       		.byte	0x8
+ 439 0051 05       		.byte	0x5
+ 440 0052 53020000 		.4byte	.LASF6
+ 441 0056 02       		.uleb128 0x2
+ 442 0057 08       		.byte	0x8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 14
 
 
- 477 01c9 06       		.uleb128 0x6
- 478 01ca 08020000 		.4byte	.LASF59
- 479 01ce F300     		.sleb128 115
- 480 01d0 06       		.uleb128 0x6
- 481 01d1 5E040000 		.4byte	.LASF60
- 482 01d5 F400     		.sleb128 116
- 483 01d7 06       		.uleb128 0x6
- 484 01d8 EE050000 		.4byte	.LASF61
- 485 01dc F500     		.sleb128 117
- 486 01de 06       		.uleb128 0x6
- 487 01df 26020000 		.4byte	.LASF62
- 488 01e3 F600     		.sleb128 118
- 489 01e5 06       		.uleb128 0x6
- 490 01e6 18080000 		.4byte	.LASF63
- 491 01ea F700     		.sleb128 119
- 492 01ec 06       		.uleb128 0x6
- 493 01ed 25070000 		.4byte	.LASF64
- 494 01f1 F800     		.sleb128 120
- 495 01f3 06       		.uleb128 0x6
- 496 01f4 71070000 		.4byte	.LASF65
- 497 01f8 F900     		.sleb128 121
- 498 01fa 06       		.uleb128 0x6
- 499 01fb E4080000 		.4byte	.LASF66
- 500 01ff FA00     		.sleb128 122
- 501 0201 06       		.uleb128 0x6
- 502 0202 07070000 		.4byte	.LASF67
- 503 0206 FA01     		.sleb128 250
- 504 0208 06       		.uleb128 0x6
- 505 0209 E3040000 		.4byte	.LASF68
- 506 020d FB01     		.sleb128 251
- 507 020f 06       		.uleb128 0x6
- 508 0210 7C040000 		.4byte	.LASF69
- 509 0214 FF01     		.sleb128 255
- 510 0216 00       		.byte	0
- 511 0217 07       		.uleb128 0x7
- 512 0218 50060000 		.4byte	.LASF70
- 513 021c 01       		.byte	0x1
- 514 021d 97       		.byte	0x97
- 515 021e 00000000 		.4byte	.LFB36
- 516 0222 50000000 		.4byte	.LFE36-.LFB36
- 517 0226 01       		.uleb128 0x1
- 518 0227 9C       		.byte	0x9c
- 519 0228 5A020000 		.4byte	0x25a
- 520 022c 08       		.uleb128 0x8
- 521 022d 24000000 		.4byte	.LVL0
- 522 0231 55030000 		.4byte	0x355
- 523 0235 08       		.uleb128 0x8
- 524 0236 28000000 		.4byte	.LVL1
- 525 023a 5C030000 		.4byte	0x35c
- 526 023e 08       		.uleb128 0x8
- 527 023f 2C000000 		.4byte	.LVL2
- 528 0243 69030000 		.4byte	0x369
- 529 0247 08       		.uleb128 0x8
- 530 0248 30000000 		.4byte	.LVL3
- 531 024c 70030000 		.4byte	0x370
- 532 0250 08       		.uleb128 0x8
- 533 0251 34000000 		.4byte	.LVL4
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 14
+ 443 0058 07       		.byte	0x7
+ 444 0059 BF040000 		.4byte	.LASF7
+ 445 005d 03       		.uleb128 0x3
+ 446 005e 04       		.byte	0x4
+ 447 005f 05       		.byte	0x5
+ 448 0060 696E7400 		.ascii	"int\000"
+ 449 0064 02       		.uleb128 0x2
+ 450 0065 04       		.byte	0x4
+ 451 0066 07       		.byte	0x7
+ 452 0067 880B0000 		.4byte	.LASF8
+ 453 006b 04       		.uleb128 0x4
+ 454 006c C3030000 		.4byte	.LASF98
+ 455 0070 03       		.byte	0x3
+ 456 0071 C2       		.byte	0xc2
+ 457 0072 2C000000 		.4byte	0x2c
+ 458 0076 02       		.uleb128 0x2
+ 459 0077 04       		.byte	0x4
+ 460 0078 04       		.byte	0x4
+ 461 0079 07090000 		.4byte	.LASF9
+ 462 007d 02       		.uleb128 0x2
+ 463 007e 08       		.byte	0x8
+ 464 007f 04       		.byte	0x4
+ 465 0080 E8030000 		.4byte	.LASF10
+ 466 0084 02       		.uleb128 0x2
+ 467 0085 01       		.byte	0x1
+ 468 0086 08       		.byte	0x8
+ 469 0087 260B0000 		.4byte	.LASF11
+ 470 008b 02       		.uleb128 0x2
+ 471 008c 04       		.byte	0x4
+ 472 008d 07       		.byte	0x7
+ 473 008e D9070000 		.4byte	.LASF12
+ 474 0092 05       		.uleb128 0x5
+ 475 0093 01       		.byte	0x1
+ 476 0094 02       		.byte	0x2
+ 477 0095 9D       		.byte	0x9d
+ 478 0096 17020000 		.4byte	0x217
+ 479 009a 06       		.uleb128 0x6
+ 480 009b 34060000 		.4byte	.LASF13
+ 481 009f 00       		.sleb128 0
+ 482 00a0 06       		.uleb128 0x6
+ 483 00a1 6D020000 		.4byte	.LASF14
+ 484 00a5 01       		.sleb128 1
+ 485 00a6 06       		.uleb128 0x6
+ 486 00a7 0B010000 		.4byte	.LASF15
+ 487 00ab 02       		.sleb128 2
+ 488 00ac 06       		.uleb128 0x6
+ 489 00ad 340C0000 		.4byte	.LASF16
+ 490 00b1 03       		.sleb128 3
+ 491 00b2 06       		.uleb128 0x6
+ 492 00b3 CD010000 		.4byte	.LASF17
+ 493 00b7 04       		.sleb128 4
+ 494 00b8 06       		.uleb128 0x6
+ 495 00b9 23000000 		.4byte	.LASF18
+ 496 00bd 05       		.sleb128 5
+ 497 00be 06       		.uleb128 0x6
+ 498 00bf BE0D0000 		.4byte	.LASF19
+ 499 00c3 20       		.sleb128 32
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 15
 
 
- 534 0255 77030000 		.4byte	0x377
- 535 0259 00       		.byte	0
- 536 025a 09       		.uleb128 0x9
- 537 025b 9D000000 		.4byte	.LASF71
- 538 025f 01       		.byte	0x1
- 539 0260 43       		.byte	0x43
- 540 0261 5D000000 		.4byte	0x5d
- 541 0265 00000000 		.4byte	.LFB35
- 542 0269 E0000000 		.4byte	.LFE35-.LFB35
- 543 026d 01       		.uleb128 0x1
- 544 026e 9C       		.byte	0x9c
- 545 026f CE020000 		.4byte	0x2ce
- 546 0273 08       		.uleb128 0x8
- 547 0274 06000000 		.4byte	.LVL5
- 548 0278 17020000 		.4byte	0x217
- 549 027c 08       		.uleb128 0x8
- 550 027d 0A000000 		.4byte	.LVL6
- 551 0281 7E030000 		.4byte	0x37e
- 552 0285 08       		.uleb128 0x8
- 553 0286 0E000000 		.4byte	.LVL7
- 554 028a 86030000 		.4byte	0x386
- 555 028e 08       		.uleb128 0x8
- 556 028f 12000000 		.4byte	.LVL8
- 557 0293 8D030000 		.4byte	0x38d
- 558 0297 08       		.uleb128 0x8
- 559 0298 2A000000 		.4byte	.LVL9
- 560 029c 94030000 		.4byte	0x394
- 561 02a0 08       		.uleb128 0x8
- 562 02a1 38000000 		.4byte	.LVL10
- 563 02a5 9F030000 		.4byte	0x39f
- 564 02a9 08       		.uleb128 0x8
- 565 02aa 5A000000 		.4byte	.LVL11
- 566 02ae A6030000 		.4byte	0x3a6
- 567 02b2 08       		.uleb128 0x8
- 568 02b3 76000000 		.4byte	.LVL12
- 569 02b7 B1030000 		.4byte	0x3b1
- 570 02bb 08       		.uleb128 0x8
- 571 02bc 98000000 		.4byte	.LVL13
- 572 02c0 B1030000 		.4byte	0x3b1
- 573 02c4 08       		.uleb128 0x8
- 574 02c5 B8000000 		.4byte	.LVL14
- 575 02c9 BC030000 		.4byte	0x3bc
- 576 02cd 00       		.byte	0
- 577 02ce 0A       		.uleb128 0xa
- 578 02cf D7080000 		.4byte	.LASF72
- 579 02d3 01       		.byte	0x1
- 580 02d4 26       		.byte	0x26
- 581 02d5 6B000000 		.4byte	0x6b
- 582 02d9 05       		.uleb128 0x5
- 583 02da 03       		.byte	0x3
- 584 02db 00000000 		.4byte	Status_Ready
- 585 02df 0A       		.uleb128 0xa
- 586 02e0 A8080000 		.4byte	.LASF73
- 587 02e4 01       		.byte	0x1
- 588 02e5 27       		.byte	0x27
- 589 02e6 6B000000 		.4byte	0x6b
- 590 02ea 05       		.uleb128 0x5
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 15
+ 500 00c4 06       		.uleb128 0x6
+ 501 00c5 BF020000 		.4byte	.LASF20
+ 502 00c9 21       		.sleb128 33
+ 503 00ca 06       		.uleb128 0x6
+ 504 00cb 69060000 		.4byte	.LASF21
+ 505 00cf 22       		.sleb128 34
+ 506 00d0 06       		.uleb128 0x6
+ 507 00d1 E2060000 		.4byte	.LASF22
+ 508 00d5 23       		.sleb128 35
+ 509 00d6 06       		.uleb128 0x6
+ 510 00d7 4A080000 		.4byte	.LASF23
+ 511 00db 24       		.sleb128 36
+ 512 00dc 06       		.uleb128 0x6
+ 513 00dd F7070000 		.4byte	.LASF24
+ 514 00e1 25       		.sleb128 37
+ 515 00e2 06       		.uleb128 0x6
+ 516 00e3 5A030000 		.4byte	.LASF25
+ 517 00e7 26       		.sleb128 38
+ 518 00e8 06       		.uleb128 0x6
+ 519 00e9 8D060000 		.4byte	.LASF26
+ 520 00ed 27       		.sleb128 39
+ 521 00ee 06       		.uleb128 0x6
+ 522 00ef 4B0B0000 		.4byte	.LASF27
+ 523 00f3 28       		.sleb128 40
+ 524 00f4 06       		.uleb128 0x6
+ 525 00f5 36020000 		.4byte	.LASF28
+ 526 00f9 29       		.sleb128 41
+ 527 00fa 06       		.uleb128 0x6
+ 528 00fb 83000000 		.4byte	.LASF29
+ 529 00ff 2A       		.sleb128 42
+ 530 0100 06       		.uleb128 0x6
+ 531 0101 E2010000 		.4byte	.LASF30
+ 532 0105 2B       		.sleb128 43
+ 533 0106 06       		.uleb128 0x6
+ 534 0107 4E0D0000 		.4byte	.LASF31
+ 535 010b 2C       		.sleb128 44
+ 536 010c 06       		.uleb128 0x6
+ 537 010d 5B040000 		.4byte	.LASF32
+ 538 0111 C000     		.sleb128 64
+ 539 0113 06       		.uleb128 0x6
+ 540 0114 1A070000 		.4byte	.LASF33
+ 541 0118 C100     		.sleb128 65
+ 542 011a 06       		.uleb128 0x6
+ 543 011b E20D0000 		.4byte	.LASF34
+ 544 011f C200     		.sleb128 66
+ 545 0121 06       		.uleb128 0x6
+ 546 0122 A5030000 		.4byte	.LASF35
+ 547 0126 C300     		.sleb128 67
+ 548 0128 06       		.uleb128 0x6
+ 549 0129 97050000 		.4byte	.LASF36
+ 550 012d C400     		.sleb128 68
+ 551 012f 06       		.uleb128 0x6
+ 552 0130 D1080000 		.4byte	.LASF37
+ 553 0134 C500     		.sleb128 69
+ 554 0136 06       		.uleb128 0x6
+ 555 0137 9C070000 		.4byte	.LASF38
+ 556 013b C600     		.sleb128 70
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 16
 
 
- 591 02eb 03       		.byte	0x3
- 592 02ec 00000000 		.4byte	Status_Acquiring
- 593 02f0 0A       		.uleb128 0xa
- 594 02f1 47020000 		.4byte	.LASF74
- 595 02f5 01       		.byte	0x1
- 596 02f6 28       		.byte	0x28
- 597 02f7 6B000000 		.4byte	0x6b
- 598 02fb 05       		.uleb128 0x5
- 599 02fc 03       		.byte	0x3
- 600 02fd 00000000 		.4byte	Status_NoMoreSpace
- 601 0301 0A       		.uleb128 0xa
- 602 0302 46050000 		.4byte	.LASF75
- 603 0306 01       		.byte	0x1
- 604 0307 29       		.byte	0x29
- 605 0308 6B000000 		.4byte	0x6b
- 606 030c 05       		.uleb128 0x5
- 607 030d 03       		.byte	0x3
- 608 030e 00000000 		.4byte	Status_DataAcquired
- 609 0312 0A       		.uleb128 0xa
- 610 0313 51010000 		.4byte	.LASF76
- 611 0317 01       		.byte	0x1
- 612 0318 2A       		.byte	0x2a
- 613 0319 6B000000 		.4byte	0x6b
- 614 031d 05       		.uleb128 0x5
- 615 031e 03       		.byte	0x3
- 616 031f 00000000 		.4byte	Status_Sending
- 617 0323 0A       		.uleb128 0xa
- 618 0324 2A090000 		.4byte	.LASF77
- 619 0328 01       		.byte	0x1
- 620 0329 2B       		.byte	0x2b
- 621 032a 6B000000 		.4byte	0x6b
- 622 032e 05       		.uleb128 0x5
- 623 032f 03       		.byte	0x3
- 624 0330 00000000 		.4byte	Status_NoMoreData
- 625 0334 0B       		.uleb128 0xb
- 626 0335 C2030000 		.4byte	.LASF78
- 627 0339 02       		.byte	0x2
- 628 033a 4A       		.byte	0x4a
- 629 033b 6B000000 		.4byte	0x6b
- 630 033f 0B       		.uleb128 0xb
- 631 0340 2C060000 		.4byte	.LASF79
- 632 0344 02       		.byte	0x2
- 633 0345 4B       		.byte	0x4b
- 634 0346 6B000000 		.4byte	0x6b
- 635 034a 0B       		.uleb128 0xb
- 636 034b C0010000 		.4byte	.LASF80
- 637 034f 02       		.byte	0x2
- 638 0350 4C       		.byte	0x4c
- 639 0351 6B000000 		.4byte	0x6b
- 640 0355 0C       		.uleb128 0xc
- 641 0356 68070000 		.4byte	.LASF81
- 642 035a 03       		.byte	0x3
- 643 035b 33       		.byte	0x33
- 644 035c 0D       		.uleb128 0xd
- 645 035d 5C070000 		.4byte	.LASF97
- 646 0361 07       		.byte	0x7
- 647 0362 26       		.byte	0x26
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 16
+ 557 013d 06       		.uleb128 0x6
+ 558 013e 4B060000 		.4byte	.LASF39
+ 559 0142 C700     		.sleb128 71
+ 560 0144 06       		.uleb128 0x6
+ 561 0145 120D0000 		.4byte	.LASF40
+ 562 0149 C800     		.sleb128 72
+ 563 014b 06       		.uleb128 0x6
+ 564 014c FA020000 		.4byte	.LASF41
+ 565 0150 C900     		.sleb128 73
+ 566 0152 06       		.uleb128 0x6
+ 567 0153 B30C0000 		.4byte	.LASF42
+ 568 0157 CA00     		.sleb128 74
+ 569 0159 06       		.uleb128 0x6
+ 570 015a CD000000 		.4byte	.LASF43
+ 571 015e CB00     		.sleb128 75
+ 572 0160 06       		.uleb128 0x6
+ 573 0161 7D050000 		.4byte	.LASF44
+ 574 0165 CC00     		.sleb128 76
+ 575 0167 06       		.uleb128 0x6
+ 576 0168 11080000 		.4byte	.LASF45
+ 577 016c CD00     		.sleb128 77
+ 578 016e 06       		.uleb128 0x6
+ 579 016f 2D030000 		.4byte	.LASF46
+ 580 0173 CE00     		.sleb128 78
+ 581 0175 06       		.uleb128 0x6
+ 582 0176 AA0A0000 		.4byte	.LASF47
+ 583 017a CF00     		.sleb128 79
+ 584 017c 06       		.uleb128 0x6
+ 585 017d EC000000 		.4byte	.LASF48
+ 586 0181 D000     		.sleb128 80
+ 587 0183 06       		.uleb128 0x6
+ 588 0184 C9030000 		.4byte	.LASF49
+ 589 0188 D100     		.sleb128 81
+ 590 018a 06       		.uleb128 0x6
+ 591 018b 79080000 		.4byte	.LASF50
+ 592 018f D200     		.sleb128 82
+ 593 0191 06       		.uleb128 0x6
+ 594 0192 AC060000 		.4byte	.LASF51
+ 595 0196 D300     		.sleb128 83
+ 596 0198 06       		.uleb128 0x6
+ 597 0199 DE0A0000 		.4byte	.LASF52
+ 598 019d D400     		.sleb128 84
+ 599 019f 06       		.uleb128 0x6
+ 600 01a0 B5050000 		.4byte	.LASF53
+ 601 01a4 D500     		.sleb128 85
+ 602 01a6 06       		.uleb128 0x6
+ 603 01a7 D6040000 		.4byte	.LASF54
+ 604 01ab D600     		.sleb128 86
+ 605 01ad 06       		.uleb128 0x6
+ 606 01ae 950B0000 		.4byte	.LASF55
+ 607 01b2 D700     		.sleb128 87
+ 608 01b4 06       		.uleb128 0x6
+ 609 01b5 75040000 		.4byte	.LASF56
+ 610 01b9 F000     		.sleb128 112
+ 611 01bb 06       		.uleb128 0x6
+ 612 01bc 930D0000 		.4byte	.LASF57
+ 613 01c0 F100     		.sleb128 113
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 17
 
 
- 648 0363 69030000 		.4byte	0x369
- 649 0367 0E       		.uleb128 0xe
- 650 0368 00       		.byte	0
- 651 0369 0C       		.uleb128 0xc
- 652 036a 94070000 		.4byte	.LASF82
- 653 036e 04       		.byte	0x4
- 654 036f 26       		.byte	0x26
- 655 0370 0C       		.uleb128 0xc
- 656 0371 80000000 		.4byte	.LASF83
- 657 0375 05       		.byte	0x5
- 658 0376 22       		.byte	0x22
- 659 0377 0C       		.uleb128 0xc
- 660 0378 9F090000 		.4byte	.LASF84
- 661 037c 02       		.byte	0x2
- 662 037d 52       		.byte	0x52
- 663 037e 0F       		.uleb128 0xf
- 664 037f F6000000 		.4byte	.LASF85
- 665 0383 06       		.byte	0x6
- 666 0384 9304     		.2byte	0x493
- 667 0386 0C       		.uleb128 0xc
- 668 0387 1A090000 		.4byte	.LASF86
- 669 038b 02       		.byte	0x2
- 670 038c 54       		.byte	0x54
- 671 038d 0C       		.uleb128 0xc
- 672 038e 73020000 		.4byte	.LASF87
- 673 0392 02       		.byte	0x2
- 674 0393 55       		.byte	0x55
- 675 0394 10       		.uleb128 0x10
- 676 0395 1D010000 		.4byte	.LASF89
- 677 0399 02       		.byte	0x2
- 678 039a 56       		.byte	0x56
- 679 039b 6B000000 		.4byte	0x6b
- 680 039f 0C       		.uleb128 0xc
- 681 03a0 4F070000 		.4byte	.LASF88
- 682 03a4 07       		.byte	0x7
- 683 03a5 2C       		.byte	0x2c
- 684 03a6 10       		.uleb128 0x10
- 685 03a7 2A000000 		.4byte	.LASF90
- 686 03ab 05       		.byte	0x5
- 687 03ac 23       		.byte	0x23
- 688 03ad 6B000000 		.4byte	0x6b
- 689 03b1 10       		.uleb128 0x10
- 690 03b2 8F000000 		.4byte	.LASF91
- 691 03b6 07       		.byte	0x7
- 692 03b7 2A       		.byte	0x2a
- 693 03b8 6B000000 		.4byte	0x6b
- 694 03bc 0C       		.uleb128 0xc
- 695 03bd 60010000 		.4byte	.LASF92
- 696 03c1 02       		.byte	0x2
- 697 03c2 57       		.byte	0x57
- 698 03c3 00       		.byte	0
- 699              		.section	.debug_abbrev,"",%progbits
- 700              	.Ldebug_abbrev0:
- 701 0000 01       		.uleb128 0x1
- 702 0001 11       		.uleb128 0x11
- 703 0002 01       		.byte	0x1
- 704 0003 25       		.uleb128 0x25
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 17
+ 614 01c2 06       		.uleb128 0x6
+ 615 01c3 41070000 		.4byte	.LASF58
+ 616 01c7 F200     		.sleb128 114
+ 617 01c9 06       		.uleb128 0x6
+ 618 01ca 7E070000 		.4byte	.LASF59
+ 619 01ce F300     		.sleb128 115
+ 620 01d0 06       		.uleb128 0x6
+ 621 01d1 B3080000 		.4byte	.LASF60
+ 622 01d5 F400     		.sleb128 116
+ 623 01d7 06       		.uleb128 0x6
+ 624 01d8 720D0000 		.4byte	.LASF61
+ 625 01dc F500     		.sleb128 117
+ 626 01de 06       		.uleb128 0x6
+ 627 01df AC000000 		.4byte	.LASF62
+ 628 01e3 F600     		.sleb128 118
+ 629 01e5 06       		.uleb128 0x6
+ 630 01e6 3F000000 		.4byte	.LASF63
+ 631 01ea F700     		.sleb128 119
+ 632 01ec 06       		.uleb128 0x6
+ 633 01ed 00000000 		.4byte	.LASF64
+ 634 01f1 F800     		.sleb128 120
+ 635 01f3 06       		.uleb128 0x6
+ 636 01f4 BE0B0000 		.4byte	.LASF65
+ 637 01f8 F900     		.sleb128 121
+ 638 01fa 06       		.uleb128 0x6
+ 639 01fb 9B040000 		.4byte	.LASF66
+ 640 01ff FA00     		.sleb128 122
+ 641 0201 06       		.uleb128 0x6
+ 642 0202 01020000 		.4byte	.LASF67
+ 643 0206 FA01     		.sleb128 250
+ 644 0208 06       		.uleb128 0x6
+ 645 0209 23050000 		.4byte	.LASF68
+ 646 020d FB01     		.sleb128 251
+ 647 020f 06       		.uleb128 0x6
+ 648 0210 3E040000 		.4byte	.LASF69
+ 649 0214 FF01     		.sleb128 255
+ 650 0216 00       		.byte	0
+ 651 0217 07       		.uleb128 0x7
+ 652 0218 02       		.byte	0x2
+ 653 0219 02       		.byte	0x2
+ 654 021a 0202     		.2byte	0x202
+ 655 021c CE020000 		.4byte	0x2ce
+ 656 0220 06       		.uleb128 0x6
+ 657 0221 4C040000 		.4byte	.LASF70
+ 658 0225 00       		.sleb128 0
+ 659 0226 06       		.uleb128 0x6
+ 660 0227 EF030000 		.4byte	.LASF71
+ 661 022b 01       		.sleb128 1
+ 662 022c 06       		.uleb128 0x6
+ 663 022d 16060000 		.4byte	.LASF72
+ 664 0231 02       		.sleb128 2
+ 665 0232 06       		.uleb128 0x6
+ 666 0233 5E000000 		.4byte	.LASF73
+ 667 0237 03       		.sleb128 3
+ 668 0238 06       		.uleb128 0x6
+ 669 0239 4B010000 		.4byte	.LASF74
+ 670 023d 04       		.sleb128 4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 18
 
 
- 705 0004 0E       		.uleb128 0xe
- 706 0005 13       		.uleb128 0x13
- 707 0006 0B       		.uleb128 0xb
- 708 0007 03       		.uleb128 0x3
- 709 0008 0E       		.uleb128 0xe
- 710 0009 1B       		.uleb128 0x1b
- 711 000a 0E       		.uleb128 0xe
- 712 000b 55       		.uleb128 0x55
- 713 000c 17       		.uleb128 0x17
- 714 000d 11       		.uleb128 0x11
- 715 000e 01       		.uleb128 0x1
- 716 000f 10       		.uleb128 0x10
- 717 0010 17       		.uleb128 0x17
- 718 0011 00       		.byte	0
- 719 0012 00       		.byte	0
- 720 0013 02       		.uleb128 0x2
- 721 0014 24       		.uleb128 0x24
- 722 0015 00       		.byte	0
- 723 0016 0B       		.uleb128 0xb
- 724 0017 0B       		.uleb128 0xb
- 725 0018 3E       		.uleb128 0x3e
- 726 0019 0B       		.uleb128 0xb
- 727 001a 03       		.uleb128 0x3
- 728 001b 0E       		.uleb128 0xe
- 729 001c 00       		.byte	0
- 730 001d 00       		.byte	0
- 731 001e 03       		.uleb128 0x3
- 732 001f 24       		.uleb128 0x24
- 733 0020 00       		.byte	0
- 734 0021 0B       		.uleb128 0xb
- 735 0022 0B       		.uleb128 0xb
- 736 0023 3E       		.uleb128 0x3e
- 737 0024 0B       		.uleb128 0xb
- 738 0025 03       		.uleb128 0x3
- 739 0026 08       		.uleb128 0x8
- 740 0027 00       		.byte	0
- 741 0028 00       		.byte	0
- 742 0029 04       		.uleb128 0x4
- 743 002a 16       		.uleb128 0x16
- 744 002b 00       		.byte	0
- 745 002c 03       		.uleb128 0x3
- 746 002d 0E       		.uleb128 0xe
- 747 002e 3A       		.uleb128 0x3a
- 748 002f 0B       		.uleb128 0xb
- 749 0030 3B       		.uleb128 0x3b
- 750 0031 0B       		.uleb128 0xb
- 751 0032 49       		.uleb128 0x49
- 752 0033 13       		.uleb128 0x13
- 753 0034 00       		.byte	0
- 754 0035 00       		.byte	0
- 755 0036 05       		.uleb128 0x5
- 756 0037 04       		.uleb128 0x4
- 757 0038 01       		.byte	0x1
- 758 0039 0B       		.uleb128 0xb
- 759 003a 0B       		.uleb128 0xb
- 760 003b 3A       		.uleb128 0x3a
- 761 003c 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 18
+ 671 023e 06       		.uleb128 0x6
+ 672 023f F8040000 		.4byte	.LASF75
+ 673 0243 05       		.sleb128 5
+ 674 0244 06       		.uleb128 0x6
+ 675 0245 710A0000 		.4byte	.LASF76
+ 676 0249 06       		.sleb128 6
+ 677 024a 06       		.uleb128 0x6
+ 678 024b A2020000 		.4byte	.LASF77
+ 679 024f 07       		.sleb128 7
+ 680 0250 06       		.uleb128 0x6
+ 681 0251 FF0A0000 		.4byte	.LASF78
+ 682 0255 08       		.sleb128 8
+ 683 0256 06       		.uleb128 0x6
+ 684 0257 390D0000 		.4byte	.LASF79
+ 685 025b 09       		.sleb128 9
+ 686 025c 06       		.uleb128 0x6
+ 687 025d 59090000 		.4byte	.LASF80
+ 688 0261 0A       		.sleb128 10
+ 689 0262 06       		.uleb128 0x6
+ 690 0263 2B0B0000 		.4byte	.LASF81
+ 691 0267 0B       		.sleb128 11
+ 692 0268 06       		.uleb128 0x6
+ 693 0269 1F020000 		.4byte	.LASF82
+ 694 026d 0C       		.sleb128 12
+ 695 026e 06       		.uleb128 0x6
+ 696 026f 26010000 		.4byte	.LASF83
+ 697 0273 0D       		.sleb128 13
+ 698 0274 06       		.uleb128 0x6
+ 699 0275 42050000 		.4byte	.LASF84
+ 700 0279 0E       		.sleb128 14
+ 701 027a 06       		.uleb128 0x6
+ 702 027b ED0C0000 		.4byte	.LASF85
+ 703 027f 0F       		.sleb128 15
+ 704 0280 06       		.uleb128 0x6
+ 705 0281 060C0000 		.4byte	.LASF86
+ 706 0285 10       		.sleb128 16
+ 707 0286 06       		.uleb128 0x6
+ 708 0287 D9050000 		.4byte	.LASF87
+ 709 028b 11       		.sleb128 17
+ 710 028c 06       		.uleb128 0x6
+ 711 028d 82030000 		.4byte	.LASF88
+ 712 0291 12       		.sleb128 18
+ 713 0292 06       		.uleb128 0x6
+ 714 0293 000E0000 		.4byte	.LASF89
+ 715 0297 13       		.sleb128 19
+ 716 0298 06       		.uleb128 0x6
+ 717 0299 80020000 		.4byte	.LASF90
+ 718 029d 27       		.sleb128 39
+ 719 029e 06       		.uleb128 0x6
+ 720 029f E10B0000 		.4byte	.LASF91
+ 721 02a3 28       		.sleb128 40
+ 722 02a4 06       		.uleb128 0x6
+ 723 02a5 D10C0000 		.4byte	.LASF92
+ 724 02a9 29       		.sleb128 41
+ 725 02aa 06       		.uleb128 0x6
+ 726 02ab 6E070000 		.4byte	.LASF93
+ 727 02af FF01     		.sleb128 255
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 19
 
 
- 762 003d 3B       		.uleb128 0x3b
- 763 003e 0B       		.uleb128 0xb
- 764 003f 01       		.uleb128 0x1
- 765 0040 13       		.uleb128 0x13
- 766 0041 00       		.byte	0
- 767 0042 00       		.byte	0
- 768 0043 06       		.uleb128 0x6
- 769 0044 28       		.uleb128 0x28
- 770 0045 00       		.byte	0
- 771 0046 03       		.uleb128 0x3
- 772 0047 0E       		.uleb128 0xe
- 773 0048 1C       		.uleb128 0x1c
- 774 0049 0D       		.uleb128 0xd
- 775 004a 00       		.byte	0
- 776 004b 00       		.byte	0
- 777 004c 07       		.uleb128 0x7
- 778 004d 2E       		.uleb128 0x2e
- 779 004e 01       		.byte	0x1
- 780 004f 3F       		.uleb128 0x3f
- 781 0050 19       		.uleb128 0x19
- 782 0051 03       		.uleb128 0x3
- 783 0052 0E       		.uleb128 0xe
- 784 0053 3A       		.uleb128 0x3a
- 785 0054 0B       		.uleb128 0xb
- 786 0055 3B       		.uleb128 0x3b
- 787 0056 0B       		.uleb128 0xb
- 788 0057 27       		.uleb128 0x27
- 789 0058 19       		.uleb128 0x19
- 790 0059 11       		.uleb128 0x11
- 791 005a 01       		.uleb128 0x1
- 792 005b 12       		.uleb128 0x12
- 793 005c 06       		.uleb128 0x6
- 794 005d 40       		.uleb128 0x40
- 795 005e 18       		.uleb128 0x18
- 796 005f 9742     		.uleb128 0x2117
- 797 0061 19       		.uleb128 0x19
- 798 0062 01       		.uleb128 0x1
- 799 0063 13       		.uleb128 0x13
- 800 0064 00       		.byte	0
- 801 0065 00       		.byte	0
- 802 0066 08       		.uleb128 0x8
- 803 0067 898201   		.uleb128 0x4109
- 804 006a 00       		.byte	0
- 805 006b 11       		.uleb128 0x11
- 806 006c 01       		.uleb128 0x1
- 807 006d 31       		.uleb128 0x31
- 808 006e 13       		.uleb128 0x13
- 809 006f 00       		.byte	0
- 810 0070 00       		.byte	0
- 811 0071 09       		.uleb128 0x9
- 812 0072 2E       		.uleb128 0x2e
- 813 0073 01       		.byte	0x1
- 814 0074 3F       		.uleb128 0x3f
- 815 0075 19       		.uleb128 0x19
- 816 0076 03       		.uleb128 0x3
- 817 0077 0E       		.uleb128 0xe
- 818 0078 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 19
+ 728 02b1 06       		.uleb128 0x6
+ 729 02b2 FD050000 		.4byte	.LASF94
+ 730 02b6 8002     		.sleb128 256
+ 731 02b8 06       		.uleb128 0x6
+ 732 02b9 9A080000 		.4byte	.LASF95
+ 733 02bd 8102     		.sleb128 257
+ 734 02bf 06       		.uleb128 0x6
+ 735 02c0 73090000 		.4byte	.LASF96
+ 736 02c4 8202     		.sleb128 258
+ 737 02c6 06       		.uleb128 0x6
+ 738 02c7 13030000 		.4byte	.LASF97
+ 739 02cb 8302     		.sleb128 259
+ 740 02cd 00       		.byte	0
+ 741 02ce 08       		.uleb128 0x8
+ 742 02cf 66080000 		.4byte	.LASF99
+ 743 02d3 02       		.byte	0x2
+ 744 02d4 5F02     		.2byte	0x25f
+ 745 02d6 17020000 		.4byte	0x217
+ 746 02da 09       		.uleb128 0x9
+ 747 02db 320A0000 		.4byte	.LASF100
+ 748 02df 01       		.byte	0x1
+ 749 02e0 BB       		.byte	0xbb
+ 750 02e1 00000000 		.4byte	.LFB36
+ 751 02e5 58000000 		.4byte	.LFE36-.LFB36
+ 752 02e9 01       		.uleb128 0x1
+ 753 02ea 9C       		.byte	0x9c
+ 754 02eb 2F030000 		.4byte	0x32f
+ 755 02ef 0A       		.uleb128 0xa
+ 756 02f0 08000000 		.4byte	.LVL0
+ 757 02f4 B7040000 		.4byte	0x4b7
+ 758 02f8 0A       		.uleb128 0xa
+ 759 02f9 0C000000 		.4byte	.LVL1
+ 760 02fd BE040000 		.4byte	0x4be
+ 761 0301 0A       		.uleb128 0xa
+ 762 0302 10000000 		.4byte	.LVL2
+ 763 0306 CB040000 		.4byte	0x4cb
+ 764 030a 0A       		.uleb128 0xa
+ 765 030b 14000000 		.4byte	.LVL3
+ 766 030f D2040000 		.4byte	0x4d2
+ 767 0313 0A       		.uleb128 0xa
+ 768 0314 18000000 		.4byte	.LVL4
+ 769 0318 D9040000 		.4byte	0x4d9
+ 770 031c 0A       		.uleb128 0xa
+ 771 031d 1C000000 		.4byte	.LVL5
+ 772 0321 E0040000 		.4byte	0x4e0
+ 773 0325 0A       		.uleb128 0xa
+ 774 0326 20000000 		.4byte	.LVL6
+ 775 032a E7040000 		.4byte	0x4e7
+ 776 032e 00       		.byte	0
+ 777 032f 09       		.uleb128 0x9
+ 778 0330 EB070000 		.4byte	.LASF101
+ 779 0334 01       		.byte	0x1
+ 780 0335 EE       		.byte	0xee
+ 781 0336 00000000 		.4byte	.LFB37
+ 782 033a 40000000 		.4byte	.LFE37-.LFB37
+ 783 033e 01       		.uleb128 0x1
+ 784 033f 9C       		.byte	0x9c
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 20
 
 
- 819 0079 0B       		.uleb128 0xb
- 820 007a 3B       		.uleb128 0x3b
- 821 007b 0B       		.uleb128 0xb
- 822 007c 49       		.uleb128 0x49
- 823 007d 13       		.uleb128 0x13
- 824 007e 11       		.uleb128 0x11
- 825 007f 01       		.uleb128 0x1
- 826 0080 12       		.uleb128 0x12
- 827 0081 06       		.uleb128 0x6
- 828 0082 40       		.uleb128 0x40
- 829 0083 18       		.uleb128 0x18
- 830 0084 9742     		.uleb128 0x2117
- 831 0086 19       		.uleb128 0x19
- 832 0087 01       		.uleb128 0x1
- 833 0088 13       		.uleb128 0x13
- 834 0089 00       		.byte	0
- 835 008a 00       		.byte	0
- 836 008b 0A       		.uleb128 0xa
- 837 008c 34       		.uleb128 0x34
- 838 008d 00       		.byte	0
- 839 008e 03       		.uleb128 0x3
- 840 008f 0E       		.uleb128 0xe
- 841 0090 3A       		.uleb128 0x3a
- 842 0091 0B       		.uleb128 0xb
- 843 0092 3B       		.uleb128 0x3b
- 844 0093 0B       		.uleb128 0xb
- 845 0094 49       		.uleb128 0x49
- 846 0095 13       		.uleb128 0x13
- 847 0096 3F       		.uleb128 0x3f
- 848 0097 19       		.uleb128 0x19
- 849 0098 02       		.uleb128 0x2
- 850 0099 18       		.uleb128 0x18
- 851 009a 00       		.byte	0
- 852 009b 00       		.byte	0
- 853 009c 0B       		.uleb128 0xb
- 854 009d 34       		.uleb128 0x34
- 855 009e 00       		.byte	0
- 856 009f 03       		.uleb128 0x3
- 857 00a0 0E       		.uleb128 0xe
- 858 00a1 3A       		.uleb128 0x3a
- 859 00a2 0B       		.uleb128 0xb
- 860 00a3 3B       		.uleb128 0x3b
- 861 00a4 0B       		.uleb128 0xb
- 862 00a5 49       		.uleb128 0x49
- 863 00a6 13       		.uleb128 0x13
- 864 00a7 3F       		.uleb128 0x3f
- 865 00a8 19       		.uleb128 0x19
- 866 00a9 3C       		.uleb128 0x3c
- 867 00aa 19       		.uleb128 0x19
- 868 00ab 00       		.byte	0
- 869 00ac 00       		.byte	0
- 870 00ad 0C       		.uleb128 0xc
- 871 00ae 2E       		.uleb128 0x2e
- 872 00af 00       		.byte	0
- 873 00b0 3F       		.uleb128 0x3f
- 874 00b1 19       		.uleb128 0x19
- 875 00b2 03       		.uleb128 0x3
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 20
+ 785 0340 57030000 		.4byte	0x357
+ 786 0344 0A       		.uleb128 0xa
+ 787 0345 06000000 		.4byte	.LVL7
+ 788 0349 EE040000 		.4byte	0x4ee
+ 789 034d 0A       		.uleb128 0xa
+ 790 034e 26000000 		.4byte	.LVL8
+ 791 0352 F5040000 		.4byte	0x4f5
+ 792 0356 00       		.byte	0
+ 793 0357 0B       		.uleb128 0xb
+ 794 0358 B90D0000 		.4byte	.LASF102
+ 795 035c 01       		.byte	0x1
+ 796 035d 46       		.byte	0x46
+ 797 035e 5D000000 		.4byte	0x5d
+ 798 0362 00000000 		.4byte	.LFB35
+ 799 0366 58010000 		.4byte	.LFE35-.LFB35
+ 800 036a 01       		.uleb128 0x1
+ 801 036b 9C       		.byte	0x9c
+ 802 036c F9030000 		.4byte	0x3f9
+ 803 0370 0A       		.uleb128 0xa
+ 804 0371 06000000 		.4byte	.LVL9
+ 805 0375 DA020000 		.4byte	0x2da
+ 806 0379 0A       		.uleb128 0xa
+ 807 037a 0A000000 		.4byte	.LVL10
+ 808 037e FC040000 		.4byte	0x4fc
+ 809 0382 0A       		.uleb128 0xa
+ 810 0383 16000000 		.4byte	.LVL11
+ 811 0387 04050000 		.4byte	0x504
+ 812 038b 0A       		.uleb128 0xa
+ 813 038c 1A000000 		.4byte	.LVL12
+ 814 0390 0B050000 		.4byte	0x50b
+ 815 0394 0A       		.uleb128 0xa
+ 816 0395 32000000 		.4byte	.LVL13
+ 817 0399 12050000 		.4byte	0x512
+ 818 039d 0A       		.uleb128 0xa
+ 819 039e 44000000 		.4byte	.LVL14
+ 820 03a2 19050000 		.4byte	0x519
+ 821 03a6 0A       		.uleb128 0xa
+ 822 03a7 70000000 		.4byte	.LVL15
+ 823 03ab 24050000 		.4byte	0x524
+ 824 03af 0A       		.uleb128 0xa
+ 825 03b0 94000000 		.4byte	.LVL16
+ 826 03b4 19050000 		.4byte	0x519
+ 827 03b8 0A       		.uleb128 0xa
+ 828 03b9 9E000000 		.4byte	.LVL17
+ 829 03bd 2F050000 		.4byte	0x52f
+ 830 03c1 0A       		.uleb128 0xa
+ 831 03c2 C8000000 		.4byte	.LVL18
+ 832 03c6 2F050000 		.4byte	0x52f
+ 833 03ca 0A       		.uleb128 0xa
+ 834 03cb E8000000 		.4byte	.LVL19
+ 835 03cf EE040000 		.4byte	0x4ee
+ 836 03d3 0A       		.uleb128 0xa
+ 837 03d4 F4000000 		.4byte	.LVL20
+ 838 03d8 3A050000 		.4byte	0x53a
+ 839 03dc 0C       		.uleb128 0xc
+ 840 03dd 08010000 		.4byte	.LVL21
+ 841 03e1 41050000 		.4byte	0x541
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 21
 
 
- 876 00b3 0E       		.uleb128 0xe
- 877 00b4 3A       		.uleb128 0x3a
- 878 00b5 0B       		.uleb128 0xb
- 879 00b6 3B       		.uleb128 0x3b
- 880 00b7 0B       		.uleb128 0xb
- 881 00b8 27       		.uleb128 0x27
- 882 00b9 19       		.uleb128 0x19
- 883 00ba 3C       		.uleb128 0x3c
- 884 00bb 19       		.uleb128 0x19
- 885 00bc 00       		.byte	0
- 886 00bd 00       		.byte	0
- 887 00be 0D       		.uleb128 0xd
- 888 00bf 2E       		.uleb128 0x2e
- 889 00c0 01       		.byte	0x1
- 890 00c1 3F       		.uleb128 0x3f
- 891 00c2 19       		.uleb128 0x19
- 892 00c3 03       		.uleb128 0x3
- 893 00c4 0E       		.uleb128 0xe
- 894 00c5 3A       		.uleb128 0x3a
- 895 00c6 0B       		.uleb128 0xb
- 896 00c7 3B       		.uleb128 0x3b
- 897 00c8 0B       		.uleb128 0xb
- 898 00c9 3C       		.uleb128 0x3c
- 899 00ca 19       		.uleb128 0x19
- 900 00cb 01       		.uleb128 0x1
- 901 00cc 13       		.uleb128 0x13
- 902 00cd 00       		.byte	0
- 903 00ce 00       		.byte	0
- 904 00cf 0E       		.uleb128 0xe
- 905 00d0 18       		.uleb128 0x18
- 906 00d1 00       		.byte	0
- 907 00d2 00       		.byte	0
- 908 00d3 00       		.byte	0
- 909 00d4 0F       		.uleb128 0xf
- 910 00d5 2E       		.uleb128 0x2e
- 911 00d6 00       		.byte	0
- 912 00d7 3F       		.uleb128 0x3f
- 913 00d8 19       		.uleb128 0x19
- 914 00d9 03       		.uleb128 0x3
- 915 00da 0E       		.uleb128 0xe
- 916 00db 3A       		.uleb128 0x3a
- 917 00dc 0B       		.uleb128 0xb
- 918 00dd 3B       		.uleb128 0x3b
- 919 00de 05       		.uleb128 0x5
- 920 00df 27       		.uleb128 0x27
- 921 00e0 19       		.uleb128 0x19
- 922 00e1 3C       		.uleb128 0x3c
- 923 00e2 19       		.uleb128 0x19
- 924 00e3 00       		.byte	0
- 925 00e4 00       		.byte	0
- 926 00e5 10       		.uleb128 0x10
- 927 00e6 2E       		.uleb128 0x2e
- 928 00e7 00       		.byte	0
- 929 00e8 3F       		.uleb128 0x3f
- 930 00e9 19       		.uleb128 0x19
- 931 00ea 03       		.uleb128 0x3
- 932 00eb 0E       		.uleb128 0xe
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 21
+ 842 03e5 EF030000 		.4byte	0x3ef
+ 843 03e9 0D       		.uleb128 0xd
+ 844 03ea 01       		.uleb128 0x1
+ 845 03eb 50       		.byte	0x50
+ 846 03ec 01       		.uleb128 0x1
+ 847 03ed 30       		.byte	0x30
+ 848 03ee 00       		.byte	0
+ 849 03ef 0A       		.uleb128 0xa
+ 850 03f0 1C010000 		.4byte	.LVL22
+ 851 03f4 2F030000 		.4byte	0x32f
+ 852 03f8 00       		.byte	0
+ 853 03f9 0E       		.uleb128 0xe
+ 854 03fa 16050000 		.4byte	.LASF103
+ 855 03fe 01       		.byte	0x1
+ 856 03ff 28       		.byte	0x28
+ 857 0400 6B000000 		.4byte	0x6b
+ 858 0404 05       		.uleb128 0x5
+ 859 0405 03       		.byte	0x3
+ 860 0406 00000000 		.4byte	Status_Ready
+ 861 040a 0E       		.uleb128 0xe
+ 862 040b 6C0C0000 		.4byte	.LASF104
+ 863 040f 01       		.byte	0x1
+ 864 0410 29       		.byte	0x29
+ 865 0411 6B000000 		.4byte	0x6b
+ 866 0415 05       		.uleb128 0x5
+ 867 0416 03       		.byte	0x3
+ 868 0417 00000000 		.4byte	Status_Acquiring
+ 869 041b 0E       		.uleb128 0xe
+ 870 041c 4D0A0000 		.4byte	.LASF105
+ 871 0420 01       		.byte	0x1
+ 872 0421 2A       		.byte	0x2a
+ 873 0422 6B000000 		.4byte	0x6b
+ 874 0426 05       		.uleb128 0x5
+ 875 0427 03       		.byte	0x3
+ 876 0428 00000000 		.4byte	Status_NoMoreSpace
+ 877 042c 0E       		.uleb128 0xe
+ 878 042d 9F0C0000 		.4byte	.LASF106
+ 879 0431 01       		.byte	0x1
+ 880 0432 2B       		.byte	0x2b
+ 881 0433 6B000000 		.4byte	0x6b
+ 882 0437 05       		.uleb128 0x5
+ 883 0438 03       		.byte	0x3
+ 884 0439 00000000 		.4byte	Status_DataAcquired
+ 885 043d 0E       		.uleb128 0xe
+ 886 043e 23040000 		.4byte	.LASF107
+ 887 0442 01       		.byte	0x1
+ 888 0443 2C       		.byte	0x2c
+ 889 0444 6B000000 		.4byte	0x6b
+ 890 0448 05       		.uleb128 0x5
+ 891 0449 03       		.byte	0x3
+ 892 044a 00000000 		.4byte	Status_Sending
+ 893 044e 0E       		.uleb128 0xe
+ 894 044f 08070000 		.4byte	.LASF108
+ 895 0453 01       		.byte	0x1
+ 896 0454 2D       		.byte	0x2d
+ 897 0455 6B000000 		.4byte	0x6b
+ 898 0459 05       		.uleb128 0x5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 22
 
 
- 933 00ec 3A       		.uleb128 0x3a
- 934 00ed 0B       		.uleb128 0xb
- 935 00ee 3B       		.uleb128 0x3b
- 936 00ef 0B       		.uleb128 0xb
- 937 00f0 27       		.uleb128 0x27
- 938 00f1 19       		.uleb128 0x19
- 939 00f2 49       		.uleb128 0x49
- 940 00f3 13       		.uleb128 0x13
- 941 00f4 3C       		.uleb128 0x3c
- 942 00f5 19       		.uleb128 0x19
- 943 00f6 00       		.byte	0
- 944 00f7 00       		.byte	0
- 945 00f8 00       		.byte	0
- 946              		.section	.debug_aranges,"",%progbits
- 947 0000 24000000 		.4byte	0x24
- 948 0004 0200     		.2byte	0x2
- 949 0006 00000000 		.4byte	.Ldebug_info0
- 950 000a 04       		.byte	0x4
- 951 000b 00       		.byte	0
- 952 000c 0000     		.2byte	0
- 953 000e 0000     		.2byte	0
- 954 0010 00000000 		.4byte	.LFB36
- 955 0014 50000000 		.4byte	.LFE36-.LFB36
- 956 0018 00000000 		.4byte	.LFB35
- 957 001c E0000000 		.4byte	.LFE35-.LFB35
- 958 0020 00000000 		.4byte	0
- 959 0024 00000000 		.4byte	0
- 960              		.section	.debug_ranges,"",%progbits
- 961              	.Ldebug_ranges0:
- 962 0000 00000000 		.4byte	.LFB36
- 963 0004 50000000 		.4byte	.LFE36
- 964 0008 00000000 		.4byte	.LFB35
- 965 000c E0000000 		.4byte	.LFE35
- 966 0010 00000000 		.4byte	0
- 967 0014 00000000 		.4byte	0
- 968              		.section	.debug_line,"",%progbits
- 969              	.Ldebug_line0:
- 970 0000 F2000000 		.section	.debug_str,"MS",%progbits,1
- 970      02009600 
- 970      00000201 
- 970      FB0E0D00 
- 970      01010101 
- 971              	.LASF21:
- 972 0000 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
- 972      455F4556 
- 972      545F4741 
- 972      505F5041 
- 972      53534B45 
- 973              	.LASF9:
- 974 0024 666C6F61 		.ascii	"float\000"
- 974      7400
- 975              	.LASF90:
- 976 002a 5F436170 		.ascii	"_CapSense_Scan\000"
- 976      53656E73 
- 976      655F5363 
- 976      616E00
- 977              	.LASF32:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 22
+ 899 045a 03       		.byte	0x3
+ 900 045b 00000000 		.4byte	Status_NoMoreData
+ 901 045f 0F       		.uleb128 0xf
+ 902 0460 600A0000 		.4byte	.LASF109
+ 903 0464 04       		.byte	0x4
+ 904 0465 22       		.byte	0x22
+ 905 0466 6B000000 		.4byte	0x6b
+ 906 046a 0F       		.uleb128 0xf
+ 907 046b 9C0A0000 		.4byte	.LASF110
+ 908 046f 05       		.byte	0x5
+ 909 0470 3F       		.byte	0x3f
+ 910 0471 6B000000 		.4byte	0x6b
+ 911 0475 0F       		.uleb128 0xf
+ 912 0476 8B0A0000 		.4byte	.LASF111
+ 913 047a 05       		.byte	0x5
+ 914 047b 40       		.byte	0x40
+ 915 047c 6B000000 		.4byte	0x6b
+ 916 0480 0F       		.uleb128 0xf
+ 917 0481 1E090000 		.4byte	.LASF112
+ 918 0485 05       		.byte	0x5
+ 919 0486 41       		.byte	0x41
+ 920 0487 6B000000 		.4byte	0x6b
+ 921 048b 0F       		.uleb128 0xf
+ 922 048c 6D0B0000 		.4byte	.LASF113
+ 923 0490 05       		.byte	0x5
+ 924 0491 42       		.byte	0x42
+ 925 0492 6B000000 		.4byte	0x6b
+ 926 0496 0F       		.uleb128 0xf
+ 927 0497 E0020000 		.4byte	.LASF114
+ 928 049b 05       		.byte	0x5
+ 929 049c 43       		.byte	0x43
+ 930 049d 6B000000 		.4byte	0x6b
+ 931 04a1 0F       		.uleb128 0xf
+ 932 04a2 5D070000 		.4byte	.LASF115
+ 933 04a6 05       		.byte	0x5
+ 934 04a7 44       		.byte	0x44
+ 935 04a8 6B000000 		.4byte	0x6b
+ 936 04ac 0F       		.uleb128 0xf
+ 937 04ad C90A0000 		.4byte	.LASF116
+ 938 04b1 05       		.byte	0x5
+ 939 04b2 47       		.byte	0x47
+ 940 04b3 6B000000 		.4byte	0x6b
+ 941 04b7 10       		.uleb128 0x10
+ 942 04b8 E2070000 		.4byte	.LASF117
+ 943 04bc 06       		.byte	0x6
+ 944 04bd 33       		.byte	0x33
+ 945 04be 11       		.uleb128 0x11
+ 946 04bf 32040000 		.4byte	.LASF136
+ 947 04c3 0A       		.byte	0xa
+ 948 04c4 26       		.byte	0x26
+ 949 04c5 CB040000 		.4byte	0x4cb
+ 950 04c9 12       		.uleb128 0x12
+ 951 04ca 00       		.byte	0
+ 952 04cb 10       		.uleb128 0x10
+ 953 04cc 35070000 		.4byte	.LASF118
+ 954 04d0 07       		.byte	0x7
+ 955 04d1 2E       		.byte	0x2e
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 23
 
 
- 978 0039 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
- 978      455F4556 
- 978      545F4741 
- 978      5454435F 
- 978      4552524F 
- 979              	.LASF2:
- 980 0053 73686F72 		.ascii	"short int\000"
- 980      7420696E 
- 980      7400
- 981              	.LASF24:
- 982 005d 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
- 982      455F4556 
- 982      545F4741 
- 982      505F4155 
- 982      54485F46 
- 983              	.LASF12:
- 984 0077 73697A65 		.ascii	"sizetype\000"
- 984      74797065 
- 984      00
- 985              	.LASF83:
- 986 0080 5F436170 		.ascii	"_CapSense_Init\000"
- 986      53656E73 
- 986      655F496E 
- 986      697400
- 987              	.LASF91:
- 988 008f 76656374 		.ascii	"vectorIsEmpty\000"
- 988      6F724973 
- 988      456D7074 
- 988      7900
- 989              	.LASF71:
- 990 009d 6D61696E 		.ascii	"main\000"
- 990      00
- 991              	.LASF46:
- 992 00a2 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
- 992      455F4556 
- 992      545F4741 
- 992      5454535F 
- 992      57524954 
- 993              	.LASF17:
- 994 00c0 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
- 994      455F4556 
- 994      545F4843 
- 994      495F5354 
- 994      41545553 
- 995              	.LASF38:
- 996 00d5 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
- 996      455F4556 
- 996      545F4741 
- 996      5454435F 
- 996      52454144 
- 997              	.LASF85:
- 998 00f6 4379426C 		.ascii	"CyBle_ProcessEvents\000"
- 998      655F5072 
- 998      6F636573 
- 998      73457665 
- 998      6E747300 
- 999              	.LASF14:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 23
+ 956 04d2 10       		.uleb128 0x10
+ 957 04d3 600C0000 		.4byte	.LASF119
+ 958 04d7 04       		.byte	0x4
+ 959 04d8 28       		.byte	0x28
+ 960 04d9 10       		.uleb128 0x10
+ 961 04da F8080000 		.4byte	.LASF120
+ 962 04de 08       		.byte	0x8
+ 963 04df 22       		.byte	0x22
+ 964 04e0 10       		.uleb128 0x10
+ 965 04e1 D6020000 		.4byte	.LASF121
+ 966 04e5 05       		.byte	0x5
+ 967 04e6 4D       		.byte	0x4d
+ 968 04e7 10       		.uleb128 0x10
+ 969 04e8 900C0000 		.4byte	.LASF122
+ 970 04ec 09       		.byte	0x9
+ 971 04ed 36       		.byte	0x36
+ 972 04ee 10       		.uleb128 0x10
+ 973 04ef CD070000 		.4byte	.LASF123
+ 974 04f3 0A       		.byte	0xa
+ 975 04f4 2C       		.byte	0x2c
+ 976 04f5 10       		.uleb128 0x10
+ 977 04f6 2B080000 		.4byte	.LASF124
+ 978 04fa 05       		.byte	0x5
+ 979 04fb 4E       		.byte	0x4e
+ 980 04fc 13       		.uleb128 0x13
+ 981 04fd 36080000 		.4byte	.LASF125
+ 982 0501 02       		.byte	0x2
+ 983 0502 9304     		.2byte	0x493
+ 984 0504 10       		.uleb128 0x10
+ 985 0505 BD070000 		.4byte	.LASF126
+ 986 0509 05       		.byte	0x5
+ 987 050a 50       		.byte	0x50
+ 988 050b 10       		.uleb128 0x10
+ 989 050c 7D0C0000 		.4byte	.LASF127
+ 990 0510 05       		.byte	0x5
+ 991 0511 51       		.byte	0x51
+ 992 0512 10       		.uleb128 0x10
+ 993 0513 0D090000 		.4byte	.LASF128
+ 994 0517 0B       		.byte	0xb
+ 995 0518 5A       		.byte	0x5a
+ 996 0519 14       		.uleb128 0x14
+ 997 051a 0D040000 		.4byte	.LASF129
+ 998 051e 05       		.byte	0x5
+ 999 051f 52       		.byte	0x52
+ 1000 0520 6B000000 		.4byte	0x6b
+ 1001 0524 14       		.uleb128 0x14
+ 1002 0525 4B030000 		.4byte	.LASF130
+ 1003 0529 08       		.byte	0x8
+ 1004 052a 23       		.byte	0x23
+ 1005 052b 6B000000 		.4byte	0x6b
+ 1006 052f 14       		.uleb128 0x14
+ 1007 0530 4B090000 		.4byte	.LASF131
+ 1008 0534 0A       		.byte	0xa
+ 1009 0535 2A       		.byte	0x2a
+ 1010 0536 6B000000 		.4byte	0x6b
+ 1011 053a 10       		.uleb128 0x10
+ 1012 053b CD060000 		.4byte	.LASF132
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 24
 
 
- 1000 010a 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
- 1000      455F4556 
- 1000      545F5354 
- 1000      41434B5F 
- 1000      4F4E00
- 1001              	.LASF89:
- 1002 011d 5F424C45 		.ascii	"_BLE_sendCapSenseData\000"
- 1002      5F73656E 
- 1002      64436170 
- 1002      53656E73 
- 1002      65446174 
- 1003              	.LASF35:
- 1004 0133 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
- 1004      455F4556 
- 1004      545F4741 
- 1004      5454535F 
- 1004      58434E48 
- 1005              	.LASF76:
- 1006 0151 53746174 		.ascii	"Status_Sending\000"
- 1006      75735F53 
- 1006      656E6469 
- 1006      6E6700
- 1007              	.LASF92:
- 1008 0160 5F424C45 		.ascii	"_BLE_sendPSOCStatus\000"
- 1008      5F73656E 
- 1008      6450534F 
- 1008      43537461 
- 1008      74757300 
- 1009              	.LASF94:
- 1010 0174 2E5C6D61 		.ascii	".\\main.c\000"
- 1010      696E2E63 
- 1010      00
- 1011              	.LASF31:
- 1012 017d 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
- 1012      455F4556 
- 1012      545F4741 
- 1012      505F4B45 
- 1012      59494E46 
- 1013              	.LASF43:
- 1014 01a1 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
- 1014      455F4556 
- 1014      545F4741 
- 1014      5454435F 
- 1014      52454144 
- 1015              	.LASF80:
- 1016 01c0 5F424C45 		.ascii	"_BLE_sendStatus\000"
- 1016      5F73656E 
- 1016      64537461 
- 1016      74757300 
- 1017              	.LASF52:
- 1018 01d0 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
- 1018      455F4556 
- 1018      545F4741 
- 1018      5454535F 
- 1018      48414E44 
- 1019              	.LASF13:
- 1020 01f1 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 24
+ 1013 053f 05       		.byte	0x5
+ 1014 0540 53       		.byte	0x53
+ 1015 0541 15       		.uleb128 0x15
+ 1016 0542 2E090000 		.4byte	.LASF137
+ 1017 0546 0C       		.byte	0xc
+ 1018 0547 AB01     		.2byte	0x1ab
+ 1019 0549 CE020000 		.4byte	0x2ce
+ 1020 054d 16       		.uleb128 0x16
+ 1021 054e 6B000000 		.4byte	0x6b
+ 1022 0552 00       		.byte	0
+ 1023 0553 00       		.byte	0
+ 1024              		.section	.debug_abbrev,"",%progbits
+ 1025              	.Ldebug_abbrev0:
+ 1026 0000 01       		.uleb128 0x1
+ 1027 0001 11       		.uleb128 0x11
+ 1028 0002 01       		.byte	0x1
+ 1029 0003 25       		.uleb128 0x25
+ 1030 0004 0E       		.uleb128 0xe
+ 1031 0005 13       		.uleb128 0x13
+ 1032 0006 0B       		.uleb128 0xb
+ 1033 0007 03       		.uleb128 0x3
+ 1034 0008 0E       		.uleb128 0xe
+ 1035 0009 1B       		.uleb128 0x1b
+ 1036 000a 0E       		.uleb128 0xe
+ 1037 000b 55       		.uleb128 0x55
+ 1038 000c 17       		.uleb128 0x17
+ 1039 000d 11       		.uleb128 0x11
+ 1040 000e 01       		.uleb128 0x1
+ 1041 000f 10       		.uleb128 0x10
+ 1042 0010 17       		.uleb128 0x17
+ 1043 0011 00       		.byte	0
+ 1044 0012 00       		.byte	0
+ 1045 0013 02       		.uleb128 0x2
+ 1046 0014 24       		.uleb128 0x24
+ 1047 0015 00       		.byte	0
+ 1048 0016 0B       		.uleb128 0xb
+ 1049 0017 0B       		.uleb128 0xb
+ 1050 0018 3E       		.uleb128 0x3e
+ 1051 0019 0B       		.uleb128 0xb
+ 1052 001a 03       		.uleb128 0x3
+ 1053 001b 0E       		.uleb128 0xe
+ 1054 001c 00       		.byte	0
+ 1055 001d 00       		.byte	0
+ 1056 001e 03       		.uleb128 0x3
+ 1057 001f 24       		.uleb128 0x24
+ 1058 0020 00       		.byte	0
+ 1059 0021 0B       		.uleb128 0xb
+ 1060 0022 0B       		.uleb128 0xb
+ 1061 0023 3E       		.uleb128 0x3e
+ 1062 0024 0B       		.uleb128 0xb
+ 1063 0025 03       		.uleb128 0x3
+ 1064 0026 08       		.uleb128 0x8
+ 1065 0027 00       		.byte	0
+ 1066 0028 00       		.byte	0
+ 1067 0029 04       		.uleb128 0x4
+ 1068 002a 16       		.uleb128 0x16
+ 1069 002b 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 25
 
 
- 1020      455F4556 
- 1020      545F484F 
- 1020      53545F49 
- 1020      4E56414C 
- 1021              	.LASF59:
- 1022 0208 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
- 1022      455F4556 
- 1022      545F4C32 
- 1022      4341505F 
- 1022      43424643 
- 1023              	.LASF62:
- 1024 0226 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
- 1024      455F4556 
- 1024      545F4C32 
- 1024      4341505F 
- 1024      43424643 
- 1025              	.LASF74:
- 1026 0247 53746174 		.ascii	"Status_NoMoreSpace\000"
- 1026      75735F4E 
- 1026      6F4D6F72 
- 1026      65537061 
- 1026      636500
- 1027              	.LASF41:
- 1028 025a 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
- 1028      455F4556 
- 1028      545F4741 
- 1028      5454435F 
- 1028      52454144 
- 1029              	.LASF87:
- 1030 0273 5F424C45 		.ascii	"_BLE_UpdateControl\000"
- 1030      5F557064 
- 1030      61746543 
- 1030      6F6E7472 
- 1030      6F6C00
- 1031              	.LASF45:
- 1032 0286 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
- 1032      455F4556 
- 1032      545F4741 
- 1032      5454435F 
- 1032      57524954 
- 1033              	.LASF6:
- 1034 02a0 6C6F6E67 		.ascii	"long long int\000"
- 1034      206C6F6E 
- 1034      6720696E 
- 1034      7400
- 1035              	.LASF7:
- 1036 02ae 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1036      206C6F6E 
- 1036      6720756E 
- 1036      7369676E 
- 1036      65642069 
- 1037              	.LASF4:
- 1038 02c5 6C6F6E67 		.ascii	"long int\000"
- 1038      20696E74 
- 1038      00
- 1039              	.LASF51:
- 1040 02ce 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 25
+ 1070 002c 03       		.uleb128 0x3
+ 1071 002d 0E       		.uleb128 0xe
+ 1072 002e 3A       		.uleb128 0x3a
+ 1073 002f 0B       		.uleb128 0xb
+ 1074 0030 3B       		.uleb128 0x3b
+ 1075 0031 0B       		.uleb128 0xb
+ 1076 0032 49       		.uleb128 0x49
+ 1077 0033 13       		.uleb128 0x13
+ 1078 0034 00       		.byte	0
+ 1079 0035 00       		.byte	0
+ 1080 0036 05       		.uleb128 0x5
+ 1081 0037 04       		.uleb128 0x4
+ 1082 0038 01       		.byte	0x1
+ 1083 0039 0B       		.uleb128 0xb
+ 1084 003a 0B       		.uleb128 0xb
+ 1085 003b 3A       		.uleb128 0x3a
+ 1086 003c 0B       		.uleb128 0xb
+ 1087 003d 3B       		.uleb128 0x3b
+ 1088 003e 0B       		.uleb128 0xb
+ 1089 003f 01       		.uleb128 0x1
+ 1090 0040 13       		.uleb128 0x13
+ 1091 0041 00       		.byte	0
+ 1092 0042 00       		.byte	0
+ 1093 0043 06       		.uleb128 0x6
+ 1094 0044 28       		.uleb128 0x28
+ 1095 0045 00       		.byte	0
+ 1096 0046 03       		.uleb128 0x3
+ 1097 0047 0E       		.uleb128 0xe
+ 1098 0048 1C       		.uleb128 0x1c
+ 1099 0049 0D       		.uleb128 0xd
+ 1100 004a 00       		.byte	0
+ 1101 004b 00       		.byte	0
+ 1102 004c 07       		.uleb128 0x7
+ 1103 004d 04       		.uleb128 0x4
+ 1104 004e 01       		.byte	0x1
+ 1105 004f 0B       		.uleb128 0xb
+ 1106 0050 0B       		.uleb128 0xb
+ 1107 0051 3A       		.uleb128 0x3a
+ 1108 0052 0B       		.uleb128 0xb
+ 1109 0053 3B       		.uleb128 0x3b
+ 1110 0054 05       		.uleb128 0x5
+ 1111 0055 01       		.uleb128 0x1
+ 1112 0056 13       		.uleb128 0x13
+ 1113 0057 00       		.byte	0
+ 1114 0058 00       		.byte	0
+ 1115 0059 08       		.uleb128 0x8
+ 1116 005a 16       		.uleb128 0x16
+ 1117 005b 00       		.byte	0
+ 1118 005c 03       		.uleb128 0x3
+ 1119 005d 0E       		.uleb128 0xe
+ 1120 005e 3A       		.uleb128 0x3a
+ 1121 005f 0B       		.uleb128 0xb
+ 1122 0060 3B       		.uleb128 0x3b
+ 1123 0061 05       		.uleb128 0x5
+ 1124 0062 49       		.uleb128 0x49
+ 1125 0063 13       		.uleb128 0x13
+ 1126 0064 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 26
 
 
- 1040      455F4556 
- 1040      545F4741 
- 1040      5454435F 
- 1040      48414E44 
- 1041              	.LASF55:
- 1042 02ef 4359424C 		.ascii	"CYBLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ\000"
- 1042      455F4556 
- 1042      545F4741 
- 1042      5454535F 
- 1042      52454144 
- 1043              	.LASF26:
- 1044 0318 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
- 1044      455F4556 
- 1044      545F4741 
- 1044      505F4445 
- 1044      56494345 
- 1045              	.LASF25:
- 1046 0337 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
- 1046      455F4556 
- 1046      545F4741 
- 1046      50505F41 
- 1046      44564552 
- 1047              	.LASF50:
- 1048 035f 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
- 1048      455F4556 
- 1048      545F4741 
- 1048      5454435F 
- 1048      48414E44 
- 1049              	.LASF18:
- 1050 0380 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
- 1050      455F4556 
- 1050      545F5354 
- 1050      41434B5F 
- 1050      42555359 
- 1051              	.LASF22:
- 1052 039c 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
- 1052      455F4556 
- 1052      545F4741 
- 1052      505F5041 
- 1052      53534B45 
- 1053              	.LASF78:
- 1054 03c2 5F424C45 		.ascii	"_BLE_sendData\000"
- 1054      5F73656E 
- 1054      64446174 
- 1054      6100
- 1055              	.LASF93:
- 1056 03d0 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1056      4320342E 
- 1056      392E3320 
- 1056      32303135 
- 1056      30333033 
- 1057 0403 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1057      20726576 
- 1057      6973696F 
- 1057      6E203232 
- 1057      31323230 
- 1058 0436 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 26
+ 1127 0065 00       		.byte	0
+ 1128 0066 09       		.uleb128 0x9
+ 1129 0067 2E       		.uleb128 0x2e
+ 1130 0068 01       		.byte	0x1
+ 1131 0069 3F       		.uleb128 0x3f
+ 1132 006a 19       		.uleb128 0x19
+ 1133 006b 03       		.uleb128 0x3
+ 1134 006c 0E       		.uleb128 0xe
+ 1135 006d 3A       		.uleb128 0x3a
+ 1136 006e 0B       		.uleb128 0xb
+ 1137 006f 3B       		.uleb128 0x3b
+ 1138 0070 0B       		.uleb128 0xb
+ 1139 0071 27       		.uleb128 0x27
+ 1140 0072 19       		.uleb128 0x19
+ 1141 0073 11       		.uleb128 0x11
+ 1142 0074 01       		.uleb128 0x1
+ 1143 0075 12       		.uleb128 0x12
+ 1144 0076 06       		.uleb128 0x6
+ 1145 0077 40       		.uleb128 0x40
+ 1146 0078 18       		.uleb128 0x18
+ 1147 0079 9742     		.uleb128 0x2117
+ 1148 007b 19       		.uleb128 0x19
+ 1149 007c 01       		.uleb128 0x1
+ 1150 007d 13       		.uleb128 0x13
+ 1151 007e 00       		.byte	0
+ 1152 007f 00       		.byte	0
+ 1153 0080 0A       		.uleb128 0xa
+ 1154 0081 898201   		.uleb128 0x4109
+ 1155 0084 00       		.byte	0
+ 1156 0085 11       		.uleb128 0x11
+ 1157 0086 01       		.uleb128 0x1
+ 1158 0087 31       		.uleb128 0x31
+ 1159 0088 13       		.uleb128 0x13
+ 1160 0089 00       		.byte	0
+ 1161 008a 00       		.byte	0
+ 1162 008b 0B       		.uleb128 0xb
+ 1163 008c 2E       		.uleb128 0x2e
+ 1164 008d 01       		.byte	0x1
+ 1165 008e 3F       		.uleb128 0x3f
+ 1166 008f 19       		.uleb128 0x19
+ 1167 0090 03       		.uleb128 0x3
+ 1168 0091 0E       		.uleb128 0xe
+ 1169 0092 3A       		.uleb128 0x3a
+ 1170 0093 0B       		.uleb128 0xb
+ 1171 0094 3B       		.uleb128 0x3b
+ 1172 0095 0B       		.uleb128 0xb
+ 1173 0096 49       		.uleb128 0x49
+ 1174 0097 13       		.uleb128 0x13
+ 1175 0098 11       		.uleb128 0x11
+ 1176 0099 01       		.uleb128 0x1
+ 1177 009a 12       		.uleb128 0x12
+ 1178 009b 06       		.uleb128 0x6
+ 1179 009c 40       		.uleb128 0x40
+ 1180 009d 18       		.uleb128 0x18
+ 1181 009e 9742     		.uleb128 0x2117
+ 1182 00a0 19       		.uleb128 0x19
+ 1183 00a1 01       		.uleb128 0x1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 27
 
 
- 1058      66756E63 
- 1058      74696F6E 
- 1058      2D736563 
- 1058      74696F6E 
- 1059              	.LASF60:
- 1060 045e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
- 1060      455F4556 
- 1060      545F4C32 
- 1060      4341505F 
- 1060      43424643 
- 1061              	.LASF69:
- 1062 047c 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
- 1062      455F4556 
- 1062      545F4D41 
- 1062      5800
- 1063              	.LASF96:
- 1064 048a 75696E74 		.ascii	"uint8\000"
- 1064      3800
- 1065              	.LASF56:
- 1066 0490 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
- 1066      455F4556 
- 1066      545F4C32 
- 1066      4341505F 
- 1066      434F4E4E 
- 1067              	.LASF1:
- 1068 04b6 756E7369 		.ascii	"unsigned char\000"
- 1068      676E6564 
- 1068      20636861 
- 1068      7200
- 1069              	.LASF47:
- 1070 04c4 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
- 1070      455F4556 
- 1070      545F4741 
- 1070      5454535F 
- 1070      50524550 
- 1071              	.LASF68:
- 1072 04e3 4359424C 		.ascii	"CYBLE_EVT_LE_PING_AUTH_TIMEOUT\000"
- 1072      455F4556 
- 1072      545F4C45 
- 1072      5F50494E 
- 1072      475F4155 
- 1073              	.LASF39:
- 1074 0502 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
- 1074      455F4556 
- 1074      545F4741 
- 1074      5454435F 
- 1074      46494E44 
- 1075              	.LASF0:
- 1076 0520 7369676E 		.ascii	"signed char\000"
- 1076      65642063 
- 1076      68617200 
- 1077              	.LASF44:
- 1078 052c 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
- 1078      455F4556 
- 1078      545F4741 
- 1078      5454535F 
- 1078      57524954 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 27
+ 1184 00a2 13       		.uleb128 0x13
+ 1185 00a3 00       		.byte	0
+ 1186 00a4 00       		.byte	0
+ 1187 00a5 0C       		.uleb128 0xc
+ 1188 00a6 898201   		.uleb128 0x4109
+ 1189 00a9 01       		.byte	0x1
+ 1190 00aa 11       		.uleb128 0x11
+ 1191 00ab 01       		.uleb128 0x1
+ 1192 00ac 31       		.uleb128 0x31
+ 1193 00ad 13       		.uleb128 0x13
+ 1194 00ae 01       		.uleb128 0x1
+ 1195 00af 13       		.uleb128 0x13
+ 1196 00b0 00       		.byte	0
+ 1197 00b1 00       		.byte	0
+ 1198 00b2 0D       		.uleb128 0xd
+ 1199 00b3 8A8201   		.uleb128 0x410a
+ 1200 00b6 00       		.byte	0
+ 1201 00b7 02       		.uleb128 0x2
+ 1202 00b8 18       		.uleb128 0x18
+ 1203 00b9 9142     		.uleb128 0x2111
+ 1204 00bb 18       		.uleb128 0x18
+ 1205 00bc 00       		.byte	0
+ 1206 00bd 00       		.byte	0
+ 1207 00be 0E       		.uleb128 0xe
+ 1208 00bf 34       		.uleb128 0x34
+ 1209 00c0 00       		.byte	0
+ 1210 00c1 03       		.uleb128 0x3
+ 1211 00c2 0E       		.uleb128 0xe
+ 1212 00c3 3A       		.uleb128 0x3a
+ 1213 00c4 0B       		.uleb128 0xb
+ 1214 00c5 3B       		.uleb128 0x3b
+ 1215 00c6 0B       		.uleb128 0xb
+ 1216 00c7 49       		.uleb128 0x49
+ 1217 00c8 13       		.uleb128 0x13
+ 1218 00c9 3F       		.uleb128 0x3f
+ 1219 00ca 19       		.uleb128 0x19
+ 1220 00cb 02       		.uleb128 0x2
+ 1221 00cc 18       		.uleb128 0x18
+ 1222 00cd 00       		.byte	0
+ 1223 00ce 00       		.byte	0
+ 1224 00cf 0F       		.uleb128 0xf
+ 1225 00d0 34       		.uleb128 0x34
+ 1226 00d1 00       		.byte	0
+ 1227 00d2 03       		.uleb128 0x3
+ 1228 00d3 0E       		.uleb128 0xe
+ 1229 00d4 3A       		.uleb128 0x3a
+ 1230 00d5 0B       		.uleb128 0xb
+ 1231 00d6 3B       		.uleb128 0x3b
+ 1232 00d7 0B       		.uleb128 0xb
+ 1233 00d8 49       		.uleb128 0x49
+ 1234 00d9 13       		.uleb128 0x13
+ 1235 00da 3F       		.uleb128 0x3f
+ 1236 00db 19       		.uleb128 0x19
+ 1237 00dc 3C       		.uleb128 0x3c
+ 1238 00dd 19       		.uleb128 0x19
+ 1239 00de 00       		.byte	0
+ 1240 00df 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 28
 
 
- 1079              	.LASF75:
- 1080 0546 53746174 		.ascii	"Status_DataAcquired\000"
- 1080      75735F44 
- 1080      61746141 
- 1080      63717569 
- 1080      72656400 
- 1081              	.LASF40:
- 1082 055a 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
- 1082      455F4556 
- 1082      545F4741 
- 1082      5454435F 
- 1082      46494E44 
- 1083              	.LASF23:
- 1084 0581 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
- 1084      455F4556 
- 1084      545F4741 
- 1084      505F4155 
- 1084      54485F43 
- 1085              	.LASF8:
- 1086 059d 756E7369 		.ascii	"unsigned int\000"
- 1086      676E6564 
- 1086      20696E74 
- 1086      00
- 1087              	.LASF33:
- 1088 05aa 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
- 1088      455F4556 
- 1088      545F4741 
- 1088      54545F43 
- 1088      4F4E4E45 
- 1089              	.LASF5:
- 1090 05c5 6C6F6E67 		.ascii	"long unsigned int\000"
- 1090      20756E73 
- 1090      69676E65 
- 1090      6420696E 
- 1090      7400
- 1091              	.LASF20:
- 1092 05d7 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
- 1092      455F4556 
- 1092      545F4741 
- 1092      505F4155 
- 1092      54485F52 
- 1093              	.LASF61:
- 1094 05ee 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
- 1094      455F4556 
- 1094      545F4C32 
- 1094      4341505F 
- 1094      43424643 
- 1095              	.LASF28:
- 1096 060f 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
- 1096      455F4556 
- 1096      545F4741 
- 1096      505F454E 
- 1096      43525950 
- 1097              	.LASF79:
- 1098 062c 5F424C45 		.ascii	"_BLE_acquireData\000"
- 1098      5F616371 
- 1098      75697265 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 28
+ 1241 00e0 10       		.uleb128 0x10
+ 1242 00e1 2E       		.uleb128 0x2e
+ 1243 00e2 00       		.byte	0
+ 1244 00e3 3F       		.uleb128 0x3f
+ 1245 00e4 19       		.uleb128 0x19
+ 1246 00e5 03       		.uleb128 0x3
+ 1247 00e6 0E       		.uleb128 0xe
+ 1248 00e7 3A       		.uleb128 0x3a
+ 1249 00e8 0B       		.uleb128 0xb
+ 1250 00e9 3B       		.uleb128 0x3b
+ 1251 00ea 0B       		.uleb128 0xb
+ 1252 00eb 27       		.uleb128 0x27
+ 1253 00ec 19       		.uleb128 0x19
+ 1254 00ed 3C       		.uleb128 0x3c
+ 1255 00ee 19       		.uleb128 0x19
+ 1256 00ef 00       		.byte	0
+ 1257 00f0 00       		.byte	0
+ 1258 00f1 11       		.uleb128 0x11
+ 1259 00f2 2E       		.uleb128 0x2e
+ 1260 00f3 01       		.byte	0x1
+ 1261 00f4 3F       		.uleb128 0x3f
+ 1262 00f5 19       		.uleb128 0x19
+ 1263 00f6 03       		.uleb128 0x3
+ 1264 00f7 0E       		.uleb128 0xe
+ 1265 00f8 3A       		.uleb128 0x3a
+ 1266 00f9 0B       		.uleb128 0xb
+ 1267 00fa 3B       		.uleb128 0x3b
+ 1268 00fb 0B       		.uleb128 0xb
+ 1269 00fc 3C       		.uleb128 0x3c
+ 1270 00fd 19       		.uleb128 0x19
+ 1271 00fe 01       		.uleb128 0x1
+ 1272 00ff 13       		.uleb128 0x13
+ 1273 0100 00       		.byte	0
+ 1274 0101 00       		.byte	0
+ 1275 0102 12       		.uleb128 0x12
+ 1276 0103 18       		.uleb128 0x18
+ 1277 0104 00       		.byte	0
+ 1278 0105 00       		.byte	0
+ 1279 0106 00       		.byte	0
+ 1280 0107 13       		.uleb128 0x13
+ 1281 0108 2E       		.uleb128 0x2e
+ 1282 0109 00       		.byte	0
+ 1283 010a 3F       		.uleb128 0x3f
+ 1284 010b 19       		.uleb128 0x19
+ 1285 010c 03       		.uleb128 0x3
+ 1286 010d 0E       		.uleb128 0xe
+ 1287 010e 3A       		.uleb128 0x3a
+ 1288 010f 0B       		.uleb128 0xb
+ 1289 0110 3B       		.uleb128 0x3b
+ 1290 0111 05       		.uleb128 0x5
+ 1291 0112 27       		.uleb128 0x27
+ 1292 0113 19       		.uleb128 0x19
+ 1293 0114 3C       		.uleb128 0x3c
+ 1294 0115 19       		.uleb128 0x19
+ 1295 0116 00       		.byte	0
+ 1296 0117 00       		.byte	0
+ 1297 0118 14       		.uleb128 0x14
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 29
 
 
- 1098      44617461 
- 1098      00
- 1099              	.LASF3:
- 1100 063d 73686F72 		.ascii	"short unsigned int\000"
- 1100      7420756E 
- 1100      7369676E 
- 1100      65642069 
- 1100      6E7400
- 1101              	.LASF70:
- 1102 0650 496E6974 		.ascii	"InitializeSystem\000"
- 1102      69616C69 
- 1102      7A655379 
- 1102      7374656D 
- 1102      00
- 1103              	.LASF29:
- 1104 0661 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
- 1104      455F4556 
- 1104      545F4741 
- 1104      505F434F 
- 1104      4E4E4543 
- 1105              	.LASF11:
- 1106 068a 63686172 		.ascii	"char\000"
- 1106      00
- 1107              	.LASF58:
- 1108 068f 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
- 1108      455F4556 
- 1108      545F4C32 
- 1108      4341505F 
- 1108      434F4D4D 
- 1109              	.LASF42:
- 1110 06ab 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
- 1110      455F4556 
- 1110      545F4741 
- 1110      5454435F 
- 1110      52454144 
- 1111              	.LASF49:
- 1112 06c9 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
- 1112      455F4556 
- 1112      545F4741 
- 1112      5454435F 
- 1112      45584543 
- 1113              	.LASF30:
- 1114 06e8 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
- 1114      455F4556 
- 1114      545F4741 
- 1114      50435F53 
- 1114      43414E5F 
- 1115              	.LASF67:
- 1116 0707 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
- 1116      455F4556 
- 1116      545F5045 
- 1116      4E44494E 
- 1116      475F464C 
- 1117              	.LASF64:
- 1118 0725 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
- 1118      455F4556 
- 1118      545F4C32 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 29
+ 1298 0119 2E       		.uleb128 0x2e
+ 1299 011a 00       		.byte	0
+ 1300 011b 3F       		.uleb128 0x3f
+ 1301 011c 19       		.uleb128 0x19
+ 1302 011d 03       		.uleb128 0x3
+ 1303 011e 0E       		.uleb128 0xe
+ 1304 011f 3A       		.uleb128 0x3a
+ 1305 0120 0B       		.uleb128 0xb
+ 1306 0121 3B       		.uleb128 0x3b
+ 1307 0122 0B       		.uleb128 0xb
+ 1308 0123 27       		.uleb128 0x27
+ 1309 0124 19       		.uleb128 0x19
+ 1310 0125 49       		.uleb128 0x49
+ 1311 0126 13       		.uleb128 0x13
+ 1312 0127 3C       		.uleb128 0x3c
+ 1313 0128 19       		.uleb128 0x19
+ 1314 0129 00       		.byte	0
+ 1315 012a 00       		.byte	0
+ 1316 012b 15       		.uleb128 0x15
+ 1317 012c 2E       		.uleb128 0x2e
+ 1318 012d 01       		.byte	0x1
+ 1319 012e 3F       		.uleb128 0x3f
+ 1320 012f 19       		.uleb128 0x19
+ 1321 0130 03       		.uleb128 0x3
+ 1322 0131 0E       		.uleb128 0xe
+ 1323 0132 3A       		.uleb128 0x3a
+ 1324 0133 0B       		.uleb128 0xb
+ 1325 0134 3B       		.uleb128 0x3b
+ 1326 0135 05       		.uleb128 0x5
+ 1327 0136 27       		.uleb128 0x27
+ 1328 0137 19       		.uleb128 0x19
+ 1329 0138 49       		.uleb128 0x49
+ 1330 0139 13       		.uleb128 0x13
+ 1331 013a 3C       		.uleb128 0x3c
+ 1332 013b 19       		.uleb128 0x19
+ 1333 013c 00       		.byte	0
+ 1334 013d 00       		.byte	0
+ 1335 013e 16       		.uleb128 0x16
+ 1336 013f 05       		.uleb128 0x5
+ 1337 0140 00       		.byte	0
+ 1338 0141 49       		.uleb128 0x49
+ 1339 0142 13       		.uleb128 0x13
+ 1340 0143 00       		.byte	0
+ 1341 0144 00       		.byte	0
+ 1342 0145 00       		.byte	0
+ 1343              		.section	.debug_aranges,"",%progbits
+ 1344 0000 2C000000 		.4byte	0x2c
+ 1345 0004 0200     		.2byte	0x2
+ 1346 0006 00000000 		.4byte	.Ldebug_info0
+ 1347 000a 04       		.byte	0x4
+ 1348 000b 00       		.byte	0
+ 1349 000c 0000     		.2byte	0
+ 1350 000e 0000     		.2byte	0
+ 1351 0010 00000000 		.4byte	.LFB36
+ 1352 0014 58000000 		.4byte	.LFE36-.LFB36
+ 1353 0018 00000000 		.4byte	.LFB37
+ 1354 001c 40000000 		.4byte	.LFE37-.LFB37
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 30
 
 
- 1118      4341505F 
- 1118      43424643 
- 1119              	.LASF10:
- 1120 0748 646F7562 		.ascii	"double\000"
- 1120      6C6500
- 1121              	.LASF88:
- 1122 074f 64656C65 		.ascii	"deleteVector\000"
- 1122      74655665 
- 1122      63746F72 
- 1122      00
- 1123              	.LASF97:
- 1124 075c 56656374 		.ascii	"Vector_Init\000"
- 1124      6F725F49 
- 1124      6E697400 
- 1125              	.LASF81:
- 1126 0768 6372635F 		.ascii	"crc_Init\000"
- 1126      496E6974 
- 1126      00
- 1127              	.LASF65:
- 1128 0771 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
- 1128      455F4556 
- 1128      545F4C32 
- 1128      4341505F 
- 1128      43424643 
- 1129              	.LASF82:
- 1130 0794 5F507249 		.ascii	"_PrISM_Init\000"
- 1130      534D5F49 
- 1130      6E697400 
- 1131              	.LASF95:
- 1132 07a0 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
- 1132      73657273 
- 1132      5C416C65 
- 1132      78616E64 
- 1132      72655C44 
- 1133 07ce 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
- 1133      534F435F 
- 1133      43617053 
- 1133      656E7365 
- 1133      5F325F42 
- 1134              	.LASF16:
- 1135 07ff 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
- 1135      455F4556 
- 1135      545F4841 
- 1135      52445741 
- 1135      52455F45 
- 1136              	.LASF63:
- 1137 0818 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
- 1137      455F4556 
- 1137      545F4C32 
- 1137      4341505F 
- 1137      43424643 
- 1138              	.LASF57:
- 1139 0837 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
- 1139      455F4556 
- 1139      545F4C32 
- 1139      4341505F 
- 1139      434F4E4E 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 30
+ 1355 0020 00000000 		.4byte	.LFB35
+ 1356 0024 58010000 		.4byte	.LFE35-.LFB35
+ 1357 0028 00000000 		.4byte	0
+ 1358 002c 00000000 		.4byte	0
+ 1359              		.section	.debug_ranges,"",%progbits
+ 1360              	.Ldebug_ranges0:
+ 1361 0000 00000000 		.4byte	.LFB36
+ 1362 0004 58000000 		.4byte	.LFE36
+ 1363 0008 00000000 		.4byte	.LFB37
+ 1364 000c 40000000 		.4byte	.LFE37
+ 1365 0010 00000000 		.4byte	.LFB35
+ 1366 0014 58010000 		.4byte	.LFE35
+ 1367 0018 00000000 		.4byte	0
+ 1368 001c 00000000 		.4byte	0
+ 1369              		.section	.debug_line,"",%progbits
+ 1370              	.Ldebug_line0:
+ 1371 0000 59010000 		.section	.debug_str,"MS",%progbits,1
+ 1371      0200CE00 
+ 1371      00000201 
+ 1371      FB0E0D00 
+ 1371      01010101 
+ 1372              	.LASF64:
+ 1373 0000 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 1373      455F4556 
+ 1373      545F4C32 
+ 1373      4341505F 
+ 1373      43424643 
+ 1374              	.LASF18:
+ 1375 0023 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 1375      455F4556 
+ 1375      545F5354 
+ 1375      41434B5F 
+ 1375      42555359 
+ 1376              	.LASF63:
+ 1377 003f 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 1377      455F4556 
+ 1377      545F4C32 
+ 1377      4341505F 
+ 1377      43424643 
+ 1378              	.LASF73:
+ 1379 005e 4359424C 		.ascii	"CYBLE_ERROR_MEMORY_ALLOCATION_FAILED\000"
+ 1379      455F4552 
+ 1379      524F525F 
+ 1379      4D454D4F 
+ 1379      52595F41 
+ 1380              	.LASF29:
+ 1381 0083 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 1381      455F4556 
+ 1381      545F4741 
+ 1381      505F434F 
+ 1381      4E4E4543 
+ 1382              	.LASF62:
+ 1383 00ac 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 1383      455F4556 
+ 1383      545F4C32 
+ 1383      4341505F 
+ 1383      43424643 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 31
 
 
- 1140              	.LASF19:
- 1141 085d 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
- 1141      455F4556 
- 1141      545F4741 
- 1141      50435F53 
- 1141      43414E5F 
- 1142              	.LASF37:
- 1143 0881 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
- 1143      455F4556 
- 1143      545F4741 
- 1143      5454435F 
- 1143      52454144 
- 1144              	.LASF73:
- 1145 08a8 53746174 		.ascii	"Status_Acquiring\000"
- 1145      75735F41 
- 1145      63717569 
- 1145      72696E67 
- 1145      00
- 1146              	.LASF36:
- 1147 08b9 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
- 1147      455F4556 
- 1147      545F4741 
- 1147      5454435F 
- 1147      5843484E 
- 1148              	.LASF72:
- 1149 08d7 53746174 		.ascii	"Status_Ready\000"
- 1149      75735F52 
- 1149      65616479 
- 1149      00
- 1150              	.LASF66:
- 1151 08e4 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
- 1151      455F4556 
- 1151      545F4C32 
- 1151      4341505F 
- 1151      43424643 
- 1152              	.LASF15:
- 1153 0908 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
- 1153      455F4556 
- 1153      545F5449 
- 1153      4D454F55 
- 1153      5400
- 1154              	.LASF86:
- 1155 091a 5F424C45 		.ascii	"_BLE_UpdateCCCD\000"
- 1155      5F557064 
- 1155      61746543 
- 1155      43434400 
- 1156              	.LASF77:
- 1157 092a 53746174 		.ascii	"Status_NoMoreData\000"
- 1157      75735F4E 
- 1157      6F4D6F72 
- 1157      65446174 
- 1157      6100
- 1158              	.LASF54:
- 1159 093c 4359424C 		.ascii	"CYBLE_EVT_GATTC_STOP_CMD_COMPLETE\000"
- 1159      455F4556 
- 1159      545F4741 
- 1159      5454435F 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccvPcvmD.s 			page 31
+ 1384              	.LASF43:
+ 1385 00cd 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 1385      455F4556 
+ 1385      545F4741 
+ 1385      5454435F 
+ 1385      52454144 
+ 1386              	.LASF48:
+ 1387 00ec 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 1387      455F4556 
+ 1387      545F4741 
+ 1387      5454535F 
+ 1387      45584543 
+ 1388              	.LASF15:
+ 1389 010b 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 1389      455F4556 
+ 1389      545F5449 
+ 1389      4D454F55 
+ 1389      5400
+ 1390              	.LASF4:
+ 1391 011d 6C6F6E67 		.ascii	"long int\000"
+ 1391      20696E74 
+ 1391      00
+ 1392              	.LASF83:
+ 1393 0126 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_WRONG_ENCODING\000"
+ 1393      455F4552 
+ 1393      524F525F 
+ 1393      4C324341 
+ 1393      505F5053 
+ 1394              	.LASF74:
+ 1395 014b 4359424C 		.ascii	"CYBLE_ERROR_INSUFFICIENT_RESOURCES\000"
+ 1395      455F4552 
+ 1395      524F525F 
+ 1395      494E5355 
+ 1395      46464943 
+ 1396              	.LASF135:
+ 1397 016e 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
+ 1397      73657273 
+ 1397      5C416C65 
+ 1397      78616E64 
+ 1397      72655C44 
+ 1398 019c 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
+ 1398      534F435F 
+ 1398      43617053 
+ 1398      656E7365 
+ 1398      5F325F42 
+ 1399              	.LASF17:
+ 1400 01cd 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 1400      455F4556 
+ 1400      545F4843 
+ 1400      495F5354 
+ 1400      41545553 
+ 1401              	.LASF30:
+ 1402 01e2 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 1402      455F4556 
+ 1402      545F4741 
+ 1402      50435F53 
+ 1402      43414E5F 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 32
 
 
- 1159      53544F50 
- 1160              	.LASF48:
- 1161 095e 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
- 1161      455F4556 
- 1161      545F4741 
- 1161      5454535F 
- 1161      45584543 
- 1162              	.LASF27:
- 1163 097d 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
- 1163      455F4556 
- 1163      545F4741 
- 1163      505F4445 
- 1163      56494345 
- 1164              	.LASF84:
- 1165 099f 5F424C45 		.ascii	"_BLE_Init\000"
- 1165      5F496E69 
- 1165      7400
- 1166              	.LASF53:
- 1167 09a9 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
- 1167      455F4556 
- 1167      545F4741 
- 1167      5454535F 
- 1167      44415441 
- 1168              	.LASF34:
- 1169 09cd 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
- 1169      455F4556 
- 1169      545F4741 
- 1169      54545F44 
- 1169      4953434F 
- 1170              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1403              	.LASF67:
+ 1404 0201 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 1404      455F4556 
+ 1404      545F5045 
+ 1404      4E44494E 
+ 1404      475F464C 
+ 1405              	.LASF82:
+ 1406 021f 4359424C 		.ascii	"CYBLE_ERROR_SEC_FAILED\000"
+ 1406      455F4552 
+ 1406      524F525F 
+ 1406      5345435F 
+ 1406      4641494C 
+ 1407              	.LASF28:
+ 1408 0236 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 1408      455F4556 
+ 1408      545F4741 
+ 1408      505F454E 
+ 1408      43525950 
+ 1409              	.LASF6:
+ 1410 0253 6C6F6E67 		.ascii	"long long int\000"
+ 1410      206C6F6E 
+ 1410      6720696E 
+ 1410      7400
+ 1411              	.LASF0:
+ 1412 0261 7369676E 		.ascii	"signed char\000"
+ 1412      65642063 
+ 1412      68617200 
+ 1413              	.LASF14:
+ 1414 026d 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 1414      455F4556 
+ 1414      545F5354 
+ 1414      41434B5F 
+ 1414      4F4E00
+ 1415              	.LASF90:
+ 1416 0280 4359424C 		.ascii	"CYBLE_ERROR_DEVICE_ALREADY_EXISTS\000"
+ 1416      455F4552 
+ 1416      524F525F 
+ 1416      44455649 
+ 1416      43455F41 
+ 1417              	.LASF77:
+ 1418 02a2 4359424C 		.ascii	"CYBLE_ERROR_NO_DEVICE_ENTITY\000"
+ 1418      455F4552 
+ 1418      524F525F 
+ 1418      4E4F5F44 
+ 1418      45564943 
+ 1419              	.LASF20:
+ 1420 02bf 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 1420      455F4556 
+ 1420      545F4741 
+ 1420      505F4155 
+ 1420      54485F52 
+ 1421              	.LASF121:
+ 1422 02d6 5F424C45 		.ascii	"_BLE_Init\000"
+ 1422      5F496E69 
+ 1422      7400
+ 1423              	.LASF114:
+ 1424 02e0 5F424C45 		.ascii	"_BLE_restartAdvertisement\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 33
+
+
+ 1424      5F726573 
+ 1424      74617274 
+ 1424      41647665 
+ 1424      72746973 
+ 1425              	.LASF41:
+ 1426 02fa 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 1426      455F4556 
+ 1426      545F4741 
+ 1426      5454435F 
+ 1426      52454144 
+ 1427              	.LASF97:
+ 1428 0313 4359424C 		.ascii	"CYBLE_ERROR_INVALID_STATE\000"
+ 1428      455F4552 
+ 1428      524F525F 
+ 1428      494E5641 
+ 1428      4C49445F 
+ 1429              	.LASF46:
+ 1430 032d 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 1430      455F4556 
+ 1430      545F4741 
+ 1430      5454535F 
+ 1430      57524954 
+ 1431              	.LASF130:
+ 1432 034b 5F436170 		.ascii	"_CapSense_Scan\000"
+ 1432      53656E73 
+ 1432      655F5363 
+ 1432      616E00
+ 1433              	.LASF25:
+ 1434 035a 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 1434      455F4556 
+ 1434      545F4741 
+ 1434      50505F41 
+ 1434      44564552 
+ 1435              	.LASF88:
+ 1436 0382 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_NOT_IN_RANGE\000"
+ 1436      455F4552 
+ 1436      524F525F 
+ 1436      4C324341 
+ 1436      505F5053 
+ 1437              	.LASF35:
+ 1438 03a5 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 1438      455F4556 
+ 1438      545F4741 
+ 1438      5454535F 
+ 1438      58434E48 
+ 1439              	.LASF98:
+ 1440 03c3 75696E74 		.ascii	"uint8\000"
+ 1440      3800
+ 1441              	.LASF49:
+ 1442 03c9 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 1442      455F4556 
+ 1442      545F4741 
+ 1442      5454435F 
+ 1442      45584543 
+ 1443              	.LASF10:
+ 1444 03e8 646F7562 		.ascii	"double\000"
+ 1444      6C6500
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 34
+
+
+ 1445              	.LASF71:
+ 1446 03ef 4359424C 		.ascii	"CYBLE_ERROR_INVALID_PARAMETER\000"
+ 1446      455F4552 
+ 1446      524F525F 
+ 1446      494E5641 
+ 1446      4C49445F 
+ 1447              	.LASF129:
+ 1448 040d 5F424C45 		.ascii	"_BLE_sendCapSenseData\000"
+ 1448      5F73656E 
+ 1448      64436170 
+ 1448      53656E73 
+ 1448      65446174 
+ 1449              	.LASF107:
+ 1450 0423 53746174 		.ascii	"Status_Sending\000"
+ 1450      75735F53 
+ 1450      656E6469 
+ 1450      6E6700
+ 1451              	.LASF136:
+ 1452 0432 56656374 		.ascii	"Vector_Init\000"
+ 1452      6F725F49 
+ 1452      6E697400 
+ 1453              	.LASF69:
+ 1454 043e 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 1454      455F4556 
+ 1454      545F4D41 
+ 1454      5800
+ 1455              	.LASF70:
+ 1456 044c 4359424C 		.ascii	"CYBLE_ERROR_OK\000"
+ 1456      455F4552 
+ 1456      524F525F 
+ 1456      4F4B00
+ 1457              	.LASF32:
+ 1458 045b 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 1458      455F4556 
+ 1458      545F4741 
+ 1458      5454435F 
+ 1458      4552524F 
+ 1459              	.LASF56:
+ 1460 0475 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 1460      455F4556 
+ 1460      545F4C32 
+ 1460      4341505F 
+ 1460      434F4E4E 
+ 1461              	.LASF66:
+ 1462 049b 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 1462      455F4556 
+ 1462      545F4C32 
+ 1462      4341505F 
+ 1462      43424643 
+ 1463              	.LASF7:
+ 1464 04bf 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1464      206C6F6E 
+ 1464      6720756E 
+ 1464      7369676E 
+ 1464      65642069 
+ 1465              	.LASF54:
+ 1466 04d6 4359424C 		.ascii	"CYBLE_EVT_GATTC_STOP_CMD_COMPLETE\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 35
+
+
+ 1466      455F4556 
+ 1466      545F4741 
+ 1466      5454435F 
+ 1466      53544F50 
+ 1467              	.LASF75:
+ 1468 04f8 4359424C 		.ascii	"CYBLE_ERROR_OOB_NOT_AVAILABLE\000"
+ 1468      455F4552 
+ 1468      524F525F 
+ 1468      4F4F425F 
+ 1468      4E4F545F 
+ 1469              	.LASF103:
+ 1470 0516 53746174 		.ascii	"Status_Ready\000"
+ 1470      75735F52 
+ 1470      65616479 
+ 1470      00
+ 1471              	.LASF68:
+ 1472 0523 4359424C 		.ascii	"CYBLE_EVT_LE_PING_AUTH_TIMEOUT\000"
+ 1472      455F4556 
+ 1472      545F4C45 
+ 1472      5F50494E 
+ 1472      475F4155 
+ 1473              	.LASF84:
+ 1474 0542 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_ALREADY_REGISTERED\000"
+ 1474      455F4552 
+ 1474      524F525F 
+ 1474      4C324341 
+ 1474      505F5053 
+ 1475              	.LASF5:
+ 1476 056b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1476      20756E73 
+ 1476      69676E65 
+ 1476      6420696E 
+ 1476      7400
+ 1477              	.LASF44:
+ 1478 057d 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ 1478      455F4556 
+ 1478      545F4741 
+ 1478      5454535F 
+ 1478      57524954 
+ 1479              	.LASF36:
+ 1480 0597 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 1480      455F4556 
+ 1480      545F4741 
+ 1480      5454435F 
+ 1480      5843484E 
+ 1481              	.LASF53:
+ 1482 05b5 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 1482      455F4556 
+ 1482      545F4741 
+ 1482      5454535F 
+ 1482      44415441 
+ 1483              	.LASF87:
+ 1484 05d9 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_CHANNEL_NOT_FOUND\000"
+ 1484      455F4552 
+ 1484      524F525F 
+ 1484      4C324341 
+ 1484      505F4348 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 36
+
+
+ 1485              	.LASF94:
+ 1486 05fd 4359424C 		.ascii	"CYBLE_ERROR_NTF_DISABLED\000"
+ 1486      455F4552 
+ 1486      524F525F 
+ 1486      4E54465F 
+ 1486      44495341 
+ 1487              	.LASF72:
+ 1488 0616 4359424C 		.ascii	"CYBLE_ERROR_INVALID_OPERATION\000"
+ 1488      455F4552 
+ 1488      524F525F 
+ 1488      494E5641 
+ 1488      4C49445F 
+ 1489              	.LASF13:
+ 1490 0634 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 1490      455F4556 
+ 1490      545F484F 
+ 1490      53545F49 
+ 1490      4E56414C 
+ 1491              	.LASF39:
+ 1492 064b 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 1492      455F4556 
+ 1492      545F4741 
+ 1492      5454435F 
+ 1492      46494E44 
+ 1493              	.LASF21:
+ 1494 0669 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 1494      455F4556 
+ 1494      545F4741 
+ 1494      505F5041 
+ 1494      53534B45 
+ 1495              	.LASF26:
+ 1496 068d 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 1496      455F4556 
+ 1496      545F4741 
+ 1496      505F4445 
+ 1496      56494345 
+ 1497              	.LASF51:
+ 1498 06ac 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 1498      455F4556 
+ 1498      545F4741 
+ 1498      5454435F 
+ 1498      48414E44 
+ 1499              	.LASF132:
+ 1500 06cd 5F424C45 		.ascii	"_BLE_sendStatusFlags\000"
+ 1500      5F73656E 
+ 1500      64537461 
+ 1500      74757346 
+ 1500      6C616773 
+ 1501              	.LASF22:
+ 1502 06e2 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 1502      455F4556 
+ 1502      545F4741 
+ 1502      505F5041 
+ 1502      53534B45 
+ 1503              	.LASF108:
+ 1504 0708 53746174 		.ascii	"Status_NoMoreData\000"
+ 1504      75735F4E 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 37
+
+
+ 1504      6F4D6F72 
+ 1504      65446174 
+ 1504      6100
+ 1505              	.LASF33:
+ 1506 071a 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 1506      455F4556 
+ 1506      545F4741 
+ 1506      54545F43 
+ 1506      4F4E4E45 
+ 1507              	.LASF118:
+ 1508 0735 5F507249 		.ascii	"_PrISM_Init\000"
+ 1508      534D5F49 
+ 1508      6E697400 
+ 1509              	.LASF58:
+ 1510 0741 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ 1510      455F4556 
+ 1510      545F4C32 
+ 1510      4341505F 
+ 1510      434F4D4D 
+ 1511              	.LASF115:
+ 1512 075d 5F424C45 		.ascii	"_BLE_resetNeeded\000"
+ 1512      5F726573 
+ 1512      65744E65 
+ 1512      65646564 
+ 1512      00
+ 1513              	.LASF93:
+ 1514 076e 4359424C 		.ascii	"CYBLE_ERROR_MAX\000"
+ 1514      455F4552 
+ 1514      524F525F 
+ 1514      4D415800 
+ 1515              	.LASF59:
+ 1516 077e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 1516      455F4556 
+ 1516      545F4C32 
+ 1516      4341505F 
+ 1516      43424643 
+ 1517              	.LASF38:
+ 1518 079c 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 1518      455F4556 
+ 1518      545F4741 
+ 1518      5454435F 
+ 1518      52454144 
+ 1519              	.LASF126:
+ 1520 07bd 5F424C45 		.ascii	"_BLE_UpdateCCCD\000"
+ 1520      5F557064 
+ 1520      61746543 
+ 1520      43434400 
+ 1521              	.LASF123:
+ 1522 07cd 636C6561 		.ascii	"clearVector\000"
+ 1522      72566563 
+ 1522      746F7200 
+ 1523              	.LASF12:
+ 1524 07d9 73697A65 		.ascii	"sizetype\000"
+ 1524      74797065 
+ 1524      00
+ 1525              	.LASF117:
+ 1526 07e2 6372635F 		.ascii	"crc_Init\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 38
+
+
+ 1526      496E6974 
+ 1526      00
+ 1527              	.LASF101:
+ 1528 07eb 52657365 		.ascii	"ResetSystem\000"
+ 1528      74537973 
+ 1528      74656D00 
+ 1529              	.LASF24:
+ 1530 07f7 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 1530      455F4556 
+ 1530      545F4741 
+ 1530      505F4155 
+ 1530      54485F46 
+ 1531              	.LASF45:
+ 1532 0811 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 1532      455F4556 
+ 1532      545F4741 
+ 1532      5454435F 
+ 1532      57524954 
+ 1533              	.LASF124:
+ 1534 082b 5F424C45 		.ascii	"_BLE_Reset\000"
+ 1534      5F526573 
+ 1534      657400
+ 1535              	.LASF125:
+ 1536 0836 4379426C 		.ascii	"CyBle_ProcessEvents\000"
+ 1536      655F5072 
+ 1536      6F636573 
+ 1536      73457665 
+ 1536      6E747300 
+ 1537              	.LASF23:
+ 1538 084a 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 1538      455F4556 
+ 1538      545F4741 
+ 1538      505F4155 
+ 1538      54485F43 
+ 1539              	.LASF99:
+ 1540 0866 4359424C 		.ascii	"CYBLE_API_RESULT_T\000"
+ 1540      455F4150 
+ 1540      495F5245 
+ 1540      53554C54 
+ 1540      5F5400
+ 1541              	.LASF50:
+ 1542 0879 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 1542      455F4556 
+ 1542      545F4741 
+ 1542      5454435F 
+ 1542      48414E44 
+ 1543              	.LASF95:
+ 1544 089a 4359424C 		.ascii	"CYBLE_ERROR_IND_DISABLED\000"
+ 1544      455F4552 
+ 1544      524F525F 
+ 1544      494E445F 
+ 1544      44495341 
+ 1545              	.LASF60:
+ 1546 08b3 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 1546      455F4556 
+ 1546      545F4C32 
+ 1546      4341505F 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 39
+
+
+ 1546      43424643 
+ 1547              	.LASF37:
+ 1548 08d1 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 1548      455F4556 
+ 1548      545F4741 
+ 1548      5454435F 
+ 1548      52454144 
+ 1549              	.LASF120:
+ 1550 08f8 5F436170 		.ascii	"_CapSense_Init\000"
+ 1550      53656E73 
+ 1550      655F496E 
+ 1550      697400
+ 1551              	.LASF9:
+ 1552 0907 666C6F61 		.ascii	"float\000"
+ 1552      7400
+ 1553              	.LASF128:
+ 1554 090d 54696D65 		.ascii	"TimerDelay_Start\000"
+ 1554      7244656C 
+ 1554      61795F53 
+ 1554      74617274 
+ 1554      00
+ 1555              	.LASF112:
+ 1556 091e 5F424C45 		.ascii	"_BLE_sendStatus\000"
+ 1556      5F73656E 
+ 1556      64537461 
+ 1556      74757300 
+ 1557              	.LASF137:
+ 1558 092e 4379426C 		.ascii	"CyBle_GappStartAdvertisement\000"
+ 1558      655F4761 
+ 1558      70705374 
+ 1558      61727441 
+ 1558      64766572 
+ 1559              	.LASF131:
+ 1560 094b 76656374 		.ascii	"vectorIsEmpty\000"
+ 1560      6F724973 
+ 1560      456D7074 
+ 1560      7900
+ 1561              	.LASF80:
+ 1562 0959 4359424C 		.ascii	"CYBLE_ERROR_TX_POWER_READ\000"
+ 1562      455F4552 
+ 1562      524F525F 
+ 1562      54585F50 
+ 1562      4F574552 
+ 1563              	.LASF96:
+ 1564 0973 4359424C 		.ascii	"CYBLE_ERROR_CHAR_IS_NOT_DISCOVERED\000"
+ 1564      455F4552 
+ 1564      524F525F 
+ 1564      43484152 
+ 1564      5F49535F 
+ 1565              	.LASF1:
+ 1566 0996 756E7369 		.ascii	"unsigned char\000"
+ 1566      676E6564 
+ 1566      20636861 
+ 1566      7200
+ 1567              	.LASF133:
+ 1568 09a4 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1568      4320342E 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 40
+
+
+ 1568      392E3320 
+ 1568      32303135 
+ 1568      30333033 
+ 1569 09d7 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1569      20726576 
+ 1569      6973696F 
+ 1569      6E203232 
+ 1569      31323230 
+ 1570 0a0a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1570      66756E63 
+ 1570      74696F6E 
+ 1570      2D736563 
+ 1570      74696F6E 
+ 1571              	.LASF100:
+ 1572 0a32 496E6974 		.ascii	"InitializeSystem\000"
+ 1572      69616C69 
+ 1572      7A655379 
+ 1572      7374656D 
+ 1572      00
+ 1573              	.LASF2:
+ 1574 0a43 73686F72 		.ascii	"short int\000"
+ 1574      7420696E 
+ 1574      7400
+ 1575              	.LASF105:
+ 1576 0a4d 53746174 		.ascii	"Status_NoMoreSpace\000"
+ 1576      75735F4E 
+ 1576      6F4D6F72 
+ 1576      65537061 
+ 1576      636500
+ 1577              	.LASF109:
+ 1578 0a60 5F54696D 		.ascii	"_Timer_DelayDone\000"
+ 1578      65725F44 
+ 1578      656C6179 
+ 1578      446F6E65 
+ 1578      00
+ 1579              	.LASF76:
+ 1580 0a71 4359424C 		.ascii	"CYBLE_ERROR_NO_CONNECTION\000"
+ 1580      455F4552 
+ 1580      524F525F 
+ 1580      4E4F5F43 
+ 1580      4F4E4E45 
+ 1581              	.LASF111:
+ 1582 0a8b 5F424C45 		.ascii	"_BLE_acquireData\000"
+ 1582      5F616371 
+ 1582      75697265 
+ 1582      44617461 
+ 1582      00
+ 1583              	.LASF110:
+ 1584 0a9c 5F424C45 		.ascii	"_BLE_sendData\000"
+ 1584      5F73656E 
+ 1584      64446174 
+ 1584      6100
+ 1585              	.LASF47:
+ 1586 0aaa 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 1586      455F4556 
+ 1586      545F4741 
+ 1586      5454535F 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 41
+
+
+ 1586      50524550 
+ 1587              	.LASF116:
+ 1588 0ac9 5F424C45 		.ascii	"_BLE_deviceConnected\000"
+ 1588      5F646576 
+ 1588      69636543 
+ 1588      6F6E6E65 
+ 1588      63746564 
+ 1589              	.LASF52:
+ 1590 0ade 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 1590      455F4556 
+ 1590      545F4741 
+ 1590      5454535F 
+ 1590      48414E44 
+ 1591              	.LASF78:
+ 1592 0aff 4359424C 		.ascii	"CYBLE_ERROR_REPEATED_ATTEMPTS\000"
+ 1592      455F4552 
+ 1592      524F525F 
+ 1592      52455045 
+ 1592      41544544 
+ 1593              	.LASF134:
+ 1594 0b1d 2E5C6D61 		.ascii	".\\main.c\000"
+ 1594      696E2E63 
+ 1594      00
+ 1595              	.LASF11:
+ 1596 0b26 63686172 		.ascii	"char\000"
+ 1596      00
+ 1597              	.LASF81:
+ 1598 0b2b 4359424C 		.ascii	"CYBLE_ERROR_BT_ON_NOT_COMPLETED\000"
+ 1598      455F4552 
+ 1598      524F525F 
+ 1598      42545F4F 
+ 1598      4E5F4E4F 
+ 1599              	.LASF27:
+ 1600 0b4b 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 1600      455F4556 
+ 1600      545F4741 
+ 1600      505F4445 
+ 1600      56494345 
+ 1601              	.LASF113:
+ 1602 0b6d 5F424C45 		.ascii	"_BLE_sendDataSynchronously\000"
+ 1602      5F73656E 
+ 1602      64446174 
+ 1602      6153796E 
+ 1602      6368726F 
+ 1603              	.LASF8:
+ 1604 0b88 756E7369 		.ascii	"unsigned int\000"
+ 1604      676E6564 
+ 1604      20696E74 
+ 1604      00
+ 1605              	.LASF55:
+ 1606 0b95 4359424C 		.ascii	"CYBLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ\000"
+ 1606      455F4556 
+ 1606      545F4741 
+ 1606      5454535F 
+ 1606      52454144 
+ 1607              	.LASF65:
+ 1608 0bbe 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 42
+
+
+ 1608      455F4556 
+ 1608      545F4C32 
+ 1608      4341505F 
+ 1608      43424643 
+ 1609              	.LASF91:
+ 1610 0be1 4359424C 		.ascii	"CYBLE_ERROR_FLASH_WRITE_NOT_PERMITED\000"
+ 1610      455F4552 
+ 1610      524F525F 
+ 1610      464C4153 
+ 1610      485F5752 
+ 1611              	.LASF86:
+ 1612 0c06 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_CONNECTION_ENTITY_NOT_FOUND\000"
+ 1612      455F4552 
+ 1612      524F525F 
+ 1612      4C324341 
+ 1612      505F434F 
+ 1613              	.LASF16:
+ 1614 0c34 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ 1614      455F4556 
+ 1614      545F4841 
+ 1614      52445741 
+ 1614      52455F45 
+ 1615              	.LASF3:
+ 1616 0c4d 73686F72 		.ascii	"short unsigned int\000"
+ 1616      7420756E 
+ 1616      7369676E 
+ 1616      65642069 
+ 1616      6E7400
+ 1617              	.LASF119:
+ 1618 0c60 5F54696D 		.ascii	"_Timer_Init\000"
+ 1618      65725F49 
+ 1618      6E697400 
+ 1619              	.LASF104:
+ 1620 0c6c 53746174 		.ascii	"Status_Acquiring\000"
+ 1620      75735F41 
+ 1620      63717569 
+ 1620      72696E67 
+ 1620      00
+ 1621              	.LASF127:
+ 1622 0c7d 5F424C45 		.ascii	"_BLE_UpdateControl\000"
+ 1622      5F557064 
+ 1622      61746543 
+ 1622      6F6E7472 
+ 1622      6F6C00
+ 1623              	.LASF122:
+ 1624 0c90 5F576174 		.ascii	"_Watchdog_Init\000"
+ 1624      6368646F 
+ 1624      675F496E 
+ 1624      697400
+ 1625              	.LASF106:
+ 1626 0c9f 53746174 		.ascii	"Status_DataAcquired\000"
+ 1626      75735F44 
+ 1626      61746141 
+ 1626      63717569 
+ 1626      72656400 
+ 1627              	.LASF42:
+ 1628 0cb3 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 43
+
+
+ 1628      455F4556 
+ 1628      545F4741 
+ 1628      5454435F 
+ 1628      52454144 
+ 1629              	.LASF92:
+ 1630 0cd1 4359424C 		.ascii	"CYBLE_ERROR_MIC_AUTH_FAILED\000"
+ 1630      455F4552 
+ 1630      524F525F 
+ 1630      4D49435F 
+ 1630      41555448 
+ 1631              	.LASF85:
+ 1632 0ced 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_NOT_REGISTERED\000"
+ 1632      455F4552 
+ 1632      524F525F 
+ 1632      4C324341 
+ 1632      505F5053 
+ 1633              	.LASF40:
+ 1634 0d12 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 1634      455F4556 
+ 1634      545F4741 
+ 1634      5454435F 
+ 1634      46494E44 
+ 1635              	.LASF79:
+ 1636 0d39 4359424C 		.ascii	"CYBLE_ERROR_GAP_ROLE\000"
+ 1636      455F4552 
+ 1636      524F525F 
+ 1636      4741505F 
+ 1636      524F4C45 
+ 1637              	.LASF31:
+ 1638 0d4e 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 1638      455F4556 
+ 1638      545F4741 
+ 1638      505F4B45 
+ 1638      59494E46 
+ 1639              	.LASF61:
+ 1640 0d72 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 1640      455F4556 
+ 1640      545F4C32 
+ 1640      4341505F 
+ 1640      43424643 
+ 1641              	.LASF57:
+ 1642 0d93 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 1642      455F4556 
+ 1642      545F4C32 
+ 1642      4341505F 
+ 1642      434F4E4E 
+ 1643              	.LASF102:
+ 1644 0db9 6D61696E 		.ascii	"main\000"
+ 1644      00
+ 1645              	.LASF19:
+ 1646 0dbe 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 1646      455F4556 
+ 1646      545F4741 
+ 1646      50435F53 
+ 1646      43414E5F 
+ 1647              	.LASF34:
+ 1648 0de2 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccY5k9I6.s 			page 44
+
+
+ 1648      455F4556 
+ 1648      545F4741 
+ 1648      54545F44 
+ 1648      4953434F 
+ 1649              	.LASF89:
+ 1650 0e00 4359424C 		.ascii	"CYBLE_ERROR_GATT_DB_INVALID_ATTR_HANDLE\000"
+ 1650      455F4552 
+ 1650      524F525F 
+ 1650      47415454 
+ 1650      5F44425F 
+ 1651              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

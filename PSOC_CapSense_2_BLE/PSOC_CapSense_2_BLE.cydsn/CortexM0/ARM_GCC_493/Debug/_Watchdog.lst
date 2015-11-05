@@ -1,0 +1,2030 @@
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"_Watchdog.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._Watchdog_Handler,"ax",%progbits
+  18              		.align	2
+  19              		.global	_Watchdog_Handler
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	_Watchdog_Handler, %function
+  23              	_Watchdog_Handler:
+  24              	.LFB36:
+  25              		.file 1 ".\\_Watchdog.c"
+   1:.\_Watchdog.c **** /****************************************************************************
+   2:.\_Watchdog.c **** *
+   3:.\_Watchdog.c **** * Project Name		: PSoC CapSense 2 BLE
+   4:.\_Watchdog.c **** *
+   5:.\_Watchdog.c **** * File Name			: _Watchdog.c
+   6:.\_Watchdog.c **** * Version 			: 1.0
+   7:.\_Watchdog.c **** *
+   8:.\_Watchdog.c **** * Device Used		: CY8C4247LQI-BL483
+   9:.\_Watchdog.c **** * Software Used		: PSoC Creator 3.3
+  10:.\_Watchdog.c **** * Compiler    		: ARM GCC 4.8.4, ARM MDK Generic
+  11:.\_Watchdog.c **** * Related Hardware	: CY8CKIT-042-BLE Bluetooth Low Energy Pioneer Kit 
+  12:.\_Watchdog.c **** *
+  13:.\_Watchdog.c **** * Owner             : A. BERNIER
+  14:.\_Watchdog.c **** *
+  15:.\_Watchdog.c **** *****************************************************************************/
+  16:.\_Watchdog.c **** 
+  17:.\_Watchdog.c **** 
+  18:.\_Watchdog.c **** /*****************************************************************************
+  19:.\_Watchdog.c **** * Included headers
+  20:.\_Watchdog.c **** *****************************************************************************/
+  21:.\_Watchdog.c **** #include "_Watchdog.h"
+  22:.\_Watchdog.c **** #include "_BLE.h"
+  23:.\_Watchdog.c **** #include "_PrISM.h"
+  24:.\_Watchdog.c **** 
+  25:.\_Watchdog.c **** 
+  26:.\_Watchdog.c **** /*****************************************************************************
+  27:.\_Watchdog.c **** * Function Name: _Watchdog_Init()
+  28:.\_Watchdog.c **** ******************************************************************************
+  29:.\_Watchdog.c **** * Summary:
+  30:.\_Watchdog.c **** *   Initialize the watchdog.
+  31:.\_Watchdog.c **** *
+  32:.\_Watchdog.c **** * Parameters:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 2
+
+
+  33:.\_Watchdog.c **** *   None.
+  34:.\_Watchdog.c **** *
+  35:.\_Watchdog.c **** * Return:
+  36:.\_Watchdog.c **** *   None.
+  37:.\_Watchdog.c **** *
+  38:.\_Watchdog.c **** * Note:
+  39:.\_Watchdog.c **** *
+  40:.\_Watchdog.c **** *****************************************************************************/
+  41:.\_Watchdog.c **** void _Watchdog_Init(void)
+  42:.\_Watchdog.c **** {
+  43:.\_Watchdog.c ****     // Unlock the WDT registers for modification.
+  44:.\_Watchdog.c **** 	CySysWdtUnlock();
+  45:.\_Watchdog.c ****     
+  46:.\_Watchdog.c ****     // Write Mode for Counters as Interrupt on Match.
+  47:.\_Watchdog.c ****     CySysWdtWriteMode(CY_SYS_WDT_COUNTER0, CY_SYS_WDT_MODE_INT);
+  48:.\_Watchdog.c ****     CySysWdtWriteMode(CY_SYS_WDT_COUNTER1, CY_SYS_WDT_MODE_INT);
+  49:.\_Watchdog.c ****     
+  50:.\_Watchdog.c ****     // Set Clear on Match for Counters.
+  51:.\_Watchdog.c **** 	CySysWdtWriteClearOnMatch(CY_SYS_WDT_COUNTER0, TRUE);
+  52:.\_Watchdog.c ****     CySysWdtWriteClearOnMatch(CY_SYS_WDT_COUNTER1, TRUE);
+  53:.\_Watchdog.c ****     
+  54:.\_Watchdog.c ****     // Set Watchdog interrupt to lower priority.
+  55:.\_Watchdog.c **** 	CyIntSetPriority(WATCHDOG_INT_VEC_NUM, WATCHDOG_INT_VEC_PRIORITY);
+  56:.\_Watchdog.c ****     
+  57:.\_Watchdog.c ****     // Enable Watchdog Interrupt using Interrupt number.
+  58:.\_Watchdog.c ****     CyIntEnable(WATCHDOG_INT_VEC_NUM);
+  59:.\_Watchdog.c ****     
+  60:.\_Watchdog.c ****     // Write the match value in Counters.
+  61:.\_Watchdog.c **** 	CySysWdtWriteMatch(CY_SYS_WDT_COUNTER0, WATCHDOG_COUNTER0_PERIOD);
+  62:.\_Watchdog.c ****     CySysWdtWriteMatch(CY_SYS_WDT_COUNTER1, WATCHDOG_COUNTER1_PERIOD);
+  63:.\_Watchdog.c ****     
+  64:.\_Watchdog.c ****     // Enable Counters.
+  65:.\_Watchdog.c ****     CySysWdtEnable(CY_SYS_WDT_COUNTER0_MASK);
+  66:.\_Watchdog.c ****     CySysWdtEnable(CY_SYS_WDT_COUNTER1_MASK);
+  67:.\_Watchdog.c **** 	
+  68:.\_Watchdog.c **** 	// Lock Watchdog to prevent further changes.
+  69:.\_Watchdog.c ****     CySysWdtLock();
+  70:.\_Watchdog.c ****     
+  71:.\_Watchdog.c ****     // Set the Watchdog Interrupt vector to the address of Interrupt routine 
+  72:.\_Watchdog.c **** 	// _Watchdog_Handler.
+  73:.\_Watchdog.c **** 	CyIntSetVector(WATCHDOG_INT_VEC_NUM, &_Watchdog_Handler);
+  74:.\_Watchdog.c **** }
+  75:.\_Watchdog.c **** 
+  76:.\_Watchdog.c **** 
+  77:.\_Watchdog.c **** /*****************************************************************************
+  78:.\_Watchdog.c **** * Function Name: _Watchdog_Handler()
+  79:.\_Watchdog.c **** ******************************************************************************
+  80:.\_Watchdog.c **** * Summary:
+  81:.\_Watchdog.c **** *   Watchdog interrupt routine.
+  82:.\_Watchdog.c **** *
+  83:.\_Watchdog.c **** * Parameters:
+  84:.\_Watchdog.c **** *   None.
+  85:.\_Watchdog.c **** *
+  86:.\_Watchdog.c **** * Return:
+  87:.\_Watchdog.c **** *   None.
+  88:.\_Watchdog.c **** *
+  89:.\_Watchdog.c **** * Note:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 3
+
+
+  90:.\_Watchdog.c **** *
+  91:.\_Watchdog.c **** *****************************************************************************/
+  92:.\_Watchdog.c **** void _Watchdog_Handler(void)
+  93:.\_Watchdog.c **** {
+  26              		.loc 1 93 0
+  27              		.cfi_startproc
+  28 0000 10B5     		push	{r4, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 4, -8
+  31              		.cfi_offset 14, -4
+  94:.\_Watchdog.c ****     // If the Interrupt source is Counter 0 match, then process.
+  95:.\_Watchdog.c **** 	if(CySysWdtGetInterruptSource() & CY_SYS_WDT_COUNTER0_INT)
+  32              		.loc 1 95 0
+  33 0002 FFF7FEFF 		bl	CySysWdtGetInterruptSource
+  34              	.LVL0:
+  35 0006 4307     		lsl	r3, r0, #29
+  36 0008 21D5     		bpl	.L2
+  96:.\_Watchdog.c **** 	{
+  97:.\_Watchdog.c ****         // Clear Watchdog Interrupt from Counter 0.
+  98:.\_Watchdog.c **** 		CySysWdtClearInterrupt(CY_SYS_WDT_COUNTER0_INT);
+  37              		.loc 1 98 0
+  38 000a 0420     		mov	r0, #4
+  39 000c FFF7FEFF 		bl	CySysWdtClearInterrupt
+  40              	.LVL1:
+  99:.\_Watchdog.c ****         
+ 100:.\_Watchdog.c ****         /********************************************************************/
+ 101:.\_Watchdog.c ****         
+ 102:.\_Watchdog.c ****         // Process all the events in the stack.
+ 103:.\_Watchdog.c ****         if(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
+  41              		.loc 1 103 0
+  42 0010 3E4B     		ldr	r3, .L10
+  43 0012 1B78     		ldrb	r3, [r3]
+  44 0014 012B     		cmp	r3, #1
+  45 0016 01D1     		bne	.L3
+ 104:.\_Watchdog.c ****             CyBle_ProcessEvents();
+  46              		.loc 1 104 0
+  47 0018 FFF7FEFF 		bl	CyBle_ProcessEvents
+  48              	.LVL2:
+  49              	.L3:
+ 105:.\_Watchdog.c ****         
+ 106:.\_Watchdog.c ****         /********************************************************************/
+ 107:.\_Watchdog.c ****         
+ 108:.\_Watchdog.c ****         // Unlock the WDT registers for modification.
+ 109:.\_Watchdog.c **** 		CySysWdtUnlock();
+  50              		.loc 1 109 0
+  51 001c FFF7FEFF 		bl	CySysWdtUnlock
+  52              	.LVL3:
+ 110:.\_Watchdog.c **** 		
+ 111:.\_Watchdog.c **** 		// Disable Counter 0 to allow modifications.
+ 112:.\_Watchdog.c **** 		CySysWdtDisable(CY_SYS_WDT_COUNTER0_MASK);
+  53              		.loc 1 112 0
+  54 0020 0120     		mov	r0, #1
+  55 0022 FFF7FEFF 		bl	CySysWdtDisable
+  56              	.LVL4:
+ 113:.\_Watchdog.c **** 		
+ 114:.\_Watchdog.c **** 		// Reset Counter 0 and give ~3 LFCLK cycles to take effect.
+ 115:.\_Watchdog.c **** 		CySysWdtResetCounters(CY_SYS_WDT_COUNTER0_RESET);
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 4
+
+
+  57              		.loc 1 115 0
+  58 0026 0820     		mov	r0, #8
+  59 0028 FFF7FEFF 		bl	CySysWdtResetCounters
+  60              	.LVL5:
+ 116:.\_Watchdog.c **** 		CyDelayUs(WATCHDOG_REG_UPDATE_WAIT_TIME);
+  61              		.loc 1 116 0
+  62 002c 6420     		mov	r0, #100
+  63 002e FFF7FEFF 		bl	CyDelayUs
+  64              	.LVL6:
+ 117:.\_Watchdog.c **** 		
+ 118:.\_Watchdog.c **** 		// Write the Counter 0 match value for 20 millisecond and give 
+ 119:.\_Watchdog.c **** 		// ~3 LFCLK cycles to take effect.
+ 120:.\_Watchdog.c **** 		CySysWdtWriteMatch(CY_SYS_WDT_COUNTER0, WATCHDOG_COUNTER0_PERIOD);
+  65              		.loc 1 120 0
+  66 0032 0020     		mov	r0, #0
+  67 0034 A521     		mov	r1, #165
+  68 0036 4900     		lsl	r1, r1, #1
+  69 0038 FFF7FEFF 		bl	CySysWdtSetMatch
+  70              	.LVL7:
+ 121:.\_Watchdog.c **** 		CyDelayUs(WATCHDOG_REG_UPDATE_WAIT_TIME);
+  71              		.loc 1 121 0
+  72 003c 6420     		mov	r0, #100
+  73 003e FFF7FEFF 		bl	CyDelayUs
+  74              	.LVL8:
+ 122:.\_Watchdog.c **** 		
+ 123:.\_Watchdog.c **** 		// Enable Watchdog Counter 0.
+ 124:.\_Watchdog.c **** 		CySysWdtEnable(CY_SYS_WDT_COUNTER0_MASK);
+  75              		.loc 1 124 0
+  76 0042 0120     		mov	r0, #1
+  77 0044 FFF7FEFF 		bl	CySysWdtEnable
+  78              	.LVL9:
+ 125:.\_Watchdog.c **** 		
+ 126:.\_Watchdog.c **** 		// Lock Watchdog to prevent any further change.
+ 127:.\_Watchdog.c **** 	    CySysWdtLock();
+  79              		.loc 1 127 0
+  80 0048 FFF7FEFF 		bl	CySysWdtLock
+  81              	.LVL10:
+  82 004c 5DE0     		b	.L1
+  83              	.L2:
+ 128:.\_Watchdog.c ****     }
+ 129:.\_Watchdog.c ****     
+ 130:.\_Watchdog.c ****     // If the Interrupt source is Counter 1 match, then process.
+ 131:.\_Watchdog.c **** 	else if(CySysWdtGetInterruptSource() & CY_SYS_WDT_COUNTER1_INT)
+  84              		.loc 1 131 0
+  85 004e FFF7FEFF 		bl	CySysWdtGetInterruptSource
+  86              	.LVL11:
+  87 0052 4305     		lsl	r3, r0, #21
+  88 0054 59D5     		bpl	.L1
+  89              	.LBB2:
+ 132:.\_Watchdog.c **** 	{
+ 133:.\_Watchdog.c ****         // Clear Watchdog Interrupt from Counter 0.
+ 134:.\_Watchdog.c **** 		CySysWdtClearInterrupt(CY_SYS_WDT_COUNTER1_INT);
+  90              		.loc 1 134 0
+  91 0056 8020     		mov	r0, #128
+  92 0058 C000     		lsl	r0, r0, #3
+  93 005a FFF7FEFF 		bl	CySysWdtClearInterrupt
+  94              	.LVL12:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 5
+
+
+ 135:.\_Watchdog.c ****         
+ 136:.\_Watchdog.c ****         /********************************************************************/
+ 137:.\_Watchdog.c ****         
+ 138:.\_Watchdog.c ****         // Stores the previous state of the BLE module.
+ 139:.\_Watchdog.c ****         static uint8 previousState = 0xFF;
+ 140:.\_Watchdog.c ****         
+ 141:.\_Watchdog.c ****         // If state changed, turn all the LEDs off.
+ 142:.\_Watchdog.c ****         if (CyBle_GetState() != previousState)
+  95              		.loc 1 142 0
+  96 005e 2C4B     		ldr	r3, .L10+4
+  97 0060 1A78     		ldrb	r2, [r3]
+  98 0062 2C4B     		ldr	r3, .L10+8
+  99 0064 1B78     		ldrb	r3, [r3]
+ 100 0066 9A42     		cmp	r2, r3
+ 101 0068 04D0     		beq	.L5
+ 143:.\_Watchdog.c ****             _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
+ 102              		.loc 1 143 0
+ 103 006a 0120     		mov	r0, #1
+ 104 006c 0121     		mov	r1, #1
+ 105 006e 0122     		mov	r2, #1
+ 106 0070 FFF7FEFF 		bl	_PrISM_TurnOffLED
+ 107              	.LVL13:
+ 108              	.L5:
+ 144:.\_Watchdog.c ****             
+ 145:.\_Watchdog.c ****         // If disconnected, turn all the LEDs off.
+ 146:.\_Watchdog.c ****         if(CyBle_GetState() == CYBLE_STATE_DISCONNECTED) {
+ 109              		.loc 1 146 0
+ 110 0074 264B     		ldr	r3, .L10+4
+ 111 0076 1B78     		ldrb	r3, [r3]
+ 112 0078 042B     		cmp	r3, #4
+ 113 007a 08D1     		bne	.L6
+ 147:.\_Watchdog.c ****             previousState = CYBLE_STATE_DISCONNECTED;
+ 114              		.loc 1 147 0
+ 115 007c 0422     		mov	r2, #4
+ 116 007e 254B     		ldr	r3, .L10+8
+ 117 0080 1A70     		strb	r2, [r3]
+ 148:.\_Watchdog.c ****             
+ 149:.\_Watchdog.c ****             _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
+ 118              		.loc 1 149 0
+ 119 0082 0120     		mov	r0, #1
+ 120 0084 0121     		mov	r1, #1
+ 121 0086 033A     		sub	r2, r2, #3
+ 122 0088 FFF7FEFF 		bl	_PrISM_TurnOffLED
+ 123              	.LVL14:
+ 124 008c 23E0     		b	.L7
+ 125              	.L6:
+ 150:.\_Watchdog.c ****         }
+ 151:.\_Watchdog.c ****                 
+ 152:.\_Watchdog.c ****         // If in advertising mode, flash the red LED.
+ 153:.\_Watchdog.c ****         else if(CyBle_GetState() == CYBLE_STATE_ADVERTISING) {
+ 126              		.loc 1 153 0
+ 127 008e 032B     		cmp	r3, #3
+ 128 0090 12D1     		bne	.L8
+ 154:.\_Watchdog.c ****             previousState = CYBLE_STATE_ADVERTISING;
+ 129              		.loc 1 154 0
+ 130 0092 0322     		mov	r2, #3
+ 131 0094 1F4B     		ldr	r3, .L10+8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 6
+
+
+ 132 0096 1A70     		strb	r2, [r3]
+ 155:.\_Watchdog.c ****             
+ 156:.\_Watchdog.c ****             if(_PrISM_Red_On)
+ 133              		.loc 1 156 0
+ 134 0098 1F4B     		ldr	r3, .L10+12
+ 135 009a 1B78     		ldrb	r3, [r3]
+ 136 009c 002B     		cmp	r3, #0
+ 137 009e 05D0     		beq	.L9
+ 157:.\_Watchdog.c ****                 _PrISM_TurnOffLED(TRUE, FALSE, FALSE);
+ 138              		.loc 1 157 0
+ 139 00a0 0120     		mov	r0, #1
+ 140 00a2 0021     		mov	r1, #0
+ 141 00a4 0022     		mov	r2, #0
+ 142 00a6 FFF7FEFF 		bl	_PrISM_TurnOffLED
+ 143              	.LVL15:
+ 144 00aa 14E0     		b	.L7
+ 145              	.L9:
+ 158:.\_Watchdog.c ****             else
+ 159:.\_Watchdog.c ****                 _PrISM_TurnOnLED(TRUE, FALSE, FALSE);
+ 146              		.loc 1 159 0
+ 147 00ac 0120     		mov	r0, #1
+ 148 00ae 0021     		mov	r1, #0
+ 149 00b0 0022     		mov	r2, #0
+ 150 00b2 FFF7FEFF 		bl	_PrISM_TurnOnLED
+ 151              	.LVL16:
+ 152 00b6 0EE0     		b	.L7
+ 153              	.L8:
+ 160:.\_Watchdog.c ****         }
+ 161:.\_Watchdog.c ****         
+ 162:.\_Watchdog.c ****         // If connected, turn the blue LED on.
+ 163:.\_Watchdog.c ****         else if(CyBle_GetState() == CYBLE_STATE_CONNECTED) {
+ 154              		.loc 1 163 0
+ 155 00b8 022B     		cmp	r3, #2
+ 156 00ba 0CD1     		bne	.L7
+ 164:.\_Watchdog.c ****             previousState = CYBLE_STATE_CONNECTED;
+ 157              		.loc 1 164 0
+ 158 00bc 0222     		mov	r2, #2
+ 159 00be 154B     		ldr	r3, .L10+8
+ 160 00c0 1A70     		strb	r2, [r3]
+ 165:.\_Watchdog.c ****             
+ 166:.\_Watchdog.c ****             _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
+ 161              		.loc 1 166 0
+ 162 00c2 0120     		mov	r0, #1
+ 163 00c4 0121     		mov	r1, #1
+ 164 00c6 013A     		sub	r2, r2, #1
+ 165 00c8 FFF7FEFF 		bl	_PrISM_TurnOffLED
+ 166              	.LVL17:
+ 167:.\_Watchdog.c ****             _PrISM_TurnOnLED(FALSE, FALSE, TRUE);
+ 167              		.loc 1 167 0
+ 168 00cc 0020     		mov	r0, #0
+ 169 00ce 0021     		mov	r1, #0
+ 170 00d0 0122     		mov	r2, #1
+ 171 00d2 FFF7FEFF 		bl	_PrISM_TurnOnLED
+ 172              	.LVL18:
+ 173              	.L7:
+ 168:.\_Watchdog.c ****         }
+ 169:.\_Watchdog.c ****         
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 7
+
+
+ 170:.\_Watchdog.c ****         /********************************************************************/
+ 171:.\_Watchdog.c ****         
+ 172:.\_Watchdog.c ****         // Unlock the WDT registers for modification.
+ 173:.\_Watchdog.c **** 		CySysWdtUnlock();
+ 174              		.loc 1 173 0
+ 175 00d6 FFF7FEFF 		bl	CySysWdtUnlock
+ 176              	.LVL19:
+ 174:.\_Watchdog.c **** 		
+ 175:.\_Watchdog.c **** 		// Disable Counter 1 to allow modifications.
+ 176:.\_Watchdog.c **** 		CySysWdtDisable(CY_SYS_WDT_COUNTER1_MASK);
+ 177              		.loc 1 176 0
+ 178 00da 8024     		mov	r4, #128
+ 179 00dc 6400     		lsl	r4, r4, #1
+ 180 00de 201C     		mov	r0, r4
+ 181 00e0 FFF7FEFF 		bl	CySysWdtDisable
+ 182              	.LVL20:
+ 177:.\_Watchdog.c **** 		
+ 178:.\_Watchdog.c **** 		// Reset Counter 1 and give ~3 LFCLK cycles to take effect.
+ 179:.\_Watchdog.c **** 		CySysWdtResetCounters(CY_SYS_WDT_COUNTER1_RESET);
+ 183              		.loc 1 179 0
+ 184 00e4 8020     		mov	r0, #128
+ 185 00e6 0001     		lsl	r0, r0, #4
+ 186 00e8 FFF7FEFF 		bl	CySysWdtResetCounters
+ 187              	.LVL21:
+ 180:.\_Watchdog.c **** 		CyDelayUs(WATCHDOG_REG_UPDATE_WAIT_TIME);
+ 188              		.loc 1 180 0
+ 189 00ec 6420     		mov	r0, #100
+ 190 00ee FFF7FEFF 		bl	CyDelayUs
+ 191              	.LVL22:
+ 181:.\_Watchdog.c **** 		
+ 182:.\_Watchdog.c **** 		// Write the Counter 1 match value for 500 millisecond and give 
+ 183:.\_Watchdog.c **** 		// ~3 LFCLK cycles to take effect.
+ 184:.\_Watchdog.c **** 		CySysWdtWriteMatch(CY_SYS_WDT_COUNTER1, WATCHDOG_COUNTER1_PERIOD);
+ 192              		.loc 1 184 0
+ 193 00f2 0120     		mov	r0, #1
+ 194 00f4 0949     		ldr	r1, .L10+16
+ 195 00f6 FFF7FEFF 		bl	CySysWdtSetMatch
+ 196              	.LVL23:
+ 185:.\_Watchdog.c **** 		CyDelayUs(WATCHDOG_REG_UPDATE_WAIT_TIME);
+ 197              		.loc 1 185 0
+ 198 00fa 6420     		mov	r0, #100
+ 199 00fc FFF7FEFF 		bl	CyDelayUs
+ 200              	.LVL24:
+ 186:.\_Watchdog.c **** 		
+ 187:.\_Watchdog.c **** 		// Enable Watchdog Counter 1.
+ 188:.\_Watchdog.c **** 		CySysWdtEnable(CY_SYS_WDT_COUNTER1_MASK);
+ 201              		.loc 1 188 0
+ 202 0100 201C     		mov	r0, r4
+ 203 0102 FFF7FEFF 		bl	CySysWdtEnable
+ 204              	.LVL25:
+ 189:.\_Watchdog.c **** 		
+ 190:.\_Watchdog.c **** 		// Lock Watchdog to prevent any further change.
+ 191:.\_Watchdog.c **** 	    CySysWdtLock();
+ 205              		.loc 1 191 0
+ 206 0106 FFF7FEFF 		bl	CySysWdtLock
+ 207              	.LVL26:
+ 208              	.L1:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 8
+
+
+ 209              	.LBE2:
+ 192:.\_Watchdog.c ****     }
+ 193:.\_Watchdog.c **** }
+ 210              		.loc 1 193 0
+ 211              		@ sp needed
+ 212 010a 10BD     		pop	{r4, pc}
+ 213              	.L11:
+ 214              		.align	2
+ 215              	.L10:
+ 216 010c 00000000 		.word	cyBle_busyStatus
+ 217 0110 00000000 		.word	cyBle_state
+ 218 0114 00000000 		.word	.LANCHOR0
+ 219 0118 00000000 		.word	_PrISM_Red_On
+ 220 011c 74400000 		.word	16500
+ 221              		.cfi_endproc
+ 222              	.LFE36:
+ 223              		.size	_Watchdog_Handler, .-_Watchdog_Handler
+ 224              		.section	.text._Watchdog_Init,"ax",%progbits
+ 225              		.align	2
+ 226              		.global	_Watchdog_Init
+ 227              		.code	16
+ 228              		.thumb_func
+ 229              		.type	_Watchdog_Init, %function
+ 230              	_Watchdog_Init:
+ 231              	.LFB35:
+  42:.\_Watchdog.c ****     // Unlock the WDT registers for modification.
+ 232              		.loc 1 42 0
+ 233              		.cfi_startproc
+ 234 0000 08B5     		push	{r3, lr}
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 3, -8
+ 237              		.cfi_offset 14, -4
+  44:.\_Watchdog.c ****     
+ 238              		.loc 1 44 0
+ 239 0002 FFF7FEFF 		bl	CySysWdtUnlock
+ 240              	.LVL27:
+  47:.\_Watchdog.c ****     CySysWdtWriteMode(CY_SYS_WDT_COUNTER1, CY_SYS_WDT_MODE_INT);
+ 241              		.loc 1 47 0
+ 242 0006 0020     		mov	r0, #0
+ 243 0008 0121     		mov	r1, #1
+ 244 000a FFF7FEFF 		bl	CySysWdtSetMode
+ 245              	.LVL28:
+  48:.\_Watchdog.c ****     
+ 246              		.loc 1 48 0
+ 247 000e 0120     		mov	r0, #1
+ 248 0010 0121     		mov	r1, #1
+ 249 0012 FFF7FEFF 		bl	CySysWdtSetMode
+ 250              	.LVL29:
+  51:.\_Watchdog.c ****     CySysWdtWriteClearOnMatch(CY_SYS_WDT_COUNTER1, TRUE);
+ 251              		.loc 1 51 0
+ 252 0016 0020     		mov	r0, #0
+ 253 0018 0121     		mov	r1, #1
+ 254 001a FFF7FEFF 		bl	CySysWdtSetClearOnMatch
+ 255              	.LVL30:
+  52:.\_Watchdog.c ****     
+ 256              		.loc 1 52 0
+ 257 001e 0120     		mov	r0, #1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 9
+
+
+ 258 0020 0121     		mov	r1, #1
+ 259 0022 FFF7FEFF 		bl	CySysWdtSetClearOnMatch
+ 260              	.LVL31:
+  55:.\_Watchdog.c ****     
+ 261              		.loc 1 55 0
+ 262 0026 0820     		mov	r0, #8
+ 263 0028 0321     		mov	r1, #3
+ 264 002a FFF7FEFF 		bl	CyIntSetPriority
+ 265              	.LVL32:
+  58:.\_Watchdog.c ****     
+ 266              		.loc 1 58 0
+ 267 002e 0820     		mov	r0, #8
+ 268 0030 FFF7FEFF 		bl	CyIntEnable
+ 269              	.LVL33:
+  61:.\_Watchdog.c ****     CySysWdtWriteMatch(CY_SYS_WDT_COUNTER1, WATCHDOG_COUNTER1_PERIOD);
+ 270              		.loc 1 61 0
+ 271 0034 0020     		mov	r0, #0
+ 272 0036 A521     		mov	r1, #165
+ 273 0038 4900     		lsl	r1, r1, #1
+ 274 003a FFF7FEFF 		bl	CySysWdtSetMatch
+ 275              	.LVL34:
+  62:.\_Watchdog.c ****     
+ 276              		.loc 1 62 0
+ 277 003e 0120     		mov	r0, #1
+ 278 0040 0849     		ldr	r1, .L13
+ 279 0042 FFF7FEFF 		bl	CySysWdtSetMatch
+ 280              	.LVL35:
+  65:.\_Watchdog.c ****     CySysWdtEnable(CY_SYS_WDT_COUNTER1_MASK);
+ 281              		.loc 1 65 0
+ 282 0046 0120     		mov	r0, #1
+ 283 0048 FFF7FEFF 		bl	CySysWdtEnable
+ 284              	.LVL36:
+  66:.\_Watchdog.c **** 	
+ 285              		.loc 1 66 0
+ 286 004c 8020     		mov	r0, #128
+ 287 004e 4000     		lsl	r0, r0, #1
+ 288 0050 FFF7FEFF 		bl	CySysWdtEnable
+ 289              	.LVL37:
+  69:.\_Watchdog.c ****     
+ 290              		.loc 1 69 0
+ 291 0054 FFF7FEFF 		bl	CySysWdtLock
+ 292              	.LVL38:
+  73:.\_Watchdog.c **** }
+ 293              		.loc 1 73 0
+ 294 0058 0820     		mov	r0, #8
+ 295 005a 0349     		ldr	r1, .L13+4
+ 296 005c FFF7FEFF 		bl	CyIntSetVector
+ 297              	.LVL39:
+  74:.\_Watchdog.c **** 
+ 298              		.loc 1 74 0
+ 299              		@ sp needed
+ 300 0060 08BD     		pop	{r3, pc}
+ 301              	.L14:
+ 302 0062 C046     		.align	2
+ 303              	.L13:
+ 304 0064 74400000 		.word	16500
+ 305 0068 00000000 		.word	_Watchdog_Handler
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 10
+
+
+ 306              		.cfi_endproc
+ 307              	.LFE35:
+ 308              		.size	_Watchdog_Init, .-_Watchdog_Init
+ 309              		.data
+ 310              		.set	.LANCHOR0,. + 0
+ 311              		.type	previousState.6896, %object
+ 312              		.size	previousState.6896, 1
+ 313              	previousState.6896:
+ 314 0000 FF       		.byte	-1
+ 315              		.text
+ 316              	.Letext0:
+ 317              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 318              		.file 3 "Generated_Source\\PSoC4/BLE_eventHandler.h"
+ 319              		.file 4 ".\\_PrISM.h"
+ 320              		.file 5 "Generated_Source\\PSoC4/CyLFClk.h"
+ 321              		.file 6 "Generated_Source\\PSoC4/CyLib.h"
+ 322              		.file 7 "Generated_Source\\PSoC4/BLE_Stack.h"
+ 323              		.section	.debug_info,"",%progbits
+ 324              	.Ldebug_info0:
+ 325 0000 AA050000 		.4byte	0x5aa
+ 326 0004 0400     		.2byte	0x4
+ 327 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 328 000a 04       		.byte	0x4
+ 329 000b 01       		.uleb128 0x1
+ 330 000c BC020000 		.4byte	.LASF44
+ 331 0010 01       		.byte	0x1
+ 332 0011 29000000 		.4byte	.LASF45
+ 333 0015 7C000000 		.4byte	.LASF46
+ 334 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 335 001d 00000000 		.4byte	0
+ 336 0021 00000000 		.4byte	.Ldebug_line0
+ 337 0025 02       		.uleb128 0x2
+ 338 0026 01       		.byte	0x1
+ 339 0027 06       		.byte	0x6
+ 340 0028 7C030000 		.4byte	.LASF0
+ 341 002c 02       		.uleb128 0x2
+ 342 002d 01       		.byte	0x1
+ 343 002e 08       		.byte	0x8
+ 344 002f 18010000 		.4byte	.LASF1
+ 345 0033 02       		.uleb128 0x2
+ 346 0034 02       		.byte	0x2
+ 347 0035 05       		.byte	0x5
+ 348 0036 4A030000 		.4byte	.LASF2
+ 349 003a 02       		.uleb128 0x2
+ 350 003b 02       		.byte	0x2
+ 351 003c 07       		.byte	0x7
+ 352 003d 50000000 		.4byte	.LASF3
+ 353 0041 02       		.uleb128 0x2
+ 354 0042 04       		.byte	0x4
+ 355 0043 05       		.byte	0x5
+ 356 0044 64030000 		.4byte	.LASF4
+ 357 0048 02       		.uleb128 0x2
+ 358 0049 04       		.byte	0x4
+ 359 004a 07       		.byte	0x7
+ 360 004b CA010000 		.4byte	.LASF5
+ 361 004f 02       		.uleb128 0x2
+ 362 0050 08       		.byte	0x8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 11
+
+
+ 363 0051 05       		.byte	0x5
+ 364 0052 92020000 		.4byte	.LASF6
+ 365 0056 02       		.uleb128 0x2
+ 366 0057 08       		.byte	0x8
+ 367 0058 07       		.byte	0x7
+ 368 0059 01010000 		.4byte	.LASF7
+ 369 005d 03       		.uleb128 0x3
+ 370 005e 04       		.byte	0x4
+ 371 005f 05       		.byte	0x5
+ 372 0060 696E7400 		.ascii	"int\000"
+ 373 0064 02       		.uleb128 0x2
+ 374 0065 04       		.byte	0x4
+ 375 0066 07       		.byte	0x7
+ 376 0067 2B020000 		.4byte	.LASF8
+ 377 006b 04       		.uleb128 0x4
+ 378 006c 71010000 		.4byte	.LASF9
+ 379 0070 02       		.byte	0x2
+ 380 0071 C2       		.byte	0xc2
+ 381 0072 2C000000 		.4byte	0x2c
+ 382 0076 04       		.uleb128 0x4
+ 383 0077 37010000 		.4byte	.LASF10
+ 384 007b 02       		.byte	0x2
+ 385 007c C3       		.byte	0xc3
+ 386 007d 3A000000 		.4byte	0x3a
+ 387 0081 04       		.uleb128 0x4
+ 388 0082 15020000 		.4byte	.LASF11
+ 389 0086 02       		.byte	0x2
+ 390 0087 C4       		.byte	0xc4
+ 391 0088 48000000 		.4byte	0x48
+ 392 008c 02       		.uleb128 0x2
+ 393 008d 04       		.byte	0x4
+ 394 008e 04       		.byte	0x4
+ 395 008f EA000000 		.4byte	.LASF12
+ 396 0093 02       		.uleb128 0x2
+ 397 0094 08       		.byte	0x8
+ 398 0095 04       		.byte	0x4
+ 399 0096 88030000 		.4byte	.LASF13
+ 400 009a 02       		.uleb128 0x2
+ 401 009b 01       		.byte	0x1
+ 402 009c 08       		.byte	0x8
+ 403 009d 38020000 		.4byte	.LASF14
+ 404 00a1 05       		.uleb128 0x5
+ 405 00a2 6B000000 		.4byte	0x6b
+ 406 00a6 06       		.uleb128 0x6
+ 407 00a7 70020000 		.4byte	.LASF15
+ 408 00ab 02       		.byte	0x2
+ 409 00ac 7E01     		.2byte	0x17e
+ 410 00ae B2000000 		.4byte	0xb2
+ 411 00b2 07       		.uleb128 0x7
+ 412 00b3 04       		.byte	0x4
+ 413 00b4 B8000000 		.4byte	0xb8
+ 414 00b8 08       		.uleb128 0x8
+ 415 00b9 02       		.uleb128 0x2
+ 416 00ba 04       		.byte	0x4
+ 417 00bb 07       		.byte	0x7
+ 418 00bc 89020000 		.4byte	.LASF16
+ 419 00c0 09       		.uleb128 0x9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 12
+
+
+ 420 00c1 01       		.byte	0x1
+ 421 00c2 03       		.byte	0x3
+ 422 00c3 3207     		.2byte	0x732
+ 423 00c5 E8000000 		.4byte	0xe8
+ 424 00c9 0A       		.uleb128 0xa
+ 425 00ca 5C020000 		.4byte	.LASF17
+ 426 00ce 00       		.sleb128 0
+ 427 00cf 0A       		.uleb128 0xa
+ 428 00d0 63000000 		.4byte	.LASF18
+ 429 00d4 01       		.sleb128 1
+ 430 00d5 0A       		.uleb128 0xa
+ 431 00d6 B4010000 		.4byte	.LASF19
+ 432 00da 02       		.sleb128 2
+ 433 00db 0A       		.uleb128 0xa
+ 434 00dc 59010000 		.4byte	.LASF20
+ 435 00e0 03       		.sleb128 3
+ 436 00e1 0A       		.uleb128 0xa
+ 437 00e2 37000000 		.4byte	.LASF21
+ 438 00e6 04       		.sleb128 4
+ 439 00e7 00       		.byte	0
+ 440 00e8 06       		.uleb128 0x6
+ 441 00e9 4E020000 		.4byte	.LASF22
+ 442 00ed 03       		.byte	0x3
+ 443 00ee 4007     		.2byte	0x740
+ 444 00f0 C0000000 		.4byte	0xc0
+ 445 00f4 0B       		.uleb128 0xb
+ 446 00f5 A0020000 		.4byte	.LASF23
+ 447 00f9 01       		.byte	0x1
+ 448 00fa 5C       		.byte	0x5c
+ 449 00fb 00000000 		.4byte	.LFB36
+ 450 00ff 20010000 		.4byte	.LFE36-.LFB36
+ 451 0103 01       		.uleb128 0x1
+ 452 0104 9C       		.byte	0x9c
+ 453 0105 38030000 		.4byte	0x338
+ 454 0109 0C       		.uleb128 0xc
+ 455 010a 56000000 		.4byte	.LBB2
+ 456 010e B4000000 		.4byte	.LBE2-.LBB2
+ 457 0112 7C020000 		.4byte	0x27c
+ 458 0116 0D       		.uleb128 0xd
+ 459 0117 B2030000 		.4byte	.LASF47
+ 460 011b 01       		.byte	0x1
+ 461 011c 8B       		.byte	0x8b
+ 462 011d 6B000000 		.4byte	0x6b
+ 463 0121 05       		.uleb128 0x5
+ 464 0122 03       		.byte	0x3
+ 465 0123 00000000 		.4byte	previousState.6896
+ 466 0127 0E       		.uleb128 0xe
+ 467 0128 5E000000 		.4byte	.LVL12
+ 468 012c 82040000 		.4byte	0x482
+ 469 0130 3C010000 		.4byte	0x13c
+ 470 0134 0F       		.uleb128 0xf
+ 471 0135 01       		.uleb128 0x1
+ 472 0136 50       		.byte	0x50
+ 473 0137 03       		.uleb128 0x3
+ 474 0138 0A       		.byte	0xa
+ 475 0139 0004     		.2byte	0x400
+ 476 013b 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 13
+
+
+ 477 013c 0E       		.uleb128 0xe
+ 478 013d 74000000 		.4byte	.LVL13
+ 479 0141 93040000 		.4byte	0x493
+ 480 0145 59010000 		.4byte	0x159
+ 481 0149 0F       		.uleb128 0xf
+ 482 014a 01       		.uleb128 0x1
+ 483 014b 52       		.byte	0x52
+ 484 014c 01       		.uleb128 0x1
+ 485 014d 31       		.byte	0x31
+ 486 014e 0F       		.uleb128 0xf
+ 487 014f 01       		.uleb128 0x1
+ 488 0150 51       		.byte	0x51
+ 489 0151 01       		.uleb128 0x1
+ 490 0152 31       		.byte	0x31
+ 491 0153 0F       		.uleb128 0xf
+ 492 0154 01       		.uleb128 0x1
+ 493 0155 50       		.byte	0x50
+ 494 0156 01       		.uleb128 0x1
+ 495 0157 31       		.byte	0x31
+ 496 0158 00       		.byte	0
+ 497 0159 0E       		.uleb128 0xe
+ 498 015a 8C000000 		.4byte	.LVL14
+ 499 015e 93040000 		.4byte	0x493
+ 500 0162 76010000 		.4byte	0x176
+ 501 0166 0F       		.uleb128 0xf
+ 502 0167 01       		.uleb128 0x1
+ 503 0168 52       		.byte	0x52
+ 504 0169 01       		.uleb128 0x1
+ 505 016a 31       		.byte	0x31
+ 506 016b 0F       		.uleb128 0xf
+ 507 016c 01       		.uleb128 0x1
+ 508 016d 51       		.byte	0x51
+ 509 016e 01       		.uleb128 0x1
+ 510 016f 31       		.byte	0x31
+ 511 0170 0F       		.uleb128 0xf
+ 512 0171 01       		.uleb128 0x1
+ 513 0172 50       		.byte	0x50
+ 514 0173 01       		.uleb128 0x1
+ 515 0174 31       		.byte	0x31
+ 516 0175 00       		.byte	0
+ 517 0176 0E       		.uleb128 0xe
+ 518 0177 AA000000 		.4byte	.LVL15
+ 519 017b 93040000 		.4byte	0x493
+ 520 017f 93010000 		.4byte	0x193
+ 521 0183 0F       		.uleb128 0xf
+ 522 0184 01       		.uleb128 0x1
+ 523 0185 52       		.byte	0x52
+ 524 0186 01       		.uleb128 0x1
+ 525 0187 30       		.byte	0x30
+ 526 0188 0F       		.uleb128 0xf
+ 527 0189 01       		.uleb128 0x1
+ 528 018a 51       		.byte	0x51
+ 529 018b 01       		.uleb128 0x1
+ 530 018c 30       		.byte	0x30
+ 531 018d 0F       		.uleb128 0xf
+ 532 018e 01       		.uleb128 0x1
+ 533 018f 50       		.byte	0x50
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 14
+
+
+ 534 0190 01       		.uleb128 0x1
+ 535 0191 31       		.byte	0x31
+ 536 0192 00       		.byte	0
+ 537 0193 0E       		.uleb128 0xe
+ 538 0194 B6000000 		.4byte	.LVL16
+ 539 0198 AE040000 		.4byte	0x4ae
+ 540 019c B0010000 		.4byte	0x1b0
+ 541 01a0 0F       		.uleb128 0xf
+ 542 01a1 01       		.uleb128 0x1
+ 543 01a2 52       		.byte	0x52
+ 544 01a3 01       		.uleb128 0x1
+ 545 01a4 30       		.byte	0x30
+ 546 01a5 0F       		.uleb128 0xf
+ 547 01a6 01       		.uleb128 0x1
+ 548 01a7 51       		.byte	0x51
+ 549 01a8 01       		.uleb128 0x1
+ 550 01a9 30       		.byte	0x30
+ 551 01aa 0F       		.uleb128 0xf
+ 552 01ab 01       		.uleb128 0x1
+ 553 01ac 50       		.byte	0x50
+ 554 01ad 01       		.uleb128 0x1
+ 555 01ae 31       		.byte	0x31
+ 556 01af 00       		.byte	0
+ 557 01b0 0E       		.uleb128 0xe
+ 558 01b1 CC000000 		.4byte	.LVL17
+ 559 01b5 93040000 		.4byte	0x493
+ 560 01b9 CD010000 		.4byte	0x1cd
+ 561 01bd 0F       		.uleb128 0xf
+ 562 01be 01       		.uleb128 0x1
+ 563 01bf 52       		.byte	0x52
+ 564 01c0 01       		.uleb128 0x1
+ 565 01c1 31       		.byte	0x31
+ 566 01c2 0F       		.uleb128 0xf
+ 567 01c3 01       		.uleb128 0x1
+ 568 01c4 51       		.byte	0x51
+ 569 01c5 01       		.uleb128 0x1
+ 570 01c6 31       		.byte	0x31
+ 571 01c7 0F       		.uleb128 0xf
+ 572 01c8 01       		.uleb128 0x1
+ 573 01c9 50       		.byte	0x50
+ 574 01ca 01       		.uleb128 0x1
+ 575 01cb 31       		.byte	0x31
+ 576 01cc 00       		.byte	0
+ 577 01cd 0E       		.uleb128 0xe
+ 578 01ce D6000000 		.4byte	.LVL18
+ 579 01d2 AE040000 		.4byte	0x4ae
+ 580 01d6 EA010000 		.4byte	0x1ea
+ 581 01da 0F       		.uleb128 0xf
+ 582 01db 01       		.uleb128 0x1
+ 583 01dc 52       		.byte	0x52
+ 584 01dd 01       		.uleb128 0x1
+ 585 01de 31       		.byte	0x31
+ 586 01df 0F       		.uleb128 0xf
+ 587 01e0 01       		.uleb128 0x1
+ 588 01e1 51       		.byte	0x51
+ 589 01e2 01       		.uleb128 0x1
+ 590 01e3 30       		.byte	0x30
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 15
+
+
+ 591 01e4 0F       		.uleb128 0xf
+ 592 01e5 01       		.uleb128 0x1
+ 593 01e6 50       		.byte	0x50
+ 594 01e7 01       		.uleb128 0x1
+ 595 01e8 30       		.byte	0x30
+ 596 01e9 00       		.byte	0
+ 597 01ea 10       		.uleb128 0x10
+ 598 01eb DA000000 		.4byte	.LVL19
+ 599 01ef C9040000 		.4byte	0x4c9
+ 600 01f3 0E       		.uleb128 0xe
+ 601 01f4 E4000000 		.4byte	.LVL20
+ 602 01f8 D0040000 		.4byte	0x4d0
+ 603 01fc 07020000 		.4byte	0x207
+ 604 0200 0F       		.uleb128 0xf
+ 605 0201 01       		.uleb128 0x1
+ 606 0202 50       		.byte	0x50
+ 607 0203 02       		.uleb128 0x2
+ 608 0204 74       		.byte	0x74
+ 609 0205 00       		.sleb128 0
+ 610 0206 00       		.byte	0
+ 611 0207 0E       		.uleb128 0xe
+ 612 0208 EC000000 		.4byte	.LVL21
+ 613 020c E1040000 		.4byte	0x4e1
+ 614 0210 1C020000 		.4byte	0x21c
+ 615 0214 0F       		.uleb128 0xf
+ 616 0215 01       		.uleb128 0x1
+ 617 0216 50       		.byte	0x50
+ 618 0217 03       		.uleb128 0x3
+ 619 0218 0A       		.byte	0xa
+ 620 0219 0008     		.2byte	0x800
+ 621 021b 00       		.byte	0
+ 622 021c 0E       		.uleb128 0xe
+ 623 021d F2000000 		.4byte	.LVL22
+ 624 0221 F2040000 		.4byte	0x4f2
+ 625 0225 30020000 		.4byte	0x230
+ 626 0229 0F       		.uleb128 0xf
+ 627 022a 01       		.uleb128 0x1
+ 628 022b 50       		.byte	0x50
+ 629 022c 02       		.uleb128 0x2
+ 630 022d 08       		.byte	0x8
+ 631 022e 64       		.byte	0x64
+ 632 022f 00       		.byte	0
+ 633 0230 0E       		.uleb128 0xe
+ 634 0231 FA000000 		.4byte	.LVL23
+ 635 0235 03050000 		.4byte	0x503
+ 636 0239 4A020000 		.4byte	0x24a
+ 637 023d 0F       		.uleb128 0xf
+ 638 023e 01       		.uleb128 0x1
+ 639 023f 51       		.byte	0x51
+ 640 0240 03       		.uleb128 0x3
+ 641 0241 0A       		.byte	0xa
+ 642 0242 7440     		.2byte	0x4074
+ 643 0244 0F       		.uleb128 0xf
+ 644 0245 01       		.uleb128 0x1
+ 645 0246 50       		.byte	0x50
+ 646 0247 01       		.uleb128 0x1
+ 647 0248 31       		.byte	0x31
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 16
+
+
+ 648 0249 00       		.byte	0
+ 649 024a 0E       		.uleb128 0xe
+ 650 024b 00010000 		.4byte	.LVL24
+ 651 024f F2040000 		.4byte	0x4f2
+ 652 0253 5E020000 		.4byte	0x25e
+ 653 0257 0F       		.uleb128 0xf
+ 654 0258 01       		.uleb128 0x1
+ 655 0259 50       		.byte	0x50
+ 656 025a 02       		.uleb128 0x2
+ 657 025b 08       		.byte	0x8
+ 658 025c 64       		.byte	0x64
+ 659 025d 00       		.byte	0
+ 660 025e 0E       		.uleb128 0xe
+ 661 025f 06010000 		.4byte	.LVL25
+ 662 0263 19050000 		.4byte	0x519
+ 663 0267 72020000 		.4byte	0x272
+ 664 026b 0F       		.uleb128 0xf
+ 665 026c 01       		.uleb128 0x1
+ 666 026d 50       		.byte	0x50
+ 667 026e 02       		.uleb128 0x2
+ 668 026f 74       		.byte	0x74
+ 669 0270 00       		.sleb128 0
+ 670 0271 00       		.byte	0
+ 671 0272 10       		.uleb128 0x10
+ 672 0273 0A010000 		.4byte	.LVL26
+ 673 0277 2A050000 		.4byte	0x52a
+ 674 027b 00       		.byte	0
+ 675 027c 10       		.uleb128 0x10
+ 676 027d 06000000 		.4byte	.LVL0
+ 677 0281 31050000 		.4byte	0x531
+ 678 0285 0E       		.uleb128 0xe
+ 679 0286 10000000 		.4byte	.LVL1
+ 680 028a 82040000 		.4byte	0x482
+ 681 028e 98020000 		.4byte	0x298
+ 682 0292 0F       		.uleb128 0xf
+ 683 0293 01       		.uleb128 0x1
+ 684 0294 50       		.byte	0x50
+ 685 0295 01       		.uleb128 0x1
+ 686 0296 34       		.byte	0x34
+ 687 0297 00       		.byte	0
+ 688 0298 10       		.uleb128 0x10
+ 689 0299 1C000000 		.4byte	.LVL2
+ 690 029d 3C050000 		.4byte	0x53c
+ 691 02a1 10       		.uleb128 0x10
+ 692 02a2 20000000 		.4byte	.LVL3
+ 693 02a6 C9040000 		.4byte	0x4c9
+ 694 02aa 0E       		.uleb128 0xe
+ 695 02ab 26000000 		.4byte	.LVL4
+ 696 02af D0040000 		.4byte	0x4d0
+ 697 02b3 BD020000 		.4byte	0x2bd
+ 698 02b7 0F       		.uleb128 0xf
+ 699 02b8 01       		.uleb128 0x1
+ 700 02b9 50       		.byte	0x50
+ 701 02ba 01       		.uleb128 0x1
+ 702 02bb 31       		.byte	0x31
+ 703 02bc 00       		.byte	0
+ 704 02bd 0E       		.uleb128 0xe
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 17
+
+
+ 705 02be 2C000000 		.4byte	.LVL5
+ 706 02c2 E1040000 		.4byte	0x4e1
+ 707 02c6 D0020000 		.4byte	0x2d0
+ 708 02ca 0F       		.uleb128 0xf
+ 709 02cb 01       		.uleb128 0x1
+ 710 02cc 50       		.byte	0x50
+ 711 02cd 01       		.uleb128 0x1
+ 712 02ce 38       		.byte	0x38
+ 713 02cf 00       		.byte	0
+ 714 02d0 0E       		.uleb128 0xe
+ 715 02d1 32000000 		.4byte	.LVL6
+ 716 02d5 F2040000 		.4byte	0x4f2
+ 717 02d9 E4020000 		.4byte	0x2e4
+ 718 02dd 0F       		.uleb128 0xf
+ 719 02de 01       		.uleb128 0x1
+ 720 02df 50       		.byte	0x50
+ 721 02e0 02       		.uleb128 0x2
+ 722 02e1 08       		.byte	0x8
+ 723 02e2 64       		.byte	0x64
+ 724 02e3 00       		.byte	0
+ 725 02e4 0E       		.uleb128 0xe
+ 726 02e5 3C000000 		.4byte	.LVL7
+ 727 02e9 03050000 		.4byte	0x503
+ 728 02ed FE020000 		.4byte	0x2fe
+ 729 02f1 0F       		.uleb128 0xf
+ 730 02f2 01       		.uleb128 0x1
+ 731 02f3 51       		.byte	0x51
+ 732 02f4 03       		.uleb128 0x3
+ 733 02f5 0A       		.byte	0xa
+ 734 02f6 4A01     		.2byte	0x14a
+ 735 02f8 0F       		.uleb128 0xf
+ 736 02f9 01       		.uleb128 0x1
+ 737 02fa 50       		.byte	0x50
+ 738 02fb 01       		.uleb128 0x1
+ 739 02fc 30       		.byte	0x30
+ 740 02fd 00       		.byte	0
+ 741 02fe 0E       		.uleb128 0xe
+ 742 02ff 42000000 		.4byte	.LVL8
+ 743 0303 F2040000 		.4byte	0x4f2
+ 744 0307 12030000 		.4byte	0x312
+ 745 030b 0F       		.uleb128 0xf
+ 746 030c 01       		.uleb128 0x1
+ 747 030d 50       		.byte	0x50
+ 748 030e 02       		.uleb128 0x2
+ 749 030f 08       		.byte	0x8
+ 750 0310 64       		.byte	0x64
+ 751 0311 00       		.byte	0
+ 752 0312 0E       		.uleb128 0xe
+ 753 0313 48000000 		.4byte	.LVL9
+ 754 0317 19050000 		.4byte	0x519
+ 755 031b 25030000 		.4byte	0x325
+ 756 031f 0F       		.uleb128 0xf
+ 757 0320 01       		.uleb128 0x1
+ 758 0321 50       		.byte	0x50
+ 759 0322 01       		.uleb128 0x1
+ 760 0323 31       		.byte	0x31
+ 761 0324 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 18
+
+
+ 762 0325 10       		.uleb128 0x10
+ 763 0326 4C000000 		.4byte	.LVL10
+ 764 032a 2A050000 		.4byte	0x52a
+ 765 032e 10       		.uleb128 0x10
+ 766 032f 52000000 		.4byte	.LVL11
+ 767 0333 31050000 		.4byte	0x531
+ 768 0337 00       		.byte	0
+ 769 0338 0B       		.uleb128 0xb
+ 770 0339 DB000000 		.4byte	.LASF24
+ 771 033d 01       		.byte	0x1
+ 772 033e 29       		.byte	0x29
+ 773 033f 00000000 		.4byte	.LFB35
+ 774 0343 6C000000 		.4byte	.LFE35-.LFB35
+ 775 0347 01       		.uleb128 0x1
+ 776 0348 9C       		.byte	0x9c
+ 777 0349 5F040000 		.4byte	0x45f
+ 778 034d 10       		.uleb128 0x10
+ 779 034e 06000000 		.4byte	.LVL27
+ 780 0352 C9040000 		.4byte	0x4c9
+ 781 0356 0E       		.uleb128 0xe
+ 782 0357 0E000000 		.4byte	.LVL28
+ 783 035b 44050000 		.4byte	0x544
+ 784 035f 6E030000 		.4byte	0x36e
+ 785 0363 0F       		.uleb128 0xf
+ 786 0364 01       		.uleb128 0x1
+ 787 0365 51       		.byte	0x51
+ 788 0366 01       		.uleb128 0x1
+ 789 0367 31       		.byte	0x31
+ 790 0368 0F       		.uleb128 0xf
+ 791 0369 01       		.uleb128 0x1
+ 792 036a 50       		.byte	0x50
+ 793 036b 01       		.uleb128 0x1
+ 794 036c 30       		.byte	0x30
+ 795 036d 00       		.byte	0
+ 796 036e 0E       		.uleb128 0xe
+ 797 036f 16000000 		.4byte	.LVL29
+ 798 0373 44050000 		.4byte	0x544
+ 799 0377 86030000 		.4byte	0x386
+ 800 037b 0F       		.uleb128 0xf
+ 801 037c 01       		.uleb128 0x1
+ 802 037d 51       		.byte	0x51
+ 803 037e 01       		.uleb128 0x1
+ 804 037f 31       		.byte	0x31
+ 805 0380 0F       		.uleb128 0xf
+ 806 0381 01       		.uleb128 0x1
+ 807 0382 50       		.byte	0x50
+ 808 0383 01       		.uleb128 0x1
+ 809 0384 31       		.byte	0x31
+ 810 0385 00       		.byte	0
+ 811 0386 0E       		.uleb128 0xe
+ 812 0387 1E000000 		.4byte	.LVL30
+ 813 038b 5A050000 		.4byte	0x55a
+ 814 038f 9E030000 		.4byte	0x39e
+ 815 0393 0F       		.uleb128 0xf
+ 816 0394 01       		.uleb128 0x1
+ 817 0395 51       		.byte	0x51
+ 818 0396 01       		.uleb128 0x1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 19
+
+
+ 819 0397 31       		.byte	0x31
+ 820 0398 0F       		.uleb128 0xf
+ 821 0399 01       		.uleb128 0x1
+ 822 039a 50       		.byte	0x50
+ 823 039b 01       		.uleb128 0x1
+ 824 039c 30       		.byte	0x30
+ 825 039d 00       		.byte	0
+ 826 039e 0E       		.uleb128 0xe
+ 827 039f 26000000 		.4byte	.LVL31
+ 828 03a3 5A050000 		.4byte	0x55a
+ 829 03a7 B6030000 		.4byte	0x3b6
+ 830 03ab 0F       		.uleb128 0xf
+ 831 03ac 01       		.uleb128 0x1
+ 832 03ad 51       		.byte	0x51
+ 833 03ae 01       		.uleb128 0x1
+ 834 03af 31       		.byte	0x31
+ 835 03b0 0F       		.uleb128 0xf
+ 836 03b1 01       		.uleb128 0x1
+ 837 03b2 50       		.byte	0x50
+ 838 03b3 01       		.uleb128 0x1
+ 839 03b4 31       		.byte	0x31
+ 840 03b5 00       		.byte	0
+ 841 03b6 0E       		.uleb128 0xe
+ 842 03b7 2E000000 		.4byte	.LVL32
+ 843 03bb 70050000 		.4byte	0x570
+ 844 03bf CE030000 		.4byte	0x3ce
+ 845 03c3 0F       		.uleb128 0xf
+ 846 03c4 01       		.uleb128 0x1
+ 847 03c5 51       		.byte	0x51
+ 848 03c6 01       		.uleb128 0x1
+ 849 03c7 33       		.byte	0x33
+ 850 03c8 0F       		.uleb128 0xf
+ 851 03c9 01       		.uleb128 0x1
+ 852 03ca 50       		.byte	0x50
+ 853 03cb 01       		.uleb128 0x1
+ 854 03cc 38       		.byte	0x38
+ 855 03cd 00       		.byte	0
+ 856 03ce 0E       		.uleb128 0xe
+ 857 03cf 34000000 		.4byte	.LVL33
+ 858 03d3 86050000 		.4byte	0x586
+ 859 03d7 E1030000 		.4byte	0x3e1
+ 860 03db 0F       		.uleb128 0xf
+ 861 03dc 01       		.uleb128 0x1
+ 862 03dd 50       		.byte	0x50
+ 863 03de 01       		.uleb128 0x1
+ 864 03df 38       		.byte	0x38
+ 865 03e0 00       		.byte	0
+ 866 03e1 0E       		.uleb128 0xe
+ 867 03e2 3E000000 		.4byte	.LVL34
+ 868 03e6 03050000 		.4byte	0x503
+ 869 03ea FB030000 		.4byte	0x3fb
+ 870 03ee 0F       		.uleb128 0xf
+ 871 03ef 01       		.uleb128 0x1
+ 872 03f0 51       		.byte	0x51
+ 873 03f1 03       		.uleb128 0x3
+ 874 03f2 0A       		.byte	0xa
+ 875 03f3 4A01     		.2byte	0x14a
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 20
+
+
+ 876 03f5 0F       		.uleb128 0xf
+ 877 03f6 01       		.uleb128 0x1
+ 878 03f7 50       		.byte	0x50
+ 879 03f8 01       		.uleb128 0x1
+ 880 03f9 30       		.byte	0x30
+ 881 03fa 00       		.byte	0
+ 882 03fb 0E       		.uleb128 0xe
+ 883 03fc 46000000 		.4byte	.LVL35
+ 884 0400 03050000 		.4byte	0x503
+ 885 0404 15040000 		.4byte	0x415
+ 886 0408 0F       		.uleb128 0xf
+ 887 0409 01       		.uleb128 0x1
+ 888 040a 51       		.byte	0x51
+ 889 040b 03       		.uleb128 0x3
+ 890 040c 0A       		.byte	0xa
+ 891 040d 7440     		.2byte	0x4074
+ 892 040f 0F       		.uleb128 0xf
+ 893 0410 01       		.uleb128 0x1
+ 894 0411 50       		.byte	0x50
+ 895 0412 01       		.uleb128 0x1
+ 896 0413 31       		.byte	0x31
+ 897 0414 00       		.byte	0
+ 898 0415 0E       		.uleb128 0xe
+ 899 0416 4C000000 		.4byte	.LVL36
+ 900 041a 19050000 		.4byte	0x519
+ 901 041e 28040000 		.4byte	0x428
+ 902 0422 0F       		.uleb128 0xf
+ 903 0423 01       		.uleb128 0x1
+ 904 0424 50       		.byte	0x50
+ 905 0425 01       		.uleb128 0x1
+ 906 0426 31       		.byte	0x31
+ 907 0427 00       		.byte	0
+ 908 0428 0E       		.uleb128 0xe
+ 909 0429 54000000 		.4byte	.LVL37
+ 910 042d 19050000 		.4byte	0x519
+ 911 0431 3D040000 		.4byte	0x43d
+ 912 0435 0F       		.uleb128 0xf
+ 913 0436 01       		.uleb128 0x1
+ 914 0437 50       		.byte	0x50
+ 915 0438 03       		.uleb128 0x3
+ 916 0439 0A       		.byte	0xa
+ 917 043a 0001     		.2byte	0x100
+ 918 043c 00       		.byte	0
+ 919 043d 10       		.uleb128 0x10
+ 920 043e 58000000 		.4byte	.LVL38
+ 921 0442 2A050000 		.4byte	0x52a
+ 922 0446 11       		.uleb128 0x11
+ 923 0447 60000000 		.4byte	.LVL39
+ 924 044b 97050000 		.4byte	0x597
+ 925 044f 0F       		.uleb128 0xf
+ 926 0450 01       		.uleb128 0x1
+ 927 0451 51       		.byte	0x51
+ 928 0452 05       		.uleb128 0x5
+ 929 0453 03       		.byte	0x3
+ 930 0454 00000000 		.4byte	_Watchdog_Handler
+ 931 0458 0F       		.uleb128 0xf
+ 932 0459 01       		.uleb128 0x1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 21
+
+
+ 933 045a 50       		.byte	0x50
+ 934 045b 01       		.uleb128 0x1
+ 935 045c 38       		.byte	0x38
+ 936 045d 00       		.byte	0
+ 937 045e 00       		.byte	0
+ 938 045f 12       		.uleb128 0x12
+ 939 0460 7D020000 		.4byte	.LASF25
+ 940 0464 03       		.byte	0x3
+ 941 0465 2009     		.2byte	0x920
+ 942 0467 E8000000 		.4byte	0xe8
+ 943 046b 12       		.uleb128 0x12
+ 944 046c 26010000 		.4byte	.LASF26
+ 945 0470 03       		.byte	0x3
+ 946 0471 2209     		.2byte	0x922
+ 947 0473 A1000000 		.4byte	0xa1
+ 948 0477 13       		.uleb128 0x13
+ 949 0478 F8010000 		.4byte	.LASF27
+ 950 047c 04       		.byte	0x4
+ 951 047d 27       		.byte	0x27
+ 952 047e 6B000000 		.4byte	0x6b
+ 953 0482 14       		.uleb128 0x14
+ 954 0483 00000000 		.4byte	.LASF28
+ 955 0487 05       		.byte	0x5
+ 956 0488 42       		.byte	0x42
+ 957 0489 93040000 		.4byte	0x493
+ 958 048d 15       		.uleb128 0x15
+ 959 048e 81000000 		.4byte	0x81
+ 960 0492 00       		.byte	0
+ 961 0493 14       		.uleb128 0x14
+ 962 0494 17000000 		.4byte	.LASF29
+ 963 0498 04       		.byte	0x4
+ 964 0499 30       		.byte	0x30
+ 965 049a AE040000 		.4byte	0x4ae
+ 966 049e 15       		.uleb128 0x15
+ 967 049f 6B000000 		.4byte	0x6b
+ 968 04a3 15       		.uleb128 0x15
+ 969 04a4 6B000000 		.4byte	0x6b
+ 970 04a8 15       		.uleb128 0x15
+ 971 04a9 6B000000 		.4byte	0x6b
+ 972 04ad 00       		.byte	0
+ 973 04ae 14       		.uleb128 0x14
+ 974 04af F0000000 		.4byte	.LASF30
+ 975 04b3 04       		.byte	0x4
+ 976 04b4 2F       		.byte	0x2f
+ 977 04b5 C9040000 		.4byte	0x4c9
+ 978 04b9 15       		.uleb128 0x15
+ 979 04ba 6B000000 		.4byte	0x6b
+ 980 04be 15       		.uleb128 0x15
+ 981 04bf 6B000000 		.4byte	0x6b
+ 982 04c3 15       		.uleb128 0x15
+ 983 04c4 6B000000 		.4byte	0x6b
+ 984 04c8 00       		.byte	0
+ 985 04c9 16       		.uleb128 0x16
+ 986 04ca 6D030000 		.4byte	.LASF36
+ 987 04ce 05       		.byte	0x5
+ 988 04cf 32       		.byte	0x32
+ 989 04d0 14       		.uleb128 0x14
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 22
+
+
+ 990 04d1 DC010000 		.4byte	.LASF31
+ 991 04d5 05       		.byte	0x5
+ 992 04d6 39       		.byte	0x39
+ 993 04d7 E1040000 		.4byte	0x4e1
+ 994 04db 15       		.uleb128 0x15
+ 995 04dc 81000000 		.4byte	0x81
+ 996 04e0 00       		.byte	0
+ 997 04e1 14       		.uleb128 0x14
+ 998 04e2 9C030000 		.4byte	.LASF32
+ 999 04e6 05       		.byte	0x5
+ 1000 04e7 43       		.byte	0x43
+ 1001 04e8 F2040000 		.4byte	0x4f2
+ 1002 04ec 15       		.uleb128 0x15
+ 1003 04ed 81000000 		.4byte	0x81
+ 1004 04f1 00       		.byte	0
+ 1005 04f2 14       		.uleb128 0x14
+ 1006 04f3 B2020000 		.4byte	.LASF33
+ 1007 04f7 06       		.byte	0x6
+ 1008 04f8 58       		.byte	0x58
+ 1009 04f9 03050000 		.4byte	0x503
+ 1010 04fd 15       		.uleb128 0x15
+ 1011 04fe 76000000 		.4byte	0x76
+ 1012 0502 00       		.byte	0
+ 1013 0503 14       		.uleb128 0x14
+ 1014 0504 A3010000 		.4byte	.LASF34
+ 1015 0508 05       		.byte	0x5
+ 1016 0509 3C       		.byte	0x3c
+ 1017 050a 19050000 		.4byte	0x519
+ 1018 050e 15       		.uleb128 0x15
+ 1019 050f 81000000 		.4byte	0x81
+ 1020 0513 15       		.uleb128 0x15
+ 1021 0514 81000000 		.4byte	0x81
+ 1022 0518 00       		.byte	0
+ 1023 0519 14       		.uleb128 0x14
+ 1024 051a 06020000 		.4byte	.LASF35
+ 1025 051e 05       		.byte	0x5
+ 1026 051f 38       		.byte	0x38
+ 1027 0520 2A050000 		.4byte	0x52a
+ 1028 0524 15       		.uleb128 0x15
+ 1029 0525 81000000 		.4byte	0x81
+ 1030 0529 00       		.byte	0
+ 1031 052a 16       		.uleb128 0x16
+ 1032 052b 8F030000 		.4byte	.LASF37
+ 1033 052f 05       		.byte	0x5
+ 1034 0530 31       		.byte	0x31
+ 1035 0531 17       		.uleb128 0x17
+ 1036 0532 3E010000 		.4byte	.LASF48
+ 1037 0536 05       		.byte	0x5
+ 1038 0537 41       		.byte	0x41
+ 1039 0538 81000000 		.4byte	0x81
+ 1040 053c 18       		.uleb128 0x18
+ 1041 053d 8F010000 		.4byte	.LASF38
+ 1042 0541 07       		.byte	0x7
+ 1043 0542 9304     		.2byte	0x493
+ 1044 0544 14       		.uleb128 0x14
+ 1045 0545 54030000 		.4byte	.LASF39
+ 1046 0549 05       		.byte	0x5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 23
+
+
+ 1047 054a 33       		.byte	0x33
+ 1048 054b 5A050000 		.4byte	0x55a
+ 1049 054f 15       		.uleb128 0x15
+ 1050 0550 81000000 		.4byte	0x81
+ 1051 0554 15       		.uleb128 0x15
+ 1052 0555 81000000 		.4byte	0x81
+ 1053 0559 00       		.byte	0
+ 1054 055a 14       		.uleb128 0x14
+ 1055 055b 77010000 		.4byte	.LASF40
+ 1056 055f 05       		.byte	0x5
+ 1057 0560 36       		.byte	0x36
+ 1058 0561 70050000 		.4byte	0x570
+ 1059 0565 15       		.uleb128 0x15
+ 1060 0566 81000000 		.4byte	0x81
+ 1061 056a 15       		.uleb128 0x15
+ 1062 056b 81000000 		.4byte	0x81
+ 1063 056f 00       		.byte	0
+ 1064 0570 14       		.uleb128 0x14
+ 1065 0571 3D020000 		.4byte	.LASF41
+ 1066 0575 06       		.byte	0x6
+ 1067 0576 49       		.byte	0x49
+ 1068 0577 86050000 		.4byte	0x586
+ 1069 057b 15       		.uleb128 0x15
+ 1070 057c 6B000000 		.4byte	0x6b
+ 1071 0580 15       		.uleb128 0x15
+ 1072 0581 6B000000 		.4byte	0x6b
+ 1073 0585 00       		.byte	0
+ 1074 0586 14       		.uleb128 0x14
+ 1075 0587 EC010000 		.4byte	.LASF42
+ 1076 058b 06       		.byte	0x6
+ 1077 058c 4C       		.byte	0x4c
+ 1078 058d 97050000 		.4byte	0x597
+ 1079 0591 15       		.uleb128 0x15
+ 1080 0592 6B000000 		.4byte	0x6b
+ 1081 0596 00       		.byte	0
+ 1082 0597 19       		.uleb128 0x19
+ 1083 0598 1C020000 		.4byte	.LASF43
+ 1084 059c 06       		.byte	0x6
+ 1085 059d 46       		.byte	0x46
+ 1086 059e A6000000 		.4byte	0xa6
+ 1087 05a2 15       		.uleb128 0x15
+ 1088 05a3 6B000000 		.4byte	0x6b
+ 1089 05a7 15       		.uleb128 0x15
+ 1090 05a8 A6000000 		.4byte	0xa6
+ 1091 05ac 00       		.byte	0
+ 1092 05ad 00       		.byte	0
+ 1093              		.section	.debug_abbrev,"",%progbits
+ 1094              	.Ldebug_abbrev0:
+ 1095 0000 01       		.uleb128 0x1
+ 1096 0001 11       		.uleb128 0x11
+ 1097 0002 01       		.byte	0x1
+ 1098 0003 25       		.uleb128 0x25
+ 1099 0004 0E       		.uleb128 0xe
+ 1100 0005 13       		.uleb128 0x13
+ 1101 0006 0B       		.uleb128 0xb
+ 1102 0007 03       		.uleb128 0x3
+ 1103 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 24
+
+
+ 1104 0009 1B       		.uleb128 0x1b
+ 1105 000a 0E       		.uleb128 0xe
+ 1106 000b 55       		.uleb128 0x55
+ 1107 000c 17       		.uleb128 0x17
+ 1108 000d 11       		.uleb128 0x11
+ 1109 000e 01       		.uleb128 0x1
+ 1110 000f 10       		.uleb128 0x10
+ 1111 0010 17       		.uleb128 0x17
+ 1112 0011 00       		.byte	0
+ 1113 0012 00       		.byte	0
+ 1114 0013 02       		.uleb128 0x2
+ 1115 0014 24       		.uleb128 0x24
+ 1116 0015 00       		.byte	0
+ 1117 0016 0B       		.uleb128 0xb
+ 1118 0017 0B       		.uleb128 0xb
+ 1119 0018 3E       		.uleb128 0x3e
+ 1120 0019 0B       		.uleb128 0xb
+ 1121 001a 03       		.uleb128 0x3
+ 1122 001b 0E       		.uleb128 0xe
+ 1123 001c 00       		.byte	0
+ 1124 001d 00       		.byte	0
+ 1125 001e 03       		.uleb128 0x3
+ 1126 001f 24       		.uleb128 0x24
+ 1127 0020 00       		.byte	0
+ 1128 0021 0B       		.uleb128 0xb
+ 1129 0022 0B       		.uleb128 0xb
+ 1130 0023 3E       		.uleb128 0x3e
+ 1131 0024 0B       		.uleb128 0xb
+ 1132 0025 03       		.uleb128 0x3
+ 1133 0026 08       		.uleb128 0x8
+ 1134 0027 00       		.byte	0
+ 1135 0028 00       		.byte	0
+ 1136 0029 04       		.uleb128 0x4
+ 1137 002a 16       		.uleb128 0x16
+ 1138 002b 00       		.byte	0
+ 1139 002c 03       		.uleb128 0x3
+ 1140 002d 0E       		.uleb128 0xe
+ 1141 002e 3A       		.uleb128 0x3a
+ 1142 002f 0B       		.uleb128 0xb
+ 1143 0030 3B       		.uleb128 0x3b
+ 1144 0031 0B       		.uleb128 0xb
+ 1145 0032 49       		.uleb128 0x49
+ 1146 0033 13       		.uleb128 0x13
+ 1147 0034 00       		.byte	0
+ 1148 0035 00       		.byte	0
+ 1149 0036 05       		.uleb128 0x5
+ 1150 0037 35       		.uleb128 0x35
+ 1151 0038 00       		.byte	0
+ 1152 0039 49       		.uleb128 0x49
+ 1153 003a 13       		.uleb128 0x13
+ 1154 003b 00       		.byte	0
+ 1155 003c 00       		.byte	0
+ 1156 003d 06       		.uleb128 0x6
+ 1157 003e 16       		.uleb128 0x16
+ 1158 003f 00       		.byte	0
+ 1159 0040 03       		.uleb128 0x3
+ 1160 0041 0E       		.uleb128 0xe
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 25
+
+
+ 1161 0042 3A       		.uleb128 0x3a
+ 1162 0043 0B       		.uleb128 0xb
+ 1163 0044 3B       		.uleb128 0x3b
+ 1164 0045 05       		.uleb128 0x5
+ 1165 0046 49       		.uleb128 0x49
+ 1166 0047 13       		.uleb128 0x13
+ 1167 0048 00       		.byte	0
+ 1168 0049 00       		.byte	0
+ 1169 004a 07       		.uleb128 0x7
+ 1170 004b 0F       		.uleb128 0xf
+ 1171 004c 00       		.byte	0
+ 1172 004d 0B       		.uleb128 0xb
+ 1173 004e 0B       		.uleb128 0xb
+ 1174 004f 49       		.uleb128 0x49
+ 1175 0050 13       		.uleb128 0x13
+ 1176 0051 00       		.byte	0
+ 1177 0052 00       		.byte	0
+ 1178 0053 08       		.uleb128 0x8
+ 1179 0054 15       		.uleb128 0x15
+ 1180 0055 00       		.byte	0
+ 1181 0056 27       		.uleb128 0x27
+ 1182 0057 19       		.uleb128 0x19
+ 1183 0058 00       		.byte	0
+ 1184 0059 00       		.byte	0
+ 1185 005a 09       		.uleb128 0x9
+ 1186 005b 04       		.uleb128 0x4
+ 1187 005c 01       		.byte	0x1
+ 1188 005d 0B       		.uleb128 0xb
+ 1189 005e 0B       		.uleb128 0xb
+ 1190 005f 3A       		.uleb128 0x3a
+ 1191 0060 0B       		.uleb128 0xb
+ 1192 0061 3B       		.uleb128 0x3b
+ 1193 0062 05       		.uleb128 0x5
+ 1194 0063 01       		.uleb128 0x1
+ 1195 0064 13       		.uleb128 0x13
+ 1196 0065 00       		.byte	0
+ 1197 0066 00       		.byte	0
+ 1198 0067 0A       		.uleb128 0xa
+ 1199 0068 28       		.uleb128 0x28
+ 1200 0069 00       		.byte	0
+ 1201 006a 03       		.uleb128 0x3
+ 1202 006b 0E       		.uleb128 0xe
+ 1203 006c 1C       		.uleb128 0x1c
+ 1204 006d 0D       		.uleb128 0xd
+ 1205 006e 00       		.byte	0
+ 1206 006f 00       		.byte	0
+ 1207 0070 0B       		.uleb128 0xb
+ 1208 0071 2E       		.uleb128 0x2e
+ 1209 0072 01       		.byte	0x1
+ 1210 0073 3F       		.uleb128 0x3f
+ 1211 0074 19       		.uleb128 0x19
+ 1212 0075 03       		.uleb128 0x3
+ 1213 0076 0E       		.uleb128 0xe
+ 1214 0077 3A       		.uleb128 0x3a
+ 1215 0078 0B       		.uleb128 0xb
+ 1216 0079 3B       		.uleb128 0x3b
+ 1217 007a 0B       		.uleb128 0xb
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 26
+
+
+ 1218 007b 27       		.uleb128 0x27
+ 1219 007c 19       		.uleb128 0x19
+ 1220 007d 11       		.uleb128 0x11
+ 1221 007e 01       		.uleb128 0x1
+ 1222 007f 12       		.uleb128 0x12
+ 1223 0080 06       		.uleb128 0x6
+ 1224 0081 40       		.uleb128 0x40
+ 1225 0082 18       		.uleb128 0x18
+ 1226 0083 9742     		.uleb128 0x2117
+ 1227 0085 19       		.uleb128 0x19
+ 1228 0086 01       		.uleb128 0x1
+ 1229 0087 13       		.uleb128 0x13
+ 1230 0088 00       		.byte	0
+ 1231 0089 00       		.byte	0
+ 1232 008a 0C       		.uleb128 0xc
+ 1233 008b 0B       		.uleb128 0xb
+ 1234 008c 01       		.byte	0x1
+ 1235 008d 11       		.uleb128 0x11
+ 1236 008e 01       		.uleb128 0x1
+ 1237 008f 12       		.uleb128 0x12
+ 1238 0090 06       		.uleb128 0x6
+ 1239 0091 01       		.uleb128 0x1
+ 1240 0092 13       		.uleb128 0x13
+ 1241 0093 00       		.byte	0
+ 1242 0094 00       		.byte	0
+ 1243 0095 0D       		.uleb128 0xd
+ 1244 0096 34       		.uleb128 0x34
+ 1245 0097 00       		.byte	0
+ 1246 0098 03       		.uleb128 0x3
+ 1247 0099 0E       		.uleb128 0xe
+ 1248 009a 3A       		.uleb128 0x3a
+ 1249 009b 0B       		.uleb128 0xb
+ 1250 009c 3B       		.uleb128 0x3b
+ 1251 009d 0B       		.uleb128 0xb
+ 1252 009e 49       		.uleb128 0x49
+ 1253 009f 13       		.uleb128 0x13
+ 1254 00a0 02       		.uleb128 0x2
+ 1255 00a1 18       		.uleb128 0x18
+ 1256 00a2 00       		.byte	0
+ 1257 00a3 00       		.byte	0
+ 1258 00a4 0E       		.uleb128 0xe
+ 1259 00a5 898201   		.uleb128 0x4109
+ 1260 00a8 01       		.byte	0x1
+ 1261 00a9 11       		.uleb128 0x11
+ 1262 00aa 01       		.uleb128 0x1
+ 1263 00ab 31       		.uleb128 0x31
+ 1264 00ac 13       		.uleb128 0x13
+ 1265 00ad 01       		.uleb128 0x1
+ 1266 00ae 13       		.uleb128 0x13
+ 1267 00af 00       		.byte	0
+ 1268 00b0 00       		.byte	0
+ 1269 00b1 0F       		.uleb128 0xf
+ 1270 00b2 8A8201   		.uleb128 0x410a
+ 1271 00b5 00       		.byte	0
+ 1272 00b6 02       		.uleb128 0x2
+ 1273 00b7 18       		.uleb128 0x18
+ 1274 00b8 9142     		.uleb128 0x2111
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 27
+
+
+ 1275 00ba 18       		.uleb128 0x18
+ 1276 00bb 00       		.byte	0
+ 1277 00bc 00       		.byte	0
+ 1278 00bd 10       		.uleb128 0x10
+ 1279 00be 898201   		.uleb128 0x4109
+ 1280 00c1 00       		.byte	0
+ 1281 00c2 11       		.uleb128 0x11
+ 1282 00c3 01       		.uleb128 0x1
+ 1283 00c4 31       		.uleb128 0x31
+ 1284 00c5 13       		.uleb128 0x13
+ 1285 00c6 00       		.byte	0
+ 1286 00c7 00       		.byte	0
+ 1287 00c8 11       		.uleb128 0x11
+ 1288 00c9 898201   		.uleb128 0x4109
+ 1289 00cc 01       		.byte	0x1
+ 1290 00cd 11       		.uleb128 0x11
+ 1291 00ce 01       		.uleb128 0x1
+ 1292 00cf 31       		.uleb128 0x31
+ 1293 00d0 13       		.uleb128 0x13
+ 1294 00d1 00       		.byte	0
+ 1295 00d2 00       		.byte	0
+ 1296 00d3 12       		.uleb128 0x12
+ 1297 00d4 34       		.uleb128 0x34
+ 1298 00d5 00       		.byte	0
+ 1299 00d6 03       		.uleb128 0x3
+ 1300 00d7 0E       		.uleb128 0xe
+ 1301 00d8 3A       		.uleb128 0x3a
+ 1302 00d9 0B       		.uleb128 0xb
+ 1303 00da 3B       		.uleb128 0x3b
+ 1304 00db 05       		.uleb128 0x5
+ 1305 00dc 49       		.uleb128 0x49
+ 1306 00dd 13       		.uleb128 0x13
+ 1307 00de 3F       		.uleb128 0x3f
+ 1308 00df 19       		.uleb128 0x19
+ 1309 00e0 3C       		.uleb128 0x3c
+ 1310 00e1 19       		.uleb128 0x19
+ 1311 00e2 00       		.byte	0
+ 1312 00e3 00       		.byte	0
+ 1313 00e4 13       		.uleb128 0x13
+ 1314 00e5 34       		.uleb128 0x34
+ 1315 00e6 00       		.byte	0
+ 1316 00e7 03       		.uleb128 0x3
+ 1317 00e8 0E       		.uleb128 0xe
+ 1318 00e9 3A       		.uleb128 0x3a
+ 1319 00ea 0B       		.uleb128 0xb
+ 1320 00eb 3B       		.uleb128 0x3b
+ 1321 00ec 0B       		.uleb128 0xb
+ 1322 00ed 49       		.uleb128 0x49
+ 1323 00ee 13       		.uleb128 0x13
+ 1324 00ef 3F       		.uleb128 0x3f
+ 1325 00f0 19       		.uleb128 0x19
+ 1326 00f1 3C       		.uleb128 0x3c
+ 1327 00f2 19       		.uleb128 0x19
+ 1328 00f3 00       		.byte	0
+ 1329 00f4 00       		.byte	0
+ 1330 00f5 14       		.uleb128 0x14
+ 1331 00f6 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 28
+
+
+ 1332 00f7 01       		.byte	0x1
+ 1333 00f8 3F       		.uleb128 0x3f
+ 1334 00f9 19       		.uleb128 0x19
+ 1335 00fa 03       		.uleb128 0x3
+ 1336 00fb 0E       		.uleb128 0xe
+ 1337 00fc 3A       		.uleb128 0x3a
+ 1338 00fd 0B       		.uleb128 0xb
+ 1339 00fe 3B       		.uleb128 0x3b
+ 1340 00ff 0B       		.uleb128 0xb
+ 1341 0100 27       		.uleb128 0x27
+ 1342 0101 19       		.uleb128 0x19
+ 1343 0102 3C       		.uleb128 0x3c
+ 1344 0103 19       		.uleb128 0x19
+ 1345 0104 01       		.uleb128 0x1
+ 1346 0105 13       		.uleb128 0x13
+ 1347 0106 00       		.byte	0
+ 1348 0107 00       		.byte	0
+ 1349 0108 15       		.uleb128 0x15
+ 1350 0109 05       		.uleb128 0x5
+ 1351 010a 00       		.byte	0
+ 1352 010b 49       		.uleb128 0x49
+ 1353 010c 13       		.uleb128 0x13
+ 1354 010d 00       		.byte	0
+ 1355 010e 00       		.byte	0
+ 1356 010f 16       		.uleb128 0x16
+ 1357 0110 2E       		.uleb128 0x2e
+ 1358 0111 00       		.byte	0
+ 1359 0112 3F       		.uleb128 0x3f
+ 1360 0113 19       		.uleb128 0x19
+ 1361 0114 03       		.uleb128 0x3
+ 1362 0115 0E       		.uleb128 0xe
+ 1363 0116 3A       		.uleb128 0x3a
+ 1364 0117 0B       		.uleb128 0xb
+ 1365 0118 3B       		.uleb128 0x3b
+ 1366 0119 0B       		.uleb128 0xb
+ 1367 011a 27       		.uleb128 0x27
+ 1368 011b 19       		.uleb128 0x19
+ 1369 011c 3C       		.uleb128 0x3c
+ 1370 011d 19       		.uleb128 0x19
+ 1371 011e 00       		.byte	0
+ 1372 011f 00       		.byte	0
+ 1373 0120 17       		.uleb128 0x17
+ 1374 0121 2E       		.uleb128 0x2e
+ 1375 0122 00       		.byte	0
+ 1376 0123 3F       		.uleb128 0x3f
+ 1377 0124 19       		.uleb128 0x19
+ 1378 0125 03       		.uleb128 0x3
+ 1379 0126 0E       		.uleb128 0xe
+ 1380 0127 3A       		.uleb128 0x3a
+ 1381 0128 0B       		.uleb128 0xb
+ 1382 0129 3B       		.uleb128 0x3b
+ 1383 012a 0B       		.uleb128 0xb
+ 1384 012b 27       		.uleb128 0x27
+ 1385 012c 19       		.uleb128 0x19
+ 1386 012d 49       		.uleb128 0x49
+ 1387 012e 13       		.uleb128 0x13
+ 1388 012f 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 29
+
+
+ 1389 0130 19       		.uleb128 0x19
+ 1390 0131 00       		.byte	0
+ 1391 0132 00       		.byte	0
+ 1392 0133 18       		.uleb128 0x18
+ 1393 0134 2E       		.uleb128 0x2e
+ 1394 0135 00       		.byte	0
+ 1395 0136 3F       		.uleb128 0x3f
+ 1396 0137 19       		.uleb128 0x19
+ 1397 0138 03       		.uleb128 0x3
+ 1398 0139 0E       		.uleb128 0xe
+ 1399 013a 3A       		.uleb128 0x3a
+ 1400 013b 0B       		.uleb128 0xb
+ 1401 013c 3B       		.uleb128 0x3b
+ 1402 013d 05       		.uleb128 0x5
+ 1403 013e 27       		.uleb128 0x27
+ 1404 013f 19       		.uleb128 0x19
+ 1405 0140 3C       		.uleb128 0x3c
+ 1406 0141 19       		.uleb128 0x19
+ 1407 0142 00       		.byte	0
+ 1408 0143 00       		.byte	0
+ 1409 0144 19       		.uleb128 0x19
+ 1410 0145 2E       		.uleb128 0x2e
+ 1411 0146 01       		.byte	0x1
+ 1412 0147 3F       		.uleb128 0x3f
+ 1413 0148 19       		.uleb128 0x19
+ 1414 0149 03       		.uleb128 0x3
+ 1415 014a 0E       		.uleb128 0xe
+ 1416 014b 3A       		.uleb128 0x3a
+ 1417 014c 0B       		.uleb128 0xb
+ 1418 014d 3B       		.uleb128 0x3b
+ 1419 014e 0B       		.uleb128 0xb
+ 1420 014f 27       		.uleb128 0x27
+ 1421 0150 19       		.uleb128 0x19
+ 1422 0151 49       		.uleb128 0x49
+ 1423 0152 13       		.uleb128 0x13
+ 1424 0153 3C       		.uleb128 0x3c
+ 1425 0154 19       		.uleb128 0x19
+ 1426 0155 00       		.byte	0
+ 1427 0156 00       		.byte	0
+ 1428 0157 00       		.byte	0
+ 1429              		.section	.debug_aranges,"",%progbits
+ 1430 0000 24000000 		.4byte	0x24
+ 1431 0004 0200     		.2byte	0x2
+ 1432 0006 00000000 		.4byte	.Ldebug_info0
+ 1433 000a 04       		.byte	0x4
+ 1434 000b 00       		.byte	0
+ 1435 000c 0000     		.2byte	0
+ 1436 000e 0000     		.2byte	0
+ 1437 0010 00000000 		.4byte	.LFB36
+ 1438 0014 20010000 		.4byte	.LFE36-.LFB36
+ 1439 0018 00000000 		.4byte	.LFB35
+ 1440 001c 6C000000 		.4byte	.LFE35-.LFB35
+ 1441 0020 00000000 		.4byte	0
+ 1442 0024 00000000 		.4byte	0
+ 1443              		.section	.debug_ranges,"",%progbits
+ 1444              	.Ldebug_ranges0:
+ 1445 0000 00000000 		.4byte	.LFB36
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 30
+
+
+ 1446 0004 20010000 		.4byte	.LFE36
+ 1447 0008 00000000 		.4byte	.LFB35
+ 1448 000c 6C000000 		.4byte	.LFE35
+ 1449 0010 00000000 		.4byte	0
+ 1450 0014 00000000 		.4byte	0
+ 1451              		.section	.debug_line,"",%progbits
+ 1452              	.Ldebug_line0:
+ 1453 0000 EB000000 		.section	.debug_str,"MS",%progbits,1
+ 1453      02009300 
+ 1453      00000201 
+ 1453      FB0E0D00 
+ 1453      01010101 
+ 1454              	.LASF28:
+ 1455 0000 43795379 		.ascii	"CySysWdtClearInterrupt\000"
+ 1455      73576474 
+ 1455      436C6561 
+ 1455      72496E74 
+ 1455      65727275 
+ 1456              	.LASF29:
+ 1457 0017 5F507249 		.ascii	"_PrISM_TurnOffLED\000"
+ 1457      534D5F54 
+ 1457      75726E4F 
+ 1457      66664C45 
+ 1457      4400
+ 1458              	.LASF45:
+ 1459 0029 2E5C5F57 		.ascii	".\\_Watchdog.c\000"
+ 1459      61746368 
+ 1459      646F672E 
+ 1459      6300
+ 1460              	.LASF21:
+ 1461 0037 4359424C 		.ascii	"CYBLE_STATE_DISCONNECTED\000"
+ 1461      455F5354 
+ 1461      4154455F 
+ 1461      44495343 
+ 1461      4F4E4E45 
+ 1462              	.LASF3:
+ 1463 0050 73686F72 		.ascii	"short unsigned int\000"
+ 1463      7420756E 
+ 1463      7369676E 
+ 1463      65642069 
+ 1463      6E7400
+ 1464              	.LASF18:
+ 1465 0063 4359424C 		.ascii	"CYBLE_STATE_INITIALIZING\000"
+ 1465      455F5354 
+ 1465      4154455F 
+ 1465      494E4954 
+ 1465      49414C49 
+ 1466              	.LASF46:
+ 1467 007c 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
+ 1467      73657273 
+ 1467      5C416C65 
+ 1467      78616E64 
+ 1467      72655C44 
+ 1468 00aa 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
+ 1468      534F435F 
+ 1468      43617053 
+ 1468      656E7365 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 31
+
+
+ 1468      5F325F42 
+ 1469              	.LASF24:
+ 1470 00db 5F576174 		.ascii	"_Watchdog_Init\000"
+ 1470      6368646F 
+ 1470      675F496E 
+ 1470      697400
+ 1471              	.LASF12:
+ 1472 00ea 666C6F61 		.ascii	"float\000"
+ 1472      7400
+ 1473              	.LASF30:
+ 1474 00f0 5F507249 		.ascii	"_PrISM_TurnOnLED\000"
+ 1474      534D5F54 
+ 1474      75726E4F 
+ 1474      6E4C4544 
+ 1474      00
+ 1475              	.LASF7:
+ 1476 0101 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1476      206C6F6E 
+ 1476      6720756E 
+ 1476      7369676E 
+ 1476      65642069 
+ 1477              	.LASF1:
+ 1478 0118 756E7369 		.ascii	"unsigned char\000"
+ 1478      676E6564 
+ 1478      20636861 
+ 1478      7200
+ 1479              	.LASF26:
+ 1480 0126 6379426C 		.ascii	"cyBle_busyStatus\000"
+ 1480      655F6275 
+ 1480      73795374 
+ 1480      61747573 
+ 1480      00
+ 1481              	.LASF10:
+ 1482 0137 75696E74 		.ascii	"uint16\000"
+ 1482      313600
+ 1483              	.LASF48:
+ 1484 013e 43795379 		.ascii	"CySysWdtGetInterruptSource\000"
+ 1484      73576474 
+ 1484      47657449 
+ 1484      6E746572 
+ 1484      72757074 
+ 1485              	.LASF20:
+ 1486 0159 4359424C 		.ascii	"CYBLE_STATE_ADVERTISING\000"
+ 1486      455F5354 
+ 1486      4154455F 
+ 1486      41445645 
+ 1486      52544953 
+ 1487              	.LASF9:
+ 1488 0171 75696E74 		.ascii	"uint8\000"
+ 1488      3800
+ 1489              	.LASF40:
+ 1490 0177 43795379 		.ascii	"CySysWdtSetClearOnMatch\000"
+ 1490      73576474 
+ 1490      53657443 
+ 1490      6C656172 
+ 1490      4F6E4D61 
+ 1491              	.LASF38:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 32
+
+
+ 1492 018f 4379426C 		.ascii	"CyBle_ProcessEvents\000"
+ 1492      655F5072 
+ 1492      6F636573 
+ 1492      73457665 
+ 1492      6E747300 
+ 1493              	.LASF34:
+ 1494 01a3 43795379 		.ascii	"CySysWdtSetMatch\000"
+ 1494      73576474 
+ 1494      5365744D 
+ 1494      61746368 
+ 1494      00
+ 1495              	.LASF19:
+ 1496 01b4 4359424C 		.ascii	"CYBLE_STATE_CONNECTED\000"
+ 1496      455F5354 
+ 1496      4154455F 
+ 1496      434F4E4E 
+ 1496      45435445 
+ 1497              	.LASF5:
+ 1498 01ca 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1498      20756E73 
+ 1498      69676E65 
+ 1498      6420696E 
+ 1498      7400
+ 1499              	.LASF31:
+ 1500 01dc 43795379 		.ascii	"CySysWdtDisable\000"
+ 1500      73576474 
+ 1500      44697361 
+ 1500      626C6500 
+ 1501              	.LASF42:
+ 1502 01ec 4379496E 		.ascii	"CyIntEnable\000"
+ 1502      74456E61 
+ 1502      626C6500 
+ 1503              	.LASF27:
+ 1504 01f8 5F507249 		.ascii	"_PrISM_Red_On\000"
+ 1504      534D5F52 
+ 1504      65645F4F 
+ 1504      6E00
+ 1505              	.LASF35:
+ 1506 0206 43795379 		.ascii	"CySysWdtEnable\000"
+ 1506      73576474 
+ 1506      456E6162 
+ 1506      6C6500
+ 1507              	.LASF11:
+ 1508 0215 75696E74 		.ascii	"uint32\000"
+ 1508      333200
+ 1509              	.LASF43:
+ 1510 021c 4379496E 		.ascii	"CyIntSetVector\000"
+ 1510      74536574 
+ 1510      56656374 
+ 1510      6F7200
+ 1511              	.LASF8:
+ 1512 022b 756E7369 		.ascii	"unsigned int\000"
+ 1512      676E6564 
+ 1512      20696E74 
+ 1512      00
+ 1513              	.LASF14:
+ 1514 0238 63686172 		.ascii	"char\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 33
+
+
+ 1514      00
+ 1515              	.LASF41:
+ 1516 023d 4379496E 		.ascii	"CyIntSetPriority\000"
+ 1516      74536574 
+ 1516      5072696F 
+ 1516      72697479 
+ 1516      00
+ 1517              	.LASF22:
+ 1518 024e 4359424C 		.ascii	"CYBLE_STATE_T\000"
+ 1518      455F5354 
+ 1518      4154455F 
+ 1518      5400
+ 1519              	.LASF17:
+ 1520 025c 4359424C 		.ascii	"CYBLE_STATE_STOPPED\000"
+ 1520      455F5354 
+ 1520      4154455F 
+ 1520      53544F50 
+ 1520      50454400 
+ 1521              	.LASF15:
+ 1522 0270 63796973 		.ascii	"cyisraddress\000"
+ 1522      72616464 
+ 1522      72657373 
+ 1522      00
+ 1523              	.LASF25:
+ 1524 027d 6379426C 		.ascii	"cyBle_state\000"
+ 1524      655F7374 
+ 1524      61746500 
+ 1525              	.LASF16:
+ 1526 0289 73697A65 		.ascii	"sizetype\000"
+ 1526      74797065 
+ 1526      00
+ 1527              	.LASF6:
+ 1528 0292 6C6F6E67 		.ascii	"long long int\000"
+ 1528      206C6F6E 
+ 1528      6720696E 
+ 1528      7400
+ 1529              	.LASF23:
+ 1530 02a0 5F576174 		.ascii	"_Watchdog_Handler\000"
+ 1530      6368646F 
+ 1530      675F4861 
+ 1530      6E646C65 
+ 1530      7200
+ 1531              	.LASF33:
+ 1532 02b2 43794465 		.ascii	"CyDelayUs\000"
+ 1532      6C617955 
+ 1532      7300
+ 1533              	.LASF44:
+ 1534 02bc 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1534      4320342E 
+ 1534      392E3320 
+ 1534      32303135 
+ 1534      30333033 
+ 1535 02ef 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1535      20726576 
+ 1535      6973696F 
+ 1535      6E203232 
+ 1535      31323230 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccVZayfn.s 			page 34
+
+
+ 1536 0322 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1536      66756E63 
+ 1536      74696F6E 
+ 1536      2D736563 
+ 1536      74696F6E 
+ 1537              	.LASF2:
+ 1538 034a 73686F72 		.ascii	"short int\000"
+ 1538      7420696E 
+ 1538      7400
+ 1539              	.LASF39:
+ 1540 0354 43795379 		.ascii	"CySysWdtSetMode\000"
+ 1540      73576474 
+ 1540      5365744D 
+ 1540      6F646500 
+ 1541              	.LASF4:
+ 1542 0364 6C6F6E67 		.ascii	"long int\000"
+ 1542      20696E74 
+ 1542      00
+ 1543              	.LASF36:
+ 1544 036d 43795379 		.ascii	"CySysWdtUnlock\000"
+ 1544      73576474 
+ 1544      556E6C6F 
+ 1544      636B00
+ 1545              	.LASF0:
+ 1546 037c 7369676E 		.ascii	"signed char\000"
+ 1546      65642063 
+ 1546      68617200 
+ 1547              	.LASF13:
+ 1548 0388 646F7562 		.ascii	"double\000"
+ 1548      6C6500
+ 1549              	.LASF37:
+ 1550 038f 43795379 		.ascii	"CySysWdtLock\000"
+ 1550      73576474 
+ 1550      4C6F636B 
+ 1550      00
+ 1551              	.LASF32:
+ 1552 039c 43795379 		.ascii	"CySysWdtResetCounters\000"
+ 1552      73576474 
+ 1552      52657365 
+ 1552      74436F75 
+ 1552      6E746572 
+ 1553              	.LASF47:
+ 1554 03b2 70726576 		.ascii	"previousState\000"
+ 1554      696F7573 
+ 1554      53746174 
+ 1554      6500
+ 1555              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

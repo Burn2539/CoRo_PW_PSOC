@@ -31,21 +31,17 @@ CYBLE_CONN_HANDLE_T  connectionHandle;
 
 // Status flag for the Stack Busy state. This flag is used to notify the
 // application  whether there is stack buffer free to push more data or not.
-uint8 busyStatus;
-
-// Connection Parameter update values. This values are used by the BLE 
-// component to update the connector parameter, including connection  
-// interval, to desired value.
-static CYBLE_GAP_CONN_UPDATE_PARAM_T ConnectionParam = {
-    CONN_PARAM_UPDATE_MIN_CONN_INTERVAL,  		      
-    CONN_PARAM_UPDATE_MAX_CONN_INTERVAL,		       
-    CONN_PARAM_UPDATE_SLAVE_LATENCY,			    
-    CONN_PARAM_UPDATE_SUPRV_TIMEOUT 			         	
-};
+uint8 _BLE_busyStatus;
 
 // This flag is used to know whether a Central device has been connected.
 // This is updated in BLE event callback function.
-uint8 deviceConnected;
+uint8 _BLE_deviceConnected;
+
+// Current Connection Parameters used by controller.
+CYBLE_GAP_CONN_PARAM_UPDATED_IN_CONTROLLER_T connectionParameters;
+
+// Size of the MTU used by the BLE stack.
+uint16 currentMTU;
 
 // These flags are set when the Central device writes to CCCD of the
 // CapSense sensors Characteristic to enable notifications or indications.
@@ -61,6 +57,9 @@ uint8 sendStatusIndications;
 uint8 _BLE_acquireData;
 uint8 _BLE_sendData;
 uint8 _BLE_sendStatus;
+uint8 _BLE_sendDataSynchronously;
+uint8 _BLE_restartAdvertisement;
+uint8 _BLE_resetNeeded;
 
 // These flags are used to let application update the CCCD value of the
 // different characteristics.
@@ -70,6 +69,13 @@ uint8 updateStatusCCCDreq;
 // This flag is used to let application update the values of the
 // control characteristic.
 uint8 updateControlValuesReq;
+
+
+//////////////////////////////////////////////////////////////////////////////
+// DEBUGGING VARIABLES
+//////////////////////////////////////////////////////////////////////////////
+uint32 eventCodesLog[256];
+uint8 pointer = 0;
 
 
 /*****************************************************************************
@@ -93,22 +99,66 @@ void _BLE_Init(void)
     CyBle_Start(EventHandler);
     
     // Initialize the busy status flag.
-    busyStatus = CYBLE_STACK_STATE_FREE;
+    _BLE_busyStatus = CYBLE_STACK_STATE_FREE;
     
     // Initialize the connection status flag.
-    deviceConnected = FALSE;
+    _BLE_deviceConnected = FALSE;
     
     // Initialize flags.
     sendDataNotifications = FALSE;
     sendDataIndications = FALSE;
     sendStatusNotifications = FALSE;
     sendStatusIndications = FALSE;
+    
     updateSensorsCCCDreq = FALSE;
     updateStatusCCCDreq = FALSE;
     updateControlValuesReq = FALSE;
+    
     _BLE_acquireData = FALSE;
     _BLE_sendData = FALSE;
     _BLE_sendStatus = FALSE;
+    _BLE_sendDataSynchronously = FALSE;
+    _BLE_restartAdvertisement = FALSE;
+    _BLE_resetNeeded = FALSE;
+}
+
+
+/*****************************************************************************
+* Function Name: _BLE_Reset()
+******************************************************************************
+* Summary:
+*   Reset the BLE variables.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*
+*****************************************************************************/
+void _BLE_Reset(void)
+{
+    // Reset connection handle.
+    connectionHandle.attId = 0;
+    connectionHandle.bdHandle = 0;
+    
+    // Reset flags.
+    sendDataNotifications = FALSE;
+    sendDataIndications = FALSE;
+    sendStatusNotifications = FALSE;
+    sendStatusIndications = FALSE;
+    
+    updateSensorsCCCDreq = FALSE;
+    updateStatusCCCDreq = FALSE;
+    updateControlValuesReq = FALSE;
+    
+    _BLE_acquireData = FALSE;
+    _BLE_sendData = FALSE;
+    _BLE_sendStatus = FALSE;
+    _BLE_sendDataSynchronously = FALSE;
+    _BLE_restartAdvertisement = TRUE;
 }
 
 
@@ -134,97 +184,131 @@ void EventHandler(uint32 eventCode, void *eventParam)
     // Local variable to store the data received as part of the Write request events.
 	CYBLE_GATTS_WRITE_REQ_PARAM_T *wrReqParam;
     
+    // Log all the events.
+    eventCodesLog[pointer++] = eventCode;
+    
     switch(eventCode)
     {
         // This event is received when the module is started.
-        case CYBLE_EVT_STACK_ON:
+        case CYBLE_EVT_STACK_ON: // eventCode == 0x01
         
             // Start fast advertisement
-			CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
+			_BLE_restartAdvertisement = TRUE;
         
             break;
+            
         
+        // This event is received when there is a timeout and application  
+        // needs to handle the event. Timeout reason is defined by 
+        // CYBLE_TO_REASON_CODE_T.
+        case CYBLE_EVT_TIMEOUT: // eventCode == 0x02
+            
+            // If triggered by the advertisement timeout.
+            if( *(CYBLE_TO_REASON_CODE_T *)eventParam == CYBLE_GAP_ADV_MODE_TO ) {
+            }
+            
+            break;
+            
         
-        // This event is generated when the internal stack buffer is full and no more
-		// data can be accepted or the stack has buffer available and can accept data.
-		// This event is used by application to prevent pushing lot of data to stack.
-        case CYBLE_EVT_STACK_BUSY_STATUS:
+        // This event is generated when the internal stack buffer is full 
+		// and no more data can be accepted or the stack has buffer available 
+		// and can accept data. This event is used by application to prevent 
+        // pushing lot of data to stack.
+        case CYBLE_EVT_STACK_BUSY_STATUS: // eventCode == 0x05
 			
-			/* Extract the present stack status */
-            busyStatus = * (uint8*)eventParam;
+			// Extract the present stack status.
+            _BLE_busyStatus = *(uint8*)eventParam;
             
             break;
-        
-        
-        // This event is received when device is disconnected or advertising
-        // times out.
-        case CYBLE_EVT_GAP_DEVICE_DISCONNECTED:
-        
-            // Reset the connection status flag.
-            deviceConnected = FALSE;
             
-            // Start fast advertisement
-			CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
         
+        // Authentication process failed between two devices. The return value 
+        // of type CYBLE_GAP_AUTH_FAILED_REASON_T indicates the reason for failure.
+        case CYBLE_EVT_GAP_AUTH_FAILED: // eventCode == 0x25
+            
             break;
+                
             
-        
         // If the current BLE state is Disconnected, then the Advertisement
-    	// Start Stop event implies that advertisement has stopped.
-        case CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP:
+    	// Start_Stop event implies that advertisement has stopped.
+        case CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP: // eventCode == 0x26
             
-            if(CyBle_GetState() == CYBLE_STATE_DISCONNECTED)
-                // Start slow advertisement
-                CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
+            // Restart fast advertisement
+            if(CyBle_GetState() != CYBLE_STATE_ADVERTISING)
+                _BLE_restartAdvertisement = TRUE;
             
             break;
+            
+            
+        // This event is generated at the GAP Peripheral end after 
+        // connection is completed with peer Centra  device.
+        case CYBLE_EVT_GAP_DEVICE_CONNECTED: // eventCode == 0x27
+            
+            break;
+
         
-        
+        // Disconnected from remote device or failed to establish
+        // connection. Parameter returned with the event contains pointer to 
+        // the reason for disconnection.
+        case CYBLE_EVT_GAP_DEVICE_DISCONNECTED: // eventCode == 0x28
+            
+            break;
+            
+            
+        // This event is generated at the GAP Central and the Peripheral end
+        // after connection parameter update is requested from the host to 
+        // the controller. Event parameter is a pointer to a structure of type
+        // CYBLE_GAP_CONN_PARAM_UPDATED_IN_CONTROLLER_T.
+        case CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE: // eventCode == 0x2A
+            
+            break;
+            
+                
         // This event is received when device is connected at GATT level.
-        case CYBLE_EVT_GATT_CONNECT_IND:
+        case CYBLE_EVT_GATT_CONNECT_IND: // eventCode == 0x41
         
 			// Update attribute handle on GATT Connection.
-            connectionHandle = *(CYBLE_CONN_HANDLE_T  *)eventParam;
-            
-            // Send Connection Update request with set Parameter.
-		    CyBle_L2capLeConnectionParamUpdateRequest(connectionHandle.bdHandle, &ConnectionParam);
+            connectionHandle = *(CYBLE_CONN_HANDLE_T *)eventParam;
             
             // Set the connection status flag.
-            deviceConnected = TRUE;
+            _BLE_deviceConnected = TRUE;
+            
+            // Set all the flags for the current connection.
+            _BLE_UpdateCCCD();
+            _BLE_UpdateControl();
+            _BLE_writeStatusFlags();
             
             break;
         
         
         // This event is received when device is disconnected at GATT level.
-        case CYBLE_EVT_GATT_DISCONNECT_IND:
+        case CYBLE_EVT_GATT_DISCONNECT_IND: // eventCode == 0x42
             
-            // Reset notification flags to prevent further notifications
-			// being sent to Central device after next connection.
-			sendDataNotifications = FALSE;
-            sendDataIndications = FALSE;
-            sendStatusNotifications = FALSE;
-            sendStatusIndications = FALSE;
+            // Reset the connection status flag.
+            _BLE_deviceConnected = FALSE;
             
-            // Reset control flags
-            _BLE_acquireData = FALSE;
-            _BLE_sendData = FALSE;
-            updateControlValuesReq = TRUE;
-            _BLE_UpdateControl();
-			
-			// Reset the CCCD value to disable notifications.
-			updateSensorsCCCDreq = TRUE;
-            updateStatusCCCDreq = TRUE;
-			_BLE_UpdateCCCD();
+            // Reset the connection status flag.
+            _BLE_resetNeeded = TRUE;
             
-            // Start fast advertisement
-			CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
+            break;
+            
+            
+        // 'MTU  Exchange  Request'  received  from  GATT  client  device. 
+        // Event parameter contains the MTU size of type CYBLE_GATT_XCHG_MTU_PARAM_T. 
+        case CYBLE_EVT_GATTS_XCNHG_MTU_REQ: // eventCode == 0x43
+            
+            // Get the MTU size.
+            CyBle_GattGetMtuSize(&currentMTU);
+            
+            // Send the MTU size to the client.
+            CyBle_GattsExchangeMtuRsp(connectionHandle, currentMTU);
             
             break;
             
         
         // This event is received when Central device sends a Write command
         // on an Attribute.
-        case CYBLE_EVT_GATTS_WRITE_REQ:
+        case CYBLE_EVT_GATTS_WRITE_REQ: // eventCode == 0x4C
             
             wrReqParam = (CYBLE_GATTS_WRITE_REQ_PARAM_T *) eventParam;
             
@@ -254,17 +338,29 @@ void EventHandler(uint32 eventCode, void *eventParam)
                 wrReqParam->handleValPair.attrHandle)
             {
                 // Update 'acquireData' flag:
-                    // FALSE possible at any time;
+                    // FALSE only if 'Status_Acquiring' is TRUE;
                     // TRUE only if 'Status_Ready' is also TRUE.
-                _BLE_acquireData = Status_Ready & wrReqParam->handleValPair.value.val[CONTROL_ACQUIRE_DATA_BYTE_MASK];
+                if ( Status_Acquiring && !wrReqParam->handleValPair.value.val[CONTROL_ACQUIRE_DATA_BYTE_MASK] )
+                    _BLE_acquireData = FALSE;
+                else if ( Status_Ready && wrReqParam->handleValPair.value.val[CONTROL_ACQUIRE_DATA_BYTE_MASK] )
+                    _BLE_acquireData = TRUE;
                 
                 // Update 'sendData' flag:
-                    // FALSE only if 'Status_NoMoreData' is also TRUE;
+                    // FALSE only if 'Status_NoMoreData' is TRUE;
                     // TRUE only if 'Status_DataAcquired' is also TRUE.
                 if ( !wrReqParam->handleValPair.value.val[CONTROL_SEND_DATA_BYTE_MASK] && Status_NoMoreData )
                     _BLE_sendData = FALSE;
                 else if ( wrReqParam->handleValPair.value.val[CONTROL_SEND_DATA_BYTE_MASK] && Status_DataAcquired )
                     _BLE_sendData = TRUE;
+                
+                // Update 'sendDataSyncronously' flag:
+                    // FALSE only if 'Status_Acquiring' OR 'Status_Ready' is TRUE;
+                    // TRUE only if 'Status_Ready' is also TRUE.
+                if ( (Status_Acquiring || Status_Ready) && !wrReqParam->handleValPair.value.val[CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK] )
+                    _BLE_sendDataSynchronously = FALSE;
+                else if ( Status_Ready && wrReqParam->handleValPair.value.val[CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK] )
+                    _BLE_sendDataSynchronously = TRUE;
+
                 
                 // Set the flag to allow the control values to be updated.
                 updateControlValuesReq = TRUE;
@@ -295,6 +391,25 @@ void EventHandler(uint32 eventCode, void *eventParam)
             
             // Send the response to the write request received.
 			CyBle_GattsWriteRsp(connectionHandle);
+            
+            break;
+            
+            
+        // Confirmation to indication response from client device. Event
+        // parameter is a pointer to a structure of type CYBLE_CONN_HANDLE_T. 
+        case CYBLE_EVT_GATTS_HANDLE_VALUE_CNF: // eventCode == 0x54
+            
+            break;
+            
+            
+        // Event parameters for characteristic read value access event 
+        // generated by BLE Stack upon an access of Characteristic value read  
+        // for the characteristic definition which has
+        // CYBLE_GATT_DB_ATTR_CHAR_VAL_RD_EVENT property set.
+        case CYBLE_EVT_GATTS_READ_CHAR_VAL_ACCESS_REQ: // eventCode == 0x57
+            
+            // Make sure all the flags are updated.
+            _BLE_writeStatusFlags();
             
             break;
     }
@@ -328,7 +443,7 @@ void _BLE_UpdateCCCD(void)
 
     // Update sensors notification/indication attribute only when there has 
     // been a write request.
-    if(updateSensorsCCCDreq)
+    if(updateSensorsCCCDreq && _BLE_deviceConnected)
 	{
 		// Reset the flag.
 		updateSensorsCCCDreq = FALSE;
@@ -343,12 +458,12 @@ void _BLE_UpdateCCCD(void)
 		CCCDhandle.value.len = CCC_DATA_LEN;
 		
 		// Report data to BLE component for sending data when read by Central device.
-		CyBle_GattsWriteAttributeValue(&CCCDhandle, 0, &connectionHandle, CYBLE_GATT_DB_PEER_INITIATED);
+		CyBle_GattsWriteAttributeValue(&CCCDhandle, 0, &connectionHandle, CYBLE_GATT_DB_LOCALLY_INITIATED);
 	}
     
     // Update sensors notification/indication attribute only when there has 
     // been a write request.
-    if(updateStatusCCCDreq)
+    if(updateStatusCCCDreq && _BLE_deviceConnected)
 	{
 		// Reset the flag.
 		updateStatusCCCDreq = FALSE;
@@ -363,7 +478,7 @@ void _BLE_UpdateCCCD(void)
 		CCCDhandle.value.len = CCC_DATA_LEN;
 		
 		// Report data to BLE component for sending data when read by Central device.
-		CyBle_GattsWriteAttributeValue(&CCCDhandle, 0, &connectionHandle, CYBLE_GATT_DB_PEER_INITIATED);
+		CyBle_GattsWriteAttributeValue(&CCCDhandle, 0, &connectionHandle, CYBLE_GATT_DB_LOCALLY_INITIATED);
 	}	
 }
 
@@ -392,7 +507,7 @@ void _BLE_UpdateControl(void)
     CYBLE_GATT_HANDLE_VALUE_PAIR_T ControlHandle;
 
     // Update control attribute only when there has been a write request.
-    if(updateControlValuesReq)
+    if(updateControlValuesReq && _BLE_deviceConnected)
     {
 		// Reset the flag.
 		updateControlValuesReq = FALSE;
@@ -400,6 +515,7 @@ void _BLE_UpdateControl(void)
 		// Write the present control values to the local variable.
 		ControlValues[CONTROL_ACQUIRE_DATA_BYTE_MASK] = _BLE_acquireData;
 		ControlValues[CONTROL_SEND_DATA_BYTE_MASK] = _BLE_sendData;
+        ControlValues[CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK] = _BLE_sendDataSynchronously;
 		
 		// Update control values handle.
 		ControlHandle.attrHandle = CYBLE_CAPSENSE_CONTROL_CHAR_HANDLE;
@@ -407,7 +523,7 @@ void _BLE_UpdateControl(void)
 		ControlHandle.value.len = NUM_CONTROLS;
 		
 		// Report data to BLE component.
-		CyBle_GattsWriteAttributeValue(&ControlHandle, 0, &connectionHandle, CYBLE_GATT_DB_PEER_INITIATED);
+		CyBle_GattsWriteAttributeValue(&ControlHandle, 0, &connectionHandle, CYBLE_GATT_DB_LOCALLY_INITIATED);
     }
 }
 
@@ -431,64 +547,75 @@ void _BLE_UpdateControl(void)
 *****************************************************************************/
 uint8 _BLE_sendCapSenseData(void)
 {
-    uint16 rawData[CapSense_TOTAL_SENSOR_COUNT];
-    uint32 encodedData[CapSense_TOTAL_SENSOR_COUNT];
-    uint8 numBytes = sizeof(encodedData[0]);
-    uint8 dataArray[CapSense_TOTAL_SENSOR_COUNT * sizeof(encodedData[0])];
-    
-    uint8 i;
-    uint8 j;
-    uint16 arrayIterator;
-        
-    CYBLE_GATTS_HANDLE_VALUE_NTF_T NotificationHandle;
-    CYBLE_GATTS_HANDLE_VALUE_IND_T IndicationHandle;
-
     // Verify the presence of data to send.
     if ( vectorIsEmpty() )
         return NO_MORE_DATA;
+    
+    
+    uint16 rawData[CapSense_TOTAL_SENSOR_COUNT];
+    uint32 encodedData[CapSense_TOTAL_SENSOR_COUNT];
+    uint8 numBytes_OneData = sizeof(encodedData[0]);
+    
+    uint8 i;
+    uint8 j;
+    uint8 k;
+    uint16 arrayIterator = 0;
+        
+    CYBLE_GATTS_HANDLE_VALUE_NTF_T NotificationHandle;
+    CYBLE_GATTS_HANDLE_VALUE_IND_T IndicationHandle;
+    
+    uint16 numIterations = 1;
+    //numIterations = ( (vectorSize() * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT) < BUFFER_MAX_SIZE ) ?
+    //                vectorSize() : BUFFER_MAX_SIZE / numBytes_OneData / CapSense_TOTAL_SENSOR_COUNT;
+                    
+    uint16 numBytes_AllData = numIterations * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT;
+    uint8 buffer[numBytes_AllData];
 
-    // Retrieve the front data in the vectors.
-    popOutVector(rawData);
-    
-    // Encode the data with CRC.
-    for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)
-        //encodedData[i] = encodeCRC( rawData[i] );
-        encodedData[i] = encodeCRC(rawData[i]);
-    
-    // Transfer the encoded sensors values into an uint8 array.
-    arrayIterator = 0;
-    for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)
-        for (j = 0; j < numBytes; j++)
-            dataArray[arrayIterator++] = encodedData[i] >> ((numBytes - 1 - j) * 8) & 0xFF;
+    for( k = 0; k < numIterations; k++) {
+        // Retrieve the front data in the vectors.
+        popOutVector(rawData);
+        
+        // Encode the data with CRC.
+        for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)
+            //encodedData[i] = encodeCRC( rawData[i] );
+            encodedData[i] = encodeCRC(rawData[i]);
+        
+        // Transfer the encoded sensors values into an uint8 array.
+        for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)
+            for (j = 0; j < numBytes_OneData; j++)
+                buffer[arrayIterator++] = encodedData[i] >> ((numBytes_OneData - 1 - j) * 8) & 0xFF;
+    }
     
     // Wait for the stack to be ready.
-	while(busyStatus == CYBLE_STACK_STATE_BUSY)
+	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
         CyBle_ProcessEvents();
     
     // Send the CapSense characteristic values to BLE client.
     if (sendDataNotifications) {
         NotificationHandle.attrHandle = CYBLE_CAPSENSE_SENSORS_CHAR_HANDLE;
-        NotificationHandle.value.val = dataArray;
-        NotificationHandle.value.len = CapSense_TOTAL_SENSOR_COUNT * numBytes;
+        NotificationHandle.value.val = buffer;
+        NotificationHandle.value.len = numBytes_AllData;
         CyBle_GattsNotification(connectionHandle, &NotificationHandle);
     }
     else if (sendDataIndications) {        
         IndicationHandle.attrHandle = CYBLE_CAPSENSE_SENSORS_CHAR_HANDLE;
-        IndicationHandle.value.val = dataArray;
-        IndicationHandle.value.len = CapSense_TOTAL_SENSOR_COUNT * numBytes;
+        IndicationHandle.value.val = buffer;
+        IndicationHandle.value.len = numBytes_AllData;
         CyBle_GattsIndication(connectionHandle, &IndicationHandle);
     }
+    
     
     // Verify if the vector is now empty.
     if ( vectorIsEmpty() )
         return NO_MORE_DATA;
+    
     
     return SUCCESS;
 }
 
 
 /*****************************************************************************
-* Function Name: _BLE_sendPSOCStatus()
+* Function Name: _BLE_sendStatusFlags()
 ******************************************************************************
 * Summary:
 *   Send all the status flags.
@@ -502,7 +629,7 @@ uint8 _BLE_sendCapSenseData(void)
 * Note:
 *   
 *****************************************************************************/
-void _BLE_sendPSOCStatus(void)
+void _BLE_sendStatusFlags(void)
 {
     static uint8 Previous_Status_Ready = 0xFF;
     static uint8 Previous_Status_Acquiring = 0xFF;
@@ -534,7 +661,7 @@ void _BLE_sendPSOCStatus(void)
         StatusArray[STATUS_NO_MORE_DATA_BYTE_MASK] = Status_NoMoreData;
         
         // Wait for the stack to be ready.
-    	while(busyStatus == CYBLE_STACK_STATE_BUSY)
+    	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
             CyBle_ProcessEvents();
         
         // Send the Status characteristic values to BLE client.
@@ -561,5 +688,41 @@ void _BLE_sendPSOCStatus(void)
     }
 }
 
+
+/*****************************************************************************
+* Function Name: _BLE_writeStatusFlags()
+******************************************************************************
+* Summary:
+*   Write the actual value of all the status flags into the characteristic.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*   
+*****************************************************************************/
+void _BLE_writeStatusFlags(void)
+{
+    uint8 StatusArray[NUM_STATUS];
+        
+    CYBLE_GATT_HANDLE_VALUE_PAIR_T FlagsHandle;
+
+    // Fill the 'StatusArray' with the current status values.
+    StatusArray[STATUS_READY_BYTE_MASK] = Status_Ready;
+    StatusArray[STATUS_ACQUIRING_BYTE_MASK] = Status_Acquiring;
+    StatusArray[STATUS_NO_MORE_SPACE_BYTE_MASK] = Status_NoMoreSpace;
+    StatusArray[STATUS_DATA_ACQUIRED_BYTE_MASK] = Status_DataAcquired;
+    StatusArray[STATUS_SENDING_BYTE_MASK] = Status_Sending;
+    StatusArray[STATUS_NO_MORE_DATA_BYTE_MASK] = Status_NoMoreData;
+    
+    // Write the Status values into the characteristic.
+    FlagsHandle.attrHandle = CYBLE_CAPSENSE_STATUS_CHAR_HANDLE;
+    FlagsHandle.value.val = StatusArray;
+    FlagsHandle.value.len = NUM_STATUS;
+    CyBle_GattsWriteAttributeValue(&FlagsHandle, 0, &connectionHandle, CYBLE_GATT_DB_LOCALLY_INITIATED);
+}
 
 /* [] END OF FILE */

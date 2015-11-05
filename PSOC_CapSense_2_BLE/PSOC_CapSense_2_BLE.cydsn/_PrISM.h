@@ -31,11 +31,21 @@
 #define RGB_LED_OFF			255
 #define RGB_LED_ON			0
 
+    
+/*****************************************************************************
+* Extern global variables
+*****************************************************************************/
+// Flags that indicate the current state of each LEDs.
+extern uint8 _PrISM_Red_On;
+extern uint8 _PrISM_Green_On;
+extern uint8 _PrISM_Blue_On;
 
 /*****************************************************************************
 * Function Declarations
 *****************************************************************************/
 void _PrISM_Init(void);
+void _PrISM_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue);
+void _PrISM_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue);
 
 #endif
 

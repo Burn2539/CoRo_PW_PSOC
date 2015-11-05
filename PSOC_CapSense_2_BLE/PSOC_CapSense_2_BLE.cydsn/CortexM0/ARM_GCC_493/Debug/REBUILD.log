@@ -1,3 +1,62 @@
---------------- Rebuild Started: 10/29/2015 08:26:34 Project: _BLE.c, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_BLE.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_BLE.c -o .\CortexM0\ARM_GCC_493\Debug\_BLE.o
---------------- Rebuild Succeeded: 10/29/2015 08:26:35 ---------------
+--------------- Rebuild Started: 11/03/2015 15:44:01 Project: PSOC_CapSense_2_BLE, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\main.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\crc.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_PrISM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_CapSense.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_BLE.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\vector.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_Watchdog.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyfitter_cfg.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\cymetadata.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_2.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_2_PM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_1.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_1_PM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_gatt.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_eventHandler.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_HAL_INT.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_HAL_PVT.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_custom.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_PM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_INT.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_TunerHelper.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLUE.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\GREEN.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\RED.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_Clock.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_bless_isr.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_SenseClk.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\Cm0Start.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyBootAsmGnu.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyFlash.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyLib.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyPm.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyutils.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyLFClk.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\Timer.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\Timer_PM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\Delay_1ms.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.hex"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.elf"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.map"
+Deleting file ".\PSOC_CapSense_2_BLE.cycdx"
+Deleting file ".\PSOC_CapSense_2_BLE.rpt"
+Deleting file ".\PSOC_CapSense_2_BLE_timing.html"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\.deps\C_FILE.P"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\.deps\ARM_C_FILE.P"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\.deps\GNU_ARM_ASM_FILE.P"
+cydsfit.exe -.appdatapath "C:\Users\Alexandre\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\PSOC_CapSense_2_BLE.cyprj -d CY8C4247LQI-BL483 -s C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+HDL Generation ...
+Synthesis ...
+Place and Route ...
+Tech mapping ...
+Error: mpr.M0014: Resource limit: Maximum number of Pre-configured Blocks exceeded (max=4, needed=5). (App=cydsfit)
+Dependency Generation ...
+Clean Temporary Files ...
+Error: cdf.M0005: CyDsFit aborted due to errors, please address all errors and rerun CyDsFit. (App=cydsfit)
+--------------- Rebuild Failed: 11/03/2015 15:44:06 ---------------

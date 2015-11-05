@@ -14,9 +14,9 @@
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\cyfitteriar.inc" value="NONE;" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\cyfitter.h" value="NONE;" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\cydisabledsheets.h" value="NONE;" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2.c" value="ARM_C_FILE;PrISM_2" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2.h" value="NONE;PrISM_2" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2_PM.c" value="ARM_C_FILE;PrISM_2" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE.c" value="ARM_C_FILE;BLUE" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE.h" value="NONE;BLUE" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE_aliases.h" value="NONE;BLUE" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_1.c" value="ARM_C_FILE;PrISM_1" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_1.h" value="NONE;PrISM_1" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_1_PM.c" value="ARM_C_FILE;PrISM_1" />
@@ -50,9 +50,8 @@
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\CapSense_TunerHelper.h" value="NONE;CapSense" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\CapSense_PVT.h" value="NONE;CapSense" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\CapSense_IP.h" value="NONE;CapSense" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE.c" value="ARM_C_FILE;BLUE" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE.h" value="NONE;BLUE" />
-  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLUE_aliases.h" value="NONE;BLUE" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\TimerDelay_Interrupt.c" value="ARM_C_FILE;TimerDelay_Interrupt" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\TimerDelay_Interrupt.h" value="NONE;TimerDelay_Interrupt" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\GREEN.c" value="ARM_C_FILE;GREEN" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\GREEN.h" value="NONE;GREEN" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\GREEN_aliases.h" value="NONE;GREEN" />
@@ -61,6 +60,12 @@
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\RED_aliases.h" value="NONE;RED" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_Clock.c" value="ARM_C_FILE;PrISM_Clock" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_Clock.h" value="NONE;PrISM_Clock" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2.c" value="ARM_C_FILE;PrISM_2" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2.h" value="NONE;PrISM_2" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\PrISM_2_PM.c" value="ARM_C_FILE;PrISM_2" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\TimerDelay.c" value="ARM_C_FILE;TimerDelay" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\TimerDelay.h" value="NONE;TimerDelay" />
+  <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\TimerDelay_PM.c" value="ARM_C_FILE;TimerDelay" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLE_bless_isr.c" value="ARM_C_FILE;BLE_bless_isr" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\BLE_bless_isr.h" value="NONE;BLE_bless_isr" />
   <file name="C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\codegentemp\CapSense_SampleClk.c" value="ARM_C_FILE;CapSense_SampleClk" />

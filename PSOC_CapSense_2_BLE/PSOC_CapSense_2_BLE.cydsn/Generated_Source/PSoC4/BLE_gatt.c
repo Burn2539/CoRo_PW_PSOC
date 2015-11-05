@@ -99,7 +99,7 @@ CYBLE_STATE_T cyBle_state;
     0x000Bu,    /* Handle of the Client Characteristic Configuration descriptor */
 };
     
-    static uint8 cyBle_attValues[0x45u] = {
+    static uint8 cyBle_attValues[0x33u] = {
     /* Device Name */
     (uint8)'C', (uint8)'a', (uint8)'p', (uint8)'S', (uint8)'e', (uint8)'n', (uint8)'s', (uint8)'e', (uint8)' ', (uint8)'2',
 (uint8)' ', (uint8)'B', (uint8)'L', (uint8)'E', 
@@ -108,21 +108,20 @@ CYBLE_STATE_T cyBle_state;
     0x00u, 0x00u, 
 
     /* Peripheral Preferred Connection Parameters */
-    0x3Cu, 0x00u, 0x50u, 0x00u, 0x00u, 0x00u, 0xC8u, 0x00u, 
+    0x08u, 0x00u, 0x28u, 0x00u, 0x00u, 0x00u, 0xE8u, 0x03u, 
 
     /* Service Changed */
     0x00u, 0x00u, 0x00u, 0x00u, 
 
     /* Sensors */
-    0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u,
-0x00u, 0x00u, 0x00u, 
+    0x00u, 
 
     /* Characteristic User Description */
     (uint8)'L', (uint8)'i', (uint8)'n', (uint8)'e', (uint8)'a', (uint8)'r', (uint8)' ', (uint8)'s', (uint8)'l', (uint8)'i',
 (uint8)'d', (uint8)'e', (uint8)'r', 
 
     /* Control */
-    0x00u, 0x00u, 
+    0x00u, 0x00u, 0x00u, 
 
     /* Status */
     0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 
@@ -142,11 +141,11 @@ CYBLE_GATTS_ATT_GEN_VAL_LEN_T cyBle_attValuesLen[CYBLE_GATT_DB_ATT_VAL_COUNT] = 
     { 0x0004u, (void *)&cyBle_attValues[24] }, /* Service Changed */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[0] }, /* Client Characteristic Configuration */
     { 0x0010u, (void *)&cyBle_attUuid128[0] }, /* CapSense UUID */
-    { 0x0014u, (void *)&cyBle_attValues[28] }, /* Sensors */
+    { 0x0001u, (void *)&cyBle_attValues[28] }, /* Sensors */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[2] }, /* Client Characteristic Configuration */
-    { 0x000Du, (void *)&cyBle_attValues[48] }, /* Characteristic User Description */
-    { 0x0002u, (void *)&cyBle_attValues[61] }, /* Control */
-    { 0x0006u, (void *)&cyBle_attValues[63] }, /* Status */
+    { 0x000Du, (void *)&cyBle_attValues[29] }, /* Characteristic User Description */
+    { 0x0003u, (void *)&cyBle_attValues[42] }, /* Control */
+    { 0x0006u, (void *)&cyBle_attValues[45] }, /* Status */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[4] }, /* Client Characteristic Configuration */
 };
 
@@ -164,11 +163,11 @@ const CYBLE_GATTS_DB_T cyBle_gattDB[0x15u] = {
     { 0x000Bu, 0x2902u /* Client Characteristic Configuration */, 0x00000A04u /* rd,wr      */, 0x000Bu, {{0x0002u, (void *)&cyBle_attValuesLen[4]}} },
     { 0x000Cu, 0x2800u /* Primary service                     */, 0x00080001u /*            */, 0x0015u, {{0x0010u, (void *)&cyBle_attValuesLen[5]}} },
     { 0x000Du, 0x2803u /* Characteristic                      */, 0x00003201u /* rd,ntf,ind */, 0x0010u, {{0xE751u, NULL}}                           },
-    { 0x000Eu, 0xE751u /* Sensors                             */, 0x00013201u /* rd,ntf,ind */, 0x0010u, {{0x0014u, (void *)&cyBle_attValuesLen[6]}} },
+    { 0x000Eu, 0xE751u /* Sensors                             */, 0x00013201u /* rd,ntf,ind */, 0x0010u, {{0x0001u, (void *)&cyBle_attValuesLen[6]}} },
     { 0x000Fu, 0x2902u /* Client Characteristic Configuration */, 0x00010A04u /* rd,wr      */, 0x000Fu, {{0x0002u, (void *)&cyBle_attValuesLen[7]}} },
     { 0x0010u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd         */, 0x0010u, {{0x000Du, (void *)&cyBle_attValuesLen[8]}} },
     { 0x0011u, 0x2803u /* Characteristic                      */, 0x00000801u /* wr         */, 0x0012u, {{0xE752u, NULL}}                           },
-    { 0x0012u, 0xE752u /* Control                             */, 0x00010802u /* wr         */, 0x0012u, {{0x0002u, (void *)&cyBle_attValuesLen[9]}} },
+    { 0x0012u, 0xE752u /* Control                             */, 0x00010802u /* wr         */, 0x0012u, {{0x0003u, (void *)&cyBle_attValuesLen[9]}} },
     { 0x0013u, 0x2803u /* Characteristic                      */, 0x00003201u /* rd,ntf,ind */, 0x0015u, {{0xE753u, NULL}}                           },
     { 0x0014u, 0xE753u /* Status                              */, 0x00013201u /* rd,ntf,ind */, 0x0015u, {{0x0006u, (void *)&cyBle_attValuesLen[10]}} },
     { 0x0015u, 0x2902u /* Client Characteristic Configuration */, 0x00010A04u /* rd,wr      */, 0x0015u, {{0x0002u, (void *)&cyBle_attValuesLen[11]}} },
