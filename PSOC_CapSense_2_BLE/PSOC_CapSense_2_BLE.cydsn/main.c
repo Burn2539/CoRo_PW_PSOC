@@ -85,6 +85,11 @@ int main()
             // Update the Control values.
             _BLE_UpdateControl();
             
+            // If asked by client, send the status flags by notification or
+            // indication.
+            if (_BLE_sendStatus)
+                _BLE_sendStatusFlags();
+                
             // If asked by client, send the content of the vector containing
             // the CapSense data.
             if ( _BLE_sendData ) {
@@ -95,7 +100,7 @@ int main()
                 TimerDelay_Start();
                 if (_Timer_DelayDone) {
                     _Timer_DelayDone = FALSE;
-                
+                    
                     // Send as many sets of values as possible (for all sensors).
                     if( NO_MORE_DATA == _BLE_sendCapSenseData() )
                         Status_NoMoreData = TRUE;
@@ -142,11 +147,6 @@ int main()
                 Status_Ready = TRUE;
                 clearVector();
             }
-            
-            // If asked by client, send the status flags by notification or
-            // indication.
-            if (_BLE_sendStatus)
-                _BLE_sendStatusFlags();
         }
                     
         // Start advertisement if the flag is set in the BLE event handler.

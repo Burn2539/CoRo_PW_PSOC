@@ -2,7 +2,7 @@
 --	Conversion of PSOC_CapSense_2_BLE.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Thu Nov 05 15:10:44 2015
+--	Fri Nov 06 13:59:07 2015
 --
 
 USE cypress.cypress.all;

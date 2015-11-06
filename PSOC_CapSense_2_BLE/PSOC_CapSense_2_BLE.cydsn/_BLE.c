@@ -565,8 +565,8 @@ uint8 _BLE_sendCapSenseData(void)
     CYBLE_GATTS_HANDLE_VALUE_IND_T IndicationHandle;
     
     uint16 numIterations = 1;
-    //numIterations = ( (vectorSize() * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT) < BUFFER_MAX_SIZE ) ?
-    //                vectorSize() : BUFFER_MAX_SIZE / numBytes_OneData / CapSense_TOTAL_SENSOR_COUNT;
+    numIterations = ( (vectorSize() * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT) < BUFFER_MAX_SIZE ) ?
+                    vectorSize() : BUFFER_MAX_SIZE / numBytes_OneData / CapSense_TOTAL_SENSOR_COUNT;
                     
     uint16 numBytes_AllData = numIterations * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT;
     uint8 buffer[numBytes_AllData];
@@ -587,8 +587,9 @@ uint8 _BLE_sendCapSenseData(void)
     }
     
     // Wait for the stack to be ready.
-	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
+//	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY) {
         CyBle_ProcessEvents();
+//    }
     
     // Send the CapSense characteristic values to BLE client.
     if (sendDataNotifications) {
@@ -661,8 +662,9 @@ void _BLE_sendStatusFlags(void)
         StatusArray[STATUS_NO_MORE_DATA_BYTE_MASK] = Status_NoMoreData;
         
         // Wait for the stack to be ready.
-    	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
+//    	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY) {
             CyBle_ProcessEvents();
+//        }
         
         // Send the Status characteristic values to BLE client.
         if (sendStatusNotifications) {

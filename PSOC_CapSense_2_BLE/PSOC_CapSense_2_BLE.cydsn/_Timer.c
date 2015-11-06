@@ -67,12 +67,12 @@ void _Timer_Init(void)
 CY_ISR(Delay)
 {
     // Allows to wait longer (by multiples of TimerDelay's period).
-    static uint8 counter = 0;
+    static uint16 counter = 0;
     
     // Clear pending interrupt.
     TimerDelay_Interrupt_ClearPending();
     
-    if (counter >= 15) {
+    if (counter >= 50) {
         // Stop the timer.
         TimerDelay_Stop();
         

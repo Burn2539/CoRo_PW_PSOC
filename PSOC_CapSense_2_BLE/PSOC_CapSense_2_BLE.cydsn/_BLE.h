@@ -53,7 +53,8 @@
 // as per BLE spec.
 #define CCC_DATA_LEN    2
     
-#define BUFFER_MAX_SIZE (CYBLE_GATT_MTU - CYBLE_GATT_MTU_BUF_COUNT)
+//#define BUFFER_MAX_SIZE (CYBLE_GATT_MTU - CYBLE_GATT_MTU_BUF_COUNT)
+#define BUFFER_MAX_SIZE 240
 
 
 /*****************************************************************************

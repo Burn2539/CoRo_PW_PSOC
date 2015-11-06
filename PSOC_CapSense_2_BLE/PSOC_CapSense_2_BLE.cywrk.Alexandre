@@ -231,8 +231,10 @@
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_Watchdog.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\vector.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\vector.c" />
-<name v=".\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4\BLE_custom.h" />
-<name v=".\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4\CyLFClk.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_PrISM.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_PrISM.c" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_Timer.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_Timer.c" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

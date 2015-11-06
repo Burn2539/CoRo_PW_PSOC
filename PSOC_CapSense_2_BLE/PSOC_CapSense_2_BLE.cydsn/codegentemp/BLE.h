@@ -97,7 +97,7 @@
     #define CYBLE_SLOW_ADV_INT_MAX                  (0x4000u)
     #define CYBLE_SLOW_ADV_TIMEOUT                  (0x0096u)
     #define CYBLE_GAPP_CONNECTION_INTERVAL_MIN      (0x0008u)
-    #define CYBLE_GAPP_CONNECTION_INTERVAL_MAX      (0x0028u)
+    #define CYBLE_GAPP_CONNECTION_INTERVAL_MAX      (0x0010u)
     #define CYBLE_GAPP_CONNECTION_SLAVE_LATENCY     (0x0000u)
     #define CYBLE_GAPP_CONNECTION_TIME_OUT          (0x03E8u)
 #endif /* CYBLE_GAP_ROLE_PERIPHERAL */
@@ -148,7 +148,7 @@
 #define CYBLE_STACK_BUF_COUNT               (6u)
 
 /* GATT MTU Size */
-#define CYBLE_GATT_MTU                      (0x0100u)
+#define CYBLE_GATT_MTU                      (0x0200u)
 #define CYBLE_GATT_MTU_PLUS_L2CAP_MEM_EXT   CYBLE_ALIGN_TO_4(CYBLE_GATT_MTU + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 
 /* GATT Maximum attribute length */
