@@ -72,7 +72,7 @@ CY_ISR(Delay)
     // Clear pending interrupt.
     TimerDelay_Interrupt_ClearPending();
     
-    if (counter >= 50) {
+    if (counter >= 100) {
         // Stop the timer.
         TimerDelay_Stop();
         

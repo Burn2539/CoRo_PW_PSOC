@@ -28,8 +28,8 @@
 #include "CapSense_SampleClk.h"
 
 /* Constants set by Customizer */
-#define CapSense_TOTAL_SENSOR_COUNT            (5u)
-#define CapSense_TOTAL_SCANSLOT_COUNT          (5u)
+#define CapSense_TOTAL_SENSOR_COUNT            (10u)
+#define CapSense_TOTAL_SCANSLOT_COUNT          (10u)
 #define CapSense_INDEX_TABLE_SIZE              (0u)
 
 /* Define Sensors */
@@ -38,6 +38,11 @@
 #define CapSense_SENSOR_LINEARSLIDER0_E2__LS    (2u)
 #define CapSense_SENSOR_LINEARSLIDER0_E3__LS    (3u)
 #define CapSense_SENSOR_LINEARSLIDER0_E4__LS    (4u)
+#define CapSense_SENSOR_LINEARSLIDER0_E5__LS    (5u)
+#define CapSense_SENSOR_LINEARSLIDER0_E6__LS    (6u)
+#define CapSense_SENSOR_LINEARSLIDER0_E7__LS    (7u)
+#define CapSense_SENSOR_LINEARSLIDER0_E8__LS    (8u)
+#define CapSense_SENSOR_LINEARSLIDER0_E9__LS    (9u)
 
 #define CapSense_TOTAL_SENSOR_MASK (((CapSense_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)
 
@@ -56,7 +61,7 @@ CY_ISR_PROTO(CapSense_ISR);
 #define CapSense_IS_COMPLEX_SCANSLOTS       (0u)
 #define CapSense_COMPLEX_SCANSLOTS_NUM      (0u)
 #define CapSense_DEDICATED_SENSORS_NUM      (0u)
-#define CapSense_PORT_PIN_CONFIG_TBL_ZISE   (5u)
+#define CapSense_PORT_PIN_CONFIG_TBL_ZISE   (10u)
 
 #define CapSense_IDAC_CNT                   (2u)
 #define CapSense_IDAC1_POLARITY             (0u)

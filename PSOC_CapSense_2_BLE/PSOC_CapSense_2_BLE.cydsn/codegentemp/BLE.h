@@ -130,8 +130,8 @@
 #define CYBLE_BONDING_REQUIREMENT                   (0x01u)
 
 /* Tx Power Level */
-#define CYBLE_TX_POWER_LEVEL_ADV                    (CYBLE_LL_PWR_LVL_0_DBM)
-#define CYBLE_TX_POWER_LEVEL_CONN                   (CYBLE_LL_PWR_LVL_0_DBM)
+#define CYBLE_TX_POWER_LEVEL_ADV                    (CYBLE_LL_PWR_LVL_3_DBM)
+#define CYBLE_TX_POWER_LEVEL_CONN                   (CYBLE_LL_PWR_LVL_3_DBM)
 
 #define CYBLE_ADV_PKT_INDEX_FLAGS   (0x00u)
 #define CYBLE_ADV_PKT_INDEX_LOCAL_NAME   (0x03u)
@@ -152,7 +152,7 @@
 #define CYBLE_GATT_MTU_PLUS_L2CAP_MEM_EXT   CYBLE_ALIGN_TO_4(CYBLE_GATT_MTU + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 
 /* GATT Maximum attribute length */
-#define CYBLE_GATT_MAX_ATTR_LEN             ((0x000Eu == 0u) ? (1u) : (0x000Eu))
+#define CYBLE_GATT_MAX_ATTR_LEN             ((0x000Du == 0u) ? (1u) : (0x000Du))
 #define CYBLE_GATT_MAX_ATTR_LEN_PLUS_L2CAP_MEM_EXT \
                                     CYBLE_ALIGN_TO_4(CYBLE_GATT_MAX_ATTR_LEN + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 

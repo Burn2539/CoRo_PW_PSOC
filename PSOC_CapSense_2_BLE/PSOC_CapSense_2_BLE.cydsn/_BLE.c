@@ -221,6 +221,17 @@ void EventHandler(uint32 eventCode, void *eventParam)
             
             break;
             
+            
+        // This event is received by Peripheral and Central devices. When it is
+        // received by Peripheral, peripheral needs to Call CyBle_GappAuthReqReply()
+        // to reply to authentication request from Central.
+        case CYBLE_EVT_GAP_AUTH_REQ: // eventCode == 0x21
+            
+            // Reply to the authentification request.
+            CyBle_GappAuthReqReply(connectionHandle.bdHandle, &cyBle_authInfo);
+            
+            break;
+            
         
         // Authentication process failed between two devices. The return value 
         // of type CYBLE_GAP_AUTH_FAILED_REASON_T indicates the reason for failure.
@@ -577,8 +588,7 @@ uint8 _BLE_sendCapSenseData(void)
         
         // Encode the data with CRC.
         for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)
-            //encodedData[i] = encodeCRC( rawData[i] );
-            encodedData[i] = encodeCRC(rawData[i]);
+            encodedData[i] = encodeCRC( rawData[i] );
         
         // Transfer the encoded sensors values into an uint8 array.
         for (i = 0; i < CapSense_TOTAL_SENSOR_COUNT; i++)

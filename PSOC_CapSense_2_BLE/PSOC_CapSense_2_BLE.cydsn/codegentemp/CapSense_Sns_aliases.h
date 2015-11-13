@@ -56,6 +56,36 @@
 #define CapSense_Sns_4_DR		(CapSense_Sns__4__DR)
 #define CapSense_Sns_4_SHIFT	(CapSense_Sns__4__SHIFT)
 
+#define CapSense_Sns_5		(CapSense_Sns__5__PC)
+#define CapSense_Sns_5_PS		(CapSense_Sns__5__PS)
+#define CapSense_Sns_5_PC		(CapSense_Sns__5__PC)
+#define CapSense_Sns_5_DR		(CapSense_Sns__5__DR)
+#define CapSense_Sns_5_SHIFT	(CapSense_Sns__5__SHIFT)
+
+#define CapSense_Sns_6		(CapSense_Sns__6__PC)
+#define CapSense_Sns_6_PS		(CapSense_Sns__6__PS)
+#define CapSense_Sns_6_PC		(CapSense_Sns__6__PC)
+#define CapSense_Sns_6_DR		(CapSense_Sns__6__DR)
+#define CapSense_Sns_6_SHIFT	(CapSense_Sns__6__SHIFT)
+
+#define CapSense_Sns_7		(CapSense_Sns__7__PC)
+#define CapSense_Sns_7_PS		(CapSense_Sns__7__PS)
+#define CapSense_Sns_7_PC		(CapSense_Sns__7__PC)
+#define CapSense_Sns_7_DR		(CapSense_Sns__7__DR)
+#define CapSense_Sns_7_SHIFT	(CapSense_Sns__7__SHIFT)
+
+#define CapSense_Sns_8		(CapSense_Sns__8__PC)
+#define CapSense_Sns_8_PS		(CapSense_Sns__8__PS)
+#define CapSense_Sns_8_PC		(CapSense_Sns__8__PC)
+#define CapSense_Sns_8_DR		(CapSense_Sns__8__DR)
+#define CapSense_Sns_8_SHIFT	(CapSense_Sns__8__SHIFT)
+
+#define CapSense_Sns_9		(CapSense_Sns__9__PC)
+#define CapSense_Sns_9_PS		(CapSense_Sns__9__PS)
+#define CapSense_Sns_9_PC		(CapSense_Sns__9__PC)
+#define CapSense_Sns_9_DR		(CapSense_Sns__9__DR)
+#define CapSense_Sns_9_SHIFT	(CapSense_Sns__9__SHIFT)
+
 
 #define CapSense_Sns_LinearSlider0_e0__LS		(CapSense_Sns__LinearSlider0_e0__LS__PC)
 #define CapSense_Sns_LinearSlider0_e0__LS_PS		(CapSense_Sns__LinearSlider0_e0__LS__PS)
@@ -86,6 +116,36 @@
 #define CapSense_Sns_LinearSlider0_e4__LS_PC		(CapSense_Sns__LinearSlider0_e4__LS__PC)
 #define CapSense_Sns_LinearSlider0_e4__LS_DR		(CapSense_Sns__LinearSlider0_e4__LS__DR)
 #define CapSense_Sns_LinearSlider0_e4__LS_SHIFT	(CapSense_Sns__LinearSlider0_e4__LS__SHIFT)
+
+#define CapSense_Sns_LinearSlider0_e5__LS		(CapSense_Sns__LinearSlider0_e5__LS__PC)
+#define CapSense_Sns_LinearSlider0_e5__LS_PS		(CapSense_Sns__LinearSlider0_e5__LS__PS)
+#define CapSense_Sns_LinearSlider0_e5__LS_PC		(CapSense_Sns__LinearSlider0_e5__LS__PC)
+#define CapSense_Sns_LinearSlider0_e5__LS_DR		(CapSense_Sns__LinearSlider0_e5__LS__DR)
+#define CapSense_Sns_LinearSlider0_e5__LS_SHIFT	(CapSense_Sns__LinearSlider0_e5__LS__SHIFT)
+
+#define CapSense_Sns_LinearSlider0_e6__LS		(CapSense_Sns__LinearSlider0_e6__LS__PC)
+#define CapSense_Sns_LinearSlider0_e6__LS_PS		(CapSense_Sns__LinearSlider0_e6__LS__PS)
+#define CapSense_Sns_LinearSlider0_e6__LS_PC		(CapSense_Sns__LinearSlider0_e6__LS__PC)
+#define CapSense_Sns_LinearSlider0_e6__LS_DR		(CapSense_Sns__LinearSlider0_e6__LS__DR)
+#define CapSense_Sns_LinearSlider0_e6__LS_SHIFT	(CapSense_Sns__LinearSlider0_e6__LS__SHIFT)
+
+#define CapSense_Sns_LinearSlider0_e7__LS		(CapSense_Sns__LinearSlider0_e7__LS__PC)
+#define CapSense_Sns_LinearSlider0_e7__LS_PS		(CapSense_Sns__LinearSlider0_e7__LS__PS)
+#define CapSense_Sns_LinearSlider0_e7__LS_PC		(CapSense_Sns__LinearSlider0_e7__LS__PC)
+#define CapSense_Sns_LinearSlider0_e7__LS_DR		(CapSense_Sns__LinearSlider0_e7__LS__DR)
+#define CapSense_Sns_LinearSlider0_e7__LS_SHIFT	(CapSense_Sns__LinearSlider0_e7__LS__SHIFT)
+
+#define CapSense_Sns_LinearSlider0_e8__LS		(CapSense_Sns__LinearSlider0_e8__LS__PC)
+#define CapSense_Sns_LinearSlider0_e8__LS_PS		(CapSense_Sns__LinearSlider0_e8__LS__PS)
+#define CapSense_Sns_LinearSlider0_e8__LS_PC		(CapSense_Sns__LinearSlider0_e8__LS__PC)
+#define CapSense_Sns_LinearSlider0_e8__LS_DR		(CapSense_Sns__LinearSlider0_e8__LS__DR)
+#define CapSense_Sns_LinearSlider0_e8__LS_SHIFT	(CapSense_Sns__LinearSlider0_e8__LS__SHIFT)
+
+#define CapSense_Sns_LinearSlider0_e9__LS		(CapSense_Sns__LinearSlider0_e9__LS__PC)
+#define CapSense_Sns_LinearSlider0_e9__LS_PS		(CapSense_Sns__LinearSlider0_e9__LS__PS)
+#define CapSense_Sns_LinearSlider0_e9__LS_PC		(CapSense_Sns__LinearSlider0_e9__LS__PC)
+#define CapSense_Sns_LinearSlider0_e9__LS_DR		(CapSense_Sns__LinearSlider0_e9__LS__DR)
+#define CapSense_Sns_LinearSlider0_e9__LS_SHIFT	(CapSense_Sns__LinearSlider0_e9__LS__SHIFT)
 
 
 #endif /* End Pins CapSense_Sns_ALIASES_H */

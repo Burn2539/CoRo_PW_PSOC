@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
   30:.\crc.c       **** * Local global variables
   31:.\crc.c       **** *****************************************************************************/
   32:.\crc.c       **** // An array containing the pre-computed intermediate result for each
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 2
 
 
   33:.\crc.c       **** // possible byte of input. This is used to speed up the computation.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
   70:.\crc.c       **** 			if (remainder & TOPBIT)
   43              		.loc 1 70 0
   44 000c 19B2     		sxth	r1, r3
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 3
 
 
   45 000e 0029     		cmp	r1, #0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
   82:.\crc.c       **** 	}
   83:.\crc.c       **** 
   84:.\crc.c       **** }
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 4
 
 
   84              		.loc 1 84 0 is_stmt 1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  114              		.loc 1 108 0
  115 0004 084B     		ldr	r3, .L13
  109:.\crc.c       **** 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 5
 
 
  110:.\crc.c       **** 	// Divide the message by the polynomial, a byte at a time.
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  157              		.size	crcCompute, .-crcCompute
  158              		.section	.text.encodeCRC,"ax",%progbits
  159              		.align	2
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 6
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 6
 
 
  160              		.global	encodeCRC
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  184 000c D21A     		sub	r2, r2, r3
  185 000e D900     		lsl	r1, r3, #3
  186 0010 201C     		mov	r0, r4
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 7
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 7
 
 
  187 0012 0841     		asr	r0, r0, r1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  166:.\crc.c       **** ******************************************************************************
  167:.\crc.c       **** * Summary:
  168:.\crc.c       **** *   Verify that the message is valid according to the CRC.
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 8
 
 
  169:.\crc.c       **** *
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  254              	.L19:
  189:.\crc.c       **** 	{
  255              		.loc 1 189 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 9
 
 
  256 001c 012B     		cmp	r3, #1
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  301 002c 02       		.uleb128 0x2
  302 002d 01       		.byte	0x1
  303 002e 08       		.byte	0x8
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 10
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 10
 
 
  304 002f C5030000 		.4byte	.LASF1
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  358 0095 04       		.byte	0x4
  359 0096 5B060000 		.4byte	.LASF13
  360 009a 02       		.uleb128 0x2
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 11
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 11
 
 
  361 009b 01       		.byte	0x1
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  415 0104 07       		.uleb128 0x7
  416 0105 DC020000 		.4byte	.LASF29
  417 0109 27       		.sleb128 39
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 12
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 12
 
 
  418 010a 07       		.uleb128 0x7
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  472 0183 07       		.uleb128 0x7
  473 0184 63020000 		.4byte	.LASF48
  474 0188 CD00     		.sleb128 77
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 13
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 13
 
 
  475 018a 07       		.uleb128 0x7
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  529 0208 07       		.uleb128 0x7
  530 0209 38060000 		.4byte	.LASF67
  531 020d F800     		.sleb128 120
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 14
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 14
 
 
  532 020f 07       		.uleb128 0x7
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  586 028c 00000000 		.4byte	.LFB36
  587 0290 30000000 		.4byte	.LFE36-.LFB36
  588 0294 01       		.uleb128 0x1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 15
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 15
 
 
  589 0295 9C       		.byte	0x9c
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  643 0313 66030000 		.4byte	0x366
  644 0317 02       		.byte	0x2
  645 0318 09       		.uleb128 0x9
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 16
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 16
 
 
  646 0319 39010000 		.4byte	.LASF76
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  700 0383 6B000000 		.4byte	0x6b
  701 0387 00000000 		.4byte	.LFB38
  702 038b 34000000 		.4byte	.LFE38-.LFB38
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 17
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 17
 
 
  703 038f 01       		.uleb128 0x1
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  757 03ff 00       		.byte	0
  758 0400 13       		.uleb128 0x13
  759 0401 2C000000 		.4byte	0x2c
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 18
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 18
 
 
  760 0405 11040000 		.4byte	0x411
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  814 001e 03       		.uleb128 0x3
  815 001f 24       		.uleb128 0x24
  816 0020 00       		.byte	0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 19
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 19
 
 
  817 0021 0B       		.uleb128 0xb
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  871 0057 01       		.byte	0x1
  872 0058 3F       		.uleb128 0x3f
  873 0059 19       		.uleb128 0x19
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 20
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 20
 
 
  874 005a 03       		.uleb128 0x3
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  928 0091 19       		.uleb128 0x19
  929 0092 03       		.uleb128 0x3
  930 0093 0E       		.uleb128 0xe
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 21
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 21
 
 
  931 0094 3A       		.uleb128 0x3a
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  985 00cb 0E       		.uleb128 0xe
  986 00cc 3A       		.uleb128 0x3a
  987 00cd 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 22
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 22
 
 
  988 00ce 3B       		.uleb128 0x3b
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1042 0109 13       		.uleb128 0x13
  1043 010a 00       		.byte	0
  1044 010b 00       		.byte	0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 23
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 23
 
 
  1045 010c 14       		.uleb128 0x14
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1099 002b 51       		.byte	0x51
  1100 002c 20000000 		.4byte	.LVL8
  1101 0030 30000000 		.4byte	.LVL12
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 24
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 24
 
 
  1102 0034 0100     		.2byte	0x1
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1156 00be 30       		.byte	0x30
  1157 00bf 9F       		.byte	0x9f
  1158 00c0 0A000000 		.4byte	.LVL15
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 25
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 25
 
 
  1159 00c4 24000000 		.4byte	.LVL22
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1213 012e 30000000 		.4byte	.LFE36
  1214 0132 0100     		.2byte	0x1
  1215 0134 53       		.byte	0x53
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 26
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 26
 
 
  1216 0135 00000000 		.4byte	0
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1270 01bd 0200     		.2byte	0x2
  1271 01bf 30       		.byte	0x30
  1272 01c0 9F       		.byte	0x9f
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 27
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 27
 
 
  1273 01c1 0A000000 		.4byte	.LVL26
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1327 0245 00       		.sleb128 0
  1328 0246 27000000 		.4byte	.LVL38-1
  1329 024a 34000000 		.4byte	.LFE38
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 28
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 28
 
 
  1330 024e 0200     		.2byte	0x2
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1384              		.section	.debug_line,"",%progbits
  1385              	.Ldebug_line0:
  1386 0000 12010000 		.section	.debug_str,"MS",%progbits,1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 29
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 29
 
 
  1386      02005C00 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1407      534F435F 
  1407      43617053 
  1407      656E7365 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 30
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 30
 
 
  1407      5F325F42 
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1427      4E56414C 
  1428              	.LASF62:
  1429 01f4 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 31
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 31
 
 
  1429      455F4556 
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1451      545F4741 
  1451      5454435F 
  1451      48414E44 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 32
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 32
 
 
  1452              	.LASF78:
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1473      676E6564 
  1473      20636861 
  1473      7200
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 33
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 33
 
 
  1474              	.LASF59:
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1493      505F4155 
  1493      54485F43 
  1494              	.LASF8:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 34
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 34
 
 
  1495 04d8 756E7369 		.ascii	"unsigned int\000"
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1515      4341505F 
  1515      434F4D4D 
  1516              	.LASF82:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 35
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 35
 
 
  1517 05b7 76616C75 		.ascii	"value\000"
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1539      52455F45 
  1540              	.LASF66:
  1541 069e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 36
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 36
 
 
  1541      455F4556 
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 1
  1559      455F4556 
  1559      545F4741 
  1559      5454535F 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccjTD8Ra.s 			page 37
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccXWzkvT.s 			page 37
 
 
  1559      52454144 

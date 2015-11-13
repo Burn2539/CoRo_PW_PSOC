@@ -2,7 +2,7 @@
 --	Conversion of PSOC_CapSense_2_BLE.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri Nov 06 13:59:07 2015
+--	Thu Nov 12 19:50:52 2015
 --
 
 USE cypress.cypress.all;
@@ -110,6 +110,11 @@ SIGNAL \BLE:Net_15\ : bit;
 SIGNAL \BLE:Net_53\ : bit;
 SIGNAL Net_4015 : bit;
 SIGNAL \BLE:Net_55\ : bit;
+TERMINAL \CapSense:Net_245_9\ : bit;
+TERMINAL \CapSense:Net_245_8\ : bit;
+TERMINAL \CapSense:Net_245_7\ : bit;
+TERMINAL \CapSense:Net_245_6\ : bit;
+TERMINAL \CapSense:Net_245_5\ : bit;
 TERMINAL \CapSense:Net_245_4\ : bit;
 TERMINAL \CapSense:Net_245_3\ : bit;
 TERMINAL \CapSense:Net_245_2\ : bit;
@@ -132,21 +137,36 @@ SIGNAL \CapSense:tmpIO_0__Cmod_net_0\ : bit;
 TERMINAL \CapSense:tmpSIOVREF__Cmod_net_0\ : bit;
 SIGNAL \CapSense:tmpINTERRUPT_0__Cmod_net_0\ : bit;
 SIGNAL \CapSense:IDAC2:Net_3\ : bit;
+SIGNAL \CapSense:tmpOE__Sns_net_9\ : bit;
+SIGNAL \CapSense:tmpOE__Sns_net_8\ : bit;
+SIGNAL \CapSense:tmpOE__Sns_net_7\ : bit;
+SIGNAL \CapSense:tmpOE__Sns_net_6\ : bit;
+SIGNAL \CapSense:tmpOE__Sns_net_5\ : bit;
 SIGNAL \CapSense:tmpOE__Sns_net_4\ : bit;
 SIGNAL \CapSense:tmpOE__Sns_net_3\ : bit;
 SIGNAL \CapSense:tmpOE__Sns_net_2\ : bit;
 SIGNAL \CapSense:tmpOE__Sns_net_1\ : bit;
 SIGNAL \CapSense:tmpOE__Sns_net_0\ : bit;
-SIGNAL \CapSense:tmpFB_4__Sns_net_4\ : bit;
-SIGNAL \CapSense:tmpFB_4__Sns_net_3\ : bit;
-SIGNAL \CapSense:tmpFB_4__Sns_net_2\ : bit;
-SIGNAL \CapSense:tmpFB_4__Sns_net_1\ : bit;
-SIGNAL \CapSense:tmpFB_4__Sns_net_0\ : bit;
-SIGNAL \CapSense:tmpIO_4__Sns_net_4\ : bit;
-SIGNAL \CapSense:tmpIO_4__Sns_net_3\ : bit;
-SIGNAL \CapSense:tmpIO_4__Sns_net_2\ : bit;
-SIGNAL \CapSense:tmpIO_4__Sns_net_1\ : bit;
-SIGNAL \CapSense:tmpIO_4__Sns_net_0\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_9\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_8\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_7\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_6\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_5\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_4\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_3\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_2\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_1\ : bit;
+SIGNAL \CapSense:tmpFB_9__Sns_net_0\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_9\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_8\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_7\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_6\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_5\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_4\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_3\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_2\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_1\ : bit;
+SIGNAL \CapSense:tmpIO_9__Sns_net_0\ : bit;
 TERMINAL \CapSense:tmpSIOVREF__Sns_net_0\ : bit;
 SIGNAL \CapSense:tmpINTERRUPT_0__Sns_net_0\ : bit;
 SIGNAL \CapSense:IDAC1:Net_3\ : bit;
@@ -661,14 +681,15 @@ BLUE:cy_psoc3_pins_v1_10
 		dig_domain_out=>open);
 \CapSense:CSD_FFB\:cy_psoc4_csd_v1_0
 	GENERIC MAP(cy_registers=>"",
-		sensors_count=>5,
+		sensors_count=>10,
 		shield_count=>1,
 		is_capsense=>'1',
 		is_mutual=>'0',
 		is_cmod_charge=>'0',
 		is_csh_charge=>'0')
-	PORT MAP(source=>(\CapSense:Net_245_4\, \CapSense:Net_245_3\, \CapSense:Net_245_2\, \CapSense:Net_245_1\,
-			\CapSense:Net_245_0\),
+	PORT MAP(source=>(\CapSense:Net_245_9\, \CapSense:Net_245_8\, \CapSense:Net_245_7\, \CapSense:Net_245_6\,
+			\CapSense:Net_245_5\, \CapSense:Net_245_4\, \CapSense:Net_245_3\, \CapSense:Net_245_2\,
+			\CapSense:Net_245_1\, \CapSense:Net_245_0\),
 		shield=>\CapSense:Net_241\,
 		amuxa=>\CapSense:Net_270\,
 		csh=>\CapSense:Net_246\,
@@ -770,73 +791,79 @@ BLUE:cy_psoc3_pins_v1_10
 		en=>Net_22);
 \CapSense:Sns\:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"f42e37f5-8f79-49a6-9ccc-3274c5ab58dc/73b612cd-240c-4d8e-8340-ea28aabf4b11",
-		drive_mode=>"000000000000000",
-		ibuf_enabled=>"00000",
-		init_dr_st=>"11111",
-		input_sync=>"11111",
+		drive_mode=>"000000000000000000000000000000",
+		ibuf_enabled=>"0000000000",
+		init_dr_st=>"1111111111",
+		input_sync=>"1111111111",
 		input_clk_en=>'0',
-		input_sync_mode=>"00000",
-		intr_mode=>"0000000000",
+		input_sync_mode=>"0000000000",
+		intr_mode=>"00000000000000000000",
 		invert_in_clock=>'0',
 		invert_in_clock_en=>'0',
 		invert_in_reset=>'0',
 		invert_out_clock=>'0',
 		invert_out_clock_en=>'0',
 		invert_out_reset=>'0',
-		io_voltage=>",,,,",
+		io_voltage=>",,,,,,,,,",
 		layout_mode=>"NONCONTIGUOUS",
-		output_conn=>"00000",
-		output_sync=>"00000",
+		output_conn=>"0000000000",
+		output_sync=>"0000000000",
 		output_clk_en=>'0',
-		output_mode=>"00000",
+		output_mode=>"0000000000",
 		output_reset=>'0',
-		output_clock_mode=>"00000",
-		oe_sync=>"00000",
-		oe_conn=>"00000",
+		output_clock_mode=>"0000000000",
+		oe_sync=>"0000000000",
+		oe_conn=>"0000000000",
 		oe_reset=>'0',
-		pin_aliases=>"LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS",
-		pin_mode=>"AAAAA",
+		pin_aliases=>"LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS,LinearSlider0_e5__LS,LinearSlider0_e6__LS,LinearSlider0_e7__LS,LinearSlider0_e8__LS,LinearSlider0_e9__LS",
+		pin_mode=>"AAAAAAAAAA",
 		por_state=>4,
 		sio_group_cnt=>0,
 		sio_hifreq=>"",
-		sio_hyst=>"11111",
+		sio_hyst=>"1111111111",
 		sio_ibuf=>"00000000",
-		sio_info=>"0000000000",
+		sio_info=>"00000000000000000000",
 		sio_obuf=>"00000000",
 		sio_refsel=>"00000000",
 		sio_vtrip=>"00000000",
 		sio_vohsel=>"",
-		slew_rate=>"00000",
+		slew_rate=>"0000000000",
 		spanning=>'1',
 		sw_only=>'0',
-		vtrip=>"1010101010",
-		width=>5,
+		vtrip=>"10101010101010101010",
+		width=>10,
 		port_alias_required=>'0',
 		port_alias_group=>"",
-		use_annotation=>"00000",
+		use_annotation=>"0000000000",
 		pa_in_clock=>-1,
 		pa_in_clock_en=>-1,
 		pa_in_reset=>-1,
 		pa_out_clock=>-1,
 		pa_out_clock_en=>-1,
 		pa_out_reset=>-1,
-		ovt_needed=>"00000",
-		ovt_slew_control=>"0000000000",
-		ovt_hyst_trim=>"00000",
-		input_buffer_sel=>"0000000000")
+		ovt_needed=>"0000000000",
+		ovt_slew_control=>"00000000000000000000",
+		ovt_hyst_trim=>"0000000000",
+		input_buffer_sel=>"00000000000000000000")
 	PORT MAP(oe=>(Net_22, Net_22, Net_22, Net_22,
-			Net_22),
+			Net_22, Net_22, Net_22, Net_22,
+			Net_22, Net_22),
 		y=>(Net_24, Net_24, Net_24, Net_24,
-			Net_24),
-		fb=>(\CapSense:tmpFB_4__Sns_net_4\, \CapSense:tmpFB_4__Sns_net_3\, \CapSense:tmpFB_4__Sns_net_2\, \CapSense:tmpFB_4__Sns_net_1\,
-			\CapSense:tmpFB_4__Sns_net_0\),
-		analog=>(\CapSense:Net_245_4\, \CapSense:Net_245_3\, \CapSense:Net_245_2\, \CapSense:Net_245_1\,
-			\CapSense:Net_245_0\),
-		io=>(\CapSense:tmpIO_4__Sns_net_4\, \CapSense:tmpIO_4__Sns_net_3\, \CapSense:tmpIO_4__Sns_net_2\, \CapSense:tmpIO_4__Sns_net_1\,
-			\CapSense:tmpIO_4__Sns_net_0\),
+			Net_24, Net_24, Net_24, Net_24,
+			Net_24, Net_24),
+		fb=>(\CapSense:tmpFB_9__Sns_net_9\, \CapSense:tmpFB_9__Sns_net_8\, \CapSense:tmpFB_9__Sns_net_7\, \CapSense:tmpFB_9__Sns_net_6\,
+			\CapSense:tmpFB_9__Sns_net_5\, \CapSense:tmpFB_9__Sns_net_4\, \CapSense:tmpFB_9__Sns_net_3\, \CapSense:tmpFB_9__Sns_net_2\,
+			\CapSense:tmpFB_9__Sns_net_1\, \CapSense:tmpFB_9__Sns_net_0\),
+		analog=>(\CapSense:Net_245_9\, \CapSense:Net_245_8\, \CapSense:Net_245_7\, \CapSense:Net_245_6\,
+			\CapSense:Net_245_5\, \CapSense:Net_245_4\, \CapSense:Net_245_3\, \CapSense:Net_245_2\,
+			\CapSense:Net_245_1\, \CapSense:Net_245_0\),
+		io=>(\CapSense:tmpIO_9__Sns_net_9\, \CapSense:tmpIO_9__Sns_net_8\, \CapSense:tmpIO_9__Sns_net_7\, \CapSense:tmpIO_9__Sns_net_6\,
+			\CapSense:tmpIO_9__Sns_net_5\, \CapSense:tmpIO_9__Sns_net_4\, \CapSense:tmpIO_9__Sns_net_3\, \CapSense:tmpIO_9__Sns_net_2\,
+			\CapSense:tmpIO_9__Sns_net_1\, \CapSense:tmpIO_9__Sns_net_0\),
 		siovref=>(\CapSense:tmpSIOVREF__Sns_net_0\),
 		annotation=>(open, open, open, open,
-			open),
+			open, open, open, open,
+			open, open),
 		in_clock=>Net_24,
 		in_clock_en=>Net_22,
 		in_reset=>Net_24,

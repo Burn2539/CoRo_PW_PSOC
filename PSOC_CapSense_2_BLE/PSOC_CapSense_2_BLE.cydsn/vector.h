@@ -29,7 +29,7 @@
 #define FALSE   0u
 #define TRUE    1u
 
-#define VECTOR_MAX_SIZE     256
+#define VECTOR_MAX_SIZE     200
 
 
 /*****************************************************************************

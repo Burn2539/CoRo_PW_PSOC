@@ -56,7 +56,7 @@ uint8 CapSense_sensorOnMask[CapSense_TOTAL_SENSOR_MASK] = {0u};
 
 uint8 CapSense_lowBaselineResetCnt[CapSense_TOTAL_SENSOR_COUNT];
 uint8 CapSense_lowBaselineReset[CapSense_TOTAL_SENSOR_COUNT] = {
-    5u, 5u, 5u, 5u, 5u, 
+    5u, 5u, 5u, 5u, 5u, 5u, 5u, 5u, 5u, 5u, 
 };
 
 
@@ -91,11 +91,11 @@ const uint8 CapSense_rawDataIndex[] = {
 };
 
 const uint8 CapSense_numberOfSensors[] = {
-    5u, /* LinearSlider0__LS */
+    10u, /* LinearSlider0__LS */
 };
 
 static const uint16 CapSense_centroidMult[] = {
-    6400u, 
+    2844u, 
 };
 
 
