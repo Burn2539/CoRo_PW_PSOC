@@ -36,7 +36,7 @@ extern uint8 TimerDelay_initVar;
 *           Parameter Defaults
 **************************************/
 
-#define TimerDelay_Resolution                 16u
+#define TimerDelay_Resolution                 8u
 #define TimerDelay_UsingFixedFunction         0u
 #define TimerDelay_UsingHWCaptureCounter      0u
 #define TimerDelay_SoftwareCaptureMode        0u
@@ -69,7 +69,7 @@ typedef struct
     uint8 TimerEnableState;
     #if(!TimerDelay_UsingFixedFunction)
 
-        uint16 TimerUdb;
+        uint8 TimerUdb;
         uint8 InterruptMaskValue;
         #if (TimerDelay_UsingHWCaptureCounter)
             uint8 TimerCaptureCounter;
@@ -100,11 +100,11 @@ uint8   TimerDelay_ReadStatusRegister(void) ;
     void    TimerDelay_WriteControlRegister(uint8 control) ;
 #endif /* (!TimerDelay_UDB_CONTROL_REG_REMOVED) */
 
-uint16  TimerDelay_ReadPeriod(void) ;
-void    TimerDelay_WritePeriod(uint16 period) ;
-uint16  TimerDelay_ReadCounter(void) ;
-void    TimerDelay_WriteCounter(uint16 counter) ;
-uint16  TimerDelay_ReadCapture(void) ;
+uint8  TimerDelay_ReadPeriod(void) ;
+void    TimerDelay_WritePeriod(uint8 period) ;
+uint8  TimerDelay_ReadCounter(void) ;
+void    TimerDelay_WriteCounter(uint8 counter) ;
+uint8  TimerDelay_ReadCapture(void) ;
 void    TimerDelay_SoftwareCapture(void) ;
 
 #if(!TimerDelay_UsingFixedFunction) /* UDB Prototypes */
@@ -168,7 +168,7 @@ void TimerDelay_Wakeup(void)        ;
 *    Initialial Parameter Constants
 ***************************************/
 
-#define TimerDelay_INIT_PERIOD             23999u
+#define TimerDelay_INIT_PERIOD             32u
 #define TimerDelay_INIT_CAPTURE_MODE       ((uint8)((uint8)0u << TimerDelay_CTRL_CAP_MODE_SHIFT))
 #define TimerDelay_INIT_TRIGGER_MODE       ((uint8)((uint8)0u << TimerDelay_CTRL_TRIG_MODE_SHIFT))
 #if (TimerDelay_UsingFixedFunction)
@@ -313,54 +313,54 @@ void TimerDelay_Wakeup(void)        ;
     #define TimerDelay_CONTROL             (* (reg8 *) TimerDelay_TimerUDB_sCTRLReg_SyncCtl_ctrlreg__CONTROL_REG )
     
     #if(TimerDelay_Resolution <= 8u) /* 8-bit Timer */
-        #define TimerDelay_CAPTURE_LSB         (* (reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-        #define TimerDelay_CAPTURE_LSB_PTR       ((reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-        #define TimerDelay_PERIOD_LSB          (* (reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-        #define TimerDelay_PERIOD_LSB_PTR        ((reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-        #define TimerDelay_COUNTER_LSB         (* (reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
-        #define TimerDelay_COUNTER_LSB_PTR       ((reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
+        #define TimerDelay_CAPTURE_LSB         (* (reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+        #define TimerDelay_CAPTURE_LSB_PTR       ((reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+        #define TimerDelay_PERIOD_LSB          (* (reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+        #define TimerDelay_PERIOD_LSB_PTR        ((reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+        #define TimerDelay_COUNTER_LSB         (* (reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
+        #define TimerDelay_COUNTER_LSB_PTR       ((reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
     #elif(TimerDelay_Resolution <= 16u) /* 8-bit Timer */
         #if(CY_PSOC3) /* 8-bit addres space */
-            #define TimerDelay_CAPTURE_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-            #define TimerDelay_CAPTURE_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-            #define TimerDelay_PERIOD_LSB          (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-            #define TimerDelay_PERIOD_LSB_PTR        ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-            #define TimerDelay_COUNTER_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
-            #define TimerDelay_COUNTER_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
+            #define TimerDelay_CAPTURE_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+            #define TimerDelay_CAPTURE_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+            #define TimerDelay_PERIOD_LSB          (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+            #define TimerDelay_PERIOD_LSB_PTR        ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+            #define TimerDelay_COUNTER_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
+            #define TimerDelay_COUNTER_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
         #else /* 16-bit address space */
-            #define TimerDelay_CAPTURE_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_F0_REG )
-            #define TimerDelay_CAPTURE_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_F0_REG )
-            #define TimerDelay_PERIOD_LSB          (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_D0_REG )
-            #define TimerDelay_PERIOD_LSB_PTR        ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_D0_REG )
-            #define TimerDelay_COUNTER_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_A0_REG )
-            #define TimerDelay_COUNTER_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT16_timerdp_u0__16BIT_A0_REG )
+            #define TimerDelay_CAPTURE_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_F0_REG )
+            #define TimerDelay_CAPTURE_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_F0_REG )
+            #define TimerDelay_PERIOD_LSB          (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_D0_REG )
+            #define TimerDelay_PERIOD_LSB_PTR        ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_D0_REG )
+            #define TimerDelay_COUNTER_LSB         (* (reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_A0_REG )
+            #define TimerDelay_COUNTER_LSB_PTR       ((reg16 *) TimerDelay_TimerUDB_sT8_timerdp_u0__16BIT_A0_REG )
         #endif /* CY_PSOC3 */
     #elif(TimerDelay_Resolution <= 24u)/* 24-bit Timer */
-        #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-        #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-        #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-        #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-        #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
-        #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
+        #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+        #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+        #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+        #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+        #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
+        #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
     #else /* 32-bit Timer */
         #if(CY_PSOC3 || CY_PSOC5) /* 8-bit address space */
-            #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-            #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__F0_REG )
-            #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-            #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__D0_REG )
-            #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
-            #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
+            #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+            #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__F0_REG )
+            #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+            #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__D0_REG )
+            #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
+            #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
         #else /* 32-bit address space */
-            #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_F0_REG )
-            #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_F0_REG )
-            #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_D0_REG )
-            #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_D0_REG )
-            #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_A0_REG )
-            #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT16_timerdp_u0__32BIT_A0_REG )
+            #define TimerDelay_CAPTURE_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_F0_REG )
+            #define TimerDelay_CAPTURE_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_F0_REG )
+            #define TimerDelay_PERIOD_LSB          (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_D0_REG )
+            #define TimerDelay_PERIOD_LSB_PTR        ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_D0_REG )
+            #define TimerDelay_COUNTER_LSB         (* (reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_A0_REG )
+            #define TimerDelay_COUNTER_LSB_PTR       ((reg32 *) TimerDelay_TimerUDB_sT8_timerdp_u0__32BIT_A0_REG )
         #endif /* CY_PSOC3 || CY_PSOC5 */ 
     #endif
 
-    #define TimerDelay_COUNTER_LSB_PTR_8BIT       ((reg8 *) TimerDelay_TimerUDB_sT16_timerdp_u0__A0_REG )
+    #define TimerDelay_COUNTER_LSB_PTR_8BIT       ((reg8 *) TimerDelay_TimerUDB_sT8_timerdp_u0__A0_REG )
     
     #if (TimerDelay_UsingHWCaptureCounter)
         #define TimerDelay_CAP_COUNT              (*(reg8 *) TimerDelay_TimerUDB_sCapCount_counter__PERIOD_REG )

@@ -2,7 +2,7 @@
 *
 * Project Name		: PSoC CapSense 2 BLE
 *
-* File Name			: _PrISM.h
+* File Name			: _LED.h
 * Version 			: 1.0
 *
 * Device Used		: CY8C4247LQI-BL483
@@ -14,8 +14,8 @@
 *
 *****************************************************************************/
 
-#ifndef _PRISM_H
-#define _PRISM_H
+#ifndef _LED_H
+#define _LED_H
 
 /*****************************************************************************
 * Included headers
@@ -36,16 +36,16 @@
 * Extern global variables
 *****************************************************************************/
 // Flags that indicate the current state of each LEDs.
-extern uint8 _PrISM_Red_On;
-extern uint8 _PrISM_Green_On;
-extern uint8 _PrISM_Blue_On;
+extern uint8 _LED_Red_On;
+extern uint8 _LED_Green_On;
+extern uint8 _LED_Blue_On;
 
 /*****************************************************************************
 * Function Declarations
 *****************************************************************************/
-void _PrISM_Init(void);
-void _PrISM_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue);
-void _PrISM_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue);
+void _LED_Init(void);
+void _LED_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue);
+void _LED_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue);
 
 #endif
 

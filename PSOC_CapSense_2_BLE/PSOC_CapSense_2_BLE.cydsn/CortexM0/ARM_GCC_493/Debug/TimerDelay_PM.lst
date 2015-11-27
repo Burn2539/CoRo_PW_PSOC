@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   30:.\Generated_Source\PSoC4/TimerDelay_PM.c **** *
   31:.\Generated_Source\PSoC4/TimerDelay_PM.c **** * Parameters:
   32:.\Generated_Source\PSoC4/TimerDelay_PM.c **** *  void
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 2
 
 
   33:.\Generated_Source\PSoC4/TimerDelay_PM.c **** *
@@ -85,12 +85,12 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   33 0002 FFF7FEFF 		bl	TimerDelay_ReadCounter
   34              	.LVL0:
   35 0006 044C     		ldr	r4, .L2
-  36 0008 6080     		strh	r0, [r4, #2]
+  36 0008 6070     		strb	r0, [r4, #1]
   47:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         TimerDelay_backup.InterruptMaskValue = TimerDelay_STATUS_MASK;
   37              		.loc 1 47 0
   38 000a 044B     		ldr	r3, .L2+4
   39 000c 1B78     		ldrb	r3, [r3]
-  40 000e 2371     		strb	r3, [r4, #4]
+  40 000e A370     		strb	r3, [r4, #2]
   48:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #if (TimerDelay_UsingHWCaptureCounter)
   49:.\Generated_Source\PSoC4/TimerDelay_PM.c ****             TimerDelay_backup.TimerCaptureCounter = TimerDelay_ReadCaptureCount();
   50:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #endif /* Back Up capture counter register  */
@@ -100,7 +100,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   41              		.loc 1 53 0
   42 0010 FFF7FEFF 		bl	TimerDelay_ReadControlRegister
   43              	.LVL1:
-  44 0014 6071     		strb	r0, [r4, #5]
+  44 0014 E070     		strb	r0, [r4, #3]
   54:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #endif /* Backup the enable state of the Timer component */
   55:.\Generated_Source\PSoC4/TimerDelay_PM.c ****     #endif /* Backup non retention registers in UDB implementation. All fixed function registers ar
   56:.\Generated_Source\PSoC4/TimerDelay_PM.c **** }
@@ -111,14 +111,14 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   49              		.align	2
   50              	.L2:
   51 0018 00000000 		.word	.LANCHOR0
-  52 001c 81000F40 		.word	1074724993
+  52 001c 83000F40 		.word	1074724995
   53              		.cfi_endproc
   54              	.LFE2:
   55              		.size	TimerDelay_SaveConfig, .-TimerDelay_SaveConfig
   56              		.section	.text.TimerDelay_RestoreConfig,"ax",%progbits
   57              		.align	2
   58              		.global	TimerDelay_RestoreConfig
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 3
 
 
   59              		.code	16
@@ -159,12 +159,12 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   81:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         TimerDelay_WriteCounter(TimerDelay_backup.TimerUdb);
   70              		.loc 1 81 0
   71 0002 054C     		ldr	r4, .L5
-  72 0004 6088     		ldrh	r0, [r4, #2]
+  72 0004 6078     		ldrb	r0, [r4, #1]
   73 0006 FFF7FEFF 		bl	TimerDelay_WriteCounter
   74              	.LVL2:
   82:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         TimerDelay_STATUS_MASK =TimerDelay_backup.InterruptMaskValue;
   75              		.loc 1 82 0
-  76 000a 2279     		ldrb	r2, [r4, #4]
+  76 000a A278     		ldrb	r2, [r4, #2]
   77 000c 034B     		ldr	r3, .L5+4
   78 000e 1A70     		strb	r2, [r3]
   83:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #if (TimerDelay_UsingHWCaptureCounter)
@@ -174,11 +174,11 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   87:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #if(!TimerDelay_UDB_CONTROL_REG_REMOVED)
   88:.\Generated_Source\PSoC4/TimerDelay_PM.c ****             TimerDelay_WriteControlRegister(TimerDelay_backup.TimerControlRegister);
   79              		.loc 1 88 0
-  80 0010 6079     		ldrb	r0, [r4, #5]
+  80 0010 E078     		ldrb	r0, [r4, #3]
   81 0012 FFF7FEFF 		bl	TimerDelay_WriteControlRegister
   82              	.LVL3:
   89:.\Generated_Source\PSoC4/TimerDelay_PM.c ****         #endif /* Restore the enable state of the Timer component */
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 4
 
 
   90:.\Generated_Source\PSoC4/TimerDelay_PM.c ****     #endif /* Restore non retention registers in the UDB implementation only */
@@ -190,7 +190,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
   87              		.align	2
   88              	.L5:
   89 0018 00000000 		.word	.LANCHOR0
-  90 001c 81000F40 		.word	1074724993
+  90 001c 83000F40 		.word	1074724995
   91              		.cfi_endproc
   92              	.LFE3:
   93              		.size	TimerDelay_RestoreConfig, .-TimerDelay_RestoreConfig
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  110 0004 1B78     		ldrb	r3, [r3]
  111 0006 5BB2     		sxtb	r3, r3
  112 0008 002B     		cmp	r3, #0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 5
 
 
  113 000a 03DA     		bge	.L8
@@ -278,7 +278,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  134              	.L11:
  135              		.align	2
  136              	.L10:
- 137 0024 71000F40 		.word	1074724977
+ 137 0024 72000F40 		.word	1074724978
  138 0028 00000000 		.word	.LANCHOR0
  139              		.cfi_endproc
  140              	.LFE4:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  134:.\Generated_Source\PSoC4/TimerDelay_PM.c **** ********************************************************************************
  135:.\Generated_Source\PSoC4/TimerDelay_PM.c **** *
  136:.\Generated_Source\PSoC4/TimerDelay_PM.c **** * Summary:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 6
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 6
 
 
  137:.\Generated_Source\PSoC4/TimerDelay_PM.c **** *  Restores and enables the user configuration
@@ -356,35 +356,34 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  179              		.align	2
  180              		.set	.LANCHOR0,. + 0
  181              		.type	TimerDelay_backup, %object
- 182              		.size	TimerDelay_backup, 6
+ 182              		.size	TimerDelay_backup, 4
  183              	TimerDelay_backup:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 7
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 7
 
 
- 184 0000 00000000 		.space	6
- 184      0000
- 185 0006 0000     		.text
+ 184 0000 00000000 		.space	4
+ 185              		.text
  186              	.Letext0:
  187              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
  188              		.file 3 ".\\Generated_Source\\PSoC4\\TimerDelay.h"
  189              		.section	.debug_info,"",%progbits
  190              	.Ldebug_info0:
- 191 0000 E6010000 		.4byte	0x1e6
+ 191 0000 DB010000 		.4byte	0x1db
  192 0004 0400     		.2byte	0x4
  193 0006 00000000 		.4byte	.Ldebug_abbrev0
  194 000a 04       		.byte	0x4
  195 000b 01       		.uleb128 0x1
- 196 000c A5010000 		.4byte	.LASF31
+ 196 000c 9E010000 		.4byte	.LASF30
  197 0010 01       		.byte	0x1
- 198 0011 8F020000 		.4byte	.LASF32
- 199 0015 74000000 		.4byte	.LASF33
+ 198 0011 88020000 		.4byte	.LASF31
+ 199 0015 74000000 		.4byte	.LASF32
  200 0019 00000000 		.4byte	.Ldebug_ranges0+0
  201 001d 00000000 		.4byte	0
  202 0021 00000000 		.4byte	.Ldebug_line0
  203 0025 02       		.uleb128 0x2
  204 0026 01       		.byte	0x1
  205 0027 06       		.byte	0x6
- 206 0028 B8020000 		.4byte	.LASF0
+ 206 0028 B1020000 		.4byte	.LASF0
  207 002c 02       		.uleb128 0x2
  208 002d 01       		.byte	0x1
  209 002e 08       		.byte	0x8
@@ -392,7 +391,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  211 0033 02       		.uleb128 0x2
  212 0034 02       		.byte	0x2
  213 0035 05       		.byte	0x5
- 214 0036 33020000 		.4byte	.LASF2
+ 214 0036 2C020000 		.4byte	.LASF2
  215 003a 02       		.uleb128 0x2
  216 003b 02       		.byte	0x2
  217 003c 07       		.byte	0x7
@@ -400,7 +399,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  219 0041 02       		.uleb128 0x2
  220 0042 04       		.byte	0x4
  221 0043 05       		.byte	0x5
- 222 0044 86020000 		.4byte	.LASF4
+ 222 0044 7F020000 		.4byte	.LASF4
  223 0048 02       		.uleb128 0x2
  224 0049 04       		.byte	0x4
  225 004a 07       		.byte	0x7
@@ -408,671 +407,663 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 1
  227 004f 02       		.uleb128 0x2
  228 0050 08       		.byte	0x8
  229 0051 05       		.byte	0x5
- 230 0052 92010000 		.4byte	.LASF6
+ 230 0052 8B010000 		.4byte	.LASF6
  231 0056 02       		.uleb128 0x2
  232 0057 08       		.byte	0x8
  233 0058 07       		.byte	0x7
- 234 0059 72010000 		.4byte	.LASF7
+ 234 0059 6B010000 		.4byte	.LASF7
  235 005d 03       		.uleb128 0x3
  236 005e 04       		.byte	0x4
  237 005f 05       		.byte	0x5
  238 0060 696E7400 		.ascii	"int\000"
  239 0064 02       		.uleb128 0x2
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 8
-
-
  240 0065 04       		.byte	0x4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 8
+
+
  241 0066 07       		.byte	0x7
- 242 0067 65010000 		.4byte	.LASF8
+ 242 0067 5E010000 		.4byte	.LASF8
  243 006b 04       		.uleb128 0x4
- 244 006c 0E010000 		.4byte	.LASF9
+ 244 006c 0E010000 		.4byte	.LASF12
  245 0070 02       		.byte	0x2
  246 0071 C2       		.byte	0xc2
  247 0072 2C000000 		.4byte	0x2c
- 248 0076 04       		.uleb128 0x4
- 249 0077 46010000 		.4byte	.LASF10
- 250 007b 02       		.byte	0x2
- 251 007c C3       		.byte	0xc3
- 252 007d 3A000000 		.4byte	0x3a
- 253 0081 02       		.uleb128 0x2
- 254 0082 04       		.byte	0x4
- 255 0083 04       		.byte	0x4
- 256 0084 E3000000 		.4byte	.LASF11
- 257 0088 02       		.uleb128 0x2
- 258 0089 08       		.byte	0x8
- 259 008a 04       		.byte	0x4
- 260 008b 14010000 		.4byte	.LASF12
- 261 008f 02       		.uleb128 0x2
- 262 0090 01       		.byte	0x1
- 263 0091 08       		.byte	0x8
- 264 0092 A0010000 		.4byte	.LASF13
- 265 0096 05       		.uleb128 0x5
- 266 0097 F7000000 		.4byte	.LASF14
- 267 009b 02       		.byte	0x2
- 268 009c 6C01     		.2byte	0x16c
- 269 009e A2000000 		.4byte	0xa2
- 270 00a2 06       		.uleb128 0x6
- 271 00a3 6B000000 		.4byte	0x6b
- 272 00a7 02       		.uleb128 0x2
- 273 00a8 04       		.byte	0x4
- 274 00a9 07       		.byte	0x7
- 275 00aa 89010000 		.4byte	.LASF15
- 276 00ae 07       		.uleb128 0x7
- 277 00af 06       		.byte	0x6
+ 248 0076 02       		.uleb128 0x2
+ 249 0077 04       		.byte	0x4
+ 250 0078 04       		.byte	0x4
+ 251 0079 E3000000 		.4byte	.LASF9
+ 252 007d 02       		.uleb128 0x2
+ 253 007e 08       		.byte	0x8
+ 254 007f 04       		.byte	0x4
+ 255 0080 14010000 		.4byte	.LASF10
+ 256 0084 02       		.uleb128 0x2
+ 257 0085 01       		.byte	0x1
+ 258 0086 08       		.byte	0x8
+ 259 0087 99010000 		.4byte	.LASF11
+ 260 008b 05       		.uleb128 0x5
+ 261 008c F7000000 		.4byte	.LASF13
+ 262 0090 02       		.byte	0x2
+ 263 0091 6C01     		.2byte	0x16c
+ 264 0093 97000000 		.4byte	0x97
+ 265 0097 06       		.uleb128 0x6
+ 266 0098 6B000000 		.4byte	0x6b
+ 267 009c 02       		.uleb128 0x2
+ 268 009d 04       		.byte	0x4
+ 269 009e 07       		.byte	0x7
+ 270 009f 82010000 		.4byte	.LASF14
+ 271 00a3 07       		.uleb128 0x7
+ 272 00a4 04       		.byte	0x4
+ 273 00a5 03       		.byte	0x3
+ 274 00a6 43       		.byte	0x43
+ 275 00a7 DC000000 		.4byte	0xdc
+ 276 00ab 08       		.uleb128 0x8
+ 277 00ac 00000000 		.4byte	.LASF15
  278 00b0 03       		.byte	0x3
- 279 00b1 43       		.byte	0x43
- 280 00b2 E7000000 		.4byte	0xe7
- 281 00b6 08       		.uleb128 0x8
- 282 00b7 00000000 		.4byte	.LASF16
- 283 00bb 03       		.byte	0x3
- 284 00bc 45       		.byte	0x45
- 285 00bd 6B000000 		.4byte	0x6b
- 286 00c1 00       		.byte	0
- 287 00c2 08       		.uleb128 0x8
- 288 00c3 6B000000 		.4byte	.LASF17
- 289 00c7 03       		.byte	0x3
- 290 00c8 48       		.byte	0x48
- 291 00c9 76000000 		.4byte	0x76
- 292 00cd 02       		.byte	0x2
- 293 00ce 08       		.uleb128 0x8
- 294 00cf ED020000 		.4byte	.LASF18
- 295 00d3 03       		.byte	0x3
- 296 00d4 49       		.byte	0x49
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 9
+ 279 00b1 45       		.byte	0x45
+ 280 00b2 6B000000 		.4byte	0x6b
+ 281 00b6 00       		.byte	0
+ 282 00b7 08       		.uleb128 0x8
+ 283 00b8 6B000000 		.4byte	.LASF16
+ 284 00bc 03       		.byte	0x3
+ 285 00bd 48       		.byte	0x48
+ 286 00be 6B000000 		.4byte	0x6b
+ 287 00c2 01       		.byte	0x1
+ 288 00c3 08       		.uleb128 0x8
+ 289 00c4 E6020000 		.4byte	.LASF17
+ 290 00c8 03       		.byte	0x3
+ 291 00c9 49       		.byte	0x49
+ 292 00ca 6B000000 		.4byte	0x6b
+ 293 00ce 02       		.byte	0x2
+ 294 00cf 08       		.uleb128 0x8
+ 295 00d0 F9020000 		.4byte	.LASF18
+ 296 00d4 03       		.byte	0x3
+ 297 00d5 4F       		.byte	0x4f
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 9
 
 
- 297 00d5 6B000000 		.4byte	0x6b
- 298 00d9 04       		.byte	0x4
- 299 00da 08       		.uleb128 0x8
- 300 00db 00030000 		.4byte	.LASF19
- 301 00df 03       		.byte	0x3
- 302 00e0 4F       		.byte	0x4f
- 303 00e1 6B000000 		.4byte	0x6b
- 304 00e5 05       		.byte	0x5
- 305 00e6 00       		.byte	0
- 306 00e7 04       		.uleb128 0x4
- 307 00e8 4D010000 		.4byte	.LASF20
- 308 00ec 03       		.byte	0x3
- 309 00ed 53       		.byte	0x53
- 310 00ee AE000000 		.4byte	0xae
- 311 00f2 09       		.uleb128 0x9
- 312 00f3 55000000 		.4byte	.LASF21
- 313 00f7 01       		.byte	0x1
- 314 00f8 2B       		.byte	0x2b
- 315 00f9 00000000 		.4byte	.LFB2
- 316 00fd 20000000 		.4byte	.LFE2-.LFB2
- 317 0101 01       		.uleb128 0x1
- 318 0102 9C       		.byte	0x9c
- 319 0103 1A010000 		.4byte	0x11a
- 320 0107 0A       		.uleb128 0xa
- 321 0108 06000000 		.4byte	.LVL0
- 322 010c A3010000 		.4byte	0x1a3
- 323 0110 0A       		.uleb128 0xa
- 324 0111 14000000 		.4byte	.LVL1
- 325 0115 AE010000 		.4byte	0x1ae
- 326 0119 00       		.byte	0
- 327 011a 09       		.uleb128 0x9
- 328 011b 2D010000 		.4byte	.LASF22
- 329 011f 01       		.byte	0x1
- 330 0120 4D       		.byte	0x4d
- 331 0121 00000000 		.4byte	.LFB3
- 332 0125 20000000 		.4byte	.LFE3-.LFB3
- 333 0129 01       		.uleb128 0x1
- 334 012a 9C       		.byte	0x9c
- 335 012b 42010000 		.4byte	0x142
- 336 012f 0A       		.uleb128 0xa
- 337 0130 0A000000 		.4byte	.LVL2
- 338 0134 B9010000 		.4byte	0x1b9
- 339 0138 0A       		.uleb128 0xa
- 340 0139 16000000 		.4byte	.LVL3
- 341 013d CA010000 		.4byte	0x1ca
- 342 0141 00       		.byte	0
- 343 0142 09       		.uleb128 0x9
- 344 0143 31000000 		.4byte	.LASF23
- 345 0147 01       		.byte	0x1
- 346 0148 70       		.byte	0x70
- 347 0149 00000000 		.4byte	.LFB4
- 348 014d 2C000000 		.4byte	.LFE4-.LFB4
- 349 0151 01       		.uleb128 0x1
- 350 0152 9C       		.byte	0x9c
- 351 0153 6A010000 		.4byte	0x16a
- 352 0157 0A       		.uleb128 0xa
- 353 0158 1E000000 		.4byte	.LVL4
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 10
+ 298 00d6 6B000000 		.4byte	0x6b
+ 299 00da 03       		.byte	0x3
+ 300 00db 00       		.byte	0
+ 301 00dc 04       		.uleb128 0x4
+ 302 00dd 46010000 		.4byte	.LASF19
+ 303 00e1 03       		.byte	0x3
+ 304 00e2 53       		.byte	0x53
+ 305 00e3 A3000000 		.4byte	0xa3
+ 306 00e7 09       		.uleb128 0x9
+ 307 00e8 55000000 		.4byte	.LASF20
+ 308 00ec 01       		.byte	0x1
+ 309 00ed 2B       		.byte	0x2b
+ 310 00ee 00000000 		.4byte	.LFB2
+ 311 00f2 20000000 		.4byte	.LFE2-.LFB2
+ 312 00f6 01       		.uleb128 0x1
+ 313 00f7 9C       		.byte	0x9c
+ 314 00f8 0F010000 		.4byte	0x10f
+ 315 00fc 0A       		.uleb128 0xa
+ 316 00fd 06000000 		.4byte	.LVL0
+ 317 0101 98010000 		.4byte	0x198
+ 318 0105 0A       		.uleb128 0xa
+ 319 0106 14000000 		.4byte	.LVL1
+ 320 010a A3010000 		.4byte	0x1a3
+ 321 010e 00       		.byte	0
+ 322 010f 09       		.uleb128 0x9
+ 323 0110 2D010000 		.4byte	.LASF21
+ 324 0114 01       		.byte	0x1
+ 325 0115 4D       		.byte	0x4d
+ 326 0116 00000000 		.4byte	.LFB3
+ 327 011a 20000000 		.4byte	.LFE3-.LFB3
+ 328 011e 01       		.uleb128 0x1
+ 329 011f 9C       		.byte	0x9c
+ 330 0120 37010000 		.4byte	0x137
+ 331 0124 0A       		.uleb128 0xa
+ 332 0125 0A000000 		.4byte	.LVL2
+ 333 0129 AE010000 		.4byte	0x1ae
+ 334 012d 0A       		.uleb128 0xa
+ 335 012e 16000000 		.4byte	.LVL3
+ 336 0132 BF010000 		.4byte	0x1bf
+ 337 0136 00       		.byte	0
+ 338 0137 09       		.uleb128 0x9
+ 339 0138 31000000 		.4byte	.LASF22
+ 340 013c 01       		.byte	0x1
+ 341 013d 70       		.byte	0x70
+ 342 013e 00000000 		.4byte	.LFB4
+ 343 0142 2C000000 		.4byte	.LFE4-.LFB4
+ 344 0146 01       		.uleb128 0x1
+ 345 0147 9C       		.byte	0x9c
+ 346 0148 5F010000 		.4byte	0x15f
+ 347 014c 0A       		.uleb128 0xa
+ 348 014d 1E000000 		.4byte	.LVL4
+ 349 0151 D0010000 		.4byte	0x1d0
+ 350 0155 0A       		.uleb128 0xa
+ 351 0156 22000000 		.4byte	.LVL5
+ 352 015a E7000000 		.4byte	0xe7
+ 353 015e 00       		.byte	0
+ 354 015f 09       		.uleb128 0x9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 10
 
 
- 354 015c DB010000 		.4byte	0x1db
- 355 0160 0A       		.uleb128 0xa
- 356 0161 22000000 		.4byte	.LVL5
- 357 0165 F2000000 		.4byte	0xf2
- 358 0169 00       		.byte	0
- 359 016a 09       		.uleb128 0x9
- 360 016b DB020000 		.4byte	.LASF24
- 361 016f 01       		.byte	0x1
- 362 0170 96       		.byte	0x96
- 363 0171 00000000 		.4byte	.LFB5
- 364 0175 18000000 		.4byte	.LFE5-.LFB5
- 365 0179 01       		.uleb128 0x1
- 366 017a 9C       		.byte	0x9c
- 367 017b 92010000 		.4byte	0x192
- 368 017f 0A       		.uleb128 0xa
- 369 0180 06000000 		.4byte	.LVL6
- 370 0184 1A010000 		.4byte	0x11a
- 371 0188 0A       		.uleb128 0xa
- 372 0189 12000000 		.4byte	.LVL7
- 373 018d E2010000 		.4byte	0x1e2
- 374 0191 00       		.byte	0
- 375 0192 0B       		.uleb128 0xb
- 376 0193 5C020000 		.4byte	.LASF34
- 377 0197 01       		.byte	0x1
- 378 0198 15       		.byte	0x15
- 379 0199 E7000000 		.4byte	0xe7
- 380 019d 05       		.uleb128 0x5
- 381 019e 03       		.byte	0x3
- 382 019f 00000000 		.4byte	TimerDelay_backup
+ 355 0160 D4020000 		.4byte	.LASF23
+ 356 0164 01       		.byte	0x1
+ 357 0165 96       		.byte	0x96
+ 358 0166 00000000 		.4byte	.LFB5
+ 359 016a 18000000 		.4byte	.LFE5-.LFB5
+ 360 016e 01       		.uleb128 0x1
+ 361 016f 9C       		.byte	0x9c
+ 362 0170 87010000 		.4byte	0x187
+ 363 0174 0A       		.uleb128 0xa
+ 364 0175 06000000 		.4byte	.LVL6
+ 365 0179 0F010000 		.4byte	0x10f
+ 366 017d 0A       		.uleb128 0xa
+ 367 017e 12000000 		.4byte	.LVL7
+ 368 0182 D7010000 		.4byte	0x1d7
+ 369 0186 00       		.byte	0
+ 370 0187 0B       		.uleb128 0xb
+ 371 0188 55020000 		.4byte	.LASF33
+ 372 018c 01       		.byte	0x1
+ 373 018d 15       		.byte	0x15
+ 374 018e DC000000 		.4byte	0xdc
+ 375 0192 05       		.uleb128 0x5
+ 376 0193 03       		.byte	0x3
+ 377 0194 00000000 		.4byte	TimerDelay_backup
+ 378 0198 0C       		.uleb128 0xc
+ 379 0199 BD020000 		.4byte	.LASF24
+ 380 019d 03       		.byte	0x3
+ 381 019e 69       		.byte	0x69
+ 382 019f 6B000000 		.4byte	0x6b
  383 01a3 0C       		.uleb128 0xc
- 384 01a4 C4020000 		.4byte	.LASF25
+ 384 01a4 36020000 		.4byte	.LASF25
  385 01a8 03       		.byte	0x3
- 386 01a9 69       		.byte	0x69
- 387 01aa 76000000 		.4byte	0x76
- 388 01ae 0C       		.uleb128 0xc
- 389 01af 3D020000 		.4byte	.LASF26
+ 386 01a9 63       		.byte	0x63
+ 387 01aa 6B000000 		.4byte	0x6b
+ 388 01ae 0D       		.uleb128 0xd
+ 389 01af 67020000 		.4byte	.LASF26
  390 01b3 03       		.byte	0x3
- 391 01b4 63       		.byte	0x63
- 392 01b5 6B000000 		.4byte	0x6b
- 393 01b9 0D       		.uleb128 0xd
- 394 01ba 6E020000 		.4byte	.LASF27
- 395 01be 03       		.byte	0x3
- 396 01bf 6A       		.byte	0x6a
- 397 01c0 CA010000 		.4byte	0x1ca
- 398 01c4 0E       		.uleb128 0xe
- 399 01c5 76000000 		.4byte	0x76
- 400 01c9 00       		.byte	0
- 401 01ca 0D       		.uleb128 0xd
- 402 01cb 11000000 		.4byte	.LASF28
- 403 01cf 03       		.byte	0x3
- 404 01d0 64       		.byte	0x64
- 405 01d1 DB010000 		.4byte	0x1db
- 406 01d5 0E       		.uleb128 0xe
- 407 01d6 6B000000 		.4byte	0x6b
- 408 01da 00       		.byte	0
- 409 01db 0F       		.uleb128 0xf
- 410 01dc D3000000 		.4byte	.LASF29
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 11
+ 391 01b4 6A       		.byte	0x6a
+ 392 01b5 BF010000 		.4byte	0x1bf
+ 393 01b9 0E       		.uleb128 0xe
+ 394 01ba 6B000000 		.4byte	0x6b
+ 395 01be 00       		.byte	0
+ 396 01bf 0D       		.uleb128 0xd
+ 397 01c0 11000000 		.4byte	.LASF27
+ 398 01c4 03       		.byte	0x3
+ 399 01c5 64       		.byte	0x64
+ 400 01c6 D0010000 		.4byte	0x1d0
+ 401 01ca 0E       		.uleb128 0xe
+ 402 01cb 6B000000 		.4byte	0x6b
+ 403 01cf 00       		.byte	0
+ 404 01d0 0F       		.uleb128 0xf
+ 405 01d1 D3000000 		.4byte	.LASF28
+ 406 01d5 03       		.byte	0x3
+ 407 01d6 5B       		.byte	0x5b
+ 408 01d7 0F       		.uleb128 0xf
+ 409 01d8 1B010000 		.4byte	.LASF29
+ 410 01dc 03       		.byte	0x3
+ 411 01dd 8B       		.byte	0x8b
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 11
 
 
- 411 01e0 03       		.byte	0x3
- 412 01e1 5B       		.byte	0x5b
- 413 01e2 0F       		.uleb128 0xf
- 414 01e3 1B010000 		.4byte	.LASF30
- 415 01e7 03       		.byte	0x3
- 416 01e8 8B       		.byte	0x8b
- 417 01e9 00       		.byte	0
- 418              		.section	.debug_abbrev,"",%progbits
- 419              	.Ldebug_abbrev0:
- 420 0000 01       		.uleb128 0x1
- 421 0001 11       		.uleb128 0x11
- 422 0002 01       		.byte	0x1
- 423 0003 25       		.uleb128 0x25
- 424 0004 0E       		.uleb128 0xe
- 425 0005 13       		.uleb128 0x13
- 426 0006 0B       		.uleb128 0xb
- 427 0007 03       		.uleb128 0x3
- 428 0008 0E       		.uleb128 0xe
- 429 0009 1B       		.uleb128 0x1b
- 430 000a 0E       		.uleb128 0xe
- 431 000b 55       		.uleb128 0x55
- 432 000c 17       		.uleb128 0x17
- 433 000d 11       		.uleb128 0x11
- 434 000e 01       		.uleb128 0x1
- 435 000f 10       		.uleb128 0x10
- 436 0010 17       		.uleb128 0x17
- 437 0011 00       		.byte	0
- 438 0012 00       		.byte	0
- 439 0013 02       		.uleb128 0x2
- 440 0014 24       		.uleb128 0x24
- 441 0015 00       		.byte	0
- 442 0016 0B       		.uleb128 0xb
- 443 0017 0B       		.uleb128 0xb
- 444 0018 3E       		.uleb128 0x3e
- 445 0019 0B       		.uleb128 0xb
- 446 001a 03       		.uleb128 0x3
- 447 001b 0E       		.uleb128 0xe
- 448 001c 00       		.byte	0
- 449 001d 00       		.byte	0
- 450 001e 03       		.uleb128 0x3
- 451 001f 24       		.uleb128 0x24
- 452 0020 00       		.byte	0
- 453 0021 0B       		.uleb128 0xb
- 454 0022 0B       		.uleb128 0xb
- 455 0023 3E       		.uleb128 0x3e
- 456 0024 0B       		.uleb128 0xb
- 457 0025 03       		.uleb128 0x3
- 458 0026 08       		.uleb128 0x8
- 459 0027 00       		.byte	0
- 460 0028 00       		.byte	0
- 461 0029 04       		.uleb128 0x4
- 462 002a 16       		.uleb128 0x16
- 463 002b 00       		.byte	0
- 464 002c 03       		.uleb128 0x3
- 465 002d 0E       		.uleb128 0xe
- 466 002e 3A       		.uleb128 0x3a
- 467 002f 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 12
+ 412 01de 00       		.byte	0
+ 413              		.section	.debug_abbrev,"",%progbits
+ 414              	.Ldebug_abbrev0:
+ 415 0000 01       		.uleb128 0x1
+ 416 0001 11       		.uleb128 0x11
+ 417 0002 01       		.byte	0x1
+ 418 0003 25       		.uleb128 0x25
+ 419 0004 0E       		.uleb128 0xe
+ 420 0005 13       		.uleb128 0x13
+ 421 0006 0B       		.uleb128 0xb
+ 422 0007 03       		.uleb128 0x3
+ 423 0008 0E       		.uleb128 0xe
+ 424 0009 1B       		.uleb128 0x1b
+ 425 000a 0E       		.uleb128 0xe
+ 426 000b 55       		.uleb128 0x55
+ 427 000c 17       		.uleb128 0x17
+ 428 000d 11       		.uleb128 0x11
+ 429 000e 01       		.uleb128 0x1
+ 430 000f 10       		.uleb128 0x10
+ 431 0010 17       		.uleb128 0x17
+ 432 0011 00       		.byte	0
+ 433 0012 00       		.byte	0
+ 434 0013 02       		.uleb128 0x2
+ 435 0014 24       		.uleb128 0x24
+ 436 0015 00       		.byte	0
+ 437 0016 0B       		.uleb128 0xb
+ 438 0017 0B       		.uleb128 0xb
+ 439 0018 3E       		.uleb128 0x3e
+ 440 0019 0B       		.uleb128 0xb
+ 441 001a 03       		.uleb128 0x3
+ 442 001b 0E       		.uleb128 0xe
+ 443 001c 00       		.byte	0
+ 444 001d 00       		.byte	0
+ 445 001e 03       		.uleb128 0x3
+ 446 001f 24       		.uleb128 0x24
+ 447 0020 00       		.byte	0
+ 448 0021 0B       		.uleb128 0xb
+ 449 0022 0B       		.uleb128 0xb
+ 450 0023 3E       		.uleb128 0x3e
+ 451 0024 0B       		.uleb128 0xb
+ 452 0025 03       		.uleb128 0x3
+ 453 0026 08       		.uleb128 0x8
+ 454 0027 00       		.byte	0
+ 455 0028 00       		.byte	0
+ 456 0029 04       		.uleb128 0x4
+ 457 002a 16       		.uleb128 0x16
+ 458 002b 00       		.byte	0
+ 459 002c 03       		.uleb128 0x3
+ 460 002d 0E       		.uleb128 0xe
+ 461 002e 3A       		.uleb128 0x3a
+ 462 002f 0B       		.uleb128 0xb
+ 463 0030 3B       		.uleb128 0x3b
+ 464 0031 0B       		.uleb128 0xb
+ 465 0032 49       		.uleb128 0x49
+ 466 0033 13       		.uleb128 0x13
+ 467 0034 00       		.byte	0
+ 468 0035 00       		.byte	0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 12
 
 
- 468 0030 3B       		.uleb128 0x3b
- 469 0031 0B       		.uleb128 0xb
- 470 0032 49       		.uleb128 0x49
- 471 0033 13       		.uleb128 0x13
- 472 0034 00       		.byte	0
- 473 0035 00       		.byte	0
- 474 0036 05       		.uleb128 0x5
- 475 0037 16       		.uleb128 0x16
- 476 0038 00       		.byte	0
- 477 0039 03       		.uleb128 0x3
- 478 003a 0E       		.uleb128 0xe
- 479 003b 3A       		.uleb128 0x3a
- 480 003c 0B       		.uleb128 0xb
- 481 003d 3B       		.uleb128 0x3b
- 482 003e 05       		.uleb128 0x5
- 483 003f 49       		.uleb128 0x49
- 484 0040 13       		.uleb128 0x13
- 485 0041 00       		.byte	0
- 486 0042 00       		.byte	0
- 487 0043 06       		.uleb128 0x6
- 488 0044 35       		.uleb128 0x35
- 489 0045 00       		.byte	0
- 490 0046 49       		.uleb128 0x49
- 491 0047 13       		.uleb128 0x13
- 492 0048 00       		.byte	0
- 493 0049 00       		.byte	0
- 494 004a 07       		.uleb128 0x7
- 495 004b 13       		.uleb128 0x13
- 496 004c 01       		.byte	0x1
- 497 004d 0B       		.uleb128 0xb
- 498 004e 0B       		.uleb128 0xb
- 499 004f 3A       		.uleb128 0x3a
- 500 0050 0B       		.uleb128 0xb
- 501 0051 3B       		.uleb128 0x3b
- 502 0052 0B       		.uleb128 0xb
- 503 0053 01       		.uleb128 0x1
- 504 0054 13       		.uleb128 0x13
- 505 0055 00       		.byte	0
- 506 0056 00       		.byte	0
- 507 0057 08       		.uleb128 0x8
- 508 0058 0D       		.uleb128 0xd
- 509 0059 00       		.byte	0
- 510 005a 03       		.uleb128 0x3
- 511 005b 0E       		.uleb128 0xe
- 512 005c 3A       		.uleb128 0x3a
- 513 005d 0B       		.uleb128 0xb
- 514 005e 3B       		.uleb128 0x3b
- 515 005f 0B       		.uleb128 0xb
- 516 0060 49       		.uleb128 0x49
- 517 0061 13       		.uleb128 0x13
- 518 0062 38       		.uleb128 0x38
- 519 0063 0B       		.uleb128 0xb
- 520 0064 00       		.byte	0
- 521 0065 00       		.byte	0
- 522 0066 09       		.uleb128 0x9
- 523 0067 2E       		.uleb128 0x2e
- 524 0068 01       		.byte	0x1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 13
+ 469 0036 05       		.uleb128 0x5
+ 470 0037 16       		.uleb128 0x16
+ 471 0038 00       		.byte	0
+ 472 0039 03       		.uleb128 0x3
+ 473 003a 0E       		.uleb128 0xe
+ 474 003b 3A       		.uleb128 0x3a
+ 475 003c 0B       		.uleb128 0xb
+ 476 003d 3B       		.uleb128 0x3b
+ 477 003e 05       		.uleb128 0x5
+ 478 003f 49       		.uleb128 0x49
+ 479 0040 13       		.uleb128 0x13
+ 480 0041 00       		.byte	0
+ 481 0042 00       		.byte	0
+ 482 0043 06       		.uleb128 0x6
+ 483 0044 35       		.uleb128 0x35
+ 484 0045 00       		.byte	0
+ 485 0046 49       		.uleb128 0x49
+ 486 0047 13       		.uleb128 0x13
+ 487 0048 00       		.byte	0
+ 488 0049 00       		.byte	0
+ 489 004a 07       		.uleb128 0x7
+ 490 004b 13       		.uleb128 0x13
+ 491 004c 01       		.byte	0x1
+ 492 004d 0B       		.uleb128 0xb
+ 493 004e 0B       		.uleb128 0xb
+ 494 004f 3A       		.uleb128 0x3a
+ 495 0050 0B       		.uleb128 0xb
+ 496 0051 3B       		.uleb128 0x3b
+ 497 0052 0B       		.uleb128 0xb
+ 498 0053 01       		.uleb128 0x1
+ 499 0054 13       		.uleb128 0x13
+ 500 0055 00       		.byte	0
+ 501 0056 00       		.byte	0
+ 502 0057 08       		.uleb128 0x8
+ 503 0058 0D       		.uleb128 0xd
+ 504 0059 00       		.byte	0
+ 505 005a 03       		.uleb128 0x3
+ 506 005b 0E       		.uleb128 0xe
+ 507 005c 3A       		.uleb128 0x3a
+ 508 005d 0B       		.uleb128 0xb
+ 509 005e 3B       		.uleb128 0x3b
+ 510 005f 0B       		.uleb128 0xb
+ 511 0060 49       		.uleb128 0x49
+ 512 0061 13       		.uleb128 0x13
+ 513 0062 38       		.uleb128 0x38
+ 514 0063 0B       		.uleb128 0xb
+ 515 0064 00       		.byte	0
+ 516 0065 00       		.byte	0
+ 517 0066 09       		.uleb128 0x9
+ 518 0067 2E       		.uleb128 0x2e
+ 519 0068 01       		.byte	0x1
+ 520 0069 3F       		.uleb128 0x3f
+ 521 006a 19       		.uleb128 0x19
+ 522 006b 03       		.uleb128 0x3
+ 523 006c 0E       		.uleb128 0xe
+ 524 006d 3A       		.uleb128 0x3a
+ 525 006e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 13
 
 
- 525 0069 3F       		.uleb128 0x3f
- 526 006a 19       		.uleb128 0x19
- 527 006b 03       		.uleb128 0x3
- 528 006c 0E       		.uleb128 0xe
- 529 006d 3A       		.uleb128 0x3a
- 530 006e 0B       		.uleb128 0xb
- 531 006f 3B       		.uleb128 0x3b
- 532 0070 0B       		.uleb128 0xb
- 533 0071 27       		.uleb128 0x27
- 534 0072 19       		.uleb128 0x19
- 535 0073 11       		.uleb128 0x11
- 536 0074 01       		.uleb128 0x1
- 537 0075 12       		.uleb128 0x12
- 538 0076 06       		.uleb128 0x6
- 539 0077 40       		.uleb128 0x40
- 540 0078 18       		.uleb128 0x18
- 541 0079 9742     		.uleb128 0x2117
- 542 007b 19       		.uleb128 0x19
- 543 007c 01       		.uleb128 0x1
- 544 007d 13       		.uleb128 0x13
- 545 007e 00       		.byte	0
- 546 007f 00       		.byte	0
- 547 0080 0A       		.uleb128 0xa
- 548 0081 898201   		.uleb128 0x4109
- 549 0084 00       		.byte	0
- 550 0085 11       		.uleb128 0x11
- 551 0086 01       		.uleb128 0x1
- 552 0087 31       		.uleb128 0x31
- 553 0088 13       		.uleb128 0x13
- 554 0089 00       		.byte	0
- 555 008a 00       		.byte	0
- 556 008b 0B       		.uleb128 0xb
- 557 008c 34       		.uleb128 0x34
- 558 008d 00       		.byte	0
- 559 008e 03       		.uleb128 0x3
- 560 008f 0E       		.uleb128 0xe
- 561 0090 3A       		.uleb128 0x3a
- 562 0091 0B       		.uleb128 0xb
- 563 0092 3B       		.uleb128 0x3b
- 564 0093 0B       		.uleb128 0xb
- 565 0094 49       		.uleb128 0x49
- 566 0095 13       		.uleb128 0x13
- 567 0096 02       		.uleb128 0x2
- 568 0097 18       		.uleb128 0x18
- 569 0098 00       		.byte	0
- 570 0099 00       		.byte	0
- 571 009a 0C       		.uleb128 0xc
- 572 009b 2E       		.uleb128 0x2e
- 573 009c 00       		.byte	0
- 574 009d 3F       		.uleb128 0x3f
- 575 009e 19       		.uleb128 0x19
- 576 009f 03       		.uleb128 0x3
- 577 00a0 0E       		.uleb128 0xe
- 578 00a1 3A       		.uleb128 0x3a
- 579 00a2 0B       		.uleb128 0xb
- 580 00a3 3B       		.uleb128 0x3b
- 581 00a4 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 14
+ 526 006f 3B       		.uleb128 0x3b
+ 527 0070 0B       		.uleb128 0xb
+ 528 0071 27       		.uleb128 0x27
+ 529 0072 19       		.uleb128 0x19
+ 530 0073 11       		.uleb128 0x11
+ 531 0074 01       		.uleb128 0x1
+ 532 0075 12       		.uleb128 0x12
+ 533 0076 06       		.uleb128 0x6
+ 534 0077 40       		.uleb128 0x40
+ 535 0078 18       		.uleb128 0x18
+ 536 0079 9742     		.uleb128 0x2117
+ 537 007b 19       		.uleb128 0x19
+ 538 007c 01       		.uleb128 0x1
+ 539 007d 13       		.uleb128 0x13
+ 540 007e 00       		.byte	0
+ 541 007f 00       		.byte	0
+ 542 0080 0A       		.uleb128 0xa
+ 543 0081 898201   		.uleb128 0x4109
+ 544 0084 00       		.byte	0
+ 545 0085 11       		.uleb128 0x11
+ 546 0086 01       		.uleb128 0x1
+ 547 0087 31       		.uleb128 0x31
+ 548 0088 13       		.uleb128 0x13
+ 549 0089 00       		.byte	0
+ 550 008a 00       		.byte	0
+ 551 008b 0B       		.uleb128 0xb
+ 552 008c 34       		.uleb128 0x34
+ 553 008d 00       		.byte	0
+ 554 008e 03       		.uleb128 0x3
+ 555 008f 0E       		.uleb128 0xe
+ 556 0090 3A       		.uleb128 0x3a
+ 557 0091 0B       		.uleb128 0xb
+ 558 0092 3B       		.uleb128 0x3b
+ 559 0093 0B       		.uleb128 0xb
+ 560 0094 49       		.uleb128 0x49
+ 561 0095 13       		.uleb128 0x13
+ 562 0096 02       		.uleb128 0x2
+ 563 0097 18       		.uleb128 0x18
+ 564 0098 00       		.byte	0
+ 565 0099 00       		.byte	0
+ 566 009a 0C       		.uleb128 0xc
+ 567 009b 2E       		.uleb128 0x2e
+ 568 009c 00       		.byte	0
+ 569 009d 3F       		.uleb128 0x3f
+ 570 009e 19       		.uleb128 0x19
+ 571 009f 03       		.uleb128 0x3
+ 572 00a0 0E       		.uleb128 0xe
+ 573 00a1 3A       		.uleb128 0x3a
+ 574 00a2 0B       		.uleb128 0xb
+ 575 00a3 3B       		.uleb128 0x3b
+ 576 00a4 0B       		.uleb128 0xb
+ 577 00a5 27       		.uleb128 0x27
+ 578 00a6 19       		.uleb128 0x19
+ 579 00a7 49       		.uleb128 0x49
+ 580 00a8 13       		.uleb128 0x13
+ 581 00a9 3C       		.uleb128 0x3c
+ 582 00aa 19       		.uleb128 0x19
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 14
 
 
- 582 00a5 27       		.uleb128 0x27
- 583 00a6 19       		.uleb128 0x19
- 584 00a7 49       		.uleb128 0x49
- 585 00a8 13       		.uleb128 0x13
- 586 00a9 3C       		.uleb128 0x3c
- 587 00aa 19       		.uleb128 0x19
- 588 00ab 00       		.byte	0
- 589 00ac 00       		.byte	0
- 590 00ad 0D       		.uleb128 0xd
- 591 00ae 2E       		.uleb128 0x2e
- 592 00af 01       		.byte	0x1
- 593 00b0 3F       		.uleb128 0x3f
- 594 00b1 19       		.uleb128 0x19
- 595 00b2 03       		.uleb128 0x3
- 596 00b3 0E       		.uleb128 0xe
- 597 00b4 3A       		.uleb128 0x3a
- 598 00b5 0B       		.uleb128 0xb
- 599 00b6 3B       		.uleb128 0x3b
- 600 00b7 0B       		.uleb128 0xb
- 601 00b8 27       		.uleb128 0x27
- 602 00b9 19       		.uleb128 0x19
- 603 00ba 3C       		.uleb128 0x3c
- 604 00bb 19       		.uleb128 0x19
- 605 00bc 01       		.uleb128 0x1
- 606 00bd 13       		.uleb128 0x13
- 607 00be 00       		.byte	0
- 608 00bf 00       		.byte	0
- 609 00c0 0E       		.uleb128 0xe
- 610 00c1 05       		.uleb128 0x5
- 611 00c2 00       		.byte	0
- 612 00c3 49       		.uleb128 0x49
- 613 00c4 13       		.uleb128 0x13
- 614 00c5 00       		.byte	0
- 615 00c6 00       		.byte	0
- 616 00c7 0F       		.uleb128 0xf
- 617 00c8 2E       		.uleb128 0x2e
- 618 00c9 00       		.byte	0
- 619 00ca 3F       		.uleb128 0x3f
- 620 00cb 19       		.uleb128 0x19
- 621 00cc 03       		.uleb128 0x3
- 622 00cd 0E       		.uleb128 0xe
- 623 00ce 3A       		.uleb128 0x3a
- 624 00cf 0B       		.uleb128 0xb
- 625 00d0 3B       		.uleb128 0x3b
- 626 00d1 0B       		.uleb128 0xb
- 627 00d2 27       		.uleb128 0x27
- 628 00d3 19       		.uleb128 0x19
- 629 00d4 3C       		.uleb128 0x3c
- 630 00d5 19       		.uleb128 0x19
- 631 00d6 00       		.byte	0
- 632 00d7 00       		.byte	0
- 633 00d8 00       		.byte	0
- 634              		.section	.debug_aranges,"",%progbits
- 635 0000 34000000 		.4byte	0x34
- 636 0004 0200     		.2byte	0x2
- 637 0006 00000000 		.4byte	.Ldebug_info0
- 638 000a 04       		.byte	0x4
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 15
+ 583 00ab 00       		.byte	0
+ 584 00ac 00       		.byte	0
+ 585 00ad 0D       		.uleb128 0xd
+ 586 00ae 2E       		.uleb128 0x2e
+ 587 00af 01       		.byte	0x1
+ 588 00b0 3F       		.uleb128 0x3f
+ 589 00b1 19       		.uleb128 0x19
+ 590 00b2 03       		.uleb128 0x3
+ 591 00b3 0E       		.uleb128 0xe
+ 592 00b4 3A       		.uleb128 0x3a
+ 593 00b5 0B       		.uleb128 0xb
+ 594 00b6 3B       		.uleb128 0x3b
+ 595 00b7 0B       		.uleb128 0xb
+ 596 00b8 27       		.uleb128 0x27
+ 597 00b9 19       		.uleb128 0x19
+ 598 00ba 3C       		.uleb128 0x3c
+ 599 00bb 19       		.uleb128 0x19
+ 600 00bc 01       		.uleb128 0x1
+ 601 00bd 13       		.uleb128 0x13
+ 602 00be 00       		.byte	0
+ 603 00bf 00       		.byte	0
+ 604 00c0 0E       		.uleb128 0xe
+ 605 00c1 05       		.uleb128 0x5
+ 606 00c2 00       		.byte	0
+ 607 00c3 49       		.uleb128 0x49
+ 608 00c4 13       		.uleb128 0x13
+ 609 00c5 00       		.byte	0
+ 610 00c6 00       		.byte	0
+ 611 00c7 0F       		.uleb128 0xf
+ 612 00c8 2E       		.uleb128 0x2e
+ 613 00c9 00       		.byte	0
+ 614 00ca 3F       		.uleb128 0x3f
+ 615 00cb 19       		.uleb128 0x19
+ 616 00cc 03       		.uleb128 0x3
+ 617 00cd 0E       		.uleb128 0xe
+ 618 00ce 3A       		.uleb128 0x3a
+ 619 00cf 0B       		.uleb128 0xb
+ 620 00d0 3B       		.uleb128 0x3b
+ 621 00d1 0B       		.uleb128 0xb
+ 622 00d2 27       		.uleb128 0x27
+ 623 00d3 19       		.uleb128 0x19
+ 624 00d4 3C       		.uleb128 0x3c
+ 625 00d5 19       		.uleb128 0x19
+ 626 00d6 00       		.byte	0
+ 627 00d7 00       		.byte	0
+ 628 00d8 00       		.byte	0
+ 629              		.section	.debug_aranges,"",%progbits
+ 630 0000 34000000 		.4byte	0x34
+ 631 0004 0200     		.2byte	0x2
+ 632 0006 00000000 		.4byte	.Ldebug_info0
+ 633 000a 04       		.byte	0x4
+ 634 000b 00       		.byte	0
+ 635 000c 0000     		.2byte	0
+ 636 000e 0000     		.2byte	0
+ 637 0010 00000000 		.4byte	.LFB2
+ 638 0014 20000000 		.4byte	.LFE2-.LFB2
+ 639 0018 00000000 		.4byte	.LFB3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 15
 
 
- 639 000b 00       		.byte	0
- 640 000c 0000     		.2byte	0
- 641 000e 0000     		.2byte	0
- 642 0010 00000000 		.4byte	.LFB2
- 643 0014 20000000 		.4byte	.LFE2-.LFB2
- 644 0018 00000000 		.4byte	.LFB3
- 645 001c 20000000 		.4byte	.LFE3-.LFB3
- 646 0020 00000000 		.4byte	.LFB4
- 647 0024 2C000000 		.4byte	.LFE4-.LFB4
- 648 0028 00000000 		.4byte	.LFB5
- 649 002c 18000000 		.4byte	.LFE5-.LFB5
- 650 0030 00000000 		.4byte	0
- 651 0034 00000000 		.4byte	0
- 652              		.section	.debug_ranges,"",%progbits
- 653              	.Ldebug_ranges0:
- 654 0000 00000000 		.4byte	.LFB2
- 655 0004 20000000 		.4byte	.LFE2
- 656 0008 00000000 		.4byte	.LFB3
- 657 000c 20000000 		.4byte	.LFE3
- 658 0010 00000000 		.4byte	.LFB4
- 659 0014 2C000000 		.4byte	.LFE4
- 660 0018 00000000 		.4byte	.LFB5
- 661 001c 18000000 		.4byte	.LFE5
- 662 0020 00000000 		.4byte	0
- 663 0024 00000000 		.4byte	0
- 664              		.section	.debug_line,"",%progbits
- 665              	.Ldebug_line0:
- 666 0000 B3000000 		.section	.debug_str,"MS",%progbits,1
- 666      02005C00 
- 666      00000201 
- 666      FB0E0D00 
- 666      01010101 
- 667              	.LASF16:
- 668 0000 54696D65 		.ascii	"TimerEnableState\000"
- 668      72456E61 
- 668      626C6553 
- 668      74617465 
- 668      00
- 669              	.LASF28:
- 670 0011 54696D65 		.ascii	"TimerDelay_WriteControlRegister\000"
- 670      7244656C 
- 670      61795F57 
- 670      72697465 
- 670      436F6E74 
- 671              	.LASF23:
- 672 0031 54696D65 		.ascii	"TimerDelay_Sleep\000"
- 672      7244656C 
- 672      61795F53 
- 672      6C656570 
- 672      00
- 673              	.LASF3:
- 674 0042 73686F72 		.ascii	"short unsigned int\000"
- 674      7420756E 
- 674      7369676E 
- 674      65642069 
- 674      6E7400
- 675              	.LASF21:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 16
+ 640 001c 20000000 		.4byte	.LFE3-.LFB3
+ 641 0020 00000000 		.4byte	.LFB4
+ 642 0024 2C000000 		.4byte	.LFE4-.LFB4
+ 643 0028 00000000 		.4byte	.LFB5
+ 644 002c 18000000 		.4byte	.LFE5-.LFB5
+ 645 0030 00000000 		.4byte	0
+ 646 0034 00000000 		.4byte	0
+ 647              		.section	.debug_ranges,"",%progbits
+ 648              	.Ldebug_ranges0:
+ 649 0000 00000000 		.4byte	.LFB2
+ 650 0004 20000000 		.4byte	.LFE2
+ 651 0008 00000000 		.4byte	.LFB3
+ 652 000c 20000000 		.4byte	.LFE3
+ 653 0010 00000000 		.4byte	.LFB4
+ 654 0014 2C000000 		.4byte	.LFE4
+ 655 0018 00000000 		.4byte	.LFB5
+ 656 001c 18000000 		.4byte	.LFE5
+ 657 0020 00000000 		.4byte	0
+ 658 0024 00000000 		.4byte	0
+ 659              		.section	.debug_line,"",%progbits
+ 660              	.Ldebug_line0:
+ 661 0000 B3000000 		.section	.debug_str,"MS",%progbits,1
+ 661      02005C00 
+ 661      00000201 
+ 661      FB0E0D00 
+ 661      01010101 
+ 662              	.LASF15:
+ 663 0000 54696D65 		.ascii	"TimerEnableState\000"
+ 663      72456E61 
+ 663      626C6553 
+ 663      74617465 
+ 663      00
+ 664              	.LASF27:
+ 665 0011 54696D65 		.ascii	"TimerDelay_WriteControlRegister\000"
+ 665      7244656C 
+ 665      61795F57 
+ 665      72697465 
+ 665      436F6E74 
+ 666              	.LASF22:
+ 667 0031 54696D65 		.ascii	"TimerDelay_Sleep\000"
+ 667      7244656C 
+ 667      61795F53 
+ 667      6C656570 
+ 667      00
+ 668              	.LASF3:
+ 669 0042 73686F72 		.ascii	"short unsigned int\000"
+ 669      7420756E 
+ 669      7369676E 
+ 669      65642069 
+ 669      6E7400
+ 670              	.LASF20:
+ 671 0055 54696D65 		.ascii	"TimerDelay_SaveConfig\000"
+ 671      7244656C 
+ 671      61795F53 
+ 671      61766543 
+ 671      6F6E6669 
+ 672              	.LASF16:
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 16
 
 
- 676 0055 54696D65 		.ascii	"TimerDelay_SaveConfig\000"
- 676      7244656C 
- 676      61795F53 
- 676      61766543 
- 676      6F6E6669 
- 677              	.LASF17:
- 678 006b 54696D65 		.ascii	"TimerUdb\000"
- 678      72556462 
- 678      00
- 679              	.LASF33:
- 680 0074 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
- 680      73657273 
- 680      5C416C65 
- 680      78616E64 
- 680      72655C44 
- 681 00a2 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
- 681      534F435F 
- 681      43617053 
- 681      656E7365 
- 681      5F325F42 
- 682              	.LASF29:
- 683 00d3 54696D65 		.ascii	"TimerDelay_Stop\000"
- 683      7244656C 
- 683      61795F53 
- 683      746F7000 
- 684              	.LASF11:
- 685 00e3 666C6F61 		.ascii	"float\000"
- 685      7400
- 686              	.LASF1:
- 687 00e9 756E7369 		.ascii	"unsigned char\000"
- 687      676E6564 
- 687      20636861 
- 687      7200
- 688              	.LASF14:
- 689 00f7 72656738 		.ascii	"reg8\000"
- 689      00
- 690              	.LASF5:
- 691 00fc 6C6F6E67 		.ascii	"long unsigned int\000"
- 691      20756E73 
- 691      69676E65 
- 691      6420696E 
- 691      7400
- 692              	.LASF9:
- 693 010e 75696E74 		.ascii	"uint8\000"
- 693      3800
- 694              	.LASF12:
- 695 0114 646F7562 		.ascii	"double\000"
- 695      6C6500
- 696              	.LASF30:
- 697 011b 54696D65 		.ascii	"TimerDelay_Enable\000"
- 697      7244656C 
- 697      61795F45 
- 697      6E61626C 
- 697      6500
- 698              	.LASF22:
- 699 012d 54696D65 		.ascii	"TimerDelay_RestoreConfig\000"
- 699      7244656C 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 17
+ 673 006b 54696D65 		.ascii	"TimerUdb\000"
+ 673      72556462 
+ 673      00
+ 674              	.LASF32:
+ 675 0074 433A5C55 		.ascii	"C:\\Users\\Alexandre\\Documents\\GitHub\\CoRo_PW_PS"
+ 675      73657273 
+ 675      5C416C65 
+ 675      78616E64 
+ 675      72655C44 
+ 676 00a2 4F435C50 		.ascii	"OC\\PSOC_CapSense_2_BLE\\PSOC_CapSense_2_BLE.cydsn\000"
+ 676      534F435F 
+ 676      43617053 
+ 676      656E7365 
+ 676      5F325F42 
+ 677              	.LASF28:
+ 678 00d3 54696D65 		.ascii	"TimerDelay_Stop\000"
+ 678      7244656C 
+ 678      61795F53 
+ 678      746F7000 
+ 679              	.LASF9:
+ 680 00e3 666C6F61 		.ascii	"float\000"
+ 680      7400
+ 681              	.LASF1:
+ 682 00e9 756E7369 		.ascii	"unsigned char\000"
+ 682      676E6564 
+ 682      20636861 
+ 682      7200
+ 683              	.LASF13:
+ 684 00f7 72656738 		.ascii	"reg8\000"
+ 684      00
+ 685              	.LASF5:
+ 686 00fc 6C6F6E67 		.ascii	"long unsigned int\000"
+ 686      20756E73 
+ 686      69676E65 
+ 686      6420696E 
+ 686      7400
+ 687              	.LASF12:
+ 688 010e 75696E74 		.ascii	"uint8\000"
+ 688      3800
+ 689              	.LASF10:
+ 690 0114 646F7562 		.ascii	"double\000"
+ 690      6C6500
+ 691              	.LASF29:
+ 692 011b 54696D65 		.ascii	"TimerDelay_Enable\000"
+ 692      7244656C 
+ 692      61795F45 
+ 692      6E61626C 
+ 692      6500
+ 693              	.LASF21:
+ 694 012d 54696D65 		.ascii	"TimerDelay_RestoreConfig\000"
+ 694      7244656C 
+ 694      61795F52 
+ 694      6573746F 
+ 694      7265436F 
+ 695              	.LASF19:
+ 696 0146 54696D65 		.ascii	"TimerDelay_backupStruct\000"
+ 696      7244656C 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 17
 
 
- 699      61795F52 
- 699      6573746F 
- 699      7265436F 
- 700              	.LASF10:
- 701 0146 75696E74 		.ascii	"uint16\000"
- 701      313600
- 702              	.LASF20:
- 703 014d 54696D65 		.ascii	"TimerDelay_backupStruct\000"
- 703      7244656C 
- 703      61795F62 
- 703      61636B75 
- 703      70537472 
- 704              	.LASF8:
- 705 0165 756E7369 		.ascii	"unsigned int\000"
- 705      676E6564 
- 705      20696E74 
- 705      00
- 706              	.LASF7:
- 707 0172 6C6F6E67 		.ascii	"long long unsigned int\000"
- 707      206C6F6E 
- 707      6720756E 
- 707      7369676E 
- 707      65642069 
- 708              	.LASF15:
- 709 0189 73697A65 		.ascii	"sizetype\000"
- 709      74797065 
- 709      00
- 710              	.LASF6:
- 711 0192 6C6F6E67 		.ascii	"long long int\000"
- 711      206C6F6E 
- 711      6720696E 
- 711      7400
- 712              	.LASF13:
- 713 01a0 63686172 		.ascii	"char\000"
- 713      00
- 714              	.LASF31:
- 715 01a5 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 715      4320342E 
- 715      392E3320 
- 715      32303135 
- 715      30333033 
- 716 01d8 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 716      20726576 
- 716      6973696F 
- 716      6E203232 
- 716      31323230 
- 717 020b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 717      66756E63 
- 717      74696F6E 
- 717      2D736563 
- 717      74696F6E 
- 718              	.LASF2:
- 719 0233 73686F72 		.ascii	"short int\000"
- 719      7420696E 
- 719      7400
- 720              	.LASF26:
- 721 023d 54696D65 		.ascii	"TimerDelay_ReadControlRegister\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccAy0bS5.s 			page 18
+ 696      61795F62 
+ 696      61636B75 
+ 696      70537472 
+ 697              	.LASF8:
+ 698 015e 756E7369 		.ascii	"unsigned int\000"
+ 698      676E6564 
+ 698      20696E74 
+ 698      00
+ 699              	.LASF7:
+ 700 016b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 700      206C6F6E 
+ 700      6720756E 
+ 700      7369676E 
+ 700      65642069 
+ 701              	.LASF14:
+ 702 0182 73697A65 		.ascii	"sizetype\000"
+ 702      74797065 
+ 702      00
+ 703              	.LASF6:
+ 704 018b 6C6F6E67 		.ascii	"long long int\000"
+ 704      206C6F6E 
+ 704      6720696E 
+ 704      7400
+ 705              	.LASF11:
+ 706 0199 63686172 		.ascii	"char\000"
+ 706      00
+ 707              	.LASF30:
+ 708 019e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 708      4320342E 
+ 708      392E3320 
+ 708      32303135 
+ 708      30333033 
+ 709 01d1 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 709      20726576 
+ 709      6973696F 
+ 709      6E203232 
+ 709      31323230 
+ 710 0204 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 710      66756E63 
+ 710      74696F6E 
+ 710      2D736563 
+ 710      74696F6E 
+ 711              	.LASF2:
+ 712 022c 73686F72 		.ascii	"short int\000"
+ 712      7420696E 
+ 712      7400
+ 713              	.LASF25:
+ 714 0236 54696D65 		.ascii	"TimerDelay_ReadControlRegister\000"
+ 714      7244656C 
+ 714      61795F52 
+ 714      65616443 
+ 714      6F6E7472 
+ 715              	.LASF33:
+ 716 0255 54696D65 		.ascii	"TimerDelay_backup\000"
+ 716      7244656C 
+ 716      61795F62 
+ 716      61636B75 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc6pO7Ts.s 			page 18
 
 
- 721      7244656C 
- 721      61795F52 
- 721      65616443 
- 721      6F6E7472 
- 722              	.LASF34:
- 723 025c 54696D65 		.ascii	"TimerDelay_backup\000"
- 723      7244656C 
- 723      61795F62 
- 723      61636B75 
- 723      7000
- 724              	.LASF27:
- 725 026e 54696D65 		.ascii	"TimerDelay_WriteCounter\000"
- 725      7244656C 
- 725      61795F57 
- 725      72697465 
- 725      436F756E 
- 726              	.LASF4:
- 727 0286 6C6F6E67 		.ascii	"long int\000"
- 727      20696E74 
- 727      00
- 728              	.LASF32:
- 729 028f 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\TimerDelay_PM.c\000"
- 729      6E657261 
- 729      7465645F 
- 729      536F7572 
- 729      63655C50 
- 730              	.LASF0:
- 731 02b8 7369676E 		.ascii	"signed char\000"
- 731      65642063 
- 731      68617200 
- 732              	.LASF25:
- 733 02c4 54696D65 		.ascii	"TimerDelay_ReadCounter\000"
- 733      7244656C 
- 733      61795F52 
- 733      65616443 
- 733      6F756E74 
- 734              	.LASF24:
- 735 02db 54696D65 		.ascii	"TimerDelay_Wakeup\000"
- 735      7244656C 
- 735      61795F57 
- 735      616B6575 
- 735      7000
- 736              	.LASF18:
- 737 02ed 496E7465 		.ascii	"InterruptMaskValue\000"
- 737      72727570 
- 737      744D6173 
- 737      6B56616C 
- 737      756500
- 738              	.LASF19:
- 739 0300 54696D65 		.ascii	"TimerControlRegister\000"
- 739      72436F6E 
- 739      74726F6C 
- 739      52656769 
- 739      73746572 
- 740              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 716      7000
+ 717              	.LASF26:
+ 718 0267 54696D65 		.ascii	"TimerDelay_WriteCounter\000"
+ 718      7244656C 
+ 718      61795F57 
+ 718      72697465 
+ 718      436F756E 
+ 719              	.LASF4:
+ 720 027f 6C6F6E67 		.ascii	"long int\000"
+ 720      20696E74 
+ 720      00
+ 721              	.LASF31:
+ 722 0288 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\TimerDelay_PM.c\000"
+ 722      6E657261 
+ 722      7465645F 
+ 722      536F7572 
+ 722      63655C50 
+ 723              	.LASF0:
+ 724 02b1 7369676E 		.ascii	"signed char\000"
+ 724      65642063 
+ 724      68617200 
+ 725              	.LASF24:
+ 726 02bd 54696D65 		.ascii	"TimerDelay_ReadCounter\000"
+ 726      7244656C 
+ 726      61795F52 
+ 726      65616443 
+ 726      6F756E74 
+ 727              	.LASF23:
+ 728 02d4 54696D65 		.ascii	"TimerDelay_Wakeup\000"
+ 728      7244656C 
+ 728      61795F57 
+ 728      616B6575 
+ 728      7000
+ 729              	.LASF17:
+ 730 02e6 496E7465 		.ascii	"InterruptMaskValue\000"
+ 730      72727570 
+ 730      744D6173 
+ 730      6B56616C 
+ 730      756500
+ 731              	.LASF18:
+ 732 02f9 54696D65 		.ascii	"TimerControlRegister\000"
+ 732      72436F6E 
+ 732      74726F6C 
+ 732      52656769 
+ 732      73746572 
+ 733              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

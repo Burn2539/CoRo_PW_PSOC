@@ -19,6 +19,7 @@
 * Included headers
 *****************************************************************************/
 #include "_Timer.h"
+#include "LowPowerMode.h"
 
 
 /*****************************************************************************
@@ -44,8 +45,10 @@ uint8 _Timer_DelayDone = FALSE;
 *****************************************************************************/
 void _Timer_Init(void)
 {
-    // Set the callback function of the TimerDelay interrupt.
-    TimerDelay_Interrupt_StartEx(Delay);
+    #if !LOWPOWERMODE_ENABLED
+        // Set the callback function of the TimerDelay interrupt.
+        TimerDelay_Interrupt_StartEx(Delay);
+    #endif
 }
 
 
@@ -66,24 +69,26 @@ void _Timer_Init(void)
 *****************************************************************************/
 CY_ISR(Delay)
 {
-    // Allows to wait longer (by multiples of TimerDelay's period).
-    static uint16 counter = 0;
-    
-    // Clear pending interrupt.
-    TimerDelay_Interrupt_ClearPending();
-    
-    if (counter >= 100) {
-        // Stop the timer.
-        TimerDelay_Stop();
+    #if !LOWPOWERMODE_ENABLED
+        // Allows to wait longer (by multiples of TimerDelay's period).
+        static uint16 counter = 0;
         
-        // Set the TimerDelay_Done variable
-        _Timer_DelayDone = TRUE;
+        // Clear pending interrupt.
+        TimerDelay_Interrupt_ClearPending();
         
-        // Reset the counter
-        counter = 0;
-    }
-    else
-        counter++;
+        if (counter >= 100) {
+            // Stop the timer.
+            TimerDelay_Stop();
+            
+            // Set the TimerDelay_Done variable
+            _Timer_DelayDone = TRUE;
+            
+            // Reset the counter
+            counter = 0;
+        }
+        else
+            counter++;
+    #endif
 }
 
 /* [] END OF FILE */

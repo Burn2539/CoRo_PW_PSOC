@@ -59,8 +59,8 @@ CYBLE_CYALIGNED_BEGIN uint8 cyBle_stackMemoryRam[CYBLE_STACK_RAM_SIZE] CYBLE_CYA
 
 CYBLE_GAPP_DISC_PARAM_T cyBle_discoveryParam =
 {
-    0x0020u,    /* uint16 advertising_interval_min */
-    0x0030u,    /* uint16 advertising_interval_max */
+    0x0190u,    /* uint16 advertising_interval_min */
+    0x01E0u,    /* uint16 advertising_interval_max */
     CYBLE_GAPP_CONNECTABLE_UNDIRECTED_ADV, /* uint8 advertising_type */
     0x00u,      /* uint8 own_addr_type */
     0x00u,      /* uint8 direct_addr_type */

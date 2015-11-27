@@ -13,19 +13,55 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE.h">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE">
 <ExpandedNodeIds>
 <v>PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\TopDesign</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\Communication</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\Communication</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLUE\BLUE.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLUE\BLUE.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLUE\BLUE_aliases.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\RED\RED.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\RED\RED.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\RED\RED_aliases.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay\TimerDelay.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay\TimerDelay.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay\TimerDelay_PM.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay_Interrupt</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay_Interrupt\TimerDelay_Interrupt.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\TimerDelay_Interrupt\TimerDelay_Interrupt.h</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\vector.c</v>
+<v>PSOC_CapSense_2_BLE</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\TopDesign</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydwr</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\Communication</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\Communication\_BLE.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\Communication\crc.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\IO</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\_Timer.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\_Watchdog.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\LowPowerMode.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Header Files\main.h</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\Communication</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\Communication\_BLE.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\Communication\crc.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\IO</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\_Timer.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\_Watchdog.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\LowPowerMode.c</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Source Files\main.c</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE</v>
@@ -34,30 +70,9 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_custom.c</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_custom.h</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_eventHandler.c</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_eventHandler.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_gatt.c</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_gatt.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_INT.c</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_PVT.c</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_HAL_PVT.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_Stack.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_STACK_PVT.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGap.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGatt.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattClient.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattDb.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackGattServer.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackHostMain.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE\BLE_StackL2cap.h</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLE_bless_isr</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\BLUE</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_SampleClk</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_SenseClk</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Generated_Source\PSoC4\CapSense_Sns</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE">
 <ExpandedNodeIds>
 <v>PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
@@ -71,7 +86,7 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\TopDesign\TopDesign.cysch</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE">
 <ExpandedNodeIds>
 <v>PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
@@ -81,7 +96,7 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_BLE.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_CapSense.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_PrISM.lst</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_LED.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_Timer.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_Watchdog.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\BLE.lst</v>
@@ -110,12 +125,8 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\cyPm.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\cyutils.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\GREEN.lst</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\LowPowerMode.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\main.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\PrISM_1.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\PrISM_1_PM.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\PrISM_2.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\PrISM_2_PM.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\PrISM_Clock.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\RED.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\TimerDelay.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\TimerDelay_Interrupt.lst</v>
@@ -137,7 +148,7 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_BLE.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_CapSense.lst</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_PrISM.lst</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_LED.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_Timer.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\_Watchdog.lst</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CortexM0\ARM_GCC_493\Debug\Listing Files\BLE.lst</v>
@@ -166,7 +177,7 @@
 <v>Datasheet</v>
 </TreeKeysV2>
 <TreeStatesV2>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_CapSense_2_BLE">
 <ExpandedNodeIds>
 <v>PSOC_CapSense_2_BLE</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE</v>
@@ -177,15 +188,10 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\System Reference Guides\cy_lfclk_v1_0</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\BLE_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CapSense_CSD_P4_v2_30.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_constant_v1_0</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_constant_v1_0\cy_constant_v1_0.pdf</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_isr_v1_70.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_pins_v2_10</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\PrISM_v2_20</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\PrISM_v2_20\PrISM_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Timer_v2_70.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\ZeroTerminal.pdf</v>
 </ExpandedNodeIds>
@@ -199,15 +205,10 @@
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\System Reference Guides\cy_lfclk_v1_0</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\BLE_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\CapSense_CSD_P4_v2_30.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_constant_v1_0</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_constant_v1_0\cy_constant_v1_0.pdf</v>
+<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_clock_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_isr_v1_70.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_pins_v2_10</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\PrISM_v2_20</v>
-<v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\PrISM_v2_20\PrISM_v2_20.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\Timer_v2_70.pdf</v>
 <v>PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE\ZeroTerminal.pdf</v>
 </VisibleNodeIds>
@@ -221,21 +222,25 @@
 <OpenDocs>
 <name v=".\PSOC_CapSense_2_BLE.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\PSOC_CapSense_2_BLE.cydwr" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4\BLE.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\main.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\main.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_BLE.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_BLE.c" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\LowPowerMode.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\LowPowerMode.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_CapSense.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_CapSense.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_Watchdog.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_Watchdog.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\vector.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\vector.c" />
-<name v=".\PSOC_CapSense_2_BLE.cydsn\_PrISM.h" />
-<name v=".\PSOC_CapSense_2_BLE.cydsn\_PrISM.c" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_LED.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_LED.c" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_Timer.h" />
 <name v=".\PSOC_CapSense_2_BLE.cydsn\_Timer.c" />
-<name v=".\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4\Cm0Start.c" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_UART.h" />
+<name v=".\PSOC_CapSense_2_BLE.cydsn\_UART.c" />
 </OpenDocs>
 <config v="" />
 <AutoUpdate v="true" />

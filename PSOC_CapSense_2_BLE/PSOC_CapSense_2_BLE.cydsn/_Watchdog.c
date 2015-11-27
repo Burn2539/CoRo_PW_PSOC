@@ -20,7 +20,8 @@
 *****************************************************************************/
 #include "_Watchdog.h"
 #include "_BLE.h"
-#include "_PrISM.h"
+#include "LowPowerMode.h"
+#include "_LED.h"
 
 
 /*****************************************************************************
@@ -75,6 +76,48 @@ void _Watchdog_Init(void)
 
 
 /*****************************************************************************
+* Function Name: _Watchdog_Pause()
+******************************************************************************
+* Summary:
+*   Disable the watchdog interrupt.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*
+*****************************************************************************/
+void _Watchdog_PauseInt(void)
+{
+    CyIntDisable(WATCHDOG_INT_VEC_NUM);
+}
+
+
+/*****************************************************************************
+* Function Name: _Watchdog_Resume()
+******************************************************************************
+* Summary:
+*   Enable the watchdog interrupt.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*
+*****************************************************************************/
+void _Watchdog_ResumeInt(void)
+{
+    CyIntEnable(WATCHDOG_INT_VEC_NUM);
+}
+
+
+/*****************************************************************************
 * Function Name: _Watchdog_Handler()
 ******************************************************************************
 * Summary:
@@ -99,9 +142,7 @@ void _Watchdog_Handler(void)
         
         /********************************************************************/
         
-        // Process all the events in the stack.
-        if(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY)
-            CyBle_ProcessEvents();
+        
         
         /********************************************************************/
         
@@ -138,33 +179,33 @@ void _Watchdog_Handler(void)
         // Stores the previous state of the BLE module.
         static uint8 previousState = 0xFF;
         
-        // If state changed, turn all the LEDs off.
-        if (CyBle_GetState() != previousState)
-            _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
-            
-        // If disconnected, turn all the LEDs off.
-        if(CyBle_GetState() == CYBLE_STATE_DISCONNECTED) {
-            previousState = CYBLE_STATE_DISCONNECTED;
-            
-            _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
-        }
-                
-        // If in advertising mode, flash the red LED.
-        else if(CyBle_GetState() == CYBLE_STATE_ADVERTISING) {
+        // If in advertising mode, flash the LED.
+         if(CyBle_GetState() == CYBLE_STATE_ADVERTISING) {
             previousState = CYBLE_STATE_ADVERTISING;
             
-            if(_PrISM_Red_On)
-                _PrISM_TurnOffLED(TRUE, FALSE, FALSE);
+            if(_LED_Green_On)
+                _LED_TurnOffLED(FALSE, TRUE, FALSE);
             else
-                _PrISM_TurnOnLED(TRUE, FALSE, FALSE);
+                _LED_TurnOnLED(FALSE, TRUE, FALSE);
         }
         
-        // If connected, turn the blue LED on.
+        // If state changed, turn all the LEDs off.
+        if (CyBle_GetState() != previousState)
+            _LED_TurnOffLED(TRUE, TRUE, TRUE);
+        
+        // If disconnected, turn all the LEDs off.
+        else if(CyBle_GetState() == CYBLE_STATE_DISCONNECTED) {
+            previousState = CYBLE_STATE_DISCONNECTED;
+            
+            _LED_TurnOffLED(TRUE, TRUE, TRUE);
+        }
+        
+        // If connected, turn the LED on.
         else if(CyBle_GetState() == CYBLE_STATE_CONNECTED) {
             previousState = CYBLE_STATE_CONNECTED;
             
-            _PrISM_TurnOffLED(TRUE, TRUE, TRUE);
-            _PrISM_TurnOnLED(FALSE, FALSE, TRUE);
+            _LED_TurnOffLED(TRUE, FALSE, TRUE);
+            _LED_TurnOnLED(FALSE, TRUE, FALSE);
         }
         
         /********************************************************************/

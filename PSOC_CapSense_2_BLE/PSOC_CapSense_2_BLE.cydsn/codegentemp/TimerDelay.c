@@ -402,12 +402,12 @@ void TimerDelay_WriteControlRegister(uint8 control)
 *  The present value of the counter.
 *
 *******************************************************************************/
-uint16 TimerDelay_ReadPeriod(void) 
+uint8 TimerDelay_ReadPeriod(void) 
 {
    #if(TimerDelay_UsingFixedFunction)
-       return ((uint16)CY_GET_REG16(TimerDelay_PERIOD_LSB_PTR));
+       return ((uint8)CY_GET_REG16(TimerDelay_PERIOD_LSB_PTR));
    #else
-       return (CY_GET_REG16(TimerDelay_PERIOD_LSB_PTR));
+       return (CY_GET_REG8(TimerDelay_PERIOD_LSB_PTR));
    #endif /* (TimerDelay_UsingFixedFunction) */
 }
 
@@ -428,13 +428,13 @@ uint16 TimerDelay_ReadPeriod(void)
 *  void
 *
 *******************************************************************************/
-void TimerDelay_WritePeriod(uint16 period) 
+void TimerDelay_WritePeriod(uint8 period) 
 {
     #if(TimerDelay_UsingFixedFunction)
         uint16 period_temp = (uint16)period;
         CY_SET_REG16(TimerDelay_PERIOD_LSB_PTR, period_temp);
     #else
-        CY_SET_REG16(TimerDelay_PERIOD_LSB_PTR, period);
+        CY_SET_REG8(TimerDelay_PERIOD_LSB_PTR, period);
     #endif /*Write Period value with appropriate resolution suffix depending on UDB or fixed function implementation */
 }
 
@@ -453,12 +453,12 @@ void TimerDelay_WritePeriod(uint16 period)
 *  Present Capture value.
 *
 *******************************************************************************/
-uint16 TimerDelay_ReadCapture(void) 
+uint8 TimerDelay_ReadCapture(void) 
 {
    #if(TimerDelay_UsingFixedFunction)
-       return ((uint16)CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
+       return ((uint8)CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
    #else
-       return (CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
+       return (CY_GET_REG8(TimerDelay_CAPTURE_LSB_PTR));
    #endif /* (TimerDelay_UsingFixedFunction) */
 }
 
@@ -477,7 +477,7 @@ uint16 TimerDelay_ReadCapture(void)
 *  void
 *
 *******************************************************************************/
-void TimerDelay_WriteCounter(uint16 counter) 
+void TimerDelay_WriteCounter(uint8 counter) 
 {
    #if(TimerDelay_UsingFixedFunction)
         /* This functionality is removed until a FixedFunction HW update to
@@ -486,7 +486,7 @@ void TimerDelay_WriteCounter(uint16 counter)
         CY_SET_REG16(TimerDelay_COUNTER_LSB_PTR, (uint16)counter);
         
     #else
-        CY_SET_REG16(TimerDelay_COUNTER_LSB_PTR, counter);
+        CY_SET_REG8(TimerDelay_COUNTER_LSB_PTR, counter);
     #endif /* Set Write Counter only for the UDB implementation (Write Counter not available in fixed function Timer */
 }
 
@@ -505,7 +505,7 @@ void TimerDelay_WriteCounter(uint16 counter)
 *  Present compare value.
 *
 *******************************************************************************/
-uint16 TimerDelay_ReadCounter(void) 
+uint8 TimerDelay_ReadCounter(void) 
 {
     /* Force capture by reading Accumulator */
     /* Must first do a software capture to be able to read the counter */
@@ -518,9 +518,9 @@ uint16 TimerDelay_ReadCounter(void)
 
     /* Read the data from the FIFO (or capture register for Fixed Function)*/
     #if(TimerDelay_UsingFixedFunction)
-        return ((uint16)CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
+        return ((uint8)CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
     #else
-        return (CY_GET_REG16(TimerDelay_CAPTURE_LSB_PTR));
+        return (CY_GET_REG8(TimerDelay_CAPTURE_LSB_PTR));
     #endif /* (TimerDelay_UsingFixedFunction) */
 }
 

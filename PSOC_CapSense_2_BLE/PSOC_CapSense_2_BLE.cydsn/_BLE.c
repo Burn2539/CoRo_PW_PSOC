@@ -19,6 +19,7 @@
 * Included headers
 *****************************************************************************/
 #include "_BLE.h"
+#include "LowPowerMode.h"
 #include "vector.h"
 #include "crc.h"
 
@@ -29,6 +30,9 @@
 // Stores connection parameters.
 CYBLE_CONN_HANDLE_T  connectionHandle;
 
+// Used to change the current clock configuration of the BLESS.
+CYBLE_BLESS_CLK_CFG_PARAMS_T clockConfig;
+
 // Status flag for the Stack Busy state. This flag is used to notify the
 // application  whether there is stack buffer free to push more data or not.
 uint8 _BLE_busyStatus;
@@ -37,11 +41,8 @@ uint8 _BLE_busyStatus;
 // This is updated in BLE event callback function.
 uint8 _BLE_deviceConnected;
 
-// Current Connection Parameters used by controller.
-CYBLE_GAP_CONN_PARAM_UPDATED_IN_CONTROLLER_T connectionParameters;
-
-// Size of the MTU used by the BLE stack.
-uint16 currentMTU;
+// Size of the MTU used by the BLE stack negociated with the client.
+uint16 negotiatedMtu;
 
 // These flags are set when the Central device writes to CCCD of the
 // CapSense sensors Characteristic to enable notifications or indications.
@@ -104,6 +105,9 @@ void _BLE_Init(void)
     // Initialize the connection status flag.
     _BLE_deviceConnected = FALSE;
     
+    // Initialize the MTU used during BLE communication.
+    negotiatedMtu = DEFAULT_MTU_SIZE;
+    
     // Initialize flags.
     sendDataNotifications = FALSE;
     sendDataIndications = FALSE;
@@ -144,6 +148,9 @@ void _BLE_Reset(void)
     connectionHandle.attId = 0;
     connectionHandle.bdHandle = 0;
     
+    // Reset the negociated MTU.
+    negotiatedMtu = DEFAULT_MTU_SIZE;
+    
     // Reset flags.
     sendDataNotifications = FALSE;
     sendDataIndications = FALSE;
@@ -181,7 +188,8 @@ void _BLE_Reset(void)
 *****************************************************************************/
 void EventHandler(uint32 eventCode, void *eventParam)
 {
-    // Local variable to store the data received as part of the Write request events.
+    // Local variable to store the data received as part of the Write request
+    // events.
 	CYBLE_GATTS_WRITE_REQ_PARAM_T *wrReqParam;
     
     // Log all the events.
@@ -189,8 +197,23 @@ void EventHandler(uint32 eventCode, void *eventParam)
     
     switch(eventCode)
     {
+        //////////////////////////////////////////////////////////////////////
+        // General events
+        //////////////////////////////////////////////////////////////////////
         // This event is received when the module is started.
         case CYBLE_EVT_STACK_ON: // eventCode == 0x01
+            
+            #if LOWPOWERMODE_ENABLED
+                // Get the configured clock parameters for BLE subsystem.
+                CyBle_GetBleClockCfgParam(&clockConfig);
+
+                // Set the device sleep-clock accuracy (SCA) based on the
+                // tuned ppm of the WCO.
+                clockConfig.bleLlSca = CYBLE_LL_SCA_000_TO_020_PPM;
+
+                // Set the clock parameter of BLESS with updated values.
+                CyBle_SetBleClockCfgParam(&clockConfig);
+            #endif
         
             // Start fast advertisement
 			_BLE_restartAdvertisement = TRUE;
@@ -222,6 +245,9 @@ void EventHandler(uint32 eventCode, void *eventParam)
             break;
             
             
+        //////////////////////////////////////////////////////////////////////
+        // GAP events
+        //////////////////////////////////////////////////////////////////////
         // This event is received by Peripheral and Central devices. When it is
         // received by Peripheral, peripheral needs to Call CyBle_GappAuthReqReply()
         // to reply to authentication request from Central.
@@ -275,6 +301,9 @@ void EventHandler(uint32 eventCode, void *eventParam)
             break;
             
                 
+        //////////////////////////////////////////////////////////////////////
+        // GATT events
+        //////////////////////////////////////////////////////////////////////
         // This event is received when device is connected at GATT level.
         case CYBLE_EVT_GATT_CONNECT_IND: // eventCode == 0x41
         
@@ -285,6 +314,8 @@ void EventHandler(uint32 eventCode, void *eventParam)
             _BLE_deviceConnected = TRUE;
             
             // Set all the flags for the current connection.
+            updateSensorsCCCDreq = TRUE;
+            updateControlValuesReq = TRUE;
             _BLE_UpdateCCCD();
             _BLE_UpdateControl();
             _BLE_writeStatusFlags();
@@ -308,11 +339,9 @@ void EventHandler(uint32 eventCode, void *eventParam)
         // Event parameter contains the MTU size of type CYBLE_GATT_XCHG_MTU_PARAM_T. 
         case CYBLE_EVT_GATTS_XCNHG_MTU_REQ: // eventCode == 0x43
             
-            // Get the MTU size.
-            CyBle_GattGetMtuSize(&currentMTU);
-            
-            // Send the MTU size to the client.
-            CyBle_GattsExchangeMtuRsp(connectionHandle, currentMTU);
+            // Establish the MTU that is going to be used during communication.
+            negotiatedMtu = (((CYBLE_GATT_XCHG_MTU_PARAM_T *)eventParam)->mtu < CYBLE_GATT_MTU) ?
+                            ((CYBLE_GATT_XCHG_MTU_PARAM_T *)eventParam)->mtu : CYBLE_GATT_MTU;
             
             break;
             
@@ -423,8 +452,12 @@ void EventHandler(uint32 eventCode, void *eventParam)
             _BLE_writeStatusFlags();
             
             break;
+            
+
+        default:
+            
+            break;
     }
-    
 }
 
 
@@ -575,12 +608,13 @@ uint8 _BLE_sendCapSenseData(void)
     CYBLE_GATTS_HANDLE_VALUE_NTF_T NotificationHandle;
     CYBLE_GATTS_HANDLE_VALUE_IND_T IndicationHandle;
     
-    uint16 numIterations = 1;
-    numIterations = ( (vectorSize() * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT) < BUFFER_MAX_SIZE ) ?
-                    vectorSize() : BUFFER_MAX_SIZE / numBytes_OneData / CapSense_TOTAL_SENSOR_COUNT;
+    uint16 numIterations;
+    
+    uint8 buffer[CYBLE_GATT_MTU];
+    numIterations = ( (vectorSize() * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT) < (negotiatedMtu - 3) ) ?
+                        vectorSize() : (negotiatedMtu - 3) / numBytes_OneData / CapSense_TOTAL_SENSOR_COUNT;
                     
     uint16 numBytes_AllData = numIterations * numBytes_OneData * CapSense_TOTAL_SENSOR_COUNT;
-    uint8 buffer[numBytes_AllData];
 
     for( k = 0; k < numIterations; k++) {
         // Retrieve the front data in the vectors.
@@ -595,11 +629,6 @@ uint8 _BLE_sendCapSenseData(void)
             for (j = 0; j < numBytes_OneData; j++)
                 buffer[arrayIterator++] = encodedData[i] >> ((numBytes_OneData - 1 - j) * 8) & 0xFF;
     }
-    
-    // Wait for the stack to be ready.
-//	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY) {
-        CyBle_ProcessEvents();
-//    }
     
     // Send the CapSense characteristic values to BLE client.
     if (sendDataNotifications) {
@@ -670,11 +699,6 @@ void _BLE_sendStatusFlags(void)
         StatusArray[STATUS_DATA_ACQUIRED_BYTE_MASK] = Status_DataAcquired;
         StatusArray[STATUS_SENDING_BYTE_MASK] = Status_Sending;
         StatusArray[STATUS_NO_MORE_DATA_BYTE_MASK] = Status_NoMoreData;
-        
-        // Wait for the stack to be ready.
-//    	while(CyBle_GattGetBusyStatus() == CYBLE_STACK_STATE_BUSY) {
-            CyBle_ProcessEvents();
-//        }
         
         // Send the Status characteristic values to BLE client.
         if (sendStatusNotifications) {

@@ -1,17 +1,16 @@
---------------- Rebuild Started: 11/03/2015 15:44:01 Project: PSOC_CapSense_2_BLE, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\main.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\crc.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\_PrISM.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\_CapSense.o"
+--------------- Rebuild Started: 11/23/2015 14:09:31 Project: PSOC_CapSense_2_BLE, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\_BLE.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_UART.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\crc.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_CapSense.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\vector.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_LED.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\main.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\_Watchdog.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\_Timer.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\LowPowerMode.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyfitter_cfg.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\cymetadata.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_2.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_2_PM.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_1.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_1_PM.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_gatt.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_eventHandler.o"
@@ -26,7 +25,6 @@ Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_TunerHelper.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLUE.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\GREEN.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\RED.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\PrISM_Clock.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\BLE_bless_isr.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\CapSense_SenseClk.o"
@@ -37,13 +35,16 @@ Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyLib.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyPm.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\cyutils.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\CyLFClk.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\Timer.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\Timer_PM.o"
-Deleting file ".\CortexM0\ARM_GCC_493\Debug\Delay_1ms.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\USB_UART.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\USB_UART_PM.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\USB_UART_INT.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\USB_UART_BOOT.o"
+Deleting file ".\CortexM0\ARM_GCC_493\Debug\USB_UART_IntClock.o"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.hex"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.elf"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.map"
 Deleting file ".\PSOC_CapSense_2_BLE.cycdx"
+Deleting file ".\PSOC_CapSense_2_BLE.svd"
 Deleting file ".\PSOC_CapSense_2_BLE.rpt"
 Deleting file ".\PSOC_CapSense_2_BLE_timing.html"
 Deleting file ".\CortexM0\ARM_GCC_493\Debug\.deps\C_FILE.P"
@@ -55,8 +56,70 @@ HDL Generation ...
 Synthesis ...
 Place and Route ...
 Tech mapping ...
-Error: mpr.M0014: Resource limit: Maximum number of Pre-configured Blocks exceeded (max=4, needed=5). (App=cydsfit)
+ADD: pft.M0040: information: The following 3 pin(s) will be assigned a location by the fitter: BLUE(0), RED(0), UART_Tx(0)
+Analog Placement ...
+Analog Routing ...
+Analog Code Generation ...
+Digital Placement ...
+Digital Routing ...
+Bitstream Generation ...
+Static timing analysis ...
+API Generation ...
 Dependency Generation ...
 Clean Temporary Files ...
-Error: cdf.M0005: CyDsFit aborted due to errors, please address all errors and rerun CyDsFit. (App=cydsfit)
---------------- Rebuild Failed: 11/03/2015 15:44:06 ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_BLE.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_BLE.c -o .\CortexM0\ARM_GCC_493\Debug\_BLE.o
+.\_BLE.c: In function '_BLE_sendCapSenseData':
+.\_BLE.c:706:36: warning: unused variable 'IndicationHandle' [-Wunused-variable]
+     CYBLE_GATTS_HANDLE_VALUE_IND_T IndicationHandle;
+                                    ^
+.\_BLE.c:705:36: warning: unused variable 'NotificationHandle' [-Wunused-variable]
+     CYBLE_GATTS_HANDLE_VALUE_NTF_T NotificationHandle;
+                                    ^
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_UART.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_UART.c -o .\CortexM0\ARM_GCC_493\Debug\_UART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/crc.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\crc.c -o .\CortexM0\ARM_GCC_493\Debug\crc.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_CapSense.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_CapSense.c -o .\CortexM0\ARM_GCC_493\Debug\_CapSense.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/vector.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\vector.c -o .\CortexM0\ARM_GCC_493\Debug\vector.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_LED.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_LED.c -o .\CortexM0\ARM_GCC_493\Debug\_LED.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/main.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\main.c -o .\CortexM0\ARM_GCC_493\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_Watchdog.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_Watchdog.c -o .\CortexM0\ARM_GCC_493\Debug\_Watchdog.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/_Timer.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\_Timer.c -o .\CortexM0\ARM_GCC_493\Debug\_Timer.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/LowPowerMode.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\LowPowerMode.c -o .\CortexM0\ARM_GCC_493\Debug\LowPowerMode.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/cyfitter_cfg.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\cyfitter_cfg.c -o .\CortexM0\ARM_GCC_493\Debug\cyfitter_cfg.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/cymetadata.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\cymetadata.c -o .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE.c -o .\CortexM0\ARM_GCC_493\Debug\BLE.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_gatt.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_gatt.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_gatt.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_eventHandler.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_eventHandler.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_eventHandler.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_HAL_INT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_HAL_INT.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_HAL_INT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_HAL_PVT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_HAL_PVT.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_HAL_PVT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_custom.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_custom.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_custom.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_PM.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_PM.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_CSHL.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_CSHL.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_INT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_INT.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_INT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_TunerHelper.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_TunerHelper.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_TunerHelper.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLUE.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLUE.c -o .\CortexM0\ARM_GCC_493\Debug\BLUE.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/GREEN.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\GREEN.c -o .\CortexM0\ARM_GCC_493\Debug\GREEN.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/RED.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\RED.c -o .\CortexM0\ARM_GCC_493\Debug\RED.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/BLE_bless_isr.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\BLE_bless_isr.c -o .\CortexM0\ARM_GCC_493\Debug\BLE_bless_isr.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_SampleClk.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_SampleClk.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CapSense_SenseClk.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CapSense_SenseClk.c -o .\CortexM0\ARM_GCC_493\Debug\CapSense_SenseClk.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/Cm0Start.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\Cm0Start.c -o .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+arm-none-eabi-as.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -alh=.\CortexM0\ARM_GCC_493\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM0\ARM_GCC_493\Debug\CyBootAsmGnu.o .\Generated_Source\PSoC4\CyBootAsmGnu.s
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CyFlash.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CyFlash.c -o .\CortexM0\ARM_GCC_493\Debug\CyFlash.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CyLib.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CyLib.c -o .\CortexM0\ARM_GCC_493\Debug\CyLib.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/cyPm.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\cyPm.c -o .\CortexM0\ARM_GCC_493\Debug\cyPm.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/cyutils.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\cyutils.c -o .\CortexM0\ARM_GCC_493\Debug\cyutils.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/CyLFClk.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\CyLFClk.c -o .\CortexM0\ARM_GCC_493\Debug\CyLFClk.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/USB_UART.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\USB_UART.c -o .\CortexM0\ARM_GCC_493\Debug\USB_UART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/USB_UART_PM.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\USB_UART_PM.c -o .\CortexM0\ARM_GCC_493\Debug\USB_UART_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/USB_UART_INT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\USB_UART_INT.c -o .\CortexM0\ARM_GCC_493\Debug\USB_UART_INT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/USB_UART_BOOT.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\USB_UART_BOOT.c -o .\CortexM0\ARM_GCC_493\Debug\USB_UART_BOOT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_493\Debug/USB_UART_IntClock.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -c .\Generated_Source\PSoC4\USB_UART_IntClock.c -o .\CortexM0\ARM_GCC_493\Debug\USB_UART_IntClock.o
+arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.a .\CortexM0\ARM_GCC_493\Debug\cyfitter_cfg.o .\CortexM0\ARM_GCC_493\Debug\BLE.o .\CortexM0\ARM_GCC_493\Debug\BLE_gatt.o .\CortexM0\ARM_GCC_493\Debug\BLE_eventHandler.o .\CortexM0\ARM_GCC_493\Debug\BLE_HAL_INT.o .\CortexM0\ARM_GCC_493\Debug\BLE_HAL_PVT.o .\CortexM0\ARM_GCC_493\Debug\BLE_custom.o .\CortexM0\ARM_GCC_493\Debug\CapSense.o .\CortexM0\ARM_GCC_493\Debug\CapSense_PM.o .\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o .\CortexM0\ARM_GCC_493\Debug\CapSense_INT.o .\CortexM0\ARM_GCC_493\Debug\CapSense_TunerHelper.o .\CortexM0\ARM_GCC_493\Debug\BLUE.o .\CortexM0\ARM_GCC_493\Debug\GREEN.o .\CortexM0\ARM_GCC_493\Debug\RED.o .\CortexM0\ARM_GCC_493\Debug\BLE_bless_isr.o .\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o .\CortexM0\ARM_GCC_493\Debug\CapSense_SenseClk.o .\CortexM0\ARM_GCC_493\Debug\CyBootAsmGnu.o .\CortexM0\ARM_GCC_493\Debug\CyFlash.o .\CortexM0\ARM_GCC_493\Debug\CyLib.o .\CortexM0\ARM_GCC_493\Debug\cyPm.o .\CortexM0\ARM_GCC_493\Debug\cyutils.o .\CortexM0\ARM_GCC_493\Debug\CyLFClk.o .\CortexM0\ARM_GCC_493\Debug\USB_UART.o .\CortexM0\ARM_GCC_493\Debug\USB_UART_PM.o .\CortexM0\ARM_GCC_493\Debug\USB_UART_INT.o .\CortexM0\ARM_GCC_493\Debug\USB_UART_BOOT.o .\CortexM0\ARM_GCC_493\Debug\USB_UART_IntClock.o
+arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o .\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.elf .\CortexM0\ARM_GCC_493\Debug\_BLE.o .\CortexM0\ARM_GCC_493\Debug\_UART.o .\CortexM0\ARM_GCC_493\Debug\crc.o .\CortexM0\ARM_GCC_493\Debug\_CapSense.o .\CortexM0\ARM_GCC_493\Debug\vector.o .\CortexM0\ARM_GCC_493\Debug\_LED.o .\CortexM0\ARM_GCC_493\Debug\main.o .\CortexM0\ARM_GCC_493\Debug\_Watchdog.o .\CortexM0\ARM_GCC_493\Debug\_Timer.o .\CortexM0\ARM_GCC_493\Debug\LowPowerMode.o .\CortexM0\ARM_GCC_493\Debug\cymetadata.o .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o .\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.a "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\BLE_v2_20\Library\gccCyBLEStack_BLE_SOC_PERIPHERAL.a" "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CapSense_CSD_P4_v2_30\PSoC4\Library\CapsenseP4Library_GCC.a" "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM0\ARM_GCC_493\Debug\CyComponentLibrary.a" -mcpu=cortex-m0 -mthumb -g -ffunction-sections -Og -L Generated_Source\PSoC4 -Wl,-Map,.\CortexM0\ARM_GCC_493\Debug/PSOC_CapSense_2_BLE.map -T Generated_Source\PSoC4\cm0gcc.ld -specs=nano.specs -Wl,--gc-sections -Wl,--end-group
+cyelftool.exe -C C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.elf --flash_row_size 128 --flash_size 131072
+cyelftool.exe -S C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\CortexM0\ARM_GCC_493\Debug\PSOC_CapSense_2_BLE.elf
+Flash used: 81664 of 131072 bytes (62.3 %).
+SRAM used: 15596 of 16384 bytes (95.2 %). Stack: 512 bytes. Heap: 128 bytes.
+--------------- Rebuild Succeeded: 11/23/2015 14:09:47 ---------------

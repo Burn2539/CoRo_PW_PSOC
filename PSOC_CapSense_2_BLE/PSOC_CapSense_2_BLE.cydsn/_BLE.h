@@ -27,34 +27,38 @@
 * Macros and constants
 *****************************************************************************/
 // Byte masks for the status characteristic.
-#define STATUS_READY_BYTE_MASK          0
-#define STATUS_ACQUIRING_BYTE_MASK      1
-#define STATUS_NO_MORE_SPACE_BYTE_MASK  2
-#define STATUS_DATA_ACQUIRED_BYTE_MASK  3
-#define STATUS_SENDING_BYTE_MASK        4
-#define STATUS_NO_MORE_DATA_BYTE_MASK   5
+#define STATUS_READY_BYTE_MASK          0u
+#define STATUS_ACQUIRING_BYTE_MASK      1u
+#define STATUS_NO_MORE_SPACE_BYTE_MASK  2u
+#define STATUS_DATA_ACQUIRED_BYTE_MASK  3u
+#define STATUS_SENDING_BYTE_MASK        4u
+#define STATUS_NO_MORE_DATA_BYTE_MASK   5u
     
 // Number of status in the BLE profile.
-#define NUM_STATUS  6
+#define NUM_STATUS  6u
     
 // Byte masks for the control characteristic.
-#define CONTROL_ACQUIRE_DATA_BYTE_MASK              0
-#define CONTROL_SEND_DATA_BYTE_MASK                 1
-#define CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK   2
+#define CONTROL_ACQUIRE_DATA_BYTE_MASK              0u
+#define CONTROL_SEND_DATA_BYTE_MASK                 1u
+#define CONTROL_SEND_DATA_SYNCHRONOUSLY_BYTE_MASK   2u
     
 // Number of controls in the BLE profile.
-#define NUM_CONTROLS    3
+#define NUM_CONTROLS    3u
 
 // Bit masks for notification and indication bit in CCCD.
-#define CCCD_NTF_BIT_MASK   1
-#define CCCD_IND_BIT_MASK   2
+#define CCCD_NTF_BIT_MASK   1u
+#define CCCD_IND_BIT_MASK   2u
     
 // Client Characteristic Configuration descriptor data length. This is defined
 // as per BLE spec.
-#define CCC_DATA_LEN    2
+#define CCC_DATA_LEN    2u
     
-//#define BUFFER_MAX_SIZE (CYBLE_GATT_MTU - CYBLE_GATT_MTU_BUF_COUNT)
-#define BUFFER_MAX_SIZE 400
+// MTU constants.
+#define MAX_MTU_SIZE        512u
+#define DEFAULT_MTU_SIZE    23u
+    
+// Maximum number of byte to send in time.
+#define BUFFER_MAX_SIZE     400u
 
 
 /*****************************************************************************

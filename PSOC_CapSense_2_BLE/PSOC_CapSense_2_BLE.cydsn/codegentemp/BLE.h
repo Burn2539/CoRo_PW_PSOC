@@ -89,15 +89,15 @@
 #define CYBLE_GAP_ROLE_BROADCASTER                  (0u != (CYBLE_GAP_ROLE & CYBLE_GAP_BROADCASTER))
 
 #if(CYBLE_GAP_ROLE_PERIPHERAL || CYBLE_GAP_ROLE_BROADCASTER)
-    #define CYBLE_FAST_ADV_INT_MIN                  (0x0020u)
-    #define CYBLE_FAST_ADV_INT_MAX                  (0x0030u)
+    #define CYBLE_FAST_ADV_INT_MIN                  (0x0190u)
+    #define CYBLE_FAST_ADV_INT_MAX                  (0x01E0u)
     #define CYBLE_FAST_ADV_TIMEOUT                  (0x001Eu)
     #define CYBLE_SLOW_ADV_ENABLED                  (0x00u)
     #define CYBLE_SLOW_ADV_INT_MIN                  (0x0640u)
     #define CYBLE_SLOW_ADV_INT_MAX                  (0x4000u)
     #define CYBLE_SLOW_ADV_TIMEOUT                  (0x0096u)
-    #define CYBLE_GAPP_CONNECTION_INTERVAL_MIN      (0x0008u)
-    #define CYBLE_GAPP_CONNECTION_INTERVAL_MAX      (0x0010u)
+    #define CYBLE_GAPP_CONNECTION_INTERVAL_MIN      (0x0010u)
+    #define CYBLE_GAPP_CONNECTION_INTERVAL_MAX      (0x0014u)
     #define CYBLE_GAPP_CONNECTION_SLAVE_LATENCY     (0x0000u)
     #define CYBLE_GAPP_CONNECTION_TIME_OUT          (0x03E8u)
 #endif /* CYBLE_GAP_ROLE_PERIPHERAL */
@@ -157,11 +157,11 @@
                                     CYBLE_ALIGN_TO_4(CYBLE_GATT_MAX_ATTR_LEN + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 
 /* L2CAP MTU Size */
-#define CYBLE_L2CAP_MTU                     (30u)
+#define CYBLE_L2CAP_MTU                     (23u)
 #define CYBLE_L2CAP_MTU_PLUS_L2CAP_MEM_EXT  CYBLE_ALIGN_TO_4(CYBLE_L2CAP_MTU + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 
 /* L2CAP PMS Size */
-#define CYBLE_L2CAP_MPS                     (30u)
+#define CYBLE_L2CAP_MPS                     (23u)
 #define CYBLE_L2CAP_MPS_PLUS_L2CAP_MEM_EXT  CYBLE_ALIGN_TO_4(CYBLE_L2CAP_MPS + CYBLE_MEM_EXT_SZ + CYBLE_L2CAP_HDR_SZ)
 
 #define CYBLE_L2CAP_PSM_PLUS_L2CAP_MEM_EXT  CYBLE_ALIGN_TO_4(CYBLE_L2CAP_PSM_SIZE + CYBLE_MEM_EXT_SZ)

@@ -21,7 +21,6 @@
 * Included headers
 *****************************************************************************/
 #include <project.h>
-#include "vector.h"
 
 
 /*****************************************************************************
@@ -34,6 +33,12 @@
 #define SUCCESS         0u
 #define NO_MORE_SPACE   1u
 #define NO_MORE_DATA    2u
+    
+// Delay (in connection intervals) between each send command.
+#define CONN_INTERVAL_DELAY 29
+    
+// TEST //
+#define TEST_USB    FALSE
 
 
 /*****************************************************************************

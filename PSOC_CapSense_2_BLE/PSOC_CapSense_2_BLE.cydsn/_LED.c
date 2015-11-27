@@ -2,7 +2,7 @@
 *
 * Project Name		: PSoC CapSense 2 BLE
 *
-* File Name			: _PrISM.c
+* File Name			: _LED.c
 * Version 			: 1.0
 *
 * Device Used		: CY8C4247LQI-BL483
@@ -18,20 +18,20 @@
 /*****************************************************************************
 * Included headers
 *****************************************************************************/
-#include "_PrISM.h"
+#include "_LED.h"
 
 
 /*****************************************************************************
 * Local global variables
 *****************************************************************************/
 // Flags that indicate the current state of each LEDs.
-uint8 _PrISM_Red_On;
-uint8 _PrISM_Green_On;
-uint8 _PrISM_Blue_On;
+uint8 _LED_Red_On;
+uint8 _LED_Green_On;
+uint8 _LED_Blue_On;
 
 
 /*****************************************************************************
-* Function Name: _PrISM_Init()
+* Function Name: _LED_Init()
 ******************************************************************************
 * Summary:
 *   Initialize the PrISM modules.
@@ -45,32 +45,22 @@ uint8 _PrISM_Blue_On;
 * Note:
 *
 *****************************************************************************/
-void _PrISM_Init(void)
+void _LED_Init(void)
 {
-    // Start the PrISM component for LED control.
-    PrISM_1_Start();
-    PrISM_2_Start();
-    
-    // The RGB LED on BLE Pioneer kit are active low. Drive HIGH on 
-	// pin for OFF and drive LOW on pin for ON.
-	PrISM_1_WritePulse0(RGB_LED_OFF);
-	PrISM_1_WritePulse1(RGB_LED_OFF);
-	PrISM_2_WritePulse0(RGB_LED_OFF);
-	
 	// Set Drive mode of output pins from HiZ to Strong.
-	RED_SetDriveMode(RED_DM_ALG_HIZ);
-	GREEN_SetDriveMode(GREEN_DM_ALG_HIZ);
-	BLUE_SetDriveMode(BLUE_DM_ALG_HIZ);
+	RED_SetDriveMode(RED_DM_STRONG);
+	GREEN_SetDriveMode(GREEN_DM_STRONG);
+	BLUE_SetDriveMode(BLUE_DM_STRONG);
     
     // Reset the flags.
-    _PrISM_Red_On = FALSE;
-    _PrISM_Green_On = FALSE;
-    _PrISM_Blue_On = FALSE;
+    _LED_Red_On = FALSE;
+    _LED_Green_On = FALSE;
+    _LED_Blue_On = FALSE;
 }
 
 
 /*****************************************************************************
-* Function Name: _PrISM_TurnOnLED()
+* Function Name: _LED_TurnOnLED()
 ******************************************************************************
 * Summary:
 *   Turns ON the selected LED.
@@ -84,39 +74,36 @@ void _PrISM_Init(void)
 * Note:
 *
 *****************************************************************************/
-void _PrISM_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue)
+void _LED_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue)
 {
     if(Red) {
         // Turn Red LED on.
-        PrISM_1_WritePulse0(RGB_LED_ON);
-    	RED_SetDriveMode(RED_DM_STRONG);
+        RED_Write(RGB_LED_ON);
         
         // Set the flag.
-        _PrISM_Red_On = TRUE;
+        _LED_Red_On = TRUE;
     }
     
     if(Green) {
         // Turn Green LED on.
-        PrISM_1_WritePulse1(RGB_LED_ON);
-    	GREEN_SetDriveMode(GREEN_DM_STRONG);
+        GREEN_Write(RGB_LED_ON);
         
         // Set the flag.
-        _PrISM_Green_On = TRUE;
+        _LED_Green_On = TRUE;
     }
     
     if(Blue) {
         // Turn Blue LED on.
-        PrISM_2_WritePulse0(RGB_LED_ON);
-    	BLUE_SetDriveMode(BLUE_DM_STRONG);
+        BLUE_Write(RGB_LED_ON);
         
         // Set the flag.
-        _PrISM_Blue_On = TRUE;
+        _LED_Blue_On = TRUE;
     }
 }
 
 
 /*****************************************************************************
-* Function Name: _PrISM_TurnOffLED()
+* Function Name: _LED_TurnOffLED()
 ******************************************************************************
 * Summary:
 *   Turns OFF the selected LED.
@@ -130,33 +117,30 @@ void _PrISM_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue)
 * Note:
 *
 *****************************************************************************/
-void _PrISM_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue)
+void _LED_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue)
 {
     if(Red) {
         // Turn Red LED off.
-        PrISM_1_WritePulse0(RGB_LED_OFF);
-    	RED_SetDriveMode(RED_DM_ALG_HIZ);
+        RED_Write(RGB_LED_OFF);
         
         // Reset the flag.
-        _PrISM_Red_On = FALSE;
+        _LED_Red_On = FALSE;
     }
     
     if(Green) {
         // Turn Green LED off.
-        PrISM_1_WritePulse1(RGB_LED_OFF);
-    	GREEN_SetDriveMode(GREEN_DM_ALG_HIZ);
+        GREEN_Write(RGB_LED_OFF);
         
         // Reset the flag.
-        _PrISM_Green_On = FALSE;
+        _LED_Green_On = FALSE;
     }
     
     if(Blue) {
         // Turn Blue LED off.
-        PrISM_2_WritePulse0(RGB_LED_OFF);
-    	BLUE_SetDriveMode(BLUE_DM_ALG_HIZ);
+        BLUE_Write(RGB_LED_OFF);
         
         // Reset the flag.
-        _PrISM_Blue_On = FALSE;
+        _LED_Blue_On = FALSE;
     }
 }
 

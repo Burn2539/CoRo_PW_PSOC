@@ -57,7 +57,7 @@ CY_ISR_PROTO(CapSense_ISR);
 *   Condition compilation parameters
 ***************************************/
 
-#define CapSense_CONNECT_INACTIVE_SNS       (1u)
+#define CapSense_CONNECT_INACTIVE_SNS       (0u)
 #define CapSense_IS_COMPLEX_SCANSLOTS       (0u)
 #define CapSense_COMPLEX_SCANSLOTS_NUM      (0u)
 #define CapSense_DEDICATED_SENSORS_NUM      (0u)
@@ -70,7 +70,7 @@ CY_ISR_PROTO(CapSense_ISR);
 
 #define CapSense_MULTIPLE_FREQUENCY_SET     (1u)
 #define CapSense_FILTER_ENABLE              (0u)
-#define CapSense_PRS_OPTIONS                (3u)
+#define CapSense_PRS_OPTIONS                (0u)
 
 #define CapSense_WATER_PROOF                (0u)
 

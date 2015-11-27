@@ -44,14 +44,16 @@
 #define WATCHDOG_REG_UPDATE_WAIT_TIME   100
     
 // Counters period
-#define WATCHDOG_COUNTER0_PERIOD (WATCHDOG_ONE_MILLISEC_COUNT_VAL * 10)
-#define WATCHDOG_COUNTER1_PERIOD (WATCHDOG_ONE_MILLISEC_COUNT_VAL * 500)
+#define WATCHDOG_COUNTER0_PERIOD (WATCHDOG_ONE_MILLISEC_COUNT_VAL * CYBLE_GAPP_CONNECTION_INTERVAL_MIN)
+#define WATCHDOG_COUNTER1_PERIOD (WATCHDOG_ONE_MILLISEC_COUNT_VAL * 1000)
 
     
 /*****************************************************************************
 * Function Declarations
 *****************************************************************************/
 void _Watchdog_Init(void);
+void _Watchdog_PauseInt(void);
+void _Watchdog_ResumeInt(void);
 void _Watchdog_Handler(void);
 
 #endif

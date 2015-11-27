@@ -33,6 +33,8 @@
 *****************************************************************************/
 void _CapSense_Init(void);
 uint8 _CapSense_Scan(void);
+void _CapSense_Sleep(void);
+void _CapSense_Wakeup(void);
 
 #endif
 

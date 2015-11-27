@@ -19,7 +19,9 @@
 * Included headers
 *****************************************************************************/
 #include "_CapSense.h"
+#include "_Watchdog.h"
 #include "crc.h"
+#include "vector.h"
 
 
 /*****************************************************************************
@@ -41,9 +43,6 @@ void _CapSense_Init(void)
 {
     // Initialize and enables all the sensors.
     CapSense_Start();
-    
-    //Initialize the baselines.
-    CapSense_InitializeEnabledBaselines();
 }
 
 
@@ -73,21 +72,18 @@ uint8 _CapSense_Scan(void)
     // Scan the Widgets.
     CapSense_ScanEnabledWidgets();
     
-    // Update baselines.
-    CapSense_UpdateEnabledBaselines();
+    // Disable watchdog interrupts
+    _Watchdog_PauseInt();
     
     // Wait for CapSense scanning to be complete.
 	while(CapSense_IsBusy()) {
 		CySysPmSleep();
     }
+    
+    // Enable watchdog interrupts
+    _Watchdog_ResumeInt();
         
     // Store the sensors values into the vectors.
-//    uint16 sensors_minus_baselines[CapSense_TOTAL_SENSOR_COUNT];
-//    uint8 sensor;
-//    
-//    for (sensor = 0; sensor < CapSense_TOTAL_SENSOR_COUNT; sensor++)
-//        sensors_minus_baselines[sensor] = CapSense_GetDiffCountData(sensor);
-        
     pushInVector(CapSense_SensorRaw);
     
     
@@ -97,6 +93,50 @@ uint8 _CapSense_Scan(void)
     
     
     return SUCCESS;
+}
+
+
+/*****************************************************************************
+* Function Name: _CapSense_Sleep()
+******************************************************************************
+* Summary:
+*   Put the Capsense module to sleep.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*
+*****************************************************************************/
+void _CapSense_Sleep(void)
+{
+    CapSense_Sleep();
+    CapSense_SetDriveModeAllPins(CY_SYS_PINS_DM_ALG_HIZ);
+}
+
+
+/*****************************************************************************
+* Function Name: _CapSense_Wakeup()
+******************************************************************************
+* Summary:
+*   Put the Capsense module to sleep.
+*
+* Parameters:
+*   None.
+*
+* Return:
+*   None.
+*
+* Note:
+*
+*****************************************************************************/
+void _CapSense_Wakeup(void)
+{
+     CapSense_RestoreDriveModeAllPins();
+    CapSense_Wakeup();
 }
 
 /* [] END OF FILE */
