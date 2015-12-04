@@ -11,40 +11,6 @@
 <CyGuid_f44455c5-3770-4452-b988-0a7a7ff46256 type_name="CyDesigner.Common.ProjMgmt.Model.CyConfigDependencies" version="1">
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
-<file name=".\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o">
-<dep name=".\Generated_Source\PSoC4\CapSense.h" />
-<dep name=".\Generated_Source\PSoC4\CapSense_CSHL.c" />
-<dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
-<dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
-<dep name=".\Generated_Source\PSoC4\CapSense_PVT.h" />
-<dep name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
-<dep name=".\Generated_Source\PSoC4\CapSense_SenseClk.h" />
-<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
-<dep name=".\Generated_Source\PSoC4\CyLib.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC4\CapSense.h" />
-<file name=".\Generated_Source\PSoC4\CapSense_CSHL.c" />
-<file name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
-<file name=".\Generated_Source\PSoC4\CapSense_IP.h" />
-<file name=".\Generated_Source\PSoC4\CapSense_PVT.h" />
-<file name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
-<file name=".\Generated_Source\PSoC4\CapSense_SenseClk.h" />
-<file name=".\Generated_Source\PSoC4\CyLFClk.h" />
-<file name=".\Generated_Source\PSoC4\CyLib.h" />
-<file name=".\Generated_Source\PSoC4\core_cm0.h" />
-<file name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
-<file name=".\Generated_Source\PSoC4\core_cmFunc.h" />
-<file name=".\Generated_Source\PSoC4\core_cmInstr.h" />
-<file name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<file name=".\Generated_Source\PSoC4\cyfitter.h" />
-<file name=".\Generated_Source\PSoC4\cytypes.h" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\LowPowerMode.o">
 <dep name=".\Generated_Source\PSoC4\BLE.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_HAL_PVT.h" />
@@ -63,8 +29,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -78,8 +42,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -117,21 +79,32 @@
 <file name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <file name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <file name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<file name=".\Generated_Source\PSoC4\BLUE.h" />
-<file name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
+<file name=".\Generated_Source\PSoC4\CapSense.h" />
+<file name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
+<file name=".\Generated_Source\PSoC4\CapSense_IP.h" />
+<file name=".\Generated_Source\PSoC4\CapSense_PVT.h" />
+<file name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
+<file name=".\Generated_Source\PSoC4\CapSense_SenseClk.h" />
 <file name=".\Generated_Source\PSoC4\CapSense_Sns_aliases.h" />
 <file name=".\Generated_Source\PSoC4\CapSense_TunerHelper.h" />
 <file name=".\Generated_Source\PSoC4\CyFlash.h" />
+<file name=".\Generated_Source\PSoC4\CyLFClk.h" />
+<file name=".\Generated_Source\PSoC4\CyLib.h" />
 <file name=".\Generated_Source\PSoC4\GREEN.h" />
 <file name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<file name=".\Generated_Source\PSoC4\RED.h" />
-<file name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <file name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <file name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
+<file name=".\Generated_Source\PSoC4\core_cm0.h" />
+<file name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<file name=".\Generated_Source\PSoC4\core_cmFunc.h" />
+<file name=".\Generated_Source\PSoC4\core_cmInstr.h" />
 <file name=".\Generated_Source\PSoC4\cyPm.h" />
+<file name=".\Generated_Source\PSoC4\cydevice_trm.h" />
 <file name=".\Generated_Source\PSoC4\cydisabledsheets.h" />
+<file name=".\Generated_Source\PSoC4\cyfitter.h" />
 <file name=".\Generated_Source\PSoC4\cyfitter_cfg.h" />
 <file name=".\Generated_Source\PSoC4\cypins.h" />
+<file name=".\Generated_Source\PSoC4\cytypes.h" />
 <file name=".\Generated_Source\PSoC4\project.h" />
 <file name=".\LowPowerMode.c" />
 <file name=".\LowPowerMode.h" />
@@ -156,8 +129,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -171,8 +142,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -215,8 +184,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -230,8 +197,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -273,8 +238,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -288,8 +251,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -328,8 +289,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -343,8 +302,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -384,8 +341,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -399,8 +354,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -441,8 +394,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -456,8 +407,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -494,8 +443,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -509,8 +456,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -555,8 +500,6 @@
 <dep name=".\Generated_Source\PSoC4\BLE_eventHandler.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_gatt.h" />
 <dep name=".\Generated_Source\PSoC4\BLE_tps.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
@@ -570,8 +513,6 @@
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN.h" />
 <dep name=".\Generated_Source\PSoC4\GREEN_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay.h" />
 <dep name=".\Generated_Source\PSoC4\TimerDelay_Interrupt.h" />
 <dep name=".\Generated_Source\PSoC4\core_cm0.h" />
@@ -610,6 +551,25 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\CapSense.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o">
+<dep name=".\Generated_Source\PSoC4\CapSense.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_CSHL.c" />
+<dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SenseClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\CapSense_CSHL.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\CapSense_INT.o">
 <dep name=".\Generated_Source\PSoC4\CapSense.h" />
 <dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
@@ -828,16 +788,6 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\BLE_gatt.c" />
-<file name=".\CortexM0\ARM_GCC_493\Debug\BLUE.o">
-<dep name=".\Generated_Source\PSoC4\BLUE.c" />
-<dep name=".\Generated_Source\PSoC4\BLUE.h" />
-<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cypins.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC4\BLUE.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o">
 <dep name=".\Generated_Source\PSoC4\CapSense_SampleClk.c" />
 <dep name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
@@ -903,16 +853,6 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\GREEN.c" />
-<file name=".\CortexM0\ARM_GCC_493\Debug\RED.o">
-<dep name=".\Generated_Source\PSoC4\RED.c" />
-<dep name=".\Generated_Source\PSoC4\RED.h" />
-<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cypins.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC4\RED.c" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\TimerDelay.o">
 <dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
 <dep name=".\Generated_Source\PSoC4\CyLib.h" />
@@ -985,6 +925,51 @@
 <file name=".\Generated_Source\PSoC4\CyBootAsmGnu.s" />
 <file name=".\Generated_Source\PSoC4\cydevicegnu_trm.inc" />
 <file name=".\Generated_Source\PSoC4\cyfittergnu.inc" />
+<file name=".\Generated_Source\PSoC4\CapSense_SMS.h" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\CapSense_SMS.o">
+<dep name=".\Generated_Source\PSoC4\CapSense.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_CSHL.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_IP.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SMS.c" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SMS.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SampleClk.h" />
+<dep name=".\Generated_Source\PSoC4\CapSense_SenseClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\CapSense_SMS.c" />
+<file name=".\Generated_Source\PSoC4\BLUE.h" />
+<file name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
+<file name=".\Generated_Source\PSoC4\RED.h" />
+<file name=".\Generated_Source\PSoC4\RED_aliases.h" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\BLUE.o">
+<dep name=".\Generated_Source\PSoC4\BLUE.c" />
+<dep name=".\Generated_Source\PSoC4\BLUE.h" />
+<dep name=".\Generated_Source\PSoC4\BLUE_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cypins.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\BLUE.c" />
+<file name=".\CortexM0\ARM_GCC_493\Debug\RED.o">
+<dep name=".\Generated_Source\PSoC4\RED.c" />
+<dep name=".\Generated_Source\PSoC4\RED.h" />
+<dep name=".\Generated_Source\PSoC4\RED_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cypins.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC4\RED.c" />
 <file name=".\Generated_Source\PSoC4\USB_UART.h" />
 <file name=".\Generated_Source\PSoC4\USB_UART_IntClock.h" />
 <file name=".\CortexM0\ARM_GCC_493\Debug\_UART.o">
@@ -1798,9 +1783,7 @@
 <dep name=".\CortexM0\ARM_GCC_493\Debug\CapSense_CSHL.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\CapSense_INT.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\CapSense_TunerHelper.o" />
-<dep name=".\CortexM0\ARM_GCC_493\Debug\BLUE.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\GREEN.o" />
-<dep name=".\CortexM0\ARM_GCC_493\Debug\RED.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\BLE_bless_isr.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\CapSense_SampleClk.o" />
 <dep name=".\CortexM0\ARM_GCC_493\Debug\CapSense_SenseClk.o" />
@@ -1889,6 +1872,7 @@
 <name_val_pair name=".\Generated_Source\PSoC4\USB_UART_INT.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects" />
 <name_val_pair name=".\Generated_Source\PSoC4\USB_UART_BOOT.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects" />
 <name_val_pair name=".\Generated_Source\PSoC4\USB_UART_IntClock.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects" />
+<name_val_pair name=".\Generated_Source\PSoC4\CapSense_SMS.c" v="-mcpu=cortex-m0 -mthumb -Wno-main -I. -IGenerated_Source\PSoC4 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\Alexandre\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\PSOC_CapSense_2_BLE.cyprj -d CY8C4247LQI-BL483 -s C:\Users\Alexandre\Documents\GitHub\CoRo_PW_PSOC\PSOC_CapSense_2_BLE\PSOC_CapSense_2_BLE.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
@@ -1903,45 +1887,6 @@
 <CyGuid_925cc1e1-309e-4e08-b0a1-09a83c35b157 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtProjectPSoCExe+CyCodeGenDepUserInfo" version="1">
 <deps_list>
 <v>.\TopDesign\TopDesign.cysch</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cysym</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cystate</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cyprimitive</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\custom.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyenums.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinsdata.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinpicture.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinutils.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.c</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.h</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\aliases.h</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\BLE_v2_20\BLE_v2_20.cysym</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\BLE_v2_20\BLE_v2_20.chm</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\BLE_v2_20\BLE_v2_20.dll</v>
@@ -2304,45 +2249,6 @@
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.c</v>
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.h</v>
 <v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\aliases.h</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cysym</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cystate</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\cy_pins_v2_10.cyprimitive</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\custom.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyenums.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinsdata.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinpicture.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinutils.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.Designer.cs</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cygeneralcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyinputcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cymappingcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyoutputcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinaliasdialog.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cypinscontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyporcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\Resource1.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\Custom\cyclockingcontrol.resx</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.c</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\pins.h</v>
-<v>${CyRoot}\psoc\content\cyprimitives\CyPrimitives.cylib\cy_pins_v2_10\PSoC4\API\aliases.h</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\Timer_v2_70\Timer_v2_70.cycdx</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\Timer_v2_70\Timer_v2_70.cysym</v>
 <v>${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\Timer_v2_70\Timer_v2_70.pdf</v>
@@ -2447,6 +2353,8 @@
 <v>.\Generated_Source\PSoC4\CapSense_TunerHelper.h</v>
 <v>.\Generated_Source\PSoC4\CapSense_PVT.h</v>
 <v>.\Generated_Source\PSoC4\CapSense_IP.h</v>
+<v>.\Generated_Source\PSoC4\CapSense_SMS.c</v>
+<v>.\Generated_Source\PSoC4\CapSense_SMS.h</v>
 <v>.\Generated_Source\PSoC4\BLUE.c</v>
 <v>.\Generated_Source\PSoC4\BLUE.h</v>
 <v>.\Generated_Source\PSoC4\BLUE_aliases.h</v>
@@ -2524,14 +2432,14 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="130931121217298693" />
+<deps_time v="130936565452800668" />
 <top_block v="TopDesign" />
 <last_generation v="10" />
 </CyGuid_925cc1e1-309e-4e08-b0a1-09a83c35b157>
 </dataGuid>
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
-<deps_time v="130931121224938822" />
+<deps_time v="130936565479989566" />
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
 <dataGuid v="237c8ed1-e161-4c9d-af97-582eda6d6952">
@@ -2573,10 +2481,11 @@
 <v>Off-Chip</v>
 </tree_states_tab_names>
 <tree_states>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog\Communications\UART [v2.50]">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog\Communications\I2C\EZI2C Slave (SCB mode) [v3.0]">
 <ExpandedNodeIds>
 <v>Cypress Component Catalog</v>
 <v>Cypress Component Catalog\Communications</v>
+<v>Cypress Component Catalog\Communications\I2C</v>
 <v>Cypress Component Catalog\Ports and Pins</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
@@ -2586,6 +2495,8 @@
 <v>Cypress Component Catalog\Communications</v>
 <v>Cypress Component Catalog\Communications\Bluetooth Low Energy (BLE) [v2.20]</v>
 <v>Cypress Component Catalog\Communications\I2C</v>
+<v>Cypress Component Catalog\Communications\I2C\EZI2C Slave (SCB mode) [v3.0]</v>
+<v>Cypress Component Catalog\Communications\I2C\I2C (SCB mode) [v3.0]</v>
 <v>Cypress Component Catalog\Communications\I2S</v>
 <v>Cypress Component Catalog\Communications\LIN [v3.20]</v>
 <v>Cypress Component Catalog\Communications\Serial Communication Block (SCB) [v3.0]</v>
@@ -2597,8 +2508,6 @@
 <v>Cypress Component Catalog\Digital</v>
 <v>Cypress Component Catalog\Display</v>
 <v>Cypress Component Catalog\Ports and Pins</v>
-<v>Cypress Component Catalog\Ports and Pins\Analog Pin [v2.10]</v>
-<v>Cypress Component Catalog\Ports and Pins\Digital Bidirectional Pin [v2.10]</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">

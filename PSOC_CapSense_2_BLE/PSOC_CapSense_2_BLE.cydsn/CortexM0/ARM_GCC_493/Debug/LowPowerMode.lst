@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
   30:.\LowPowerMode.c **** uint8 LowPowerMode_Capsense_inSleep;
   31:.\LowPowerMode.c **** uint8 LowPowerMode_System_DeepSleepAllowed;
   32:.\LowPowerMode.c **** 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 2
 
 
   33:.\LowPowerMode.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
   51              	.L2:
   52 0018 00000000 		.word	LowPowerMode_Capsense_inSleep
   53 001c 00000000 		.word	LowPowerMode_System_DeepSleepAllowed
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 3
 
 
   54              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
   85 0016 0122     		mov	r2, #1
   86 0018 084B     		ldr	r3, .L7+4
   87 001a 1A70     		strb	r2, [r3]
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 4
 
 
   88 001c 0AE0     		b	.L4
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  102:.\LowPowerMode.c **** * Return:
  103:.\LowPowerMode.c **** *   None.
  104:.\LowPowerMode.c **** *
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 5
 
 
  105:.\LowPowerMode.c **** * Note:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  128:.\LowPowerMode.c ****     // BLESS is not in Deep Sleep mode. Check if it can enter Sleep mode.
  129:.\LowPowerMode.c ****     else if(blePowerMode != CYBLE_BLESS_STATE_EVENT_CLOSE)
  156              		.loc 1 129 0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 6
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 6
 
 
  157 0022 0228     		cmp	r0, #2
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  192              	.L13:
  193 0050 00000000 		.word	LowPowerMode_System_DeepSleepAllowed
  194              		.cfi_endproc
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 7
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 7
 
 
  195              	.LFE37:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  249 0052 EE020000 		.4byte	.LASF6
  250 0056 02       		.uleb128 0x2
  251 0057 08       		.byte	0x8
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 8
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 8
 
 
  252 0058 07       		.byte	0x7
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  306 00be 5B010000 		.4byte	.LASF19
  307 00c2 04       		.sleb128 4
  308 00c3 06       		.uleb128 0x6
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 9
 
 
  309 00c4 6C080000 		.4byte	.LASF20
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  363 0134 C8090000 		.4byte	.LASF38
  364 0138 C400     		.sleb128 68
  365 013a 06       		.uleb128 0x6
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 10
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 10
 
 
  366 013b 83090000 		.4byte	.LASF39
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  420 01b9 510A0000 		.4byte	.LASF57
  421 01bd D700     		.sleb128 87
  422 01bf 06       		.uleb128 0x6
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 11
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 11
 
 
  423 01c0 38050000 		.4byte	.LASF58
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  477 0238 43040000 		.4byte	.LASF74
  478 023c 03       		.sleb128 3
  479 023d 06       		.uleb128 0x6
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 12
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 12
 
 
  480 023e 300B0000 		.4byte	.LASF75
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  534 02af CC020000 		.4byte	0x2cc
  535 02b3 0A       		.uleb128 0xa
  536 02b4 06000000 		.4byte	.LVL0
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 13
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 13
 
 
  537 02b8 BB030000 		.4byte	0x3bb
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  591 0339 50       		.byte	0x50
  592 033a 01       		.uleb128 0x1
  593 033b 31       		.byte	0x31
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 14
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 14
 
 
  594 033c 00       		.byte	0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  648 03ab FF030000 		.4byte	.LASF92
  649 03af 01       		.byte	0x1
  650 03b0 1E       		.byte	0x1e
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 15
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 15
 
 
  651 03b1 6B000000 		.4byte	0x6b
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  705 0422 11       		.uleb128 0x11
  706 0423 8D060000 		.4byte	.LASF100
  707 0427 07       		.byte	0x7
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 16
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 16
 
 
  708 0428 1C       		.byte	0x1c
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  762 002e 3A       		.uleb128 0x3a
  763 002f 0B       		.uleb128 0xb
  764 0030 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 17
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 17
 
 
  765 0031 0B       		.uleb128 0xb
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  819 0067 2E       		.uleb128 0x2e
  820 0068 01       		.byte	0x1
  821 0069 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 18
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 18
 
 
  822 006a 19       		.uleb128 0x19
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  876 00a8 0B       		.uleb128 0xb
  877 00a9 3B       		.uleb128 0x3b
  878 00aa 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 19
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 19
 
 
  879 00ab 49       		.uleb128 0x49
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  933 00e3 3F       		.uleb128 0x3f
  934 00e4 19       		.uleb128 0x19
  935 00e5 03       		.uleb128 0x3
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 20
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 20
 
 
  936 00e6 0E       		.uleb128 0xe
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  990 011c 00       		.byte	0
  991 011d 00       		.byte	0
  992 011e 15       		.uleb128 0x15
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 21
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 21
 
 
  993 011f 2E       		.uleb128 0x2e
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1047 0008 00000000 		.4byte	.LFB36
  1048 000c 40000000 		.4byte	.LFE36
  1049 0010 00000000 		.4byte	.LFB37
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 22
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 22
 
 
  1050 0014 54000000 		.4byte	.LFE37
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1071      7420696E 
  1071      7400
  1072              	.LASF26:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 23
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 23
 
 
  1073 00d0 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1091      545F4741 
  1091      5454535F 
  1091      58434E48 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 24
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 24
 
 
  1092              	.LASF27:
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1111      545F4741 
  1111      5454435F 
  1111      52454144 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 25
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 25
 
 
  1112              	.LASF47:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1132              	.LASF78:
  1133 03ad 4359424C 		.ascii	"CYBLE_BLESS_STATE_ACTIVE\000"
  1133      455F424C 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 26
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 26
 
 
  1133      4553535F 
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1149      43424643 
  1150              	.LASF71:
  1151 0505 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 27
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 27
 
 
  1151      455F4556 
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1171      545F4741 
  1171      5454435F 
  1171      46494E44 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 28
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 28
 
 
  1172              	.LASF25:
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1191      455F4556 
  1191      545F4741 
  1191      505F434F 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 29
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 29
 
 
  1191      4E4E4543 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1211      333200
  1212              	.LASF69:
  1213 07c0 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 30
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 30
 
 
  1213      455F4556 
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1231              	.LASF18:
  1232 08e7 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
  1232      455F4556 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 31
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 31
 
 
  1232      545F4841 
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1250      545F5449 
  1250      4D454F55 
  1250      5400
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 32
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 32
 
 
  1251              	.LASF88:
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 1
  1270      545F4741 
  1270      5454535F 
  1270      44415441 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccmVWehW.s 			page 33
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccSZCWQM.s 			page 33
 
 
  1271              	.LASF36:

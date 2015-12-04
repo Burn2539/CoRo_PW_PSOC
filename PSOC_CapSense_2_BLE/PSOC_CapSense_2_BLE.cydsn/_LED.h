@@ -36,16 +36,14 @@
 * Extern global variables
 *****************************************************************************/
 // Flags that indicate the current state of each LEDs.
-extern uint8 _LED_Red_On;
 extern uint8 _LED_Green_On;
-extern uint8 _LED_Blue_On;
 
 /*****************************************************************************
 * Function Declarations
 *****************************************************************************/
 void _LED_Init(void);
-void _LED_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue);
-void _LED_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue);
+void _LED_TurnOnLED(uint8 Green);
+void _LED_TurnOffLED(uint8 Green);
 
 #endif
 

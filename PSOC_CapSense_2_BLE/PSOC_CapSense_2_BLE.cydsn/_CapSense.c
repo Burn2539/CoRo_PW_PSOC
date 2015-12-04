@@ -82,10 +82,9 @@ uint8 _CapSense_Scan(void)
     
     // Enable watchdog interrupts
     _Watchdog_ResumeInt();
-        
+    
     // Store the sensors values into the vectors.
     pushInVector(CapSense_SensorRaw);
-    
     
     // Verify if the vector is now full.
     if ( vectorIsFull() )

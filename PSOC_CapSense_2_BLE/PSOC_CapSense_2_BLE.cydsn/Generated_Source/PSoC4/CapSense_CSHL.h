@@ -27,7 +27,7 @@
 
 #define CapSense_SIGNAL_SIZE                    (16u)
 #define CapSense_AUTO_RESET                     (0u)
-#define CapSense_RAW_FILTER_MASK                (0u)
+#define CapSense_RAW_FILTER_MASK                (8u)
 
 /* Signal size definition */
 #define CapSense_SIGNAL_SIZE_UINT8              (8u)
@@ -53,15 +53,24 @@
 ***************************************/
 
 /* Widgets constants definition */
-#define CapSense_LINEARSLIDER0__LS        (0u)
+#define CapSense_BUTTON0__BTN        (0u)
+#define CapSense_BUTTON1__BTN        (1u)
+#define CapSense_BUTTON2__BTN        (2u)
+#define CapSense_BUTTON3__BTN        (3u)
+#define CapSense_BUTTON4__BTN        (4u)
+#define CapSense_BUTTON5__BTN        (5u)
+#define CapSense_BUTTON6__BTN        (6u)
+#define CapSense_BUTTON7__BTN        (7u)
+#define CapSense_BUTTON8__BTN        (8u)
+#define CapSense_BUTTON9__BTN        (9u)
 
 #define CapSense_TOTAL_DIPLEXED_SLIDERS_COUNT        (0u)
-#define CapSense_TOTAL_LINEAR_SLIDERS_COUNT          (1u)
+#define CapSense_TOTAL_LINEAR_SLIDERS_COUNT          (0u)
 #define CapSense_TOTAL_RADIAL_SLIDERS_COUNT          (0u)
 #define CapSense_TOTAL_TOUCH_PADS_COUNT              (0u)
 #define CapSense_TOTAL_TOUCH_PADS_BASIC_COUNT        (0u)
 #define CapSense_TOTAL_TRACKPAD_GESTURES_COUNT       (0u)
-#define CapSense_TOTAL_BUTTONS_COUNT                 (0u)
+#define CapSense_TOTAL_BUTTONS_COUNT                 (10u)
 #define CapSense_TOTAL_MATRIX_BUTTONS_COUNT          (0u)
 #define CapSense_TOTAL_GENERICS_COUNT                (0u)
 
@@ -71,15 +80,15 @@
 #define CapSense_TOUCH_PADS_POS_FILTERS_MASK         (0x0u)
 #define CapSense_TRACKPAD_GEST_POS_FILTERS_MASK      (0x0u)
 
-#define CapSense_UNUSED_DEBOUNCE_COUNTER_INDEX       (0u)
+#define CapSense_UNUSED_DEBOUNCE_COUNTER_INDEX       (10u)
 
 #define CapSense_TOTAL_PROX_SENSORS_COUNT            (0u)
 
 #define CapSense_END_OF_SLIDERS_INDEX                (0u)
 #define CapSense_END_OF_TOUCH_PAD_INDEX              (0u)
-#define CapSense_END_OF_BUTTONS_INDEX                (0u)
-#define CapSense_END_OF_MATRIX_BUTTONS_INDEX         (0u)
-#define CapSense_END_OF_WIDGETS_INDEX                (1u)
+#define CapSense_END_OF_BUTTONS_INDEX                (9u)
+#define CapSense_END_OF_MATRIX_BUTTONS_INDEX         (9u)
+#define CapSense_END_OF_WIDGETS_INDEX                (10u)
 
 
 

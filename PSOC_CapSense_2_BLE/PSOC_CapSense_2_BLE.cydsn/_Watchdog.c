@@ -184,28 +184,28 @@ void _Watchdog_Handler(void)
             previousState = CYBLE_STATE_ADVERTISING;
             
             if(_LED_Green_On)
-                _LED_TurnOffLED(FALSE, TRUE, FALSE);
+                _LED_TurnOffLED(TRUE);
             else
-                _LED_TurnOnLED(FALSE, TRUE, FALSE);
+                _LED_TurnOnLED(TRUE);
         }
         
         // If state changed, turn all the LEDs off.
         if (CyBle_GetState() != previousState)
-            _LED_TurnOffLED(TRUE, TRUE, TRUE);
+            _LED_TurnOffLED(TRUE);
         
         // If disconnected, turn all the LEDs off.
         else if(CyBle_GetState() == CYBLE_STATE_DISCONNECTED) {
             previousState = CYBLE_STATE_DISCONNECTED;
             
-            _LED_TurnOffLED(TRUE, TRUE, TRUE);
+            _LED_TurnOffLED(TRUE);
         }
         
         // If connected, turn the LED on.
         else if(CyBle_GetState() == CYBLE_STATE_CONNECTED) {
             previousState = CYBLE_STATE_CONNECTED;
             
-            _LED_TurnOffLED(TRUE, FALSE, TRUE);
-            _LED_TurnOnLED(FALSE, TRUE, FALSE);
+            _LED_TurnOffLED(FALSE);
+            _LED_TurnOnLED(TRUE);
         }
         
         /********************************************************************/

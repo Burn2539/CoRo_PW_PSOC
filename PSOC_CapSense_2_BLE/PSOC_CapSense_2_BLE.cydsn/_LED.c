@@ -25,9 +25,7 @@
 * Local global variables
 *****************************************************************************/
 // Flags that indicate the current state of each LEDs.
-uint8 _LED_Red_On;
 uint8 _LED_Green_On;
-uint8 _LED_Blue_On;
 
 
 /*****************************************************************************
@@ -47,15 +45,11 @@ uint8 _LED_Blue_On;
 *****************************************************************************/
 void _LED_Init(void)
 {
-	// Set Drive mode of output pins from HiZ to Strong.
-	RED_SetDriveMode(RED_DM_STRONG);
+	// Set Drive mode of output pins to Strong.
 	GREEN_SetDriveMode(GREEN_DM_STRONG);
-	BLUE_SetDriveMode(BLUE_DM_STRONG);
     
     // Reset the flags.
-    _LED_Red_On = FALSE;
     _LED_Green_On = FALSE;
-    _LED_Blue_On = FALSE;
 }
 
 
@@ -74,30 +68,14 @@ void _LED_Init(void)
 * Note:
 *
 *****************************************************************************/
-void _LED_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue)
+void _LED_TurnOnLED(uint8 Green)
 {
-    if(Red) {
-        // Turn Red LED on.
-        RED_Write(RGB_LED_ON);
-        
-        // Set the flag.
-        _LED_Red_On = TRUE;
-    }
-    
     if(Green) {
         // Turn Green LED on.
         GREEN_Write(RGB_LED_ON);
         
         // Set the flag.
         _LED_Green_On = TRUE;
-    }
-    
-    if(Blue) {
-        // Turn Blue LED on.
-        BLUE_Write(RGB_LED_ON);
-        
-        // Set the flag.
-        _LED_Blue_On = TRUE;
     }
 }
 
@@ -117,30 +95,14 @@ void _LED_TurnOnLED(uint8 Red, uint8 Green, uint8 Blue)
 * Note:
 *
 *****************************************************************************/
-void _LED_TurnOffLED(uint8 Red, uint8 Green, uint8 Blue)
+void _LED_TurnOffLED(uint8 Green)
 {
-    if(Red) {
-        // Turn Red LED off.
-        RED_Write(RGB_LED_OFF);
-        
-        // Reset the flag.
-        _LED_Red_On = FALSE;
-    }
-    
     if(Green) {
         // Turn Green LED off.
         GREEN_Write(RGB_LED_OFF);
         
         // Reset the flag.
         _LED_Green_On = FALSE;
-    }
-    
-    if(Blue) {
-        // Turn Blue LED off.
-        BLUE_Write(RGB_LED_OFF);
-        
-        // Reset the flag.
-        _LED_Blue_On = FALSE;
     }
 }
 

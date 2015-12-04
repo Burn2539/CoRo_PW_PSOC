@@ -33,16 +33,16 @@
 #define CapSense_INDEX_TABLE_SIZE              (0u)
 
 /* Define Sensors */
-#define CapSense_SENSOR_LINEARSLIDER0_E0__LS    (0u)
-#define CapSense_SENSOR_LINEARSLIDER0_E1__LS    (1u)
-#define CapSense_SENSOR_LINEARSLIDER0_E2__LS    (2u)
-#define CapSense_SENSOR_LINEARSLIDER0_E3__LS    (3u)
-#define CapSense_SENSOR_LINEARSLIDER0_E4__LS    (4u)
-#define CapSense_SENSOR_LINEARSLIDER0_E5__LS    (5u)
-#define CapSense_SENSOR_LINEARSLIDER0_E6__LS    (6u)
-#define CapSense_SENSOR_LINEARSLIDER0_E7__LS    (7u)
-#define CapSense_SENSOR_LINEARSLIDER0_E8__LS    (8u)
-#define CapSense_SENSOR_LINEARSLIDER0_E9__LS    (9u)
+#define CapSense_SENSOR_BUTTON0__BTN    (0u)
+#define CapSense_SENSOR_BUTTON1__BTN    (1u)
+#define CapSense_SENSOR_BUTTON2__BTN    (2u)
+#define CapSense_SENSOR_BUTTON3__BTN    (3u)
+#define CapSense_SENSOR_BUTTON4__BTN    (4u)
+#define CapSense_SENSOR_BUTTON5__BTN    (5u)
+#define CapSense_SENSOR_BUTTON6__BTN    (6u)
+#define CapSense_SENSOR_BUTTON7__BTN    (7u)
+#define CapSense_SENSOR_BUTTON8__BTN    (8u)
+#define CapSense_SENSOR_BUTTON9__BTN    (9u)
 
 #define CapSense_TOTAL_SENSOR_MASK (((CapSense_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)
 
@@ -68,9 +68,9 @@ CY_ISR_PROTO(CapSense_ISR);
 #define CapSense_IDAC1_RANGE_VALUE          (0u)
 #define CapSense_IDAC2_RANGE_VALUE          (0u)
 
-#define CapSense_MULTIPLE_FREQUENCY_SET     (1u)
+#define CapSense_MULTIPLE_FREQUENCY_SET     (0u)
 #define CapSense_FILTER_ENABLE              (0u)
-#define CapSense_PRS_OPTIONS                (0u)
+#define CapSense_PRS_OPTIONS                (3u)
 
 #define CapSense_WATER_PROOF                (0u)
 
@@ -225,7 +225,7 @@ void CapSense_NormalizeWidgets(uint32 widgetsNum, uint8 dataPtr[]);
 
 #define CapSense_RESOLUTION_OFFSET          (16u)
 #define CapSense_MSB_RESOLUTION_OFFSET      (22u)
-#define CapSense_RESOLUTIONS_TBL_SIZE       (1u)
+#define CapSense_RESOLUTIONS_TBL_SIZE       (10u)
 
 /* Software Status Register Bit Masks */
 #define CapSense_SW_STS_BUSY                (0x01u)

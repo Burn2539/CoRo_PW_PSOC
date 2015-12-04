@@ -232,7 +232,7 @@ ClockBlock/hfclk                                      m0s8clockblockcell      0 
 Path Begin     : \TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7
 Path End       : \TimerDelay:TimerUDB:sT8:timerdp:u0\/cs_addr_1
 Capture Clock  : \TimerDelay:TimerUDB:sT8:timerdp:u0\/clock
-Path slack     : 24867p
+Path slack     : 25015p
 
 Capture Clock Arrival Time                          0
 + Clock path delay                                  0
@@ -243,9 +243,9 @@ End-of-path required time (ps)                  30147
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       5280
++ Data path delay                       5131
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           5280
+End-of-path arrival time (ps)           5131
  
 Launch Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -256,8 +256,8 @@ ClockBlock/hfclk                                      m0s8clockblockcell      0 
 Data path
 pin name                                                  model name     delay     AT  slack  edge  Fanout
 --------------------------------------------------------  -------------  -----  -----  -----  ----  ------
-\TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7  controlcell1    2580   2580  24867  RISE       1
-\TimerDelay:TimerUDB:sT8:timerdp:u0\/cs_addr_1            datapathcell1   2700   5280  24867  RISE       1
+\TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7  controlcell1    2580   2580  25015  RISE       1
+\TimerDelay:TimerUDB:sT8:timerdp:u0\/cs_addr_1            datapathcell1   2551   5131  25015  RISE       1
 
 Capture Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -272,7 +272,7 @@ ClockBlock/hfclk                                      m0s8clockblockcell      0 
 Path Begin     : \TimerDelay:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : \TimerDelay:TimerUDB:rstSts:stsreg\/status_0
 Capture Clock  : \TimerDelay:TimerUDB:rstSts:stsreg\/clock
-Path slack     : 27928p
+Path slack     : 27961p
 
 Capture Clock Arrival Time                         0
 + Clock path delay                                 0
@@ -283,9 +283,9 @@ End-of-path required time (ps)                 40097
 
 Launch Clock Arrival Time                       0
 + Clock path delay                          0
-+ Data path delay                       12169
++ Data path delay                       12136
 -------------------------------------   ----- 
-End-of-path arrival time (ps)           12169
+End-of-path arrival time (ps)           12136
  
 Launch Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -297,9 +297,9 @@ Data path
 pin name                                      model name     delay     AT  slack  edge  Fanout
 --------------------------------------------  -------------  -----  -----  -----  ----  ------
 \TimerDelay:TimerUDB:sT8:timerdp:u0\/z0_comb  datapathcell1   3850   3850  23626  RISE       1
-\TimerDelay:TimerUDB:status_tc\/main_1        macrocell1      2704   6554  27928  RISE       1
-\TimerDelay:TimerUDB:status_tc\/q             macrocell1      3350   9904  27928  RISE       1
-\TimerDelay:TimerUDB:rstSts:stsreg\/status_0  statusicell1    2265  12169  27928  RISE       1
+\TimerDelay:TimerUDB:status_tc\/main_1        macrocell1      2673   6523  27961  RISE       1
+\TimerDelay:TimerUDB:status_tc\/q             macrocell1      3350   9873  27961  RISE       1
+\TimerDelay:TimerUDB:rstSts:stsreg\/status_0  statusicell1    2263  12136  27961  RISE       1
 
 Capture Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -314,7 +314,7 @@ ClockBlock/hfclk                                      m0s8clockblockcell      0 
 Path Begin     : \TimerDelay:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : Net_4130/main_1
 Capture Clock  : Net_4130/clock_0
-Path slack     : 31603p
+Path slack     : 31634p
 
 Capture Clock Arrival Time                         0
 + Clock path delay                                 0
@@ -325,9 +325,9 @@ End-of-path required time (ps)                 38157
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       6554
++ Data path delay                       6523
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           6554
+End-of-path arrival time (ps)           6523
  
 Launch Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -339,7 +339,7 @@ Data path
 pin name                                      model name     delay     AT  slack  edge  Fanout
 --------------------------------------------  -------------  -----  -----  -----  ----  ------
 \TimerDelay:TimerUDB:sT8:timerdp:u0\/z0_comb  datapathcell1   3850   3850  23626  RISE       1
-Net_4130/main_1                               macrocell3      2704   6554  31603  RISE       1
+Net_4130/main_1                               macrocell3      2673   6523  31634  RISE       1
 
 Capture Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -354,7 +354,7 @@ Net_4130/clock_0                                      macrocell3              0 
 Path Begin     : \TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7
 Path End       : Net_4130/main_0
 Capture Clock  : Net_4130/clock_0
-Path slack     : 32862p
+Path slack     : 33017p
 
 Capture Clock Arrival Time                         0
 + Clock path delay                                 0
@@ -365,9 +365,9 @@ End-of-path required time (ps)                 38157
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       5295
++ Data path delay                       5140
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           5295
+End-of-path arrival time (ps)           5140
  
 Launch Clock Path
 pin name                                              model name          delay     AT  edge  Fanout
@@ -378,8 +378,8 @@ ClockBlock/hfclk                                      m0s8clockblockcell      0 
 Data path
 pin name                                                  model name    delay     AT  slack  edge  Fanout
 --------------------------------------------------------  ------------  -----  -----  -----  ----  ------
-\TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7  controlcell1   2580   2580  24867  RISE       1
-Net_4130/main_0                                           macrocell3     2715   5295  32862  RISE       1
+\TimerDelay:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\/control_7  controlcell1   2580   2580  25015  RISE       1
+Net_4130/main_0                                           macrocell3     2560   5140  33017  RISE       1
 
 Capture Clock Path
 pin name                                              model name          delay     AT  edge  Fanout

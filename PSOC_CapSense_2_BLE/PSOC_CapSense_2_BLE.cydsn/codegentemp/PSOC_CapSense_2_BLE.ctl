@@ -1,6 +1,6 @@
 -- ======================================================================
 -- PSOC_CapSense_2_BLE.ctl generated from PSOC_CapSense_2_BLE
--- 11/27/2015 at 10:35
+-- 12/03/2015 at 17:49
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

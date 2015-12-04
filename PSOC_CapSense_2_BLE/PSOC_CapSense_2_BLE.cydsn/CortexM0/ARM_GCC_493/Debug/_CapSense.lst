@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
   30:.\_CapSense.c **** * Summary:
   31:.\_CapSense.c **** *   Initialize the CapSense module.
   32:.\_CapSense.c **** *
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 2
 
 
   33:.\_CapSense.c **** * Parameters:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
   64:.\_CapSense.c **** *****************************************************************************/
   65:.\_CapSense.c **** uint8 _CapSense_Scan(void)
   66:.\_CapSense.c **** {
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 3
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 3
 
 
   49              		.loc 1 66 0
@@ -172,27 +172,26 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
   78              		.loc 1 84 0
   79 0020 FFF7FEFF 		bl	_Watchdog_ResumeInt
   80              	.LVL6:
-  85:.\_CapSense.c ****         
+  85:.\_CapSense.c ****     
   86:.\_CapSense.c ****     // Store the sensors values into the vectors.
   87:.\_CapSense.c ****     pushInVector(CapSense_SensorRaw);
   81              		.loc 1 87 0
   82 0024 0548     		ldr	r0, .L7
   83 0026 FFF7FEFF 		bl	pushInVector
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 4
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 4
 
 
   84              	.LVL7:
   88:.\_CapSense.c ****     
-  89:.\_CapSense.c ****     
-  90:.\_CapSense.c ****     // Verify if the vector is now full.
-  91:.\_CapSense.c ****     if ( vectorIsFull() )
-  85              		.loc 1 91 0
+  89:.\_CapSense.c ****     // Verify if the vector is now full.
+  90:.\_CapSense.c ****     if ( vectorIsFull() )
+  85              		.loc 1 90 0
   86 002a FFF7FEFF 		bl	vectorIsFull
   87              	.LVL8:
   88 002e 0028     		cmp	r0, #0
   89 0030 02D0     		beq	.L3
-  92:.\_CapSense.c ****         return NO_MORE_SPACE;
-  90              		.loc 1 92 0
+  91:.\_CapSense.c ****         return NO_MORE_SPACE;
+  90              		.loc 1 91 0
   91 0032 0120     		mov	r0, #1
   92 0034 00E0     		b	.L3
   93              	.L6:
@@ -200,11 +199,11 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
   94              		.loc 1 69 0
   95 0036 0120     		mov	r0, #1
   96              	.L3:
+  92:.\_CapSense.c ****     
   93:.\_CapSense.c ****     
-  94:.\_CapSense.c ****     
-  95:.\_CapSense.c ****     return SUCCESS;
-  96:.\_CapSense.c **** }
-  97              		.loc 1 96 0
+  94:.\_CapSense.c ****     return SUCCESS;
+  95:.\_CapSense.c **** }
+  97              		.loc 1 95 0
   98              		@ sp needed
   99 0038 08BD     		pop	{r3, pc}
  100              	.L8:
@@ -222,45 +221,45 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  112              		.type	_CapSense_Sleep, %function
  113              	_CapSense_Sleep:
  114              	.LFB37:
+  96:.\_CapSense.c **** 
   97:.\_CapSense.c **** 
-  98:.\_CapSense.c **** 
-  99:.\_CapSense.c **** /*****************************************************************************
- 100:.\_CapSense.c **** * Function Name: _CapSense_Sleep()
- 101:.\_CapSense.c **** ******************************************************************************
- 102:.\_CapSense.c **** * Summary:
- 103:.\_CapSense.c **** *   Put the Capsense module to sleep.
- 104:.\_CapSense.c **** *
- 105:.\_CapSense.c **** * Parameters:
- 106:.\_CapSense.c **** *   None.
- 107:.\_CapSense.c **** *
- 108:.\_CapSense.c **** * Return:
- 109:.\_CapSense.c **** *   None.
- 110:.\_CapSense.c **** *
- 111:.\_CapSense.c **** * Note:
- 112:.\_CapSense.c **** *
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 5
+  98:.\_CapSense.c **** /*****************************************************************************
+  99:.\_CapSense.c **** * Function Name: _CapSense_Sleep()
+ 100:.\_CapSense.c **** ******************************************************************************
+ 101:.\_CapSense.c **** * Summary:
+ 102:.\_CapSense.c **** *   Put the Capsense module to sleep.
+ 103:.\_CapSense.c **** *
+ 104:.\_CapSense.c **** * Parameters:
+ 105:.\_CapSense.c **** *   None.
+ 106:.\_CapSense.c **** *
+ 107:.\_CapSense.c **** * Return:
+ 108:.\_CapSense.c **** *   None.
+ 109:.\_CapSense.c **** *
+ 110:.\_CapSense.c **** * Note:
+ 111:.\_CapSense.c **** *
+ 112:.\_CapSense.c **** *****************************************************************************/
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 5
 
 
- 113:.\_CapSense.c **** *****************************************************************************/
- 114:.\_CapSense.c **** void _CapSense_Sleep(void)
- 115:.\_CapSense.c **** {
- 115              		.loc 1 115 0
+ 113:.\_CapSense.c **** void _CapSense_Sleep(void)
+ 114:.\_CapSense.c **** {
+ 115              		.loc 1 114 0
  116              		.cfi_startproc
  117 0000 08B5     		push	{r3, lr}
  118              		.cfi_def_cfa_offset 8
  119              		.cfi_offset 3, -8
  120              		.cfi_offset 14, -4
- 116:.\_CapSense.c ****     CapSense_Sleep();
- 121              		.loc 1 116 0
+ 115:.\_CapSense.c ****     CapSense_Sleep();
+ 121              		.loc 1 115 0
  122 0002 FFF7FEFF 		bl	CapSense_Sleep
  123              	.LVL9:
- 117:.\_CapSense.c ****     CapSense_SetDriveModeAllPins(CY_SYS_PINS_DM_ALG_HIZ);
- 124              		.loc 1 117 0
+ 116:.\_CapSense.c ****     CapSense_SetDriveModeAllPins(CY_SYS_PINS_DM_ALG_HIZ);
+ 124              		.loc 1 116 0
  125 0006 0020     		mov	r0, #0
  126 0008 FFF7FEFF 		bl	CapSense_SetDriveModeAllPins
  127              	.LVL10:
- 118:.\_CapSense.c **** }
- 128              		.loc 1 118 0
+ 117:.\_CapSense.c **** }
+ 128              		.loc 1 117 0
  129              		@ sp needed
  130 000c 08BD     		pop	{r3, pc}
  131              		.cfi_endproc
@@ -274,44 +273,44 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  139              		.type	_CapSense_Wakeup, %function
  140              	_CapSense_Wakeup:
  141              	.LFB38:
+ 118:.\_CapSense.c **** 
  119:.\_CapSense.c **** 
- 120:.\_CapSense.c **** 
- 121:.\_CapSense.c **** /*****************************************************************************
- 122:.\_CapSense.c **** * Function Name: _CapSense_Wakeup()
- 123:.\_CapSense.c **** ******************************************************************************
- 124:.\_CapSense.c **** * Summary:
- 125:.\_CapSense.c **** *   Put the Capsense module to sleep.
- 126:.\_CapSense.c **** *
- 127:.\_CapSense.c **** * Parameters:
- 128:.\_CapSense.c **** *   None.
- 129:.\_CapSense.c **** *
- 130:.\_CapSense.c **** * Return:
- 131:.\_CapSense.c **** *   None.
- 132:.\_CapSense.c **** *
- 133:.\_CapSense.c **** * Note:
- 134:.\_CapSense.c **** *
- 135:.\_CapSense.c **** *****************************************************************************/
- 136:.\_CapSense.c **** void _CapSense_Wakeup(void)
- 137:.\_CapSense.c **** {
- 142              		.loc 1 137 0
+ 120:.\_CapSense.c **** /*****************************************************************************
+ 121:.\_CapSense.c **** * Function Name: _CapSense_Wakeup()
+ 122:.\_CapSense.c **** ******************************************************************************
+ 123:.\_CapSense.c **** * Summary:
+ 124:.\_CapSense.c **** *   Put the Capsense module to sleep.
+ 125:.\_CapSense.c **** *
+ 126:.\_CapSense.c **** * Parameters:
+ 127:.\_CapSense.c **** *   None.
+ 128:.\_CapSense.c **** *
+ 129:.\_CapSense.c **** * Return:
+ 130:.\_CapSense.c **** *   None.
+ 131:.\_CapSense.c **** *
+ 132:.\_CapSense.c **** * Note:
+ 133:.\_CapSense.c **** *
+ 134:.\_CapSense.c **** *****************************************************************************/
+ 135:.\_CapSense.c **** void _CapSense_Wakeup(void)
+ 136:.\_CapSense.c **** {
+ 142              		.loc 1 136 0
  143              		.cfi_startproc
  144 0000 08B5     		push	{r3, lr}
  145              		.cfi_def_cfa_offset 8
  146              		.cfi_offset 3, -8
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 6
-
-
  147              		.cfi_offset 14, -4
- 138:.\_CapSense.c ****      CapSense_RestoreDriveModeAllPins();
- 148              		.loc 1 138 0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 6
+
+
+ 137:.\_CapSense.c ****      CapSense_RestoreDriveModeAllPins();
+ 148              		.loc 1 137 0
  149 0002 FFF7FEFF 		bl	CapSense_RestoreDriveModeAllPins
  150              	.LVL11:
- 139:.\_CapSense.c ****     CapSense_Wakeup();
- 151              		.loc 1 139 0
+ 138:.\_CapSense.c ****     CapSense_Wakeup();
+ 151              		.loc 1 138 0
  152 0006 FFF7FEFF 		bl	CapSense_Wakeup
  153              	.LVL12:
- 140:.\_CapSense.c **** }
- 154              		.loc 1 140 0
+ 139:.\_CapSense.c **** }
+ 154              		.loc 1 139 0
  155              		@ sp needed
  156 000a 08BD     		pop	{r3, pc}
  157              		.cfi_endproc
@@ -358,10 +357,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  198 0042 04       		.byte	0x4
  199 0043 05       		.byte	0x5
  200 0044 9B020000 		.4byte	.LASF4
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 7
-
-
  201 0048 02       		.uleb128 0x2
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 7
+
+
  202 0049 04       		.byte	0x4
  203 004a 07       		.byte	0x7
  204 004b FE000000 		.4byte	.LASF5
@@ -418,10 +417,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  255 00ae 06       		.uleb128 0x6
  256 00af A8010000 		.4byte	.LASF16
  257 00b3 01       		.byte	0x1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 8
-
-
  258 00b4 2A       		.byte	0x2a
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 8
+
+
  259 00b5 00000000 		.4byte	.LFB35
  260 00b9 08000000 		.4byte	.LFE35-.LFB35
  261 00bd 01       		.uleb128 0x1
@@ -469,7 +468,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  303 012f 06       		.uleb128 0x6
  304 0130 54020000 		.4byte	.LASF17
  305 0134 01       		.byte	0x1
- 306 0135 72       		.byte	0x72
+ 306 0135 71       		.byte	0x71
  307 0136 00000000 		.4byte	.LFB37
  308 013a 0E000000 		.4byte	.LFE37-.LFB37
  309 013e 01       		.uleb128 0x1
@@ -478,10 +477,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  312 0144 07       		.uleb128 0x7
  313 0145 06000000 		.4byte	.LVL9
  314 0149 EB010000 		.4byte	0x1eb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 9
-
-
  315 014d 09       		.uleb128 0x9
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 9
+
+
  316 014e 0C000000 		.4byte	.LVL10
  317 0152 F2010000 		.4byte	0x1f2
  318 0156 0A       		.uleb128 0xa
@@ -494,7 +493,7 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  325 015d 06       		.uleb128 0x6
  326 015e DD000000 		.4byte	.LASF18
  327 0162 01       		.byte	0x1
- 328 0163 88       		.byte	0x88
+ 328 0163 87       		.byte	0x87
  329 0164 00000000 		.4byte	.LFB38
  330 0168 0C000000 		.4byte	.LFE38-.LFB38
  331 016c 01       		.uleb128 0x1
@@ -538,10 +537,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  369 01c0 37       		.byte	0x37
  370 01c1 0E       		.uleb128 0xe
  371 01c2 0D000000 		.4byte	.LASF22
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 10
-
-
  372 01c6 05       		.byte	0x5
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 10
+
+
  373 01c7 1C       		.byte	0x1c
  374 01c8 0F       		.uleb128 0xf
  375 01c9 EE000000 		.4byte	.LASF24
@@ -598,10 +597,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  426 000c 17       		.uleb128 0x17
  427 000d 11       		.uleb128 0x11
  428 000e 01       		.uleb128 0x1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 11
-
-
  429 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 11
+
+
  430 0010 17       		.uleb128 0x17
  431 0011 00       		.byte	0
  432 0012 00       		.byte	0
@@ -658,10 +657,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  483 0045 0E       		.uleb128 0xe
  484 0046 3A       		.uleb128 0x3a
  485 0047 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 12
-
-
  486 0048 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 12
+
+
  487 0049 0B       		.uleb128 0xb
  488 004a 27       		.uleb128 0x27
  489 004b 19       		.uleb128 0x19
@@ -718,10 +717,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  540 0084 01       		.byte	0x1
  541 0085 11       		.uleb128 0x11
  542 0086 01       		.uleb128 0x1
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 13
-
-
  543 0087 31       		.uleb128 0x31
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 13
+
+
  544 0088 13       		.uleb128 0x13
  545 0089 00       		.byte	0
  546 008a 00       		.byte	0
@@ -778,10 +777,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  597 00c0 0E       		.uleb128 0xe
  598 00c1 3A       		.uleb128 0x3a
  599 00c2 0B       		.uleb128 0xb
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 14
-
-
  600 00c3 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 14
+
+
  601 00c4 0B       		.uleb128 0xb
  602 00c5 27       		.uleb128 0x27
  603 00c6 19       		.uleb128 0x19
@@ -838,10 +837,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  654              		.section	.debug_aranges,"",%progbits
  655 0000 34000000 		.4byte	0x34
  656 0004 0200     		.2byte	0x2
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 15
-
-
  657 0006 00000000 		.4byte	.Ldebug_info0
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 15
+
+
  658 000a 04       		.byte	0x4
  659 000b 00       		.byte	0
  660 000c 0000     		.2byte	0
@@ -898,10 +897,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  694      746F7265 
  694      44726976 
  695              	.LASF3:
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 16
-
-
  696 004e 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 16
+
+
  696      7420756E 
  696      7369676E 
  696      65642069 
@@ -958,10 +957,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  717 012b 43617053 		.ascii	"CapSense_ScanEnabledWidgets\000"
  717      656E7365 
  717      5F536361 
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 17
-
-
  717      6E456E61 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 17
+
+
  717      626C6564 
  718              	.LASF10:
  719 0147 75696E74 		.ascii	"uint16\000"
@@ -1018,10 +1017,10 @@ ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 1
  741      32303135 
  741      30333033 
  742 01f9 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
-ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\cc1kN6q9.s 			page 18
-
-
  742      20726576 
+ARM GAS  C:\Users\ALEXAN~1\AppData\Local\Temp\ccJ5AKv6.s 			page 18
+
+
  742      6973696F 
  742      6E203232 
  742      31323230 

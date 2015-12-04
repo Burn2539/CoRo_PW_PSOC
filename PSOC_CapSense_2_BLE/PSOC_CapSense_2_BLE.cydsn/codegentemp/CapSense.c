@@ -66,78 +66,91 @@ uint8 CapSense_sensorEnableMask[(((CapSense_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)
 0xFFu, 0x3u, };
 
 reg32 * CapSense_pcTable[] = {
-    (reg32 *)CapSense_Sns__LinearSlider0_e0__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e1__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e2__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e3__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e4__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e5__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e6__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e7__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e8__LS__PC, 
-    (reg32 *)CapSense_Sns__LinearSlider0_e9__LS__PC, 
+    (reg32 *)CapSense_Sns__Button0__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button1__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button2__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button3__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button4__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button5__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button6__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button7__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button8__BTN__PC, 
+    (reg32 *)CapSense_Sns__Button9__BTN__PC, 
 };
 
 const uint8 CapSense_portTable[] = {
-    CapSense_Sns__LinearSlider0_e0__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e1__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e2__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e3__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e4__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e5__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e6__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e7__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e8__LS__PORT, 
-    CapSense_Sns__LinearSlider0_e9__LS__PORT, 
+    CapSense_Sns__Button0__BTN__PORT, 
+    CapSense_Sns__Button1__BTN__PORT, 
+    CapSense_Sns__Button2__BTN__PORT, 
+    CapSense_Sns__Button3__BTN__PORT, 
+    CapSense_Sns__Button4__BTN__PORT, 
+    CapSense_Sns__Button5__BTN__PORT, 
+    CapSense_Sns__Button6__BTN__PORT, 
+    CapSense_Sns__Button7__BTN__PORT, 
+    CapSense_Sns__Button8__BTN__PORT, 
+    CapSense_Sns__Button9__BTN__PORT, 
 };
 
 const uint32 CapSense_maskTable[] = {
-    CapSense_Sns__LinearSlider0_e0__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e1__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e2__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e3__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e4__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e5__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e6__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e7__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e8__LS__MASK, 
-    CapSense_Sns__LinearSlider0_e9__LS__MASK, 
+    CapSense_Sns__Button0__BTN__MASK, 
+    CapSense_Sns__Button1__BTN__MASK, 
+    CapSense_Sns__Button2__BTN__MASK, 
+    CapSense_Sns__Button3__BTN__MASK, 
+    CapSense_Sns__Button4__BTN__MASK, 
+    CapSense_Sns__Button5__BTN__MASK, 
+    CapSense_Sns__Button6__BTN__MASK, 
+    CapSense_Sns__Button7__BTN__MASK, 
+    CapSense_Sns__Button8__BTN__MASK, 
+    CapSense_Sns__Button9__BTN__MASK, 
 };
 
 const uint8 CapSense_pinShiftTbl[] = {
-    (uint8) CapSense_Sns__LinearSlider0_e0__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e1__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e2__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e3__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e4__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e5__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e6__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e7__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e8__LS__SHIFT, 
-    (uint8) CapSense_Sns__LinearSlider0_e9__LS__SHIFT, 
+    (uint8) CapSense_Sns__Button0__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button1__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button2__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button3__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button4__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button5__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button6__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button7__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button8__BTN__SHIFT, 
+    (uint8) CapSense_Sns__Button9__BTN__SHIFT, 
 };
 
 const uint8 CapSense_modulationIDAC[CapSense_TOTAL_SENSOR_COUNT] = {
-    80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 
+    1u, 1u, 1u, 1u, 1u, 1u, 1u, 1u, 1u, 1u, 
 };
 const uint8 CapSense_compensationIDAC[CapSense_TOTAL_SENSOR_COUNT] = {
-    80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 80u, 
+    65u, 63u, 45u, 42u, 40u, 40u, 40u, 40u, 40u, 40u, 
 };
 
 const uint32 CapSense_widgetResolution[CapSense_RESOLUTIONS_TBL_SIZE] = {
     CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
+    CapSense_RESOLUTION_16_BITS,
 };
 
-const uint8 CapSense_senseClkDividerVal[CapSense_TOTAL_SCANSLOT_COUNT] = {
-    2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 
-};
-const uint8 CapSense_sampleClkDividerVal[CapSense_TOTAL_SCANSLOT_COUNT] = {
-    2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 
-};
-
+const uint8 CapSense_senseClkDividerVal = 2u;
+const uint8 CapSense_sampleClkDividerVal = 2u;
 
 const uint8 CapSense_widgetNumber[CapSense_TOTAL_SENSOR_COUNT] = {
-    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, /* LinearSlider0__LS */
+    0u, /* Button0__BTN */
+    1u, /* Button1__BTN */
+    2u, /* Button2__BTN */
+    3u, /* Button3__BTN */
+    4u, /* Button4__BTN */
+    5u, /* Button5__BTN */
+    6u, /* Button6__BTN */
+    7u, /* Button7__BTN */
+    8u, /* Button8__BTN */
+    9u, /* Button9__BTN */
 };
 
 reg32* const CapSense_prtSelTbl[CapSense_CFG_REG_TBL_SIZE] = {
